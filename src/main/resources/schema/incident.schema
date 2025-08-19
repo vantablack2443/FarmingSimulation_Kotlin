@@ -86,7 +86,7 @@
           "properties": {
             "type": { "const": "CITY_EXPANSION" }
           },
-          "required": ["id", "type", "tick", "location", "radius"]
+          "required": ["id", "type", "tick", "location"]
         }
       ]
     }
