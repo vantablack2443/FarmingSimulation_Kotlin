@@ -12,7 +12,7 @@ object SystemTestRegistration {
      * understood something correctly or not (everything should work
      * the same as their reference implementation)
      */
-    fun registerSystemTestsReferenceImpl(testSuite: SELab25TestSuite) {
+    fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
     }
 
