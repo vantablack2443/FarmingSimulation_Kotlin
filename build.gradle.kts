@@ -173,10 +173,11 @@ application {
     mainClass.set("de.unisaarland.cs.se.selab.MainKt")
 }
 
-val serverExec = tasks.register<JavaExec>("serverExec") {
+tasks.register<JavaExec>("serverExec") {
+    description = "Runs the simulation on the group jar with the parameters in gradle.properties"
+    group = "systemtest"
     dependsOn(tasks.jar)
     classpath(files("libs/selab.jar"))
-    mainClass.set("de.unisaarland.cs.se.selab.MainKt")
     args = listOf("--map", properties["MAP"].toString(),
         "--farms", properties["FARMS"].toString(),
         "--scenario", properties["SCENARIO"].toString(),
@@ -187,13 +188,18 @@ val serverExec = tasks.register<JavaExec>("serverExec") {
     )
 }
 
-val systemtestExec = tasks.register<JavaExec>("systemtestExec") {
+tasks.register<JavaExec>("systemtestExec") {
+    description = "Runs the registered system tests on the group jar"
+    group = "systemtest"
     dependsOn(tasks.jar)
     classpath(files("libs/selab.jar"))
-    mainClass.set("de.unisaarland.cs.se.selab.systemtest.MainKt")
+    mainClass.set("de.unisaarland.cs.se.selab.systemtest.selab25.MainKt")
+    val toRun = "reference_implementation"
+//    val toRun = "validation_mutants"
+//    val toRun = "simulation_mutants"
     args = listOf(
         "--jar", "libs/selab.jar",
-        "--run", "system",
+        "--run", toRun,
         "--timeout", "10",
 //        "--debug", "1337"
     )
