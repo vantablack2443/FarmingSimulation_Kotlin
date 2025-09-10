@@ -4,12 +4,12 @@ import de.unisaarland.cs.se.selab.systemtest.api.SystemTestAssertionError
 import de.unisaarland.cs.se.selab.systemtest.selab25.SystemTestSELab25
 
 /**
- * adds skips to basic systemtest class
+ * Adds skips to basic systemtest class
  */
 abstract class ExampleSystemTestExtension : SystemTestSELab25() {
 
     /**
-     * skips until the given [startString] is found
+     * Skips until the given [startString] is found
      */
     private suspend fun skipUntilString(startString: String): String {
         val line: String = getNextLine()
@@ -22,17 +22,17 @@ abstract class ExampleSystemTestExtension : SystemTestSELab25() {
     }
 
     /**
-     * skips until the given [logs] is found
+     * Skips until the given [logLevel] and [logType] is found
      */
-    suspend fun skipUntilLogType(logs: Logs): String {
-        return skipUntilString(logs.toString())
+    suspend fun skipUntilLogType(logLevel: LogLevel, logType: LogType): String {
+        return skipUntilString("[$logLevel] $logType")
     }
 }
 
 /**
- * the categories of logs
+ * Enum for categories of logs
  */
-enum class Logs(private val message: String) {
+enum class LogType(private val message: String) {
     INITIALIZATION_INFO("Initialization Info"),
     SIMULATION_INFO("Simulation Info"),
     SIMULATION_STATISTICS("Simulation Statistics");
@@ -40,4 +40,13 @@ enum class Logs(private val message: String) {
     override fun toString(): String {
         return message
     }
+}
+
+/**
+ * Enum for log levels
+ */
+enum class LogLevel {
+    DEBUG,
+    INFO,
+    IMPORTANT
 }
