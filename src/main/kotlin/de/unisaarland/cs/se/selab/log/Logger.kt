@@ -138,8 +138,11 @@ object SimulationLogger {
     /**
      * logs incidents
      */
-    fun logIncident(id: Int, type: IncidentType, affectedTiles: List<Tile>) {
-        TODO()
+    fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Tile>) {
+        printer.println(
+            "[IMPORTANT] Incident: Incident $incidentID of type $incidentType\n" +
+                " happened and affected tiles $tileIDs."
+        )
     }
 
     /**
