@@ -121,15 +121,21 @@ object SimulationLogger {
     /**
      * logs missed actions
      */
-    fun logMissedActions(tile: Int, actions: List<ActionType>) {
-        TODO()
+    fun logMissedActions(tileID: Int, actions: List<ActionType>) {
+        printer.println(
+            "[DEBUG] Harvest Estimate: Required actions on tile $tileID were not\n" +
+                " performed: $actions."
+        )
     }
 
     /**
      * logs the harvests estimate
      */
-    fun logHarvestEstimate(tileId: Int, amount: Int, plant: PlantType) {
-        TODO()
+    fun logHarvestEstimate(tileID: Int, amount: Int, plant: PlantType) {
+        printer.println(
+            "[INFO] Harvest Estimate: Harvest estimate on tile $tileID changed to\n" +
+                " $amount g of $plant."
+        )
     }
 
     fun end() {
