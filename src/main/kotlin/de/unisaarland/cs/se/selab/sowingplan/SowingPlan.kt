@@ -1,4 +1,7 @@
-package de.unisaarland.cs.se.selab.farms
+package de.unisaarland.cs.se.selab.sowingplan
+
+import de.unisaarland.cs.se.selab.enumerations.PlantType
+import de.unisaarland.cs.se.selab.tile.Tile
 
 class SowingPlan (
     private val id : Int,
