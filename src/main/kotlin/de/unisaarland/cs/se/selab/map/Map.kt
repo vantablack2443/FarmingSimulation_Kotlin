@@ -52,7 +52,6 @@ class Map(
                 }
             }
         }
-
         return tiles
     }
 
@@ -98,7 +97,25 @@ class Map(
      * get reachable tiles for harvesting phase
      */
     fun getReachableTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
-        TODO()
+        val reach: MutableList<Tile> = mutableListOf()
+        if (radius == -1) {
+            reach += tiles.values.toList()
+            // whole map is considered when radius is -1
+        } else {
+            reach += getTilesByRadius(machine.currentTile, radius)
+            // only tiles in given radius considered otherwise
+        }
+        for (tile in reach) {
+            if (tile.farmID != machine.farmID || tile.category == TileType.FOREST) {
+                reach -= tile
+                // remove tile from reach if it belongs to other farm or is FOREST
+            }
+            if (carryingHarvest && tile.category == TileType.VILLAGE) {
+                reach -= tile
+                // remove VILLAGE tiles if machine is loaded
+            }
+        }
+        return reach
     }
 
     /**
@@ -107,16 +124,16 @@ class Map(
      * returns null if no shed on the farm is reachable
      */
     fun findTargetShed(machine: Machine, farmSheds: List<Tile>, carryingHarvest: Boolean): Tile? {
-        if (isReachable(machine, machine.homeShed)) return machine.homeShed
         val reach = getReachableTiles(machine, -1, carryingHarvest)
         val reachableSheds = farmSheds.intersect(reach.toSet())
+        if (machine.homeShed in reachableSheds) return machine.homeShed
         // assumes farm sheds are ordered by id
         if (!reachableSheds.isEmpty()) return reachableSheds.first()
         return null
     }
 
     /**
-     * return all field and platation tiles
+     * return all field and plantation tiles
      */
     fun getPlantableTiles(): List<Tile> {
         val plantables: MutableList<Tile> = mutableListOf()
