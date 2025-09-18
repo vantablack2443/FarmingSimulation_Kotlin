@@ -12,12 +12,15 @@ import de.unisaarland.cs.se.selab.plant.Grape
 import de.unisaarland.cs.se.selab.plant.Plant
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.tile.Tile
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import java.io.File
 
 /**
  * custom exception
@@ -26,21 +29,31 @@ class ValidationException : Exception("Validation Exception, missing or invalid 
 
 
 class MapParser (private val simData: SimulationData) {
-    private lateinit var simulationData: SimulationData
     private lateinit var tileIDMap: MutableMap<Int, Tile>
     private lateinit var tileCoordinates: MutableMap<Coordinate, Tile>
 
 
     fun parse(json: String): Unit {
-        // TODO
+        val file = File(json)
+        val jsonString = file.readText()
+        val tiles = Json.parseToJsonElement(jsonString).jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
+        parseCreateTiles(tiles)
     }
 
 
+    /**
+     * iterates over the tiles array extracted from the json file and parses them one by one
+     */
     private fun parseCreateTiles(tiles: JsonArray): Unit {
-        // TODO
+        for (tile in tiles) {
+            parseTile(tile as JsonObject)
+        }
     }
 
 
+    /**
+     * parses a single tile object
+     */
     private fun parseTile(tile: JsonObject): Tile {
         val id = tile["id"]?.jsonPrimitive?.int ?: throw ValidationException()
         if (id < 0) throw ValidationException()
@@ -52,14 +65,15 @@ class MapParser (private val simData: SimulationData) {
         val location = Coordinate(x, y)
         val shape = getShapeByCoordinate(location)
         val parsedTile = Tile(id, location, category, shape)
-
-
         val (airflow, direction) = parseAirflow(tile, category)
         parsedTile.airflow = airflow
         parsedTile.direction = direction
         parseFarmID(tile, parsedTile)
         parseFarmstead(tile, parsedTile)
         parsePlantableTiles(tile, parsedTile)
+        if (tileIDMap.containsKey(id) || tileCoordinates.containsKey(location)) throw ValidationException()
+        tileIDMap[id] = parsedTile
+        tileCoordinates[location] = parsedTile
         return parsedTile
     }
 
@@ -146,10 +160,6 @@ class MapParser (private val simData: SimulationData) {
         tile.currentMoisture = capacity
     }
 
-
-    private fun validateUniqueAttributes(id: Int, c: Coordinate): Boolean {
-        // TODO
-    }
 
 
     private fun validateTileShape(type: TileType): Boolean {
