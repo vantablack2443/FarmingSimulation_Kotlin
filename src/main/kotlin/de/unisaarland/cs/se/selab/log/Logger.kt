@@ -21,9 +21,19 @@ object SimulationLogger {
         this.level = logType
     }
 
-    fun logParsing(valid: Boolean, filename: String) {}
+    /**
+     * logs if parsing was successful or not
+     */
+    fun logParsing(valid: Boolean, filename: String) {
+        TODO()
+    }
 
-    fun logSimulationStart(yearTick: Int) {}
+    /**
+     * logs the start of the simulation
+     */
+    fun logSimulationStart(yearTick: Int) {
+        TODO()
+    }
 
     /**
      * [IMPORTANT] Simulation Info: Simulation ended at tick $tick.
@@ -39,6 +49,20 @@ object SimulationLogger {
     fun logTickStart(tick: Int, yearTick: Int) {
         printer.println("[INFO] Simulation Info: Tick $tick started at tick $yearTick within the year.")
         printer.flush()
+    }
+
+    /**
+     * logs the reduction of moisture
+     */
+    fun logMoistureReduction(amountField: Int, amountPlantation: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the rain
+     */
+    fun logRain(cloudID: Int, tileID: Int, amount: Int) {
+        TODO()
     }
 
     /**
