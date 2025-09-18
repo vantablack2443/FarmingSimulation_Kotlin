@@ -35,10 +35,10 @@ class ScenarioParser(private val simData: SimulationData) {
     private var cloudIDs: MutableList<Int> = mutableListOf()
     private var cloudToTile: MutableMap<Cloud, Tile> = mutableMapOf()
 
-    // map from tick to cloud creation incidents
+    // Map from tick to cloud creation incidents
     private var cloudCreationIncidents: MutableMap<Int, MutableList<Incident>> = mutableMapOf()
 
-    // for double-checking against sowing plan tiles
+    // For double-checking against sowing plan tiles
     private var cityExpansionTiles: MutableList<Tile> = mutableListOf()
 
     fun parse(jsonPath: String) {
@@ -363,7 +363,11 @@ class ScenarioParser(private val simData: SimulationData) {
      * TODO
      */
     private fun checkSowingPlanFields(plans: List<SowingPlan>): Boolean {
-        // TODO
+        val newVillageIDs = cityExpansionTiles.map { it.id }.toSet()
+        for (plan in plans) {
+            val potentialTilesInPlan = plan.getSowingTiles().filter { it.id !in newVillageIDs }
+            if (potentialTilesInPlan.none { it.category == TileType.FIELD }) return false
+        }
         return true
     }
 }
