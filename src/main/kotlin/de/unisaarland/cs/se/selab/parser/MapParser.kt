@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.map.Map
 import de.unisaarland.cs.se.selab.plant.Almond
 import de.unisaarland.cs.se.selab.plant.Apple
 import de.unisaarland.cs.se.selab.plant.Cherry
@@ -43,6 +44,7 @@ class MapParser(private val simData: SimulationData) {
         val tiles = Json.parseToJsonElement(jsonString).jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
         parseCreateTiles(tiles)
         simData.tiles = tileIDMap
+        simData.map = Map(tileCoordinates)
         TODO("add logger")
     }
 
