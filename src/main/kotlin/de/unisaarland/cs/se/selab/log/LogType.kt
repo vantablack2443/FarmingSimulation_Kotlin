@@ -1,5 +1,5 @@
 
-package de.unisaarland.cs.se.selab.enumerations
+package de.unisaarland.cs.se.selab.log
 
 /**
  * enumaration for log types
