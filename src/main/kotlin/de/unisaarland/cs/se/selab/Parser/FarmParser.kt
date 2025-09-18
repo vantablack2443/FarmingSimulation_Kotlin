@@ -1,18 +1,21 @@
-package de.unisaarland.cs.se.selab.Parser
+package de.unisaarland.cs.se.selab.parser
 
+import de.unisaarland.cs.se.selab.farms.Farm
+import de.unisaarland.cs.se.selab.farms.SowingPlan
 import org.json.JSONObject
 import org.json.JSONArray
 
-import de.unisaarland.cs.se.selab.SimulationData
+import de.unisaarland.cs.se.selab.simulation.SimulationData
+import de.unisaarland.cs.se.selab.tile.Tile
 
 class FarmParser(private val simulationData: SimulationData) {
-    private var simulationData: SimulationData
-    private var farmIDs: List<Int>
-    private var farmNames: List<String>
-    private var machineIDs: List<Int>
-    private var machineNames: List<String>
-    private var sowingPlanIDs: List<Int>
-    private var sowingPlanTicks: MutableMap<Int, List<SowingPlan>>
+    private lateinit var simulationData: SimulationData
+    private lateinit var farmIDs: List<Int>
+    private lateinit var farmNames: List<String>
+    private lateinit var machineIDs: List<Int>
+    private lateinit var machineNames: List<String>
+    private lateinit var sowingPlanIDs: List<Int>
+    private lateinit var sowingPlanTicks: MutableMap<Int, List<SowingPlan>>
 
 
     fun parse(json: String): Unit {
