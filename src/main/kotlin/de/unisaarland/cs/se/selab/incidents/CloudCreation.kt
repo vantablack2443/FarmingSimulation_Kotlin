@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.incidents
 
-import de.unisaarland.cs.se.selab.map.Map
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
+import de.unisaarland.cs.se.selab.map.Map
 
 /**
  * cloud creation incident
