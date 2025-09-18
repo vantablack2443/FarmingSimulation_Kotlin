@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab.Incidents
+package de.unisaarland.cs.se.selab.incidents
 import de.unisaarland.cs.se.selab.Map
 
 abstract class Incident (
