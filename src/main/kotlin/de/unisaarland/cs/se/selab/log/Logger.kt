@@ -6,12 +6,15 @@ import java.io.PrintWriter
 /**
  * SimulationLogger logs Simulation details
  */
-object Logger {
+object SimulationLogger {
     var printer: PrintWriter = PrintWriter(System.out)
-    private val level: LogType = TODO()
+    private var level: LogType = TODO()
 
     fun setPrinter(printer: PrintWriter) {
         this.printer = printer
+    }
+    fun setLevel(logType: LogType) {
+        this.level = logType
     }
 
     fun logParsing(valid: Boolean, filename: String) {}
@@ -34,6 +37,13 @@ object Logger {
         printer.flush()
     }
 
+    fun end (){
+        printer.println("Simulation Info: Simulation statistics are calculated.")
+    }
+
+}
+
+object EnvironmentLogger {
 
 }
 
