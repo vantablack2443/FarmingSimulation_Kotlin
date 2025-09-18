@@ -1,0 +1,9 @@
+package de.unisaarland.cs.se.selab.cloud
+import de.unisaarland.cs.se.selab.Coordinate
+
+class Cloud(val id: Int, var duration: Int, var location: Coordinate, var amount: Int) {
+    var maxTraversibleTiles: Int = 10
+    var isStuck: Boolean = false
+
+
+}
