@@ -10,9 +10,9 @@ import java.io.PrintWriter
 /**
  * SimulationLogger logs Simulation details
  */
-object SimulationLogger {
+object Logger {
     var printer: PrintWriter = PrintWriter(System.out)
-    private var level: LogType = TODO()
+    private var level: LogType = LogType.INFO
 
     /**
      * intializes the printer
@@ -26,6 +26,19 @@ object SimulationLogger {
      */
     fun setLevel(logType: LogType) {
         this.level = logType
+    }
+
+    private fun logs(logType: LogType, message: String) {
+        val shouldLog = when (logType) {
+            LogType.IMPORTANT -> true
+            LogType.INFO -> level != LogType.IMPORTANT
+            LogType.DEBUG -> level == LogType.DEBUG
+        }
+
+        if (shouldLog) {
+            printer.println("[${logType.name}] $message")
+            printer.flush()
+        }
     }
 
     /**
