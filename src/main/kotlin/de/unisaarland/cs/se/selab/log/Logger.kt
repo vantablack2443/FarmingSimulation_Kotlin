@@ -1,6 +1,10 @@
 package de.unisaarland.cs.se.selab.log
 
+import de.unisaarland.cs.se.selab.enumerations.ActionType
+import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.LogType
+import de.unisaarland.cs.se.selab.enumerations.PlantType
+import de.unisaarland.cs.se.selab.tile.Tile
 import java.io.PrintWriter
 
 /**
@@ -37,13 +41,100 @@ object SimulationLogger {
         printer.flush()
     }
 
-    fun end (){
-        printer.println("Simulation Info: Simulation statistics are calculated.")
+    /**
+     * logd the position of a cloud
+     */
+    fun logCloudPosition(cloudID: Int, tileID: Int, sunight: Int) {
+        TODO()
     }
 
+    /**
+     * logs the start of a farm action phase
+     */
+    fun logFarmStart(farmID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs farm sowing plans
+     */
+    fun logFarmSowingPlan(farmID: Int, sowingPlanIDs: List<Int>) {
+        TODO()
+    }
+
+    /**
+     * logs the actions of a farm
+     */
+    fun logFarmAction(machineID: Int, actionType: ActionType, tileID: Int, duration: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the sowing action
+     */
+    fun logSowing(machineID: Int, plant: PlantType, sowingPlanID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the harvest action
+     */
+    fun logHarvest(machineID: Int, amount: Int, plant: PlantType) {
+        TODO()
+    }
+
+    /**
+     * logs when a machine gets stuck
+     */
+    fun logMachineReturnFail(machineID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the end of the use of a machine
+     */
+    fun logMachineFinish(machineID: Int, tileID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the harvest in the machine that is returned
+     */
+    fun logUnload(machineID: Int, amount: Int, plant: PlantType) {
+        TODO()
+    }
+
+    /**
+     * logs the end of a farm action phase
+     */
+    fun logFarmEnd(farmID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs incidents
+     */
+    fun logIncident(id: Int, type: IncidentType, affectedTiles: List<Tile>) {
+        TODO()
+    }
+
+    /**
+     * logs missed actions
+     */
+    fun logMissedActions(tile: Int, actions: List<ActionType>) {
+        TODO()
+    }
+
+    /**
+     * logs the harvests estimate
+     */
+    fun logHarvestEstimate(tileId: Int, amount: Int, plant: PlantType) {
+        TODO()
+    }
+
+    fun end() {
+        printer.println("Simulation Info: Simulation statistics are calculated.")
+    }
 }
 
-object EnvironmentLogger {
-
-}
-
+object EnvironmentLogger
