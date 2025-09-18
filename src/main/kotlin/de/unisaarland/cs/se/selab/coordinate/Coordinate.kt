@@ -58,7 +58,7 @@ data class Coordinate(
      * it only gives back the neighbors in four defined directions
      */
     fun getImmediateNeighbors(): Set<Coordinate> {
-        val neighbors = setOf<Coordinate>()
+        val neighbors = mutableSetOf<Coordinate>()
         for (
         direction in setOf(
             Direction.NORTH_EAST,
@@ -67,11 +67,11 @@ data class Coordinate(
             Direction.NORTH_WEST
         )
         ) {
-            neighbors.plus(getNeighbor(direction))
+            getNeighbor(direction)?.let { neighbors.add(it) }
         }
         if (!isSquare()) {
             for (direction in setOf(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)) {
-                neighbors.plus(getNeighbor(direction))
+                getNeighbor(direction)?.let { neighbors.add(it) }
             }
         }
         return neighbors
@@ -81,9 +81,14 @@ data class Coordinate(
      * returns the neighboring tile coordinates in the given radius
      */
     fun getNeighborsInRadius(radius: Int): Set<Coordinate> {
-        val neighbors = setOf<Coordinate>()
-        repeat(radius) {
-            neighbors.plus(getImmediateNeighbors())
+        val neighbors = mutableSetOf<Coordinate>()
+        neighbors.addAll(getImmediateNeighbors())
+        repeat(radius - 1) {
+            val newNeighbors = mutableSetOf<Coordinate>()
+            for (neighbor in neighbors) {
+                newNeighbors.addAll(neighbor.getImmediateNeighbors())
+            }
+            neighbors.addAll(newNeighbors)
         }
         return neighbors
     }
