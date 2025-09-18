@@ -7,11 +7,12 @@ import de.unisaarland.cs.se.selab.incidents.Incident
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
+import de.unisaarland.cs.se.selab.map.Map
 
 class SimulationData {
-    var map: MutableMap<Coordinate, Tile> = mutableMapOf() // take a look at this later
-    var tiles:  MutableMap<Int, Tile> = mutableMapOf()
-    var farms: MutableMap<Int, Farm>  = mutableMapOf() // ID to Farm
+    lateinit var map: Map // take a look at this later
+    var tiles: MutableMap<Int, Tile> = mutableMapOf()
+    var farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
     var machines: MutableMap<Int, Machine> = mutableMapOf()
     var incidents: MutableMap<Int, Incident> = mutableMapOf()
     var clouds: MutableMap<Int, Cloud> = mutableMapOf()
