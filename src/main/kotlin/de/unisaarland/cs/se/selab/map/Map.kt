@@ -6,7 +6,6 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
-
 import kotlin.math.abs
 
 /**
@@ -16,14 +15,14 @@ class Map(
     var tiles: MutableMap<Coordinate, Tile>
 ) {
     /**
-     * get tile from map according to its coordinate
+     * get tile from map by its coordinate
      */
     fun getTileByCoordinate(coordinate: Coordinate): Tile? {
         return tiles.get(coordinate)
     }
 
     /**
-     * get tile from map according to its id
+     * get tile from map by its id
      */
     fun getTileByID(id: Int): Tile? {
         for (tile in tiles.values) {
@@ -35,7 +34,8 @@ class Map(
     }
 
     /**
-     * abstract incident class
+     * gets all tiles in the specified radius of given tile
+     * (not optimized yet, imo doesn't need optimization)
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
         val cord = tile.location
@@ -102,10 +102,17 @@ class Map(
     }
 
     /**
-     * find all reachable sheds by the machine
+     * find the shed to which the machine returns
+     * first priority: Home shed then priority by ID
+     * returns null if no shed on the farm is reachable
      */
     fun findTargetShed(machine: Machine, farmSheds: List<Tile>, carryingHarvest: Boolean): Tile? {
-        TODO()
+        if (isReachable(machine, machine.homeShed)) return machine.homeShed
+        val reach = getReachableTiles(machine, -1, carryingHarvest)
+        val reachableSheds = farmSheds.intersect(reach.toSet())
+        // assumes farm sheds are ordered by id
+        if (!reachableSheds.isEmpty()) return reachableSheds.first()
+        return null
     }
 
     /**
