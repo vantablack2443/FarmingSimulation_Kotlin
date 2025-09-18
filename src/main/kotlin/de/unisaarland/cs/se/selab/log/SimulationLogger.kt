@@ -14,9 +14,16 @@ object SimulationLogger {
     var printer: PrintWriter = PrintWriter(System.out)
     private var level: LogType = TODO()
 
+    /**
+     * intializes the printer
+     */
     fun setPrinter(printer: PrintWriter) {
         this.printer = printer
     }
+
+    /**
+     * sets the log level
+     */
     fun setLevel(logType: LogType) {
         this.level = logType
     }
@@ -62,6 +69,34 @@ object SimulationLogger {
      * logs the rain
      */
     fun logRain(cloudID: Int, tileID: Int, amount: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the cloud movement
+     */
+    fun logCloudMove(cloudID: Int, amount: Int, startTile: Int, endTile: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the sunlight
+     */
+    fun logSunlight(tileID: Int, sunlight: Int) {
+        TODO()
+    }
+
+    /**
+     * logs when clouds merge
+     */
+    fun logCloudMerge(startCloudID: Int, endCloudID: Int, newID: Int, amount: Int, duration: Int, tileID: Int) {
+        TODO()
+    }
+
+    /**
+     * logs the dissipation of a cloud
+     */
+    fun logDissipation(cloudID: Int, tileID: Int) {
         TODO()
     }
 
@@ -162,9 +197,10 @@ object SimulationLogger {
         )
     }
 
+    /**
+     * logs farm statistics, plant statistics, remaining statistics
+     */
     fun end() {
         printer.println("Simulation Info: Simulation statistics are calculated.")
     }
 }
-
-object EnvironmentLogger
