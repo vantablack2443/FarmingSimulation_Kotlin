@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.coordinate
 
 data class Coordinate(
     val x: Int,
