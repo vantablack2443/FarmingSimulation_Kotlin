@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab.data
+package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 
 abstract class Plant(
