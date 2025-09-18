@@ -1,6 +1,6 @@
 package de.unisaarland.cs.se.selab.incidents
 
-import de.unisaarland.cs.se.selab.Map
+import de.unisaarland.cs.se.selab.map.Map
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 
 /**
