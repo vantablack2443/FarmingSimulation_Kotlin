@@ -1,14 +1,17 @@
 package de.unisaarland.cs.se.selab.incidents
 import de.unisaarland.cs.se.selab.Map
+import de.unisaarland.cs.se.selab.enumerations.IncidentType
 
-abstract class Incident (
+/**
+ * abstract incident class
+ */
+abstract class Incident(
     val id: Int,
     val tick: Int,
     val type: IncidentType
 ) {
-    enum class IncidentType {
-        ANIMAL_ATTACK, BEE_HAPPY, BROKEN_MACHINE, CLOUD_CREATION, CITY_EXPANSION, DROUGHT
-    }
-
+    /**
+     * execute method, will be overridden in concrete classes
+     */
     abstract fun execute(map: Map, yearTick: Int)
 }
