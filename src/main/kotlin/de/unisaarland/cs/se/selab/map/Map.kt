@@ -7,8 +7,10 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
 
+import kotlin.math.abs
+
 /**
- * Keeps track of the tiles of the simulation
+ * Map Class
  */
 class Map(
     var tiles: MutableMap<Coordinate, Tile>
@@ -21,7 +23,7 @@ class Map(
     }
 
     /**
-     * get tiile from map according to its id
+     * get tile from map according to its id
      */
     fun getTileByID(id: Int): Tile? {
         for (tile in tiles.values) {
@@ -33,10 +35,25 @@ class Map(
     }
 
     /**
-     * get all reachable tiles in radius moves
+     * abstract incident class
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
-        TODO()
+        val cord = tile.location
+        val tiles: MutableList<Tile> = mutableListOf()
+        for (i in (cord.x - (radius * 2))..(cord.x + (radius * 2))) {
+            for (j in (cord.y - (radius * 2))..(cord.y + (radius * 2))) {
+                if (abs(i - cord.x) + abs(j - cord.y) > radius * 2) {
+                    continue
+                }
+                val tile = getTileByCoordinate(Coordinate(i, j))
+                // Here it will also try to get invalid tiles such as (9,4) but getTileByCoordinate will return null
+                if (tile != null) {
+                    tiles.add(tile)
+                }
+            }
+        }
+
+        return tiles
     }
 
     /**
