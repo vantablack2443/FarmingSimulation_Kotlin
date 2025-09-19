@@ -11,7 +11,7 @@ import kotlin.math.abs
 /**
  * Map Class
  */
-class Map(
+class SimulationMap(
     var tiles: MutableMap<Coordinate, Tile>
 ) {
     /**
@@ -90,7 +90,7 @@ class Map(
      * check if the destination tile is reachable from the current machine location
      */
     fun isReachable(machine: Machine, destination: Tile): Boolean {
-        TODO()
+
     }
 
     /**
