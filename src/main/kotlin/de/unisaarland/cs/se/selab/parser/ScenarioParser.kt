@@ -11,6 +11,7 @@ import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.incidents.Incident
+import de.unisaarland.cs.se.selab.parser.ValidationException
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -22,11 +23,6 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
-/**
- * Throws exception in case validation fails
- * */
-class ValidationException : Exception("Validation Exception, missing or invalid fields")
-
 /**
  * Handles Parsing the Scenario File
  * */
@@ -41,6 +37,9 @@ class ScenarioParser(private val simData: SimulationData) {
     // For double-checking against sowing plan tiles
     private var cityExpansionTiles: MutableList<Tile> = mutableListOf()
 
+    /**
+     * Parses the scenario files and runs the checks validity
+     */
     fun parse(jsonPath: String) {
         // Read file
         val jsonFile = File(jsonPath).readText()
@@ -57,10 +56,21 @@ class ScenarioParser(private val simData: SimulationData) {
         parseClouds(clouds)
 
         // Validate City Expansion Incidents
-        if (!validateCityExpansion(simData.incidents.values.toList())) throw ValidationException()
+        checkValid(validateCityExpansion(simData.incidents.values.toList()))
 
-        // Validate Cloud Creation Incidents for overlapping areas
-        if (!validateCloudCreation(simData.incidents.values.toList())) throw ValidationException()
+        // Validate Cloud Creation Incidents for villages
+        checkValid(validateCloudCreationWithVillages(simData.incidents.values.toList()))
+
+        // Validate Cloud Creation and Overlapping clouds !!!!
+        checkValid(checkOverlappingCloudCreation())
+
+        // Cross check sowing plans
+        // Since there has to be at least one field tile till the end of the simulation, the function will compare
+        // with all possible city expansion incidents
+        val sowingPlanMap = simData.sowingPlans
+        for (sowingPlans in sowingPlanMap.values) {
+            checkValid(checkSowingPlanFields(sowingPlans))
+        }
     }
 
     private fun parseIncidents(incidents: JsonArray) {
@@ -74,19 +84,19 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get ID
         val id: Int = obj["id"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Check if ID is not negative
-        if (id < 0) throw ValidationException()
+        checkValid(id >= 0)
         // Checks if ID is unique
-        if (!validateUniqueIncidentIDs(id)) throw ValidationException()
+        checkValid(validateUniqueIncidentIDs(id))
 
         // Get tick
         val tick: Int = obj["tick"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Check if tick is not negative
-        if (tick < 0) throw ValidationException()
+        checkValid(tick >= 0)
 
         // Get Incident Type
         val type: String = obj["type"]?.jsonPrimitive?.content ?: throw ValidationException()
         // Convert to enum - Throw error if no matching enum value
-        val incident_type: IncidentType = try {
+        val incidentType: IncidentType = try {
             IncidentType.valueOf(type)
         } catch (e: IllegalArgumentException) {
             throw ValidationException()
@@ -95,138 +105,35 @@ class ScenarioParser(private val simData: SimulationData) {
         // Will be set depending on IncidentType
         lateinit var incident: Incident
 
-        when (incident_type) {
+        when (incidentType) {
             IncidentType.ANIMAL_ATTACK -> {
-                // Get location
-                val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for non-negative id
-                if (tileID < 0) throw ValidationException()
-                // Check if tile exists and get tile
-                val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
-
-                // Get Radius
-                val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for non-negative radius
-                if (radius < 0) throw ValidationException()
-
-                // Validate affected tiles - CHECK FOR FOREST
-                if (!validateAnimalAttack(tile, radius)) throw ValidationException()
-
-                incident = AnimalAttack(id, tick, incident_type, tile, radius)
+                // Call ParseAnimalAttack Helper
+                incident = parseAnimalAttack(obj, id, tick, incidentType)
             }
 
             IncidentType.BEE_HAPPY -> {
-                // Get location
-                val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for if non negative
-                if (tileID < 0) throw ValidationException()
-                // Check if tile exists and get tile
-                val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
-
-                // Get Radius
-                val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for non-negative radius
-                if (radius < 0) throw ValidationException()
-
-                // Validate affected tiles - CHECK FOR MEADOW
-                if (!validateBeeHappy(tile, radius)) throw ValidationException()
-
-                // Get pollination effect
-                val effect: Int = obj["effect"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Check if positive
-                if (effect <= 0) throw ValidationException()
-
-                incident = BeeHappy(id, tick, incident_type, effect, tile, radius)
+                // Call ParseBeeHappy Helper
+                incident = parseBeeHappy(obj, id, tick, incidentType)
             }
 
             IncidentType.BROKEN_MACHINE -> {
-                // Gets duration
-                val duration: Int = obj["duration"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for positive or -1 duration
-                if (duration <= 0 && duration != -1) throw ValidationException()
-
-                // Get machine ID
-                val machineid: Int = obj["machineId"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks if not negative
-                if (machineid < 0) throw ValidationException()
-                // Check if machine exists and get machine
-                val machine = simData.machines[machineid] ?: throw ValidationException()
-
-                lateinit var durationObject: Duration
-                if (duration == -1) {
-                    durationObject = Duration(-1, -1)
-                } else {
-                    durationObject = Duration(tick + 1, tick + duration)
-                }
-
-                incident = BrokenMachine(id, tick, incident_type, machine, durationObject)
+                // Call ParseBrokenMachine Helper
+                incident = parseBrokenMachine(obj, id, tick, incidentType)
             }
 
             IncidentType.CITY_EXPANSION -> {
-                // Get location
-                val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for if non-negative
-                if (tileID < 0) throw ValidationException()
-                // Check if tile exists and get tile
-                val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
-                // Add to cityExpansionTiles to validate sowing Plans
-                cityExpansionTiles.add(tile)
-
-                // VALIDATE EXISTENCE OF ADJOINING VILLAGE AT POINT OF INCIDENCE AFTER COLLECTING ALL INCIDENTS
-
-                // !! Check toList function
-                incident = CityExpansion(id, tick, incident_type, tile, simData.farms.values.toList())
+                // Call ParseCityExpansion Helper
+                incident = parseCityExpansion(obj, id, tick, incidentType)
             }
 
             IncidentType.CLOUD_CREATION -> {
-                // Gets duration
-                val duration: Int = obj["duration"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for positive or -1 duration
-                if (duration <= 0 && duration != -1) throw ValidationException()
-
-                // Get location
-                val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for if non negative
-                if (tileID < 0) throw ValidationException()
-                // Check if tile exists and get tile
-                val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
-
-                // Get Radius
-                val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for non-negative radius
-                if (radius < 0) throw ValidationException()
-
-                // Get amount of water on cloud
-                val amount: Int = obj["amount"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks if positive
-                if (amount <= 0) throw ValidationException()
-
-                // VALIDATE WITH CITY EXPANSION TILES AND SOWING PLAN TILES AFTER COLLECTING ALL INCIDENTS
-
-                incident = CloudCreation(id, tick, incident_type, tile, radius, duration, amount)
-
-                // Add to cloudCreationIncidents
-                cloudCreationIncidents.getOrPut(tick) { mutableListOf() }.add(incident)
+                // call parseCloudCreation Helper
+                incident = parseCloudCreation(obj, id, tick, incidentType)
             }
 
             IncidentType.DROUGHT -> {
-                // Get location
-                val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for if non negative
-                if (tileID < 0) throw ValidationException()
-                // Check if tile exists and get tile
-                val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
-
-                // Get Radius
-                val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
-                // Checks for non-negative radius
-                if (radius < 0) throw ValidationException()
-
-                // Validate affected tiles - CHECK FOR FIELD OR PLANTATION
-                if (!validateDrought(tile, radius)) throw ValidationException()
-
-                // Initialize CloudHandler at a later point when simData is fully initialized !!!!
-                incident = Drought(id, tick, incident_type, tile, radius)
+                // call parseDrought Helper
+                incident = parseDrought(obj, id, tick, incidentType)
             }
         }
 
@@ -234,6 +141,142 @@ class ScenarioParser(private val simData: SimulationData) {
         incidentIDs.add(id)
 
         return incident
+    }
+
+    private fun parseAnimalAttack(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): Incident {
+        // Get location
+        val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative id
+        checkValid(tileID > 0)
+
+        // Check if tile exists and get tile
+        val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
+
+        // Get Radius
+        val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative radius
+        checkValid(radius >= 0)
+
+        // Validate affected tiles - CHECK FOR FOREST
+        checkValid(validateAnimalAttack(tile, radius))
+
+        return AnimalAttack(id, tick, incidentType, tile, radius)
+    }
+
+    private fun parseBeeHappy(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): BeeHappy {
+        // Get location
+        val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative id
+        checkValid(tileID > 0)
+
+        // Check if tile exists and get tile
+        val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
+
+        // Get Radius
+        val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative radius
+        checkValid(radius >= 0)
+
+        // Validate affected tiles - CHECK FOR MEADOW
+        checkValid(validateBeeHappy(tile, radius))
+
+        // Get pollination effect
+        val effect: Int = obj["effect"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Check if positive
+        checkValid(effect > 0)
+
+        return BeeHappy(id, tick, incidentType, effect, tile, radius)
+    }
+
+    private fun parseBrokenMachine(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): BrokenMachine {
+        // Gets duration
+        val duration: Int = obj["duration"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for positive or -1 duration
+        checkValid(duration > 0 || duration == -1)
+
+        // Get machine ID
+        val machineid: Int = obj["machineId"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks if not negative
+        checkValid(machineid <= 0)
+        // Check if machine exists and get machine
+        val machine = simData.machines[machineid] ?: throw ValidationException()
+
+        lateinit var durationObject: Duration
+        if (duration == -1) {
+            durationObject = Duration(-1, -1)
+        } else {
+            durationObject = Duration(tick + 1, tick + duration)
+        }
+
+        return BrokenMachine(id, tick, incidentType, machine, durationObject)
+    }
+
+    private fun parseCityExpansion(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): CityExpansion {
+        // Get location
+        val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for if non-negative
+        checkValid(tileID >= 0)
+        // Check if tile exists and get tile
+        val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
+        // Add to cityExpansionTiles to validate sowing Plans
+        cityExpansionTiles.add(tile)
+
+        // VALIDATE EXISTENCE OF ADJOINING VILLAGE AT POINT OF INCIDENCE AFTER COLLECTING ALL INCIDENTS
+
+        // !! Check toList function
+        return CityExpansion(id, tick, incidentType, tile, simData.farms.values.toList())
+    }
+
+    private fun parseCloudCreation(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): CloudCreation {
+        // Gets duration
+        val duration: Int = obj["duration"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for positive or -1 duration
+        checkValid(duration > 0 || duration == -1)
+
+        // Get location
+        val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for if non negative
+        checkValid(tileID >= 0)
+        // Check if tile exists and get tile
+        val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
+
+        // Get Radius
+        val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative radius
+        checkValid(radius >= 0)
+
+        // Get amount of water on cloud
+        val amount: Int = obj["amount"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks if positive
+        checkValid(amount > 0)
+
+        // VALIDATE WITH CITY EXPANSION TILES AND SOWING PLAN TILES AFTER COLLECTING ALL INCIDENTS
+
+        val incident = CloudCreation(id, tick, incidentType, tile, radius, duration, amount)
+
+        // Add to cloudCreationIncidents
+        cloudCreationIncidents.getOrPut(tick) { mutableListOf() }.add(incident)
+        return incident
+    }
+
+    private fun parseDrought(obj: JsonObject, id: Int, tick: Int, incidentType: IncidentType): Drought {
+        // Get location
+        val tileID: Int = obj["location"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for if non negative
+        checkValid(tileID >= 0)
+        // Check if tile exists and get tile
+        val tile: Tile = simData.tiles[tileID] ?: throw ValidationException()
+
+        // Get Radius
+        val radius: Int = obj["radius"]?.jsonPrimitive?.int ?: throw ValidationException()
+        // Checks for non-negative radius
+        checkValid(radius >= 0)
+
+        // Validate affected tiles - CHECK FOR FIELD OR PLANTATION
+        checkValid(validateDrought(tile, radius))
+
+        // Initialize CloudHandler at a later point when simData is fully initialized !!!!
+        return Drought(id, tick, incidentType, tile, radius)
     }
 
     private fun validateAnimalAttack(locationTile: Tile, radius: Int): Boolean {
@@ -251,23 +294,31 @@ class ScenarioParser(private val simData: SimulationData) {
         return affectedTiles.any { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
     }
 
-    /*private fun validateAffectedTiles(tile: Tile, radius: Int, type: IncidentType): Boolean {
-        return true
-    }*/
-
     private fun validateCityExpansion(incidents: List<Incident>): Boolean {
-        val cityExpansionIncidents: List<CityExpansion> = incidents.filterIsInstance<CityExpansion>()
-            .sortedBy { it.tick }
+        val cityExpansionIncidents: List<CityExpansion> = incidents.filterIsInstance<CityExpansion>().sortedWith(
+            compareBy(
+                CityExpansion::tick,
+                CityExpansion::id
+            )
+        )
 
+        // These should be all the new villages created up to the tick and then id
+        // Since the cityExpansion incidents are ordered in this way, we will add villages to the list in this order
+        // while iterating through the incidents
         val newVillages: MutableList<Tile> = mutableListOf()
 
         for (cityExpansionIncident in cityExpansionIncidents) {
             val tiles = simData.map.getTilesByRadius(cityExpansionIncident.tile, 1)
-            if (!tiles.any { it.category == TileType.VILLAGE } &&
-                !newVillages.any { it.category == TileType.VILLAGE }
+            // Find any overlap between newVillages and adjoining tiles
+            val newVillagesTiles = tiles.intersect(newVillages).toList()
+
+            if (tiles.none { it.category == TileType.VILLAGE } ||
+                newVillagesTiles.none { it.category == TileType.VILLAGE }
             ) {
                 return false
             }
+
+            // Check if the incident Tile is a FIELDS or ROAD
             if (cityExpansionIncident.tile.category != TileType.FIELD &&
                 cityExpansionIncident.tile.category != TileType.ROAD
             ) {
@@ -278,10 +329,83 @@ class ScenarioParser(private val simData: SimulationData) {
         return true
     }
 
-    private fun validateCloudCreation(incidents: List<Incident>): Boolean {
+    private fun validateCloudCreationWithVillages(incidents: List<Incident>): Boolean {
         val cloudCreationIncidents: List<CloudCreation> = incidents.filterIsInstance<CloudCreation>()
             .sortedBy { it.tick }
-        // TODO
+        val cityExpansionIncidents: List<CityExpansion> = incidents.filterIsInstance<CityExpansion>()
+            .sortedBy { it.tick }
+
+        for (cloudCreation in cloudCreationIncidents) {
+            // Get affected tiles by cloud creation incident
+            val tiles: List<Tile> = simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+            // Get the list of villages that will be created up to the point of the cloud creation incident
+            val villagesUpToIncident: List<Tile> = newVillagesUpToIncident(
+                cityExpansionIncidents,
+                cloudCreation.tick,
+                cloudCreation.id
+            )
+
+            // Get set difference of these tiles -> The affected tiles that don't have new villages on them
+            val tilesToCheck: List<Tile> = tiles - villagesUpToIncident
+
+            // Check if at least one of them is not a village -> Else return false
+            // Which means if all tiles are villages then this must be rejected
+            if (tilesToCheck.all { it.category == TileType.VILLAGE }) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun newVillagesUpToIncident(
+        cityExpansions: List<CityExpansion>,
+        incidentTick: Int,
+        incidentID: Int
+    ): List<Tile> {
+        lateinit var villageTiles: MutableList<Tile>
+        for (cityExpansion in cityExpansions) {
+            if (cityExpansion.tick < incidentTick ||
+                (cityExpansion.tick == incidentTick && cityExpansion.id < incidentID)
+            ) {
+                villageTiles.add(cityExpansion.tile)
+            }
+        }
+        return villageTiles
+    }
+
+    private fun checkOverlappingCloudCreation(): Boolean {
+        // Use the tick to cloudCreationIncident map
+        // Check for each tick available if there are overlaps in the affected tiles on the map
+
+        for (cloudList in cloudCreationIncidents.values) {
+            // Cloud Creation Incidents sorted by id per tick
+            val cloudCreations: List<CloudCreation> = cloudList.filterIsInstance<CloudCreation>()
+                .sortedWith(compareBy(CloudCreation::id))
+            val tileIDSet: MutableSet<Int> = mutableSetOf()
+            // Iterate through incidents adding the affected tiles to the set
+            for (cloudCreation in cloudCreations) {
+                val affectedTiles = simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+                if (!checkNoOverlap(tileIDSet, cloudCreation, affectedTiles)) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    // Helper function for checkOverlappingCloudCreation
+    private fun checkNoOverlap(
+        tileIDSet: MutableSet<Int>,
+        incident: CloudCreation,
+        affectedTiles: List<Tile>
+    ): Boolean {
+        for (tile in affectedTiles) {
+            if (tile.id in tileIDSet && tile.category != TileType.VILLAGE) {
+                return false
+            } else {
+                tileIDSet.add(tile.id)
+            }
+        }
         return true
     }
 
@@ -296,28 +420,28 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get ID
         val id: Int = c["id"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks if ID is positive
-        if (id < 0) throw ValidationException()
+        checkValid(id >= 0)
         // Checks if the ID is unique
-        if (!validateUniqueCloudIDs(id)) throw ValidationException()
+        checkValid(validateUniqueCloudIDs(id))
 
         // Get location
         val location: Int = c["location"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks if ID is positive
-        if (location < 0) throw ValidationException()
+        checkValid(location >= 0)
         // Checks if this tile exists on the map and returns its coordinate
         val tile: Tile = simData.tiles[id] ?: throw ValidationException()
         // Checks if the tile already has a cloud on it
-        if (!validateLocation(tile)) throw ValidationException()
+        checkValid(validateLocation(tile))
 
         // Gets duration
         val duration: Int = c["duration"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks for positive or -1 duration
-        if (duration <= 0 && duration != -1) throw ValidationException()
+        checkValid(duration > 0 || duration == -1)
 
         // Gets amount
         val amount: Int = c["amount"]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks for positive amount
-        if (amount < 0) throw ValidationException()
+        checkValid(amount > 0)
 
         val c = Cloud(id, tile.location, duration, amount)
 
@@ -354,13 +478,12 @@ class ScenarioParser(private val simData: SimulationData) {
         }
     }
 
-    /*private fun checkOverlappingCloudCreation(): Boolean {
-        // TODO
+    /*private fun validateAffectedTiles(tile: Tile, radius: Int, type: IncidentType): Boolean {
         return true
     }*/
 
     /**
-     * TODO
+     * Will cross-check sowing plans from farm parser
      */
     private fun checkSowingPlanFields(plans: List<SowingPlan>): Boolean {
         val newVillageIDs = cityExpansionTiles.map { it.id }.toSet()
@@ -369,5 +492,9 @@ class ScenarioParser(private val simData: SimulationData) {
             if (potentialTilesInPlan.none { it.category == TileType.FIELD }) return false
         }
         return true
+    }
+
+    private fun checkValid(condition: Boolean) {
+        if (!condition) throw ValidationException()
     }
 }
