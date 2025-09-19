@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.parser
 
 import de.unisaarland.cs.se.selab.cloud.Cloud
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
-import de.unisaarland.cs.se.selab.farms.SowingPlan
+import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.incidents.Incident
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -17,55 +17,50 @@ class ScenarioParser (private val simData:SimulationData) {
     private var cityExpansionTiles: List<Tile> = mutableListOf() // for double-checking against sowing plan tiles
 
     fun parse(json: String) {
-        // TODO
+        TODO()
     }
 
     private fun parseIncidents(incidents: JSONArray) {
-        // TODO
+        TODO()
     }
 
     private fun parseIncident(obj: JSONObject): Incident {
-        // TODO
+        TODO()
     }
 
     private fun validateIncident(type: IncidentType): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateAffectedTiles(tile: Tile, radius: Int, type: IncidentType): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateCloudCreation(incidents: List<Incident>): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun parseClouds(clouds: JSONArray) {
-        // TODO
+        TODO()
     }
 
     private fun parseCloud(c: JSONObject): Cloud {
-        // TODO
-        return null
+        TODO()
     }
 
     private fun validateLocation(t: Tile): Boolean {
-        // TODO
-        return true
+        TODO()
     }
 
     private fun validateUniqueIDs(): Boolean {
-        // TODO
-        return true
+        TODO()
     }
 
     private fun checkOverlappingCloudCreation(): Boolean {
-        // TODO
-        return true
+        TODO()
     }
 
     private fun checkSowingPlanFields(plan: SowingPlan): Boolean {
-        // TODO
-        return true
+        TODO()
     }
 }

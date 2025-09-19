@@ -1,15 +1,15 @@
 package de.unisaarland.cs.se.selab.parser
 
-import de.unisaarland.cs.se.selab.farms.Farm
-import de.unisaarland.cs.se.selab.farms.SowingPlan
+import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import org.json.JSONObject
 import org.json.JSONArray
 
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.tile.Tile
+import de.unisaarland.cs.se.selab.machine.Machine
 
 class FarmParser(private val simulationData: SimulationData) {
-    private lateinit var simulationData: SimulationData
     private lateinit var farmIDs: List<Int>
     private lateinit var farmNames: List<String>
     private lateinit var machineIDs: List<Int>
@@ -19,56 +19,54 @@ class FarmParser(private val simulationData: SimulationData) {
 
 
     fun parse(json: String): Unit {
-            // TODO
+        TODO()
     }
 
     private fun parseFarms(farms: JSONArray): Unit {
-        // TODO
+        TODO()
     }
 
     private fun parseFarm(f: JSONObject): Farm {
-        // TODO
+        TODO("Provide the return value")
     }
 
     private fun validateFarmTiles(f: Farm):  Boolean {
-        // TODO
+        TODO()
     }
 
     private fun parseMachines(machines: JSONArray):Unit {
-        // TODO
+        TODO()
     }
 
     private fun parseMachine(m: JSONObject): Machine {
-        // TODO
+        TODO()
     }
 
     private fun validateActionsAndPlants(actions: JSONArray, plants: JSONArray): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateMachineLocation(tileID: Int): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateUniqueAttributes(): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun crossValidateFarmMachine(): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun parseSowingPlans(plans: JSONArray): Unit {
-        // TODO
+        TODO()
     }
 
     private fun parseSowingPlan(plan: JSONObject): SowingPlan {
-    // TODO
+        TODO()
     }
 
     private fun validateSowingPlanLocation(tiles: List<Tile>, fields: Boolean): Boolean {
-     // TODO
+        TODO()
     }
-
-
 }

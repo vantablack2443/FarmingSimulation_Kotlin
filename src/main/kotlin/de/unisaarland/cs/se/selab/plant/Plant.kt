@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 
 abstract class Plant(
     var harvestEstimate : Int,
