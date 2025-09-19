@@ -7,17 +7,17 @@ import de.unisaarland.cs.se.selab.incidents.Incident
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
-import de.unisaarland.cs.se.selab.map.Map
+import de.unisaarland.cs.se.selab.map.SimulationMap
 
 class SimulationData {
-    lateinit var map: Map // take a look at this later
+    lateinit var map: SimulationMap // take a look at this later
     var tiles: MutableMap<Int, Tile> = mutableMapOf()
     var farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
     var machines: MutableMap<Int, Machine> = mutableMapOf()
     var incidents: MutableMap<Int, Incident> = mutableMapOf()
     var clouds: MutableMap<Int, Cloud> = mutableMapOf()
     var sowingPlans: MutableMap<Int, List<SowingPlan>> = mutableMapOf() // mapping tick
-    var sunlightData: Map<Int, Int> = mapOf()// tick to average value
+    var sunlightData: = mapOf<Int, Int> ()// tick to average value
 
     fun setMap(m: MutableMap<Coordinate, Tile>) {
         map = m

@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.cloudHandler.CloudHandler
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
-import de.unisaarland.cs.se.selab.map.Map
+import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
 /**
@@ -23,7 +23,7 @@ class CloudCreation(
 ) {
     lateinit var cloudHandler: CloudHandler
 
-    override fun execute(map: Map, yearTick: Int) {
+    override fun execute(map: SimulationMap, yearTick: Int) {
         TODO("Not yet implemented")
     }
 }

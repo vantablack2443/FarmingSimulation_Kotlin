@@ -1,9 +1,9 @@
 package de.unisaarland.cs.se.selab.harvestestimatehandler
 
-import de.unisaarland.cs.se.selab.map.Map
+import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
-class HarvestEstimateHandler(val map: Map) {
+class HarvestEstimateHandler(val map: SimulationMap) {
     fun estimateHarvest() {
         TODO()
     }

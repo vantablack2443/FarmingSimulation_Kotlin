@@ -3,12 +3,12 @@ package de.unisaarland.cs.se.selab.actionHandlers
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.machine.Machine
-import de.unisaarland.cs.se.selab.map.Map
+import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
 
 abstract class ActionHandler (
-    val map: Map,
+    val map: SimulationMap,
     val plantdata: PlantData,
     val operableTiles: List<Tile>,
     val tileMap: HashSet<tileID>

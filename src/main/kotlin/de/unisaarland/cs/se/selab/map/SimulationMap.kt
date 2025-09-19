@@ -12,7 +12,7 @@ import kotlin.math.abs
 /**
  * Map Class
  */
-class Map(
+class SimulationMap(
     var tiles: MutableMap<Coordinate, Tile>
 ) {
     /**
