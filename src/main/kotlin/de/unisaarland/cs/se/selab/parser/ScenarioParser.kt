@@ -63,7 +63,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Validate Cloud Creation and Overlapping clouds !!!!
         checkValid(checkOverlappingCloudCreation())
 
-        // Cross check sowing plans
+        // Cross-check sowing plans
         // Since there has to be at least one field tile till the end of the simulation, the function will compare
         // with all possible city expansion incidents
         val sowingPlanMap = simData.sowingPlans
@@ -377,11 +377,12 @@ class ScenarioParser(private val simData: SimulationData) {
             // Cloud Creation Incidents sorted by id per tick
             val cloudCreations: List<CloudCreation> = cloudList.filterIsInstance<CloudCreation>()
                 .sortedWith(compareBy(CloudCreation::id))
+            // ID set keeps track of tiles that will be affected. This will be updated in ascending order of id per tick
             val tileIDSet: MutableSet<Int> = mutableSetOf()
-            // Iterate through incidents adding the affected tiles to the set
+            // Iterate through incidents in tick adding the affected tiles to the set
             for (cloudCreation in cloudCreations) {
                 val affectedTiles = simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
-                if (!checkNoOverlap(tileIDSet, cloudCreation, affectedTiles)) {
+                if (!checkNoOverlap(tileIDSet, affectedTiles)) {
                     return false
                 }
             }
@@ -392,10 +393,14 @@ class ScenarioParser(private val simData: SimulationData) {
     // Helper function for checkOverlappingCloudCreation
     private fun checkNoOverlap(
         tileIDSet: MutableSet<Int>,
-        incident: CloudCreation,
         affectedTiles: List<Tile>
     ): Boolean {
         for (tile in affectedTiles) {
+            // For each tile in affectedTile, if the Tile is already in set, that means that another cloud creation
+            // event happened before during the same tick that would have affected the same tile.
+            // This holds because the incidents are ordered by ID per tick.
+            // Then there will be an overlap if one of these overlapping tiles is not a village
+            // since clouds are not created on villages
             if (tile.id in tileIDSet && tile.category != TileType.VILLAGE) {
                 return false
             } else {
@@ -473,10 +478,6 @@ class ScenarioParser(private val simData: SimulationData) {
             return true
         }
     }
-
-    /*private fun validateAffectedTiles(tile: Tile, radius: Int, type: IncidentType): Boolean {
-        return true
-    }*/
 
     /**
      * Will cross-check sowing plans from farm parser
