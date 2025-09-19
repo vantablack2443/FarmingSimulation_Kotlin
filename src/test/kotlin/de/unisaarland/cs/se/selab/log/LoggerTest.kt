@@ -2,13 +2,21 @@ package de.unisaarland.cs.se.selab.log
 
 import de.unisaarland.cs.se.selab.enumerations.LogType
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import java.io.PrintWriter
 import java.io.StringWriter
 import kotlin.test.Test
 
 class LoggerTest {
 
-    private var buffer = StringWriter()
+    private lateinit var buffer: StringWriter
     private fun out(): String = buffer.toString().trim()
+
+    @BeforeEach
+    fun setUp() {
+        buffer = StringWriter()
+        Logger.printer = PrintWriter(buffer, true)
+    }
 
     @Test
     fun `IMPORTANT log level tests`() {
@@ -43,7 +51,7 @@ class LoggerTest {
         assertEquals(
             "[DEBUG] Cloud Movement: On tile 69, the amount of sunlight is 69.",
             output,
-            "DEBUG logs should not be printed at IMPORTANT level"
+            "DEBUG logs should be printed at DEBUG level"
         )
     }
 }
