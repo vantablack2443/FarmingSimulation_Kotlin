@@ -5,6 +5,8 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.tile.Tile
 
+const val DAYS_IN_TICK = 14
+
 /**
  * Machine class
  */
@@ -28,20 +30,20 @@ class Machine(
      * checks if the action can be performed by comparing elapsed time
      */
     fun canPerform(): Boolean {
-        TODO()
+        return elapsedTime + duration <= DAYS_IN_TICK
     }
 
     /**
      * update elapsed time
      */
     fun updateElapsedTime() {
-        TODO()
+        elapsedTime += duration
     }
 
     /**
      * reset elapsed time
      */
     fun resetElapsedTime() {
-        TODO()
+        elapsedTime = 0
     }
 }
