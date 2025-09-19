@@ -7,7 +7,7 @@ import de.unisaarland.cs.se.selab.parser.ParsingException
 import de.unisaarland.cs.se.selab.parser.ValidationException
 import de.unisaarland.cs.se.selab.simulation.Simulation
 import java.io.PrintWriter
-import de.unisaarland.cs.se.selab.log.SimulationLogger as Logger
+import de.unisaarland.cs.se.selab.log.Logger as Logger
 
 
 const val MAX_TICKS = 1000

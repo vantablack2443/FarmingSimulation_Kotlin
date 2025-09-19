@@ -53,6 +53,11 @@ object Logger {
         logs(LogType.INFO, message)
     }
 
+    fun logInvalidFile(filename: String) {
+        val message = "Initialization Info: $filename is invalid"
+        logs(LogType.IMPORTANT, message)
+    }
+
     /**
      * Logs the start of the simulation.
      * @param yearTick The tick within the year when the simulation starts.
