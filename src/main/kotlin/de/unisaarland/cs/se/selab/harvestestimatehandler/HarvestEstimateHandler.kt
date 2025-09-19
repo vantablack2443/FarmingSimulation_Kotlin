@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.harvestestimatehandler
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
-class HarvestEstimateHandler(val map: SimulationMap) {
+class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun estimateHarvest() {
         TODO()
     }
