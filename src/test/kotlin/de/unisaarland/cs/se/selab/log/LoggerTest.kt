@@ -7,7 +7,7 @@ import kotlin.test.Test
 
 class LoggerTest {
 
-    private lateinit var buffer: StringWriter
+    private var buffer = StringWriter()
     private fun out(): String = buffer.toString().trim()
 
     @Test
