@@ -23,4 +23,25 @@ class Machine(
     var brokenFor: Duration? = null
     var currentHarvest: PlantAndHarvest? = null
     // remove object of currentHarvest if the harvest is 0
+
+    /**
+     * checks if the action can be performed by comparing elapsed time
+     */
+    fun canPerform(): Boolean {
+        TODO()
+    }
+
+    /**
+     * update elapsed time
+     */
+    fun updateElapsedTime() {
+        TODO()
+    }
+
+    /**
+     * reset elapsed time
+     */
+    fun resetElapsedTime() {
+        TODO()
+    }
 }
