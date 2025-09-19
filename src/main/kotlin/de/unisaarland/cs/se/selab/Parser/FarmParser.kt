@@ -14,6 +14,8 @@ import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
 import org.jetbrains.kotlin.gradle.utils.`is`
 import kotlin.text.get
 
@@ -28,20 +30,17 @@ class FarmParser(private val simulationData: SimulationData) {
 
 
     fun parse(json: String): Unit {
-        val jsonObject = JsonObject(json) // todo
+        val jsonObject = Json.parseToJsonElement(json).jsonObject
 
         // Parse main components
         val farms = jsonObject["farms"]?.jsonPrimitive?.jsonArray ?: throw IllegalArgumentException("Farms array is missing or not an array.")
-        val machines = jsonObject["machines"]?.jsonPrimitive?.jsonArray ?: throw IllegalArgumentException("Machines array is missing or not an array.")
-        val sowingPlans = jsonObject["sowingPlans"]?.jsonPrimitive?.jsonArray ?: throw IllegalArgumentException("Sowing plans is missing or not an array.")
 
         parseFarms(farms)
-        parseMachines(machines)
-        parseSowingPlans(sowingPlans)
 
-        simulationData.farms().forEach { farm ->
-            if (!validateFarmTiles(farm)) {
-                throw IllegalArgumentException("Farm ${farm.id} has invalid tiles.")
+            for (farm in simulationData.farms.values) {
+                if (!validateFarmTiles(farm)) {
+                    throw IllegalArgumentException("Farm ${farm.id} has invalid tiles.")
+                }
             }
         }
 
@@ -58,7 +57,8 @@ class FarmParser(private val simulationData: SimulationData) {
         for (farm in farms) {
             val farm = parseFarm(farm as JsonObject)
             // gets ID and then sets one by one to mapofFarms
-            mapOfFarms[farm.id] = farm
+            val farmID = farm.jsonObject["id"]?.jsonPrimitive?.int ?: throw IllegalArgumentException("Farm ID is missing or not an integer.")
+            mapOfFarms[farmID] = farm
         }
         simulationData.setFarms(mapOfFarms)
     }
@@ -186,11 +186,11 @@ class FarmParser(private val simulationData: SimulationData) {
 
         } else if (plan["tiles"] != null) {
             val tileArray = plan["tiles"]?.jsonPrimitive?.jsonArray ?: throw IllegalArgumentException("Tiles array missing")
-            val arrayofTiles = tileArray.map { tileJson ->
+            val arrayOfTiles = tileArray.map { tileJson ->
                 val tileID = tileJson.jsonPrimitive.int
                 simulationData.tiles[tileID] ?: throw IllegalArgumentException("Tile $tileID not found.")
             }
-            if (!validateSowingPlanLocation(arrayofTiles, false)) {
+            if (!validateSowingPlanLocation(arrayOfTiles, false)) {
                 throw IllegalArgumentException("Sowing plan location is invalid.")
             }
         }
@@ -208,12 +208,19 @@ class FarmParser(private val simulationData: SimulationData) {
         actionList.forEach { action ->
             when (action) {
                 ActionType.SOW, ActionType.WEED -> {
-                    if (!plantList.contains(PlantType.WHEAT, PlantType.OAT, PlantType.PUMPKIN, PlantType.POTATO))
+                    if (!plantList.contains(PlantType.WHEAT) ||
+                        !plantList.contains(PlantType.OAT) ||
+                        !plantList.contains(PlantType.PUMPKIN) ||
+                        !plantList.contains(PlantType.POTATO))
                         return false
                 }
                 ActionType.CUT, ActionType.MOW -> {
-                    if (!plantList.contains(PlantType.APPLE, PlantType.GRAPE, PlantType.CHERRY, PlantType.ALMOND))
-                        return false
+                    if (!plantList.contains(PlantType.APPLE) ||
+                        !plantList.contains(PlantType.GRAPE) ||
+                        !plantList.contains(PlantType.CHERRY) ||
+                        !plantList.contains(PlantType.ALMOND))
+                     return false
+
                 }
                 else -> { return true }
             }
@@ -222,24 +229,93 @@ class FarmParser(private val simulationData: SimulationData) {
     }
 
     private fun validateMachineLocation(tileID: Int): Boolean {
-        val tile = simulationData.tiles[tileID] ?: return false
+        val tile = simulationData.tiles[tileID]
         return tile.category == TileType.FARMSTEAD && tile.shed == true
     }
 
     private fun validateUniqueAttributes(): Boolean {
-        // TODO
+        // Check unique farm attributes
+        val farmIds = mutableSetOf<Int>()
+        val farmNames = mutableSetOf<String>()
+
+        for (farm in simulationData.farms.values) {
+            if (!farmIds.add(farm.id)) || !farmNames.add(farm.name)
+            return false
+        }
+
+        // Check unique machine attributes
+        val machineIds = mutableSetOf<Int>()
+        val machineNames = mutableSetOf<String>()
+
+        for (machine in simulationData.machines.values) {
+            if (!machineIds.add(machine.id)) || !machineNames.add(machine.name)
+            return false
+        }
+
+        // Check unique sowing plan attributes
+        val sowingPlanIds = mutableSetOf<Int>()
+
+        for (plan in simulationData.sowingPlans.values) {
+            if (!sowingPlanIds.add(plan.id))
+                return false
+        }
+        return true
     }
+
 
     private fun crossValidateFarmMachine(): Boolean {
-        // TODO
+        for (farm in simulationData.farms.values) {
+            // Get all farmstead tiles with sheds on them
+            val shedTiles: List<Tile> = farm.farmstead.filter { it.shed == true }
+            for (machine in farm.machines) {
+                // Check if the machine's home shed is in the farm's shed tiles
+                if (!shedTiles.contains(machine.homeShed))
+                    return false
+            }
+        }
+        return true
     }
 
+    /*
+    validateSowingPlanLocation checks if the field tiles on the list given in the parameter all belong to one farm.
+    There is also a boolean, fields, that if true, just checks if the farmIDs of the tiles are all the same (since if
+    fields == true, this means that the list only contains field tiles), whereas if false, checks if there is at least one
+    field tile in the list and also checks the farmIDs.
+     */
     private fun validateSowingPlanLocation(tiles: List<Tile>, fields: Boolean): Boolean {
-     // TODO
+        var list : MutableList<Int> = mutableListOf<Int>()
+        if (fields) {
+         for (tile in tiles) {
+             if (tile.category != TileType.FIELD)
+                 return false
+             val farmIDofTile = tile.farmID ?: return false
+             list.add(farmIDofTile)
+         }
+         // Check if all farmIDs in the list are the same
+         return list.distinct().size == 1
+      }
+        else {
+            var fieldExists : Boolean = false
+            for (tile in tiles) {
+                if (tile.category == TileType.FIELD) {
+                    fieldExists = true
+                    val farmIDofTile = tile.farmID ?: return false
+                    list.add(farmIDofTile)
+                }
+            }
+            if (!fieldExists) return false
+            return list.distinct().size == 1
+      }
     }
 
     private fun validateFarmTiles(f: Farm): Boolean {
-        // TODO
+        // Get all tiles and store into one list
+        val tilesOfFarm : List<Tile> = f.farmstead + f.fields + f.plantation
+        for (tile in tilesOfFarm) {
+            val farmIDofTile : Int? = tile.farmID
+            if (farmIDofTile != f.id)
+                return false
+        }
+        return true
     }
-
 }
