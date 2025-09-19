@@ -22,4 +22,5 @@ class Machine(
     var isStuck: Boolean = false
     var brokenFor: Duration? = null
     var currentHarvest: PlantAndHarvest? = null
+    // remove object of currentHarvest if the harvest is 0
 }

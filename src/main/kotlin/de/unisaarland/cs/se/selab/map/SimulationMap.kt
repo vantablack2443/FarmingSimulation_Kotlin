@@ -18,7 +18,7 @@ class SimulationMap(
      * get tile from map by its coordinate
      */
     fun getTileByCoordinate(coordinate: Coordinate): Tile? {
-        return tiles.get(coordinate)
+        return tiles[coordinate]
     }
 
     /**
@@ -61,26 +61,26 @@ class SimulationMap(
     fun getNeighbor(tile: Tile, direction: Direction): Tile? {
         var neighbour: Tile? = null
         if (tile.shape == TileShape.SQUARE) {
-            when (direction) {
-                Direction.NORTH -> neighbour = null
-                Direction.NORTH_EAST -> neighbour = tiles.get(Coordinate(tile.location.x + 1, tile.location.y - 1))
-                Direction.EAST -> neighbour = null
-                Direction.SOUTH_EAST -> neighbour = tiles.get(Coordinate(tile.location.x + 1, tile.location.y + 1))
-                Direction.SOUTH -> neighbour = null
-                Direction.SOUTH_WEST -> neighbour = tiles.get(Coordinate(tile.location.x - 1, tile.location.y + 1))
-                Direction.WEST -> neighbour = null
-                Direction.NORTH_WEST -> neighbour = tiles.get(Coordinate(tile.location.x - 1, tile.location.y - 1))
+            neighbour = when (direction) {
+                Direction.NORTH -> null
+                Direction.NORTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y - 1)]
+                Direction.EAST -> null
+                Direction.SOUTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y + 1)]
+                Direction.SOUTH -> null
+                Direction.SOUTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y + 1)]
+                Direction.WEST -> null
+                Direction.NORTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y - 1)]
             }
         } else if (tile.shape == TileShape.OCTAGONAL) {
-            when (direction) {
-                Direction.NORTH -> neighbour = tiles.get(Coordinate(tile.location.x, tile.location.y - 2))
-                Direction.NORTH_EAST -> neighbour = tiles.get(Coordinate(tile.location.x + 1, tile.location.y - 1))
-                Direction.EAST -> neighbour = tiles.get(Coordinate(tile.location.x + 2, tile.location.y))
-                Direction.SOUTH_EAST -> neighbour = tiles.get(Coordinate(tile.location.x + 1, tile.location.y + 1))
-                Direction.SOUTH -> neighbour = tiles.get(Coordinate(tile.location.x, tile.location.y + 2))
-                Direction.SOUTH_WEST -> neighbour = tiles.get(Coordinate(tile.location.x - 1, tile.location.y + 1))
-                Direction.WEST -> neighbour = tiles.get(Coordinate(tile.location.x - 2, tile.location.y))
-                Direction.NORTH_WEST -> neighbour = tiles.get(Coordinate(tile.location.x - 1, tile.location.y - 1))
+            neighbour = when (direction) {
+                Direction.NORTH -> tiles[Coordinate(tile.location.x, tile.location.y - 2)]
+                Direction.NORTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y - 1)]
+                Direction.EAST -> tiles[Coordinate(tile.location.x + 2, tile.location.y)]
+                Direction.SOUTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y + 1)]
+                Direction.SOUTH -> tiles[Coordinate(tile.location.x, tile.location.y + 2)]
+                Direction.SOUTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y + 1)]
+                Direction.WEST -> tiles[Coordinate(tile.location.x - 2, tile.location.y)]
+                Direction.NORTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y - 1)]
             }
         }
         return neighbour
@@ -90,7 +90,36 @@ class SimulationMap(
      * check if the destination tile is reachable from the current machine location
      */
     fun isReachable(machine: Machine, destination: Tile): Boolean {
+        val start: Tile = machine.currentTile
+        val carryingHarvest: Boolean = machine.currentHarvest != null
+        val tileList: List<Tile> = getReachableTiles(machine, -1, carryingHarvest)
+        val visited: MutableSet<Tile> = mutableSetOf()
+        val queue: ArrayDeque<Tile> = ArrayDeque()
 
+        queue.add(start)
+        visited.add(start)
+
+        while (queue.isNotEmpty()) {
+            val currTile: Tile = queue.removeFirst()
+            // use id if location doesnt work
+            if (currTile.location == destination.location) return true
+
+            val neighbors: MutableList<Tile> = mutableListOf()
+            for (direction in Direction.entries) {
+                val temp: Tile? = getNeighbor(currTile, direction)
+                if (temp != null) {
+                    neighbors += temp
+                }
+            }
+
+            for (neighbor in neighbors) {
+                if (neighbor in tileList && neighbor !in visited) {
+                    visited.add(neighbor)
+                    queue.add(neighbor)
+                }
+            }
+        }
+        return false
     }
 
     /**
@@ -98,11 +127,11 @@ class SimulationMap(
      */
     fun getReachableTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
         val reach: MutableList<Tile> = mutableListOf()
-        if (radius == -1) {
-            reach += tiles.values.toList()
+        reach += if (radius == -1) {
+            tiles.values.toList()
             // whole map is considered when radius is -1
         } else {
-            reach += getTilesByRadius(machine.currentTile, radius)
+            getTilesByRadius(machine.currentTile, radius)
             // only tiles in given radius considered otherwise
         }
         for (tile in reach) {
