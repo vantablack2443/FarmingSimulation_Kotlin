@@ -22,11 +22,21 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
+import de.unisaarland.cs.se.selab.log.SimulationLogger as Logger
 
 /**
  * custom exception
  */
-class ValidationException : Exception("Validation Exception, missing or invalid fields")
+class ValidationException : Exception {
+    var filePath: String? = null
+    constructor(cause: Throwable, filePath: String) : super(cause) {
+        this.filePath = filePath
+    }
+
+    // constructor(cause: Throwable) : super(cause)
+    constructor(message: String) : super(message)
+    constructor() : super()
+}
 
 /**
  * Map parser class
@@ -44,8 +54,8 @@ class MapParser(private val simData: SimulationData) {
         val tiles = Json.parseToJsonElement(jsonString).jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
         parseCreateTiles(tiles)
         simData.tiles = tileIDMap
-        simData.map = SimulationMap(tileCoordinates)
-        TODO("add logger")
+        simData.setMap(SimulationMap(tileCoordinates))
+        Logger.logParsing(true, file.name)
     }
 
     /**
@@ -67,11 +77,12 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun parseTile(tile: JsonObject): Tile {
         val id = tile["id"]?.jsonPrimitive?.int ?: throw ValidationException()
-        if (id < 0) throw ValidationException()
-        val type = tile["category"] ?.jsonPrimitive?.content ?: throw ValidationException()
-        if (type !in TileType.entries.toString()) throw ValidationException()
+        if (id < 0) throw ValidationException("Tile ID negative")
+        val type = tile["category"] ?.jsonPrimitive?.content ?: throw ValidationException("Missing tile type")
+        if (type !in TileType.entries.toString()) throw ValidationException("invalid tile type")
         val category = TileType.valueOf(type.uppercase())
-        val coordinates = tile["location"] ?.jsonPrimitive?.content ?: throw ValidationException()
+        val coordinates = tile["location"] ?.jsonPrimitive?.content
+            ?: throw ValidationException("Missing tile coordinates")
         val (x, y) = coordinates.removeSurrounding("(", ")").split(',').map { it.toInt() }
         val location = Coordinate(x, y)
         val shape = getShapeByCoordinate(location)
@@ -93,19 +104,22 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun parseAirflow(tile: JsonObject, category: TileType): Pair<Boolean, Direction> {
         if (category != TileType.VILLAGE) {
-            val airflow = tile["airflow"]?.jsonPrimitive?.boolean ?: throw ValidationException()
+            val airflow = tile["airflow"]?.jsonPrimitive?.boolean
+                ?: throw ValidationException("Missing tile airflow")
             val angle = tile["direction"]?.jsonPrimitive?.int ?: throw ValidationException()
             val direction = Direction.getDirectionByAngle(angle)
             return Pair(airflow, direction)
         }
-        throw ValidationException()
+        throw ValidationException("Village tile cannot have airflow")
     }
 
     /**
      * validate the uniqueness of each new ID and coordinate
      */
     private fun validateUniqueAttributes(id: Int, location: Coordinate) {
-        if (tileIDMap.containsKey(id) || tileCoordinates.containsKey(location)) throw ValidationException()
+        if (tileIDMap.containsKey(id) || tileCoordinates.containsKey(location)) {
+            throw ValidationException("ID or location is not unique")
+        }
     }
 
     /**
@@ -115,8 +129,8 @@ class MapParser(private val simData: SimulationData) {
         if (tile.category == TileType.FARMSTEAD || tile.category == TileType.PLANTATION ||
             tile.category == TileType.FIELD
         ) {
-            val farmID = jsonObject["farm"]?.jsonPrimitive?.int ?: throw ValidationException()
-            if (farmID < 0) throw ValidationException()
+            val farmID = jsonObject["farm"]?.jsonPrimitive?.int ?: throw ValidationException("Missing farmID")
+            if (farmID < 0) throw ValidationException("Negative farm ID")
             tile.farmID = farmID
         }
     }
@@ -126,7 +140,8 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun parseFarmstead(jsonObject: JsonObject, tile: Tile) {
         if (tile.category == TileType.FARMSTEAD) {
-            val shed = jsonObject["shed"]?.jsonPrimitive?.boolean ?: throw ValidationException()
+            val shed = jsonObject["shed"]?.jsonPrimitive?.boolean
+                ?: throw ValidationException("Missing shed on a farmstead")
             tile.shed = shed
         }
     }
@@ -136,7 +151,8 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun parsePlantableTiles(jsonObject: JsonObject, tile: Tile) {
         if (tile.category == TileType.PLANTATION) {
-            val plantType = jsonObject["plant"]?.jsonPrimitive?.content ?: throw ValidationException()
+            val plantType = jsonObject["plant"]?.jsonPrimitive?.content
+                ?: throw ValidationException("Missing plant type")
             validatePlantType(TileType.PLANTATION, plantType)
             var plant: Plant? = null
             when (plantType.uppercase()) {
@@ -150,7 +166,8 @@ class MapParser(private val simData: SimulationData) {
         }
 
         if (tile.category == TileType.FIELD) {
-            val plants = jsonObject["possiblePlants"]?.jsonArray ?: throw ValidationException()
+            val plants = jsonObject["possiblePlants"]?.jsonArray
+                ?: throw ValidationException("Possible plants missing")
             val fieldPlants = plants.map { it.jsonPrimitive.content }
             for (element in fieldPlants) {
                 validatePlantType(TileType.FIELD, element)
@@ -165,8 +182,9 @@ class MapParser(private val simData: SimulationData) {
      * and updates it in the tile object
      */
     private fun parseCapacity(jsonObject: JsonObject, tile: Tile) {
-        val capacity = jsonObject["capacity"]?.jsonPrimitive?.int ?: throw ValidationException()
-        if (capacity < 0) throw ValidationException()
+        val capacity = jsonObject["capacity"]?.jsonPrimitive?.int
+            ?: throw ValidationException("missing capacity")
+        if (capacity < 0) throw ValidationException("capacity must be positive")
         tile.maxMoisture = capacity
         tile.currentMoisture = capacity
     }
@@ -177,10 +195,14 @@ class MapParser(private val simData: SimulationData) {
     private fun validateTileShape(tile: Tile) {
         when (tile.category) {
             TileType.FARMSTEAD, TileType.MEADOW -> {
-                if (tile.shape != TileShape.SQUARE) throw ValidationException()
+                if (tile.shape != TileShape.SQUARE) {
+                    throw ValidationException("Mismatched shape for tile ${tile.id}")
+                }
             }
             TileType.FIELD, TileType.PLANTATION -> {
-                if (tile.shape != TileShape.OCTAGONAL) throw ValidationException()
+                if (tile.shape != TileShape.OCTAGONAL) {
+                    throw ValidationException("Mismatched shape for tile ${tile.id}")
+                }
             }
             else -> { return }
         }
@@ -191,8 +213,16 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun validatePlantType(tileType: TileType, plant: String) {
         when (tileType) {
-            TileType.PLANTATION -> { if (!PlantType.isPlantationPlant(plant)) throw ValidationException() }
-            TileType.FIELD -> { if (!PlantType.isFieldPlant(plant)) throw ValidationException() }
+            TileType.PLANTATION -> {
+                if (!PlantType.isPlantationPlant(plant)) {
+                    throw ValidationException("mismatched plant type")
+                }
+            }
+            TileType.FIELD -> {
+                if (!PlantType.isFieldPlant(plant)) {
+                    throw ValidationException("mismatched plant type")
+                }
+            }
             else -> { return }
         }
     }
@@ -234,7 +264,7 @@ class MapParser(private val simData: SimulationData) {
     private fun validateForestNeighbors(neighbors: List<Tile>) {
         for (element in neighbors) {
             if (element.category == TileType.VILLAGE) {
-                throw ValidationException()
+                throw ValidationException("forest can not adjoin village")
             }
         }
     }
@@ -244,7 +274,9 @@ class MapParser(private val simData: SimulationData) {
      */
     private fun validateVillageNeighbors(neighbors: List<Tile>) {
         for (element in neighbors) {
-            if (element.category == TileType.FOREST) throw ValidationException()
+            if (element.category == TileType.FOREST) {
+                throw ValidationException("village can not adjoin forest")
+            }
         }
     }
 
