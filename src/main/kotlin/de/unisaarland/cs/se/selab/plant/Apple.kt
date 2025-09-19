@@ -1,6 +1,15 @@
 package de.unisaarland.cs.se.selab.plant
 
-class Apple : PlantationPlant() {
+import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
+
+class Apple(harvestEstimate: Int, neededMoisture: Int, harvestingTime: Duration, bloomingTime: Duration?,
+            pollination: Int, animalAttack: Boolean, actionsNeeded: MutableList<ActionType>,
+            lateActions: MutableList<ActionType>
+) : PlantationPlant(harvestEstimate, neededMoisture,
+    harvestingTime,
+    bloomingTime, pollination, animalAttack, actionsNeeded, lateActions
+) {
     override fun needsHarvesting(tick: Int) {
         TODO("Not yet implemented")
     }
