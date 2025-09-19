@@ -16,17 +16,18 @@ class Tile(
     val id: Int,
     val location: Coordinate,
     val category: TileType,
-    val shape: TileShape,
-    val airflow: Boolean?,
-    val direction: Direction?,
-    val shed: Boolean?,
-    val possiblePlants: List<PlantType>?,
-    val maxMoisture: Int?
+    val shape: TileShape
 ) {
+    var currentCrop: PlantType? = null
+    var airflow: Boolean? = null
+    var direction: Direction? = null
+    var shed: Boolean? = null
+    var possiblePlants: List<PlantType>? = mutableListOf()
+    var maxMoisture: Int? = null
     var currentMoisture: Int? = null
     var currentSunlight: Int = 0
     var plant: Plant? = null
-    val farmID: Int? = null
+    var farmID: Int? = null
     var plantationDamaged: Boolean? = null
     var fallowDuration: Duration? = null
 
@@ -75,9 +76,9 @@ class Tile(
     /**
      * returns the plant if the tile has one
      */
-    fun getPlant(): Plant {
-        TODO()
-    }
+//    fun getPlant(): Plant {
+//        TODO()
+//    }
 
     /**
      * perform harvest
