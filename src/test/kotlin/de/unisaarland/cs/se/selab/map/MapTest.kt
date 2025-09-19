@@ -3,36 +3,45 @@ package de.unisaarland.cs.se.selab.map
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
 
 class MapTest {
     private lateinit var map: SimulationMap
     private lateinit var fieldTile: Tile
     private lateinit var plantationTile: Tile
     private lateinit var shedTile: Tile
+    private lateinit var edgeTile: Tile
 
     @BeforeEach
     fun setUp() {
         fieldTile = Tile(
-            1, Coordinate(0, 0), TileType.FIELD, TileShape.SQUARE, airflow = false,
-            direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            1, Coordinate(0, 0), TileType.FIELD, TileShape.OCTAGONAL,
+            airflow = false, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         )
         plantationTile = Tile(
-            2, Coordinate(1, 0), TileType.PLANTATION, TileShape.SQUARE,
+            2, Coordinate(2, 0), TileType.PLANTATION, TileShape.OCTAGONAL,
             airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         )
         shedTile = Tile(
-            3, Coordinate(2, 0), TileType.VILLAGE, TileShape.SQUARE,
+            3, Coordinate(3, 1), TileType.FARMSTEAD, TileShape.SQUARE,
             airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        edgeTile = Tile(
+            4, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE,
+            airflow = true, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         )
 
         val tiles = mutableMapOf(
             fieldTile.location to fieldTile,
             plantationTile.location to plantationTile,
             shedTile.location to shedTile,
+            edgeTile.location to edgeTile
         )
         map = SimulationMap(tiles)
     }
@@ -40,9 +49,191 @@ class MapTest {
     @Test
     fun testGetTileByCoordinate() {
         assertEquals(fieldTile, map.getTileByCoordinate(Coordinate(0, 0)))
-        assertEquals(plantationTile, map.getTileByCoordinate(Coordinate(1, 0)))
-        assertEquals(shedTile, map.getTileByCoordinate(Coordinate(2, 0)))
+        assertEquals(plantationTile, map.getTileByCoordinate(Coordinate(2, 0)))
+        assertEquals(shedTile, map.getTileByCoordinate(Coordinate(3, 1)))
         assertNull(map.getTileByCoordinate(Coordinate(99, 99)))
     }
 
+    @Test
+    fun testGetTileByID() {
+        assertEquals(fieldTile, map.getTileByID(1))
+        assertEquals(plantationTile, map.getTileByID(2))
+        assertEquals(shedTile, map.getTileByID(3))
+        assertNull(map.getTileByID(99))
+    }
+
+    @Test
+    fun testGetTilesByRadius() {
+        val tilesRadius1 = map.getTilesByRadius(fieldTile, 1)
+        // assertTrue(tilesRadius1.contains(fieldTile))
+        assertTrue(tilesRadius1.contains(plantationTile))
+        assertEquals(setOf(edgeTile, plantationTile, fieldTile), tilesRadius1.toSet())
+
+//        val tilesRadius2 = map.getTilesByRadius(edgeTile, 2)
+//        assertTrue(tilesRadius2.contains(fieldTile))
+//        assertTrue(tilesRadius2.contains(plantationTile))
+//        assertFalse(tilesRadius2.contains(shedTile),)
+    }
+
+//    @Test
+//    fun testSquareMapScenario() {
+//        // 2x2 map: (0,0) FIELD, (0,1) PLANTATION, (1,0) VILLAGE, (1,1) FIELD
+//        val tileA = Tile(
+//            10,
+//            Coordinate(
+//                0,
+//                0
+//            ),
+//            TileType.FIELD, TileShape.SQUARE, airflow = null, direction = null, shed = null,
+//            possiblePlants = null, maxMoisture = null
+//        )
+//        val tileB = Tile(
+//            11,
+//            Coordinate(
+//                0,
+//                1
+//            ),
+//            TileType.PLANTATION, TileShape.SQUARE, airflow = null, direction = null, shed = null,
+//            possiblePlants = null, maxMoisture = null
+//        )
+//        val tileC = Tile(
+//            12,
+//            Coordinate(
+//                1,
+//                0
+//            ),
+//            TileType.VILLAGE, TileShape.SQUARE, airflow = null, direction = null, shed = null,
+//            possiblePlants = null, maxMoisture = null
+//        )
+//        val tileD = Tile(
+//            13,
+//            Coordinate(
+//                1,
+//                1
+//            ),
+//            TileType.FIELD, TileShape.SQUARE, airflow = null, direction = null, shed = null,
+//            possiblePlants = null, maxMoisture = null
+//        )
+//        val tiles = mutableMapOf(
+//            tileA.location to tileA,
+//            tileB.location to tileB,
+//            tileC.location to tileC,
+//            tileD.location to tileD
+//        )
+//        val squareMap = SimulationMap(tiles)
+//        // Test getTileByID
+//        assertEquals(tileA, squareMap.getTileByID(10))
+//        assertEquals(tileB, squareMap.getTileByID(11))
+//        assertEquals(tileC, squareMap.getTileByID(12))
+//        assertEquals(tileD, squareMap.getTileByID(13))
+//        assertNull(squareMap.getTileByID(99))
+//        // Test getTilesByRadius (radius 1 from tileA should include tileA, tileB, tileC, tileD)
+//        val radiusTiles = squareMap.getTilesByRadius(tileA, 1)
+//        assertTrue(radiusTiles.contains(tileA))
+//        assertTrue(radiusTiles.contains(tileB))
+//        assertTrue(radiusTiles.contains(tileC))
+//        assertTrue(radiusTiles.contains(tileD))
+//    }
+
+    @Test
+    fun testIsReachable() {
+        // Create tiles
+        val tileA = Tile(
+            100, Coordinate(10, 4), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileB = Tile(
+            101, Coordinate(10, 2), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileC = Tile(
+            102, Coordinate(10, 6), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileD = Tile(
+            103, Coordinate(8, 4), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileShed = Tile(
+            104, Coordinate(9, 5), TileType.FARMSTEAD, TileShape.SQUARE,
+            airflow = null, direction = null, shed = true, possiblePlants = null, maxMoisture = null
+        )
+        val tiles = mutableMapOf(
+            tileA.location to tileA,
+            tileB.location to tileB,
+            tileC.location to tileC,
+            tileD.location to tileD,
+            tileShed.location to tileShed
+        )
+        val testMap = SimulationMap(tiles)
+
+        // Use Mockito to mock the real Machine class
+        val machine = mock<Machine> {
+            on { currentTile } doReturn tileShed
+            on { farmID } doReturn 1
+            on { currentHarvest } doReturn null
+            on { homeShed } doReturn tileShed
+        }
+
+        // Positive cases
+        assertTrue(testMap.isReachable(machine, tileA), "Tile A should be reachable from A")
+        assertTrue(testMap.isReachable(machine, tileB), "Tile B should be reachable from A")
+        assertTrue(testMap.isReachable(machine, tileC), "Tile C should be reachable from A")
+        assertTrue(testMap.isReachable(machine, tileD), "Tile D should be reachable from A")
+
+        // Negative case: unreachable tile
+        val tileFar = Tile(
+            200, Coordinate(20, 20), TileType.FIELD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        assertFalse(testMap.isReachable(machine, tileFar), "TileFar should not be reachable")
+    }
+
+    @Test
+    fun testGetReachableTiles() {
+        // Create tiles
+        val tileA = Tile(
+            100, Coordinate(10, 4), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileB = Tile(
+            101, Coordinate(10, 2), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileC = Tile(
+            102, Coordinate(10, 6), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileD = Tile(
+            103, Coordinate(8, 4), TileType.ROAD, TileShape.OCTAGONAL,
+            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+        )
+        val tileShed = Tile(
+            104, Coordinate(9, 5), TileType.FARMSTEAD, TileShape.SQUARE,
+            airflow = null, direction = null, shed = true, possiblePlants = null, maxMoisture = null
+        )
+        val tiles = mutableMapOf(
+            tileA.location to tileA,
+            tileB.location to tileB,
+            tileC.location to tileC,
+            tileD.location to tileD,
+            tileShed.location to tileShed
+        )
+        val testMap = SimulationMap(tiles)
+
+        // Use Mockito to mock the real Machine class
+        val machine = mock<Machine> {
+            on { currentTile } doReturn tileShed
+            on { farmID } doReturn 1
+            on { currentHarvest } doReturn null
+            on { homeShed } doReturn tileShed
+        }
+
+        val reachableTilesWithoutHarvest = testMap.getReachableTiles(machine, -1, false)
+        assertTrue(reachableTilesWithoutHarvest.contains(tileA))
+        assertTrue(reachableTilesWithoutHarvest.contains(tileB))
+        assertTrue(reachableTilesWithoutHarvest.contains(tileC))
+        assertTrue(reachableTilesWithoutHarvest.contains(tileD))
+        assertTrue(reachableTilesWithoutHarvest.contains(tileShed))
+    }
 }
