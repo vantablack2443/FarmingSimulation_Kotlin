@@ -4,7 +4,6 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.LogType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
-import de.unisaarland.cs.se.selab.tile.Tile
 import java.io.PrintWriter
 
 /**
@@ -279,7 +278,7 @@ object Logger {
      * @param incidentType The type of the incident.
      * @param tileIDs The list of affected tiles.
      */
-    fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Tile>) {
+    fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Int>) {
         val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $tileIDs."
         logs(LogType.IMPORTANT, message)
     }
