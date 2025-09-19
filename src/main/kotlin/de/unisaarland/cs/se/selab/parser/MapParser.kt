@@ -14,34 +14,34 @@ class MapParser (private val simData: SimulationData) {
     private lateinit var tileCoordinates: MutableMap<Coordinate, Tile>
 
     fun parse(json: String): Unit {
-        // TODO
+        TODO()
     }
 
     private fun parseCreateTiles(tiles: JSONArray): Unit {
-        // TODO
+        TODO()
     }
 
     private fun parseTile(tile: JSONObject): Tile {
-        // TODO
+        TODO()
     }
 
     private fun validateUniqueAttributes(id: Int, c: Coordinate): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateTileShape(type: TileType): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validatePlantType(tileType: TileType, plant: PlantType): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateAdjacentTiles(): Boolean {
-        // TODO
+        TODO()
     }
 
     private fun validateNeighbors(t: Tile): Boolean {
-        // TODO
+        TODO()
     }
 }

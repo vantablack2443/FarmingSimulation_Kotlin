@@ -11,7 +11,7 @@ abstract class ActionHandler (
     val simulationMap: SimulationMap,
     val plantdata: PlantData,
     val operableTiles: List<Tile>,
-    val tileMap: HashSet<tileID>
+    val tileMap: HashSet<Int>
 
 ){
     abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int): Unit
