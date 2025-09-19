@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.Almond
 import de.unisaarland.cs.se.selab.plant.Apple
@@ -22,7 +23,6 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
-import de.unisaarland.cs.se.selab.log.SimulationLogger as Logger
 
 /**
  * custom exception
@@ -270,7 +270,7 @@ class MapParser(private val simData: SimulationData) {
     }
 
     /**
-     * helper function to validate adjoining tiles of a vilage
+     * helper function to validate adjoining tiles of a village
      */
     private fun validateVillageNeighbors(neighbors: List<Tile>) {
         for (element in neighbors) {
