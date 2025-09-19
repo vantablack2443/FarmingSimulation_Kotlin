@@ -9,6 +9,7 @@ class SowingPlan(
     private val tick: Int,
     private val affectedTiles: List<Tile>
 ) {
+    fun getId(): Int = id
 
     fun getSowingTiles(): List<Tile> = affectedTiles
 
