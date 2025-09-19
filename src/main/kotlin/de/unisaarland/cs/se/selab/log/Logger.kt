@@ -18,9 +18,9 @@ object Logger {
      * Sets the output printer for the logger.
      * @param printer The PrintWriter to use for logging output.
      */
-    fun setPrinter(printer: PrintWriter) {
-        this.printer = printer
-    }
+//    fun setPrinter(printer: PrintWriter) {
+//        this.printer = printer
+//    }
 
     /**
      * Sets the logging level.

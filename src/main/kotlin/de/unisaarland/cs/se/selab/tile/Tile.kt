@@ -75,9 +75,9 @@ class Tile(
     /**
      * returns the plant if the tile has one
      */
-    fun getPlant(): Plant {
-        TODO()
-    }
+//    fun getPlant(): Plant {
+//        TODO()
+//    }
 
     /**
      * perform harvest
