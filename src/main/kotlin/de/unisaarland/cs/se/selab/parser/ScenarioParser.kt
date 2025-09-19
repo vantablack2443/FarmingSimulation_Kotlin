@@ -11,7 +11,6 @@ import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.incidents.Incident
-import de.unisaarland.cs.se.selab.parser.ValidationException
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
