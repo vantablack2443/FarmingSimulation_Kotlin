@@ -19,6 +19,9 @@ class Farm(
     private val harvestPerPlant: kotlin.collections.Map<PlantType, Int>
 ) {
 
+    val machineHashMap: MutableSet<Int> = mutableSetOf()
+    val tileHashMap: MutableSet<Int> = mutableSetOf()
+
     /**
      * Getter methods for private attributes
      */
@@ -73,5 +76,9 @@ class Farm(
      */
     fun getHarvestPerPlant(): Map<PlantType, Int> {
         return harvestPerPlant
+    }
+
+    fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
+        // TODO
     }
 }
