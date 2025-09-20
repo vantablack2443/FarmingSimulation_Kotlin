@@ -83,7 +83,8 @@ class PlantData(
     }
 
     /**
-     * get harvestable plant method
+     * returns all harvestabble plant types in the given yeartick
+     * @param yeartick the yeartick of the simulation
      */
     fun getHarvestablePlantTypes(yeartick: Int): List<PlantType> {
         return harvestingTimes.filter { (range, _) -> yeartick in range }.map { (_, value) -> value }
