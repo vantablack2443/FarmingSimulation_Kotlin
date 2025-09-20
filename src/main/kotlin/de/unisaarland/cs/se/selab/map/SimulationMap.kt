@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.map
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -145,6 +146,14 @@ class SimulationMap(
             }
         }
         return reach
+    }
+
+    /**
+     * Gets next possible tile for continuing action
+     */
+    fun tileForContinueAction(machine: Machine, currentTile: Tile, action: ActionType): Tile? {
+        // TODO
+        return TODO("Provide the return value")
     }
 
     /**
