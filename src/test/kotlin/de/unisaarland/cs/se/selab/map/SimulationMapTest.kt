@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.map
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -8,6 +9,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.text.category
 
 class SimulationMapTest {
     private lateinit var map: SimulationMap
@@ -92,7 +94,7 @@ class SimulationMapTest {
             airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         ))
         Tiles.add(Tile(
-            212, Coordinate(9, 2), TileType.MEADOW, TileShape.SQUARE,
+            212, Coordinate(9, 1), TileType.MEADOW, TileShape.SQUARE,
             airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         ))
         Tiles.add(Tile(
@@ -192,6 +194,8 @@ class SimulationMapTest {
 
     @Test
     fun testGetNeighbor() {
+        assertNull(map.getNeighbor(Tiles[0]), Direction.NORTH_WEST)
+    }
     }
 
     @Test
@@ -256,6 +260,8 @@ class SimulationMapTest {
 
     @Test
     fun getPlantableTiles() {
+        val expected = Tiles.filter { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
+        assertEquals(expected.toSet(), map.getPlantableTiles().toSet())
     }
 
     @Test

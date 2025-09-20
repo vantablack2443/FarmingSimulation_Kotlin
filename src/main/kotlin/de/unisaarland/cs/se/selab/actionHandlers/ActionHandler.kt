@@ -29,4 +29,9 @@ abstract class ActionHandler(
     fun returnToShed(machine: Machine) {
         TODO()
     }
+
+    fun clearSets(farm: Farm) {
+        farm.machineHashMap.clear()
+        farm.tileHashMap.clear()
+    }
 }

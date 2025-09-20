@@ -12,7 +12,6 @@ const val DAYS_IN_TICK = 14
  */
 class Machine(
     val id: Int,
-    val farmID: Int,
     val name: String,
     val duration: Int,
     var currentTile: Tile,
@@ -20,6 +19,7 @@ class Machine(
     val plants: List<PlantType>,
     var homeShed: Tile
 ) {
+    var farmID: Int = 0
     var elapsedTime: Int = 0
     var isStuck: Boolean = false
     var brokenFor: Duration? = null

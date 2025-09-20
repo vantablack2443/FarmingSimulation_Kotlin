@@ -9,9 +9,9 @@ import de.unisaarland.cs.se.selab.simulation.Simulation
 import java.io.PrintWriter
 import de.unisaarland.cs.se.selab.log.Logger as Logger
 
-
 const val MAX_TICKS = 1000
 const val MAX_YEAR_TICK = 24
+
 /**
  Main Function
  **/
@@ -43,9 +43,13 @@ fun main(args: Array<String>) {
 
     try {
         val parser = Parser()
-        val simData = parser.parse(listOf(result["map"] ?: throw ParsingException(),
-            result["farms"] ?: throw ParsingException(),
-            result["scenario"] ?: throw ParsingException()))
+        val simData = parser.parse(
+            listOf(
+                result["map"] ?: throw ParsingException(),
+                result["farms"] ?: throw ParsingException(),
+                result["scenario"] ?: throw ParsingException()
+            )
+        )
         val simulation = Simulation(simData, maxTicks, startYearTick)
         simulation.run()
     } catch (exception: ParsingException) {
@@ -84,8 +88,9 @@ private fun validateYearTick(result: CommandLineParser.ParsingResult): Int {
  */
 private fun validateLogLevel(result: CommandLineParser.ParsingResult) {
     val logType = result["log_level"] ?: throw ParsingException()
-    if (logType.uppercase() !in setOf("DEBUG", "INFO", "IMPORTANT"))
+    if (logType.uppercase() !in setOf("DEBUG", "INFO", "IMPORTANT")) {
         throw ParsingException("Log level should be either DEBUG, INFO or IMPORTANT")
+    }
     val logLevel = LogType.valueOf(logType)
     Logger.setLevel(logLevel)
 }
