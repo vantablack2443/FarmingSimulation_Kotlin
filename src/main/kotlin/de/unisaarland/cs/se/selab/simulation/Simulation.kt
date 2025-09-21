@@ -10,9 +10,11 @@ import de.unisaarland.cs.se.selab.actionHandlers.WeedingHandler
 import de.unisaarland.cs.se.selab.cloud.Cloud
 import de.unisaarland.cs.se.selab.cloudHandler.CloudHandler
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.harvestestimatehandler.HarvestEstimateHandler
+import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.tile.Tile
 
@@ -35,10 +37,15 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         for (cloud in clouds) {
             mapping[cloud.location] = cloud
         }
+        cloudHandler.setCloudMapping(mapping)
     }
     private var incidentHandler = IncidentHandler(this.map)
     init {
         var incidents = data.getIncidents()
+        var cloudCreations = incidents.filter { it.type == IncidentType.CLOUD_CREATION }
+        for (element in cloudCreations) {
+            if (element is CloudCreation) element.setCloudHandler(this.cloudHandler)
+        }
         incidentHandler.setIncidents(incidents)
     }
     private var harvestEstimator = HarvestEstimateHandler(this.map)
