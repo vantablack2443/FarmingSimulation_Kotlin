@@ -111,8 +111,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         return tiles
     }
 
-
-
     /**
      * Retrieves a list of available machines that can perform the CUT action
      * on the given plant type. The machines are sorted by duration and ID.
@@ -154,7 +152,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
 
     override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
         throw NotImplementedError(" is not implemented in CuttingHandler")
-        }
+    }
 
     override fun getOperableTiles(
         farm: Farm,
@@ -164,9 +162,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         TODO("Not yet implemented")
     }
 }
-
-
-
 
 //    private fun hasCuttingMachinesLeft(farm: Farm): Boolean {
 //        // Return true if there is at least one machine not in the machineHashMap
