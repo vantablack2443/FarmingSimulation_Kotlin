@@ -6,6 +6,10 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
+const val MAX_SUNLIGHT_REDUCTION = 50
+const val MIN_SUNLIGHT_REDUCTION = 30
+const val MAX_TRAVERSIBLE_TILES = 10
+
 /**
  * handler class for cloud movement
  */
@@ -120,6 +124,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
         // Move the cloud in the airflow direction, or mark it as stuck if it can't move
         val direction = tile.direction
 
+        var currTile = tile
         var nextTile = map.getNeighbor(tile, direction)
         // If the neighbor tile is null, mark the cloud as stuck and check for dissipation(duration Check)
         if (nextTile == null) {
@@ -136,11 +141,13 @@ class CloudHandler(val simulationMap: SimulationMap) {
         if (cloud.isStuck) return
 
         var moves = 0
+        var mergedOrDissipated = false
         while (nextTile != null || moves < cloud.maxTraversibleTiles) {
             // Check for village dissipation
             if (checkVillageDissipate(nextTile!!)) {
                 dissipate(cloud)
-                return
+                mergedOrDissipated = true
+                break
             }
 
             // Check for merge and merge if necessary
@@ -150,14 +157,28 @@ class CloudHandler(val simulationMap: SimulationMap) {
                 tryRainAndDissipate(nextTile, newCloud)
                 // Dissipate will add the new cloud to removed clouds
                 // Will be removed after appending to the two lists if required
-                return
+                mergedOrDissipated = true
+                break
             }
 
             // Move the cloud to the neighbor tile's location
+            reduceSunlight(MIN_SUNLIGHT_REDUCTION, currTile)
             cloud.location = nextTile.location
+            currTile = nextTile
             moves++
 
             nextTile = map.getNeighbor(tile, direction)
+        }
+
+        cloud.duration -= 1
+
+        if (!mergedOrDissipated) {
+            val currTile = map.getTileByCoordinate(cloud.location) as Tile
+            if (simulationMap.nextTileNullButAirflow(currTile)) {
+                cloud.isStuck = true
+            }
+            reduceSunlight(MAX_SUNLIGHT_REDUCTION, currTile)
+            cloud.maxTraversibleTiles = MAX_TRAVERSIBLE_TILES
         }
     }
 
@@ -216,5 +237,12 @@ class CloudHandler(val simulationMap: SimulationMap) {
         removedClouds.add(cloud.id)
         coordinateToCloud.remove(cloud.location)
         // ADD LOG
+    }
+
+    private fun reduceSunlight(amount: Int, tile: Tile) {
+        tile.currentSunlight -= amount
+        if (tile.currentSunlight < 0) {
+            tile.currentSunlight = 0
+        }
     }
 }

@@ -194,4 +194,11 @@ class SimulationMap(
     fun filterByType(type: TileType, tiles: List<Tile>): List<Tile> {
         return tiles.filter { it.category == type }.sortedBy { it.id }
     }
+
+    /**
+     * For move cloud optimization
+     */
+    fun nextTileNullButAirflow(tile: Tile): Boolean {
+        // TODO
+    }
 }
