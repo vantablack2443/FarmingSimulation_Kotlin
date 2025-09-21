@@ -150,4 +150,25 @@ class SimulationData {
     fun getFarms(): List<Farm> {
         return this.farms.values.toList().sortedBy { it.getId() }
     }
+
+    /**
+     * returns sowing plans
+     */
+    fun getSowingPlans(): Map<Int, List<SowingPlan>> {
+        return this.sowingPlans
+    }
+
+    /**
+     * get tile by ID
+     */
+    fun getTileById(id: Int): Tile? {
+        return tiles[id]
+    }
+
+    /**
+     * get machine by ID
+     */
+    fun getMachineById(id: Int): Machine? {
+        return machines[id]
+    }
 }
