@@ -14,9 +14,9 @@ class Farm(
     private val farmstead: List<Tile>,
     private val fields: List<Tile>,
     private val plantation: List<Tile>,
-    private val machine: List<Machine>,
+    private val machines: List<Machine>,
     private val sowingPlans: MutableMap<Int, List<SowingPlan>>,
-    private val harvestPerPlant: kotlin.collections.Map<PlantType, Int>
+    private val harvestPerPlant: MutableMap<PlantType, Int>
 ) {
 
     val machineHashMap: MutableSet<Int> = mutableSetOf()
@@ -61,7 +61,7 @@ class Farm(
      * Returns the machines of the farm
      */
     fun getMachines(): List<Machine> {
-        return machine
+        return machines
     }
 
     /**
@@ -84,5 +84,29 @@ class Farm(
 
     fun removeSowingPlans(executedPlans: List<SowingPlan>) {
         // TODO
+    }
+
+    /**
+     * returns the overall sum of the harvest
+     */
+    fun calculateTotalHarvest(): Int {
+        var amount = harvestPerPlant.values.sum()
+        for (machine in machines) {
+            val currentHarvest = machine.currentHarvest ?: continue
+            amount += currentHarvest.getAmount()
+        }
+        return amount
+    }
+
+    /**
+     * returns the harvest amount based on the plant type
+     */
+    fun calculatePlantHarvest(plant: PlantType): Int {
+        var amount = harvestPerPlant.getOrDefault(plant, 0)
+        for (machine in machines) {
+            val currentHarvest = machine.currentHarvest ?: continue
+            amount += currentHarvest.getAmount()
+        }
+        return amount
     }
 }
