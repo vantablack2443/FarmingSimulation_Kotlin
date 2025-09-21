@@ -144,6 +144,18 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         return null
     }
 
+    /**
+     *THINGS BELOW SO THAT THIS SHIT BUILDS
+     */
+
+    /**
+//    private fun hasCuttingMachinesLeft(farm: Farm): Boolean {
+//        // Return true if there is at least one machine not in the machineHashMap
+//        return farm.getMachines().any { machine ->
+//            !farm.machineHashMap.contains(machine.id)
+//        }
+//    }
+*/
     // Implement missing abstract methods from ActionHandler
     override fun startPhase(farm: Farm, machine: Machine) {
         // Provide a minimal implementation or throw if not used
@@ -151,7 +163,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     }
 
     override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
-        throw NotImplementedError(" is not implemented in CuttingHandler")
     }
 
     override fun getOperableTiles(
@@ -159,13 +170,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         plant: PlantType,
         yearTick: Int
     ): List<Tile> {
-        TODO("Not yet implemented")
+        throw NotImplementedError(" is not implemented in CuttingHandler")
     }
 }
-
-//    private fun hasCuttingMachinesLeft(farm: Farm): Boolean {
-//        // Return true if there is at least one machine not in the machineHashMap
-//        return farm.getMachines().any { machine ->
-//            !farm.machineHashMap.contains(machine.id)
-//        }
-//    }
