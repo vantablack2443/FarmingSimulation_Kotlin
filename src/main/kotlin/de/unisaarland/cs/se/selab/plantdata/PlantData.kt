@@ -49,7 +49,7 @@ const val CHERRY_HARVEST_END = 15
 const val GRAPE_HARVEST_START = 17
 const val GRAPE_HARVEST_END = 20
 
-
+// harvest estimates
 const val ALMOND_HARVEST = 800000
 const val APPLE_HARVEST = 1700000
 const val CHERRY_HARVEST = 1200000

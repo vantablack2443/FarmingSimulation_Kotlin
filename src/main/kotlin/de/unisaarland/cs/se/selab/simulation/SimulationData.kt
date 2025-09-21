@@ -33,13 +33,13 @@ const val DEC_TICK = 23
  */
 class SimulationData {
     lateinit var map: SimulationMap // take a look at this later
-    var tiles: MutableMap<Int, Tile> = mutableMapOf()
-    var farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
-    var machines: MutableMap<Int, Machine> = mutableMapOf()
-    var incidents: MutableMap<Int, Incident> = mutableMapOf()
-    var clouds: MutableMap<Int, Cloud> = mutableMapOf()
-    var sowingPlans: MutableMap<Int, List<SowingPlan>> = mutableMapOf() // mapping tick
-    var sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
+    private var tiles: MutableMap<Int, Tile> = mutableMapOf()
+    private var farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
+    private var machines: MutableMap<Int, Machine> = mutableMapOf()
+    private var incidents: MutableMap<Int, Incident> = mutableMapOf()
+    private var clouds: MutableMap<Int, Cloud> = mutableMapOf()
+    private var sowingPlans: MutableMap<Int, List<SowingPlan>> = mutableMapOf() // mapping tick
+    private var sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
     init {
         sunlightData[1] = SUN_JAN_NOV
         sunlightData[2] = SUN_JAN_NOV
@@ -114,5 +114,40 @@ class SimulationData {
      */
     fun setSowingPlans(plans: MutableMap<Int, List<SowingPlan>>) {
         this.sowingPlans = plans
+    }
+
+    /**
+     * get the sunlight amount for the given tick
+     */
+    fun getSunlightAmount(currentYear: Int): Int {
+        return sunlightData.getOrDefault(currentYear, 0)
+    }
+
+    /**
+     * returns all the tiles sorted by the ascending ID
+     */
+    fun getTiles(): List<Tile> {
+        return tiles.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns the incidents sorted by ascending ID
+     */
+    fun getIncidents(): List<Incident> {
+        return incidents.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns the clouds listed by ascending ID
+     */
+    fun getClouds(): List<Cloud> {
+        return clouds.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns farms sorted by ID
+     */
+    fun getFarms(): List<Farm> {
+        return this.farms.values.toList().sortedBy { it.getId() }
     }
 }

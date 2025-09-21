@@ -49,14 +49,28 @@ class Tile(
      * increases the current moisture
      */
     fun increaseMoistureByAmount(amount: Int) {
-        TODO()
+        val newMoisture = currentMoisture?.plus(amount)
+        if (newMoisture != null) {
+            maxMoisture?.let {
+                if (newMoisture > it) currentMoisture = maxMoisture
+                return
+            }
+            currentMoisture = newMoisture
+        }
     }
 
     /**
-     * decreases the current moisture
+     * decreases the current moisture by given amount
      */
     fun decreaseMoistureByAmount(amount: Int) {
-        TODO()
+        val newMoisture = currentMoisture?.minus(amount)
+        if (newMoisture != null) {
+            if (newMoisture < 0) {
+                currentMoisture = 0
+                return
+            }
+            currentMoisture = newMoisture
+        }
     }
 
     /**
@@ -127,5 +141,12 @@ class Tile(
      */
     fun isOwnedBY(farmID: Int): Boolean {
         TODO()
+    }
+
+    /**
+     * setter for the current sunlight amount
+     */
+    fun setSunlight(sunlight: Int) {
+        this.currentSunlight = sunlight
     }
 }
