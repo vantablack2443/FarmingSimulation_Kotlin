@@ -21,20 +21,17 @@ class MapTest {
     @BeforeEach
     fun setUp() {
         fieldTile = Tile(
-            1, Coordinate(0, 0), TileType.FIELD, TileShape.OCTAGONAL,
-            airflow = false, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            1, Coordinate(0, 0), TileType.FIELD, TileShape.OCTAGONAL
         )
         plantationTile = Tile(
-            2, Coordinate(2, 0), TileType.PLANTATION, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            2, Coordinate(2, 0), TileType.PLANTATION, TileShape.OCTAGONAL
         )
         shedTile = Tile(
             3, Coordinate(3, 1), TileType.FARMSTEAD, TileShape.SQUARE,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         )
         edgeTile = Tile(
-            4, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE,
-            airflow = true, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            4, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE
+//            airflow = true, direction = null, shed = null, possiblePlants = null, maxMoisture = null
         )
 
         val tiles = mutableMapOf(
@@ -63,100 +60,55 @@ class MapTest {
     }
 
     @Test
-    fun testGetTilesByRadius() {
+    fun testGetTilesByRadius1() {
         val tilesRadius1 = map.getTilesByRadius(fieldTile, 1)
-        // assertTrue(tilesRadius1.contains(fieldTile))
+        assertFalse(tilesRadius1.contains(fieldTile))
         assertTrue(tilesRadius1.contains(plantationTile))
-        assertEquals(setOf(edgeTile, plantationTile, fieldTile), tilesRadius1.toSet())
-
-//        val tilesRadius2 = map.getTilesByRadius(edgeTile, 2)
-//        assertTrue(tilesRadius2.contains(fieldTile))
-//        assertTrue(tilesRadius2.contains(plantationTile))
-//        assertFalse(tilesRadius2.contains(shedTile),)
+        assertFalse(tilesRadius1.contains(shedTile))
+        assertTrue(tilesRadius1.contains(edgeTile))
     }
 
-//    @Test
-//    fun testSquareMapScenario() {
-//        // 2x2 map: (0,0) FIELD, (0,1) PLANTATION, (1,0) VILLAGE, (1,1) FIELD
-//        val tileA = Tile(
-//            10,
-//            Coordinate(
-//                0,
-//                0
-//            ),
-//            TileType.FIELD, TileShape.SQUARE, airflow = null, direction = null, shed = null,
-//            possiblePlants = null, maxMoisture = null
-//        )
-//        val tileB = Tile(
-//            11,
-//            Coordinate(
-//                0,
-//                1
-//            ),
-//            TileType.PLANTATION, TileShape.SQUARE, airflow = null, direction = null, shed = null,
-//            possiblePlants = null, maxMoisture = null
-//        )
-//        val tileC = Tile(
-//            12,
-//            Coordinate(
-//                1,
-//                0
-//            ),
-//            TileType.VILLAGE, TileShape.SQUARE, airflow = null, direction = null, shed = null,
-//            possiblePlants = null, maxMoisture = null
-//        )
-//        val tileD = Tile(
-//            13,
-//            Coordinate(
-//                1,
-//                1
-//            ),
-//            TileType.FIELD, TileShape.SQUARE, airflow = null, direction = null, shed = null,
-//            possiblePlants = null, maxMoisture = null
-//        )
-//        val tiles = mutableMapOf(
-//            tileA.location to tileA,
-//            tileB.location to tileB,
-//            tileC.location to tileC,
-//            tileD.location to tileD
-//        )
-//        val squareMap = SimulationMap(tiles)
-//        // Test getTileByID
-//        assertEquals(tileA, squareMap.getTileByID(10))
-//        assertEquals(tileB, squareMap.getTileByID(11))
-//        assertEquals(tileC, squareMap.getTileByID(12))
-//        assertEquals(tileD, squareMap.getTileByID(13))
-//        assertNull(squareMap.getTileByID(99))
-//        // Test getTilesByRadius (radius 1 from tileA should include tileA, tileB, tileC, tileD)
-//        val radiusTiles = squareMap.getTilesByRadius(tileA, 1)
-//        assertTrue(radiusTiles.contains(tileA))
-//        assertTrue(radiusTiles.contains(tileB))
-//        assertTrue(radiusTiles.contains(tileC))
-//        assertTrue(radiusTiles.contains(tileD))
-//    }
+    @Test
+    fun testGetTilesByRadius2() {
+        val tilesRadius2 = map.getTilesByRadius(edgeTile, 2)
+        assertTrue(tilesRadius2.contains(fieldTile))
+        assertTrue(tilesRadius2.contains(plantationTile))
+        assertFalse(tilesRadius2.contains(shedTile), "Shed tile should be out of radius 2 from edge tile")
+        assertFalse(tilesRadius2.contains(edgeTile), "Edge tile should not be included in its own radius")
+    }
 
     @Test
     fun testIsReachable() {
         // Create tiles
         val tileA = Tile(
-            100, Coordinate(10, 4), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            100,
+            Coordinate(10, 4),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileB = Tile(
-            101, Coordinate(10, 2), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            101,
+            Coordinate(10, 2),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileC = Tile(
-            102, Coordinate(10, 6), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            102,
+            Coordinate(10, 6),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileD = Tile(
-            103, Coordinate(8, 4), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            103,
+            Coordinate(8, 4),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileShed = Tile(
-            104, Coordinate(9, 5), TileType.FARMSTEAD, TileShape.SQUARE,
-            airflow = null, direction = null, shed = true, possiblePlants = null, maxMoisture = null
+            104,
+            Coordinate(9, 5),
+            TileType.FARMSTEAD,
+            TileShape.SQUARE
         )
         val tiles = mutableMapOf(
             tileA.location to tileA,
@@ -183,8 +135,10 @@ class MapTest {
 
         // Negative case: unreachable tile
         val tileFar = Tile(
-            200, Coordinate(20, 20), TileType.FIELD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            200,
+            Coordinate(20, 20),
+            TileType.FIELD,
+            TileShape.OCTAGONAL
         )
         assertFalse(testMap.isReachable(machine, tileFar), "TileFar should not be reachable")
     }
@@ -193,24 +147,34 @@ class MapTest {
     fun testGetReachableTiles() {
         // Create tiles
         val tileA = Tile(
-            100, Coordinate(10, 4), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            100,
+            Coordinate(10, 4),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileB = Tile(
-            101, Coordinate(10, 2), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            101,
+            Coordinate(10, 2),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileC = Tile(
-            102, Coordinate(10, 6), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            102,
+            Coordinate(10, 6),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileD = Tile(
-            103, Coordinate(8, 4), TileType.ROAD, TileShape.OCTAGONAL,
-            airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+            103,
+            Coordinate(8, 4),
+            TileType.ROAD,
+            TileShape.OCTAGONAL
         )
         val tileShed = Tile(
-            104, Coordinate(9, 5), TileType.FARMSTEAD, TileShape.SQUARE,
-            airflow = null, direction = null, shed = true, possiblePlants = null, maxMoisture = null
+            104,
+            Coordinate(9, 5),
+            TileType.FARMSTEAD,
+            TileShape.SQUARE
         )
         val tiles = mutableMapOf(
             tileA.location to tileA,
