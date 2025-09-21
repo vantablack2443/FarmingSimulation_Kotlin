@@ -59,8 +59,9 @@ class SimulationMap(
     /**
      * gets the neighbouring tile according to its airflow direction
      */
-    fun getNeighbor(tile: Tile, direction: Direction): Tile? {
+    fun getNeighbor(tile: Tile, direction: Direction?): Tile? {
         var neighbour: Tile? = null
+        if (direction == null) return null
         if (tile.shape == TileShape.SQUARE) {
             neighbour = when (direction) {
                 Direction.NORTH -> null
