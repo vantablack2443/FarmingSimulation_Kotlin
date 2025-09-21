@@ -67,6 +67,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             updatePlantationHarvestEstimate()
             updateSunlight(this.currentYearTick)
             reduceMoisture()
+            cloudHandler.moveClouds()
             actionHandler.farmPhase(currentYearTick, currentTick)
             applyIncidents(this.currentYearTick)
             harvestEstimator.estimateHarvest()
