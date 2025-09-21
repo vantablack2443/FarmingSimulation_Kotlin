@@ -214,6 +214,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
 
     private fun dissipate(cloud: Cloud) {
         removedClouds.add(cloud.id)
+        coordinateToCloud.remove(cloud.location)
         // ADD LOG
     }
 }
