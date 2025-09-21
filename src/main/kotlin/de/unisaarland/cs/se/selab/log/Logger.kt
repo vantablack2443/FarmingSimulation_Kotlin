@@ -312,8 +312,32 @@ object Logger {
     /**
      * Logs the end of the simulation and statistics calculation.
      */
-    fun end() {
+    fun logStatistics() {
         val message = "Simulation Info: Simulation statistics are calculated."
+        logs(LogType.IMPORTANT, message)
+    }
+
+    /**
+     * Logs the total harvest of the farm
+     */
+    fun logTotalFarmHarvest(farmID: Int, amount: Int) {
+        val message = "Simulation Statistics: Farm $farmID collected $amount g of harvest."
+        logs(LogType.IMPORTANT, message)
+    }
+
+    /**
+     * Logs the total harvest of the given plant
+     */
+    fun logHarvestPerPlant(plant: PlantType, amount: Int) {
+        val message = "Simulation Statistics: Total amount of $plant harvested: $amount g."
+        logs(LogType.IMPORTANT, message)
+    }
+
+    /**
+     * Logs the total harvest remaining after simulation end
+     */
+    fun logRemainingHarvest(amount: Int) {
+        val message = "Simulation Statistics: Total harvest estimate still in fields and plantations: $amount g."
         logs(LogType.IMPORTANT, message)
     }
 }
