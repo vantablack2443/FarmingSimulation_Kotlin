@@ -53,7 +53,7 @@ class MapParser(private val simData: SimulationData) {
         val jsonString = file.readText()
         val tiles = Json.parseToJsonElement(jsonString).jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
         parseCreateTiles(tiles)
-        simData.tiles = tileIDMap
+        simData.setTiles(tileIDMap)
         simData.setMap(SimulationMap(tileCoordinates))
         Logger.logParsing(true, file.name)
     }
