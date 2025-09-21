@@ -1,10 +1,10 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
 
 const val GRAPE_SUNLIGHT = 150
 const val GRAPE_MOISTURE = 250
-const val GRAPE_HARVEST = 1200000
 const val GRAPE_CUT_START = 15
 const val GRAPE_CUT_END = 16
 const val GRAPE_CUT_ALT = 14

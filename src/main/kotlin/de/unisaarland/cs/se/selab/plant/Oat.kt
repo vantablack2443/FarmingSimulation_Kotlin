@@ -1,10 +1,10 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.OAT_HARVEST
 
 const val OAT_SUNLIGHT = 90
 const val OAT_MOISTURE = 300
-const val OAT_HARVEST = 1200000
 const val OAT_SOW_START = 6
 const val OAT_SOW_END = 6
 const val OAT_HARVEST_START = 13

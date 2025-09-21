@@ -49,13 +49,32 @@ const val CHERRY_HARVEST_END = 15
 const val GRAPE_HARVEST_START = 17
 const val GRAPE_HARVEST_END = 20
 
+
+const val ALMOND_HARVEST = 800000
+const val APPLE_HARVEST = 1700000
+const val CHERRY_HARVEST = 1200000
+const val GRAPE_HARVEST = 1200000
+const val OAT_HARVEST = 1200000
+const val POTATO_HARVEST = 1000000
+const val PUMPKIN_HARVEST = 500000
+const val WHEAT_HARVEST = 1500000
+
 /**
  * class to find available actions for given tick
  */
-class PlantData(
-    val plantationHarvestEstimates: Map<PlantType, Int>,
-    val fieldHarvestingEstimates: Map<PlantType, Int>,
-) {
+class PlantData {
+    val plantationHarvestEstimates: Map<PlantType, Int> = mapOf(
+        PlantType.ALMOND to ALMOND_HARVEST,
+        PlantType.APPLE to APPLE_HARVEST,
+        PlantType.GRAPE to GRAPE_HARVEST,
+        PlantType.CHERRY to CHERRY_HARVEST
+    )
+    val fieldHarvestingEstimates: Map<PlantType, Int> = mapOf(
+        PlantType.OAT to OAT_HARVEST,
+        PlantType.PUMPKIN to PUMPKIN_HARVEST,
+        PlantType.POTATO to POTATO_HARVEST,
+        PlantType.WHEAT to WHEAT_HARVEST,
+    )
     val sowingTimes: Map<IntRange, PlantType> = mapOf(
         POTATO_SOWING_START..POTATO_SOWING_END to PlantType.POTATO,
         WHEAT_SOWING_START..WHEAT_SOWING_END to PlantType.WHEAT,

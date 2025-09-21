@@ -1,10 +1,10 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST
 
 const val CHERRY_SUNLIGHT = 120
 const val CHERRY_MOISTURE = 150
-const val CHERRY_HARVEST = 1200000
 const val CHERRY_CUT_START = 21
 const val CHERRY_CUT_END = 22
 const val CHERRY_CUT_START_ALT = 3

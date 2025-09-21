@@ -1,11 +1,10 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
-import de.unisaarland.cs.se.selab.enumerations.ActionType
+import de.unisaarland.cs.se.selab.plantdata.POTATO_HARVEST
 
 const val POTATO_SUNLIGHT = 130
 const val POTATO_MOISTURE = 500
-const val POTATO_HARVEST = 1000000
 const val POTATO_SOW_START = 7
 const val POTATO_SOW_END = 10
 const val POTATO_HARVEST_START = 17
@@ -24,7 +23,6 @@ class Potato : FieldPlant() {
     override fun needsHarvesting(tick: Int) {
         TODO("Not yet implemented")
     }
-
 
     override fun isBlooming(tick: Int): Boolean {
         TODO("Not yet implemented")

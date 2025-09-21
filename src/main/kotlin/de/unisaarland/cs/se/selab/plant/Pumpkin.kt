@@ -1,10 +1,10 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.PUMPKIN_HARVEST
 
 const val PUMPKIN_SUNLIGHT = 120
 const val PUMPKIN_MOISTURE = 600
-const val PUMPKIN_HARVEST = 500000
 const val PUMPKIN_SOW_START = 10
 const val PUMPKIN_SOW_END = 12
 const val PUMPKIN_HARVEST_START = 17

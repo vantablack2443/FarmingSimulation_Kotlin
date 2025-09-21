@@ -1,10 +1,10 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST
 
 const val ALMOND_SUNLIGHT = 130
 const val ALMOND_MOISTURE = 400
-const val ALMOND_HARVEST = 800000
 const val ALMOND_CUT_START = 21
 const val ALMOND_CUT_END = 22
 const val ALMOND_CUT_START_ALT = 3

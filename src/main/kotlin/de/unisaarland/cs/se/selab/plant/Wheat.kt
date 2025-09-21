@@ -1,10 +1,10 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST
 
 const val WHEAT_SUNLIGHT = 90
 const val WHEAT_MOISTURE = 450
-const val WHEAT_HARVEST = 1500000
 const val WHEAT_SOW_START = 19
 const val WHEAT_SOW_END = 20
 const val WHEAT_BLOOM_START = 9

@@ -1,10 +1,10 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST
 
 const val APPLE_SUNLIGHT = 50
 const val APPLE_MOISTURE = 100
-const val APPLE_HARVEST = 1700000
 const val APPLE_CUT_START = 21
 const val APPLE_CUT_END = 22
 const val APPLE_CUT_START_ALT = 3
