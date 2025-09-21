@@ -55,4 +55,11 @@ class Grape : PlantationPlant() {
     override fun needsHarvesting(tick: Int) {
         TODO("Not yet implemented")
     }
+
+    /**
+     * reset harvest estimate
+     */
+    override fun resetHarvestEstimate() {
+        this.harvestEstimate = GRAPE_HARVEST
+    }
 }

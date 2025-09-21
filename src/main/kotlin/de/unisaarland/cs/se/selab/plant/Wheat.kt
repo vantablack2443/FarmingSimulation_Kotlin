@@ -46,4 +46,11 @@ class Wheat : FieldPlant() {
     override fun applyPollinationBuff() {
         TODO("Not yet implemented")
     }
+
+    /**
+     * reset harvest estimate
+     */
+    override fun resetHarvestEstimate() {
+        this.harvestEstimate = WHEAT_HARVEST
+    }
 }

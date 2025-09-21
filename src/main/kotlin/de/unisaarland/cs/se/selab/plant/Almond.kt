@@ -17,7 +17,7 @@ const val ALMOND_BLOOM_START = 4
 const val ALMOND_BLOOM_END = 4
 
 /**
- * apple class
+ * almond class
  */
 class Almond : PlantationPlant() {
     override var neededSunlight = ALMOND_SUNLIGHT
@@ -56,6 +56,13 @@ class Almond : PlantationPlant() {
 
     override fun needsHarvesting(tick: Int) {
         TODO("Not yet implemented")
+    }
+
+    /**
+     * reset harvest estimate
+     */
+    override fun resetHarvestEstimate() {
+        this.harvestEstimate = ALMOND_HARVEST
     }
 
 }

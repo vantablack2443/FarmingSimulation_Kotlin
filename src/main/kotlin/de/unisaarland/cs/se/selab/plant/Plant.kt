@@ -22,6 +22,7 @@ abstract class Plant {
     abstract fun doAnimalAttack(): Unit
     abstract fun doBeeHappy(): Unit
     abstract fun applyPollinationBuff(): Unit
+    abstract fun resetHarvestEstimate(): Unit
 
     /**
      * Factory method to create plants based on PlantType
