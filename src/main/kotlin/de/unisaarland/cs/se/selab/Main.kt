@@ -51,6 +51,7 @@ fun main(args: Array<String>) {
             )
         )
         val simulation = Simulation(simData, maxTicks, startYearTick)
+        Logger.logSimulationStart(startYearTick)
         simulation.run()
     } catch (exception: ParsingException) {
         Logger.logInvalidFile(exception.filePath ?: "null file")
