@@ -12,14 +12,10 @@ import de.unisaarland.cs.se.selab.tile.Tile
 
 class SowingHandler(
     simulationMap: SimulationMap,
-    plantData: PlantData,
-    operableTiles: List<Tile>,
-    tileMap: HashSet<Int>
+    plantData: PlantData
 ) : ActionHandler(
     simulationMap,
-    plantData,
-    operableTiles,
-    tileMap
+    plantData
 ) {
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {

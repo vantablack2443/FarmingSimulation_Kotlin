@@ -7,11 +7,7 @@ import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 
-class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData, operableTiles: List<Tile>,
-                     tileMap: HashSet<Int>
-) : ActionHandler(simulationMap, plantdata,
-    operableTiles, tileMap
-) {
+class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         TODO("Not yet implemented")

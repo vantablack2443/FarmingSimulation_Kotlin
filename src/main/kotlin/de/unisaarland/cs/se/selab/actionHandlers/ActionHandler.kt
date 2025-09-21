@@ -9,11 +9,10 @@ import de.unisaarland.cs.se.selab.tile.Tile
 
 abstract class ActionHandler(
     val simulationMap: SimulationMap,
-    val plantdata: PlantData,
-    val operableTiles: List<Tile>,
-    val tileMap: HashSet<Int>
-
+    val plantdata: PlantData
 ) {
+    val operableTiles: List<Tile> = mutableListOf()
+    val tileMap: HashSet<Int> = hashSetOf()
     abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int): Unit
     abstract fun startPhase(farm: Farm, machine: Machine): Unit
     abstract fun performAction(machine: Machine, tile: Tile): Unit

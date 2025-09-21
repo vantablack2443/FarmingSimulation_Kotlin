@@ -1,4 +1,7 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
-class IrrigationHandler {
+import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.plantdata.PlantData
+
+class IrrigationHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
 }
