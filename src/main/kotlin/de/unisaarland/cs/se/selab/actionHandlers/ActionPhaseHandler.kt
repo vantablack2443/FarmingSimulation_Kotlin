@@ -34,4 +34,8 @@ class ActionPhaseHandler(farms: List<Farm>) {
     fun setMowingHandler(mowingHandler: MowingHandler) {
         this.mowingHandler = mowingHandler
     }
+
+    fun farmPhase(currentyearTick: Int, simTick: Int) {
+        TODO()
+    }
 }
