@@ -171,47 +171,26 @@ class SimulationMap(
     }
 
     /**
-     * return all field and plantation tiles
+     * return all field and plantation tiles sorted by ID
      */
     fun getPlantableTiles(): List<Tile> {
-        val plantables: MutableList<Tile> = mutableListOf()
-        for (tile in tiles.values) {
-            if (tile.category == TileType.FIELD) {
-                plantables.add(tile)
-            }
-            if (tile.category == TileType.PLANTATION) {
-                plantables.add(tile)
-            }
-        }
-        return plantables
+        return tiles.values.toList()
+            .filter { it.category in setOf(TileType.FIELD, TileType.PLANTATION) }
+            .sortedBy { it.id }
     }
 
     /**
-     * return all field and plantation tiles from the given list of tiles
+     * return all field and plantation tiles (sorted by ID) from the given list of tiles
      */
     fun filterForPlantable(tiles: List<Tile>): List<Tile> {
-        val plantables: MutableList<Tile> = mutableListOf()
-        for (tile in tiles) {
-            if (tile.category == TileType.FIELD) {
-                plantables.add(tile)
-            }
-            if (tile.category == TileType.PLANTATION) {
-                plantables.add(tile)
-            }
-        }
-        return plantables
+        return tiles.filter { it.category in setOf(TileType.FIELD, TileType.PLANTATION) }
+            .sortedBy { it.id }
     }
 
     /**
-     * returns all tiles of the given type from the given list of tiles
+     * returns all tiles of the given type (sorted by ID) from the given list of tiles
      */
     fun filterByType(type: TileType, tiles: List<Tile>): List<Tile> {
-        val filtered: MutableList<Tile> = mutableListOf()
-        for (tile in tiles) {
-            if (tile.category == type) {
-                filtered.add(tile)
-            }
-        }
-        return filtered
+        return tiles.filter { it.category == type }.sortedBy { it.id }
     }
 }
