@@ -203,7 +203,7 @@ class SimulationMapTest {
     }
 
     @Test
-    fun testGetReachableTiles() {
+    fun testGetAccessibleTiles() {
     }
 
     @Test
@@ -251,7 +251,7 @@ class SimulationMapTest {
     }
 
     @Test
-    fun getReachableTiles() {
+    fun getAccessibleTiles() {
     }
 
     @Test
