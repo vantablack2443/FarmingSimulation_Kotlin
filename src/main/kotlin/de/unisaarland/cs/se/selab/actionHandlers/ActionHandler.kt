@@ -38,12 +38,6 @@ abstract class ActionHandler(
     abstract fun performAction(machine: Machine, tile: Tile)
 
     /**
-     * Gets operable tiles based on farm, and the plantType. Implementation detail is different
-     * for each concrete definition of getOperableTiles
-     */
-    abstract fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile>
-
-    /**
      * Gets operable tiles based on farm
      */
     abstract fun getOperableTiles(farm: Farm): List<Tile>
@@ -59,7 +53,6 @@ abstract class ActionHandler(
     fun updateTileMap(farm: Farm, tile: Tile) {
         // TODO implementation just to build
         farm.tileHashMap.contains(tile.id)
-
     }
 
     /**
