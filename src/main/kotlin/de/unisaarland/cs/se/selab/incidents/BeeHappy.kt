@@ -15,7 +15,7 @@ class BeeHappy(
     val tile: Tile,
     val radius: Int
 ) : Incident(id, tick, type) {
-    override fun execute(map: SimulationMap, yearTick: Int) {
+    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         TODO("Not yet implemented")
     }
 }

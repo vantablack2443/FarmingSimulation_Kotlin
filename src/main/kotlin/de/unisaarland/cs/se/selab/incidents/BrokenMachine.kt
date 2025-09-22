@@ -14,7 +14,7 @@ class BrokenMachine(id: Int, tick: Int, type: IncidentType, val machine: Machine
         tick,
         type
     ) {
-    override fun execute(map: SimulationMap, yearTick: Int) {
+    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         TODO("Not yet implemented")
     }
 }
