@@ -1,7 +1,9 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
+import kotlin.math.floor
 
 const val GRAPE_SUNLIGHT = 150
 const val GRAPE_MOISTURE = 250
@@ -13,7 +15,8 @@ const val GRAPE_MOW_ALTERNATE = 13
 const val GRAPE_HARVEST_TIME = 17
 const val GRAPE_BLOOM_START = 12
 const val GRAPE_BLOOM_END = 13
-const val PENALTY_POINT_NINETYFIVE = 0.95
+const val GRAPE_LATE_HARVEST_PENALTY = 0.95
+const val GRAPE_ANIMAL_ATTACK_PENALTY = 0.5
 
 /**
  * apple class
@@ -34,11 +37,8 @@ class Grape : PlantationPlant() {
     override var bloomingTime: Duration? = Duration(GRAPE_BLOOM_START, GRAPE_BLOOM_END)
 
     override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
-    }
-
-    override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * animalAttackPenalty
+        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     override fun resetHarvestEstimate() {
@@ -46,39 +46,31 @@ class Grape : PlantationPlant() {
     }
 
     override fun doAnimalAttack() {
-        TODO("Not yet implemented")
-    }
-
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
-    }
-
-    override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+        this.animalAttackPenalty *= GRAPE_ANIMAL_ATTACK_PENALTY
     }
 
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun needsCutting(tick: Int) {
-        // TODO
-    }
-
-    override fun needsMowing(tick: Int) {
-        // TODO
+        if (tick == GRAPE_HARVEST_TIME) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+        }
+        if (tick in GRAPE_HARVEST_TIME + 1..GRAPE_HARVEST_TIME + 3) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+            this.lateActions.add(ActionType.HARVEST)
+        }
     }
 
     override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick <= GRAPE_HARVEST_TIME) {
-            return
-        } else if (tick - GRAPE_HARVEST_TIME > 3) { // more than 2 ticks late, set to 0
+        if (tick - GRAPE_HARVEST_TIME > 3) { // more than 3 ticks late, set to 0
             this.harvestEstimate = 0
-        } else { // up to 3 ticks late, reduce by half
-            var counter = tick - GRAPE_HARVEST_TIME
-            while (counter > 0) {
-                this.harvestEstimate = (PENALTY_POINT_NINETYFIVE * this.harvestEstimate).toInt()
-                counter--
-            }
+            return
         }
-    }}
+        var effect = GRAPE_LATE_HARVEST_PENALTY
+        var counter = tick
+        while (counter <= GRAPE_HARVEST_TIME + 3) {
+            effect *= GRAPE_LATE_HARVEST_PENALTY
+            counter++
+        }
+        val newEstimate = this.harvestEstimate * effect
+        this.harvestEstimate = newEstimate.toInt()
+    }
+}

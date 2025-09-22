@@ -1,7 +1,9 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST
+import kotlin.math.floor
 
 const val APPLE_SUNLIGHT = 50
 const val APPLE_MOISTURE = 100
@@ -15,6 +17,7 @@ const val APPLE_HARVEST_START = 17
 const val APPLE_HARVEST_END = 19
 const val APPLE_BLOOM_START = 8
 const val APPLE_BLOOM_END = 9
+const val ANIMAL_ATTACK_PENALTY = 0.9
 
 /**
  * apple class
@@ -34,44 +37,65 @@ class Apple : PlantationPlant() {
     override var harvestingTime = Duration(APPLE_HARVEST_START, APPLE_HARVEST_END)
     override var bloomingTime: Duration? = Duration(APPLE_BLOOM_START, APPLE_BLOOM_END)
 
+    /**
+     * updates harvest estimate based on the animal attack
+     */
     override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * animalAttackPenalty
+        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
+    /**
+     * updates the harvest estimate based on the bee happy effect
+     */
     override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * pollination
+        this.harvestEstimate = floor(newEstimate).toInt()
     }
 
+    /**
+     * updates the animal attack penalty
+     */
     override fun doAnimalAttack() {
-        TODO("Not yet implemented")
+        // this.animalAttack = true
+        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
     }
 
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
+    /**
+     * updates the pollination effect
+     */
+    override fun doBeeHappy(effect: Double) {
+        this.pollination *= effect
     }
 
+    /**
+     * checks if the plant is blooming
+     */
     override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+        return tick in APPLE_BLOOM_START..APPLE_BLOOM_END
     }
 
+    /**
+     * checks if the plant needs harvesting in this tick
+     */
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
+        if (tick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+        }
+        if (tick == APPLE_HARVEST_END + 1 || tick == APPLE_HARVEST_END + 2) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+            this.lateActions.add(ActionType.HARVEST)
+        }
     }
 
-    override fun needsCutting(tick: Int) {
-        // TODO
-    }
-
-    override fun needsMowing(tick: Int) {
-        // TODO
-    }
-
+    /**
+     * updates harvest estimate based on the late penalty ; tick is year tick
+     */
     override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick <= APPLE_HARVEST_END) {
-            return
-        } else if (tick - APPLE_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+        if (tick - APPLE_HARVEST_END > 1) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
-        } else { // up to 1 tick late, reduce by half
+        }
+        if (tick - APPLE_HARVEST_END == 1) { // up to 1 tick late, reduce by half
             this.harvestEstimate /= 2
         }
     }

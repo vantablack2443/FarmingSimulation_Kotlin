@@ -10,7 +10,6 @@ const val OAT_SOW_START = 6
 const val OAT_SOW_END = 6
 const val OAT_HARVEST_START = 13
 const val OAT_HARVEST_END = 16
-const val PENALTY_POINT_EIGHT = 0.8
 
 /**
  * Oat class
@@ -23,28 +22,20 @@ class Oat : FieldPlant() {
     override var harvestingTime = Duration(OAT_HARVEST_START, OAT_HARVEST_END)
 
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
+        if ((OAT_HARVEST_START ..OAT_HARVEST_END).contains(tick)) {
+            actionsNeeded.add(ActionType.HARVEST)
+        }
     }
 
-    override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun needsWeeding(simTick: Int) {
+        //In the first 3 ticks after sowing
+        if (((sownTick + 1)..(sownTick + 3)).contains(simTick)){
+            actionsNeeded.add(ActionType.WEED)
+        }
     }
 
-    override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
-    }
+    // OAT does not require pollination. Does not bloom
 
-    override fun doAnimalAttack() {
-        TODO("Not yet implemented")
-    }
-
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
-    }
-
-    override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
-    }
 
     override fun checkLateSowing() {
         if (sownTick - OAT_SOW_END <= 2) {
@@ -52,8 +43,12 @@ class Oat : FieldPlant() {
         }
     }
 
-    override fun needsWeeding(tick: Int) {
-        // TODO
+    override fun applyLateSowingPenalty() {
+        var counter = sownTick - OAT_SOW_END
+        while (counter > 0) {
+            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            counter--
+        }
     }
 
     override fun applyLateHarvestPenalty(tick: Int) {
@@ -64,17 +59,9 @@ class Oat : FieldPlant() {
         } else { // %20 reduction per tick
             var counter = tick - OAT_HARVEST_END
             while (counter > 0) {
-                this.harvestEstimate = (PENALTY_POINT_EIGHT * this.harvestEstimate).toInt()
+                this.harvestEstimate = (LATE_HARVEST_PENALTY_FIELDS * this.harvestEstimate).toInt()
                 counter--
             }
-        }
-    }
-
-    override fun applyLateSowingPenalty() {
-        var counter = sownTick - OAT_SOW_END
-        while (counter > 0) {
-            this.harvestEstimate = (PENALTY_POINT_EIGHT * this.harvestEstimate).toInt()
-            counter--
         }
     }
 
