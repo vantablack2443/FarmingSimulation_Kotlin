@@ -58,6 +58,24 @@ class Apple : PlantationPlant() {
         TODO("Not yet implemented")
     }
 
+    override fun needsCutting(tick: Int) {
+        // TODO
+    }
+
+    override fun needsMowing(tick: Int) {
+        // TODO
+    }
+
+    override fun applyLateHarvestPenalty(tick: Int) {
+        if (tick <= APPLE_HARVEST_END) {
+            return
+        } else if (tick - APPLE_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+            this.harvestEstimate = 0
+        } else { // up to 1 tick late, reduce by half
+            this.harvestEstimate /= 2
+        }
+    }
+
     /**
      * reset harvest estimate
      */

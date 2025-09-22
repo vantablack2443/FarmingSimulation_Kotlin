@@ -15,6 +15,7 @@ const val ALMOND_HARVEST_START = 16
 const val ALMOND_HARVEST_END = 18
 const val ALMOND_BLOOM_START = 4
 const val ALMOND_BLOOM_END = 4
+const val PENALTY_POINT_NINE = 0.9
 
 /**
  * almond class
@@ -57,6 +58,25 @@ class Almond : PlantationPlant() {
     override fun needsHarvesting(tick: Int) {
         TODO("Not yet implemented")
     }
+
+    override fun needsCutting(tick: Int) {
+        // TODO
+    }
+
+    override fun needsMowing(tick: Int) {
+        // TODO
+    }
+
+    override fun applyLateHarvestPenalty(tick: Int) {
+        if (tick <= ALMOND_HARVEST_END) {
+            return
+        } else if (tick - ALMOND_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+            this.harvestEstimate = 0
+        } else { // up to 2 ticks late, reduce by 10% per tick
+            this.harvestEstimate = (this.harvestEstimate * PENALTY_POINT_NINE).toInt()
+        }
+    }
+
 
     /**
      * reset harvest estimate

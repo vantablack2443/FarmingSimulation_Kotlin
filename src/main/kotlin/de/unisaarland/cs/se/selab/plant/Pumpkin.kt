@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.PUMPKIN_HARVEST
 
 const val PUMPKIN_SUNLIGHT = 120
@@ -42,6 +43,31 @@ class Pumpkin: FieldPlant() {
 
     override fun applyPollinationBuff() {
         TODO("Not yet implemented")
+    }
+
+    override fun checkLateSowing() {
+        if (sownTick - PUMPKIN_SOW_END <= 2) {
+            lateActions.add(ActionType.SOW)
+        }
+    }
+
+    override fun needsWeeding(tick: Int) {
+        // TODO
+    }
+
+    override fun applyLateHarvestPenalty(tick: Int) {
+       if (tick > PUMPKIN_HARVEST_END) {
+           this.harvestEstimate = 0
+       }
+    }
+
+
+    override fun applyLateSowingPenalty() {
+        var counter = sownTick - PUMPKIN_SOW_END
+        while (counter > 0) {
+            this.harvestEstimate = (PENALTY_POINT_EIGHT * this.harvestEstimate).toInt()
+            counter--
+        }
     }
 
     /**

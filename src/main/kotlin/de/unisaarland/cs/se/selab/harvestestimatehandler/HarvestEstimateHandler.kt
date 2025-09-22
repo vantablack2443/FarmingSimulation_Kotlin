@@ -1,12 +1,15 @@
 package de.unisaarland.cs.se.selab.harvestestimatehandler
 
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.plant.FieldPlant
 import de.unisaarland.cs.se.selab.plant.Oat
 import de.unisaarland.cs.se.selab.plant.Plant
+import de.unisaarland.cs.se.selab.plant.PlantationPlant
 import de.unisaarland.cs.se.selab.plant.Potato
 import de.unisaarland.cs.se.selab.plant.Pumpkin
 import de.unisaarland.cs.se.selab.plant.Wheat
@@ -66,10 +69,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     }
 
     /**
-     * TODO
+     * Applies the late sowing penalty on the tile plant's harvest estimate if there was a late sowing action.
      */
     fun applyLateSowing(t: Tile) {
-        TODO()
+        val lateActions = t.plant?.lateActions ?: return
+
+        if (lateActions.contains(ActionType.SOW)) {
+            lateActions.remove(ActionType.SOW)
+            (t.plant as FieldPlant).applyLateSowingPenalty()
+        }
     }
 
     /**
@@ -97,36 +105,63 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             return
         }
 
-        t.plant!!.harvestEstimate -= 50 * ((neededMoisture - t.currentMoisture?.toInt()) / 100)
-        }
-
+        val currentMoisture = t.currentMoisture ?: throw IllegalStateException("Tile has no moisture value")
+        val penaltyCounter = (neededMoisture - currentMoisture) / 100
+        t.plant!!.harvestEstimate -= 50 * penaltyCounter
+    }
 
     /**
-     * TODO
+     * Applies the weeding penalty for each missed weeding action on the field tile plant's harvest estimate.
      */
     fun applyMissedWeeding(t: Tile) {
-        TODO()
+        // when we sow, we set the plant attribute on the tile right?
+        val lateActions = t.plant?.lateActions ?: return
+
+        while (lateActions.contains(ActionType.WEED)) {
+            lateActions.remove(ActionType.WEED)
+            (t.plant as FieldPlant).applyMissedWeedingPenalty()
+        }
     }
 
     /**
-     * TODO
+     * Applies the late harvest penalty for the late harvest action on the tile plant's harvest estimate.
      */
     fun applyLateHarvest(t: Tile) {
-        TODO()
+        /**
+         *  estimateHarvest() would most likely need to include the yearTick parameter aswell since
+         *  applyLateHarvestPenalty needs it to determine how many times the penalty needs to be applied
+         */
+        val lateActions = t.plant?.lateActions ?: return
+
+        if (lateActions.contains(ActionType.HARVEST)) {
+            lateActions.remove(ActionType.HARVEST)
+            t.plant?.applyLateHarvestPenalty(tick = 17) // TODO pass the yearTick here
+        }
     }
 
     /**
-     * TODO
+     * Applies the cutting penalty for a missed cutting action on the plantation tile plant's harvest estimate.
      */
     fun applyMissedCutting(t: Tile) {
-        TODO()
-    }
+        val lateActions = t.plant?.lateActions ?: return
+
+        // no while loop since cutting can be done only once per harvest cycle
+        if (lateActions.contains(ActionType.CUT)) {
+            lateActions.remove(ActionType.CUT)
+            (t.plant as PlantationPlant).applyCuttingPenalty()
+            }
+        }
 
     /**
-     * TODO
+     * Applies the mowing penalty for each missed mowing action on the plantation tile plant's harvest estimate.
      */
     fun applyMissedMowing(t: Tile) {
-        TODO()
+        val lateActions = t.plant?.lateActions ?: return
+
+        while (lateActions.contains(ActionType.MOW)) {
+            lateActions.remove(ActionType.MOW)
+            (t.plant as PlantationPlant).applyMowingPenalty()
+        }
     }
 
     /**

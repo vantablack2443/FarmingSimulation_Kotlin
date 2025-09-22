@@ -13,6 +13,7 @@ const val GRAPE_MOW_ALTERNATE = 13
 const val GRAPE_HARVEST_TIME = 17
 const val GRAPE_BLOOM_START = 12
 const val GRAPE_BLOOM_END = 13
+const val PENALTY_POINT_NINETYFIVE = 0.95
 
 /**
  * apple class
@@ -40,6 +41,10 @@ class Grape : PlantationPlant() {
         TODO("Not yet implemented")
     }
 
+    override fun resetHarvestEstimate() {
+        this.harvestEstimate = GRAPE_HARVEST
+    }
+
     override fun doAnimalAttack() {
         TODO("Not yet implemented")
     }
@@ -56,10 +61,24 @@ class Grape : PlantationPlant() {
         TODO("Not yet implemented")
     }
 
-    /**
-     * reset harvest estimate
-     */
-    override fun resetHarvestEstimate() {
-        this.harvestEstimate = GRAPE_HARVEST
+    override fun needsCutting(tick: Int) {
+        // TODO
     }
-}
+
+    override fun needsMowing(tick: Int) {
+        // TODO
+    }
+
+    override fun applyLateHarvestPenalty(tick: Int) {
+        if (tick <= GRAPE_HARVEST_TIME) {
+            return
+        } else if (tick - GRAPE_HARVEST_TIME > 3) { // more than 2 ticks late, set to 0
+            this.harvestEstimate = 0
+        } else { // up to 3 ticks late, reduce by half
+            var counter = tick - GRAPE_HARVEST_TIME
+            while (counter > 0) {
+                this.harvestEstimate = (PENALTY_POINT_NINETYFIVE * this.harvestEstimate).toInt()
+                counter--
+            }
+        }
+    }}
