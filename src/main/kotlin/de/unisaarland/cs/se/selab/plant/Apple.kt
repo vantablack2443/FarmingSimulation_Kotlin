@@ -64,7 +64,7 @@ class Apple : PlantationPlant() {
     /**
      * updates the pollination effect
      */
-    override fun doBeeHappy(effect: Int) {
+    override fun doBeeHappy(effect: Double) {
         this.pollination *= effect
     }
 

@@ -29,7 +29,7 @@ abstract class Plant {
 
     abstract fun animalAttackPenalty(): Unit
     abstract fun doAnimalAttack(): Unit
-    open fun doBeeHappy(effect: Int) {
+    open fun doBeeHappy(effect: Double) {
         return
     }
     open fun applyPollinationBuff() {
