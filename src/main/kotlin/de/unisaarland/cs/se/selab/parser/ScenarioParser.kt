@@ -40,9 +40,9 @@ const val AMOUNT_STRING = "amount"
  * Handles Parsing the Scenario File
  * */
 class ScenarioParser(private val simData: SimulationData) {
-    private var incidentIDs: MutableList<Int> = mutableListOf()
-    private var cloudIDs: MutableList<Int> = mutableListOf()
-    private var cloudToTile: MutableMap<Cloud, Tile> = mutableMapOf()
+    private val incidentIDs: MutableList<Int> = mutableListOf()
+    private val cloudIDs: MutableList<Int> = mutableListOf()
+    private val cloudToTile: MutableMap<Cloud, Tile> = mutableMapOf()
 
     // Map from tick to cloud creation incidents
     private var cloudCreationIncidents: MutableMap<Int, MutableList<Incident>> = mutableMapOf()
