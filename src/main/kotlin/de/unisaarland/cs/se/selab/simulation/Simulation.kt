@@ -22,7 +22,6 @@ const val MOISTURE_WITH_PLANT = 100
 const val MOISTURE_WITHOUT_PLANT = 70
 const val MAX_YEAR_TICK = 24
 
-
 /**
  * simulation class
  */

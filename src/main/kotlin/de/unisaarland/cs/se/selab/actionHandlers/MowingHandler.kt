@@ -65,7 +65,6 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         }
     }
 
-
     /**
      * gets all tiles that needs mowing
      * @param farm all mowable tiles are stored in farm

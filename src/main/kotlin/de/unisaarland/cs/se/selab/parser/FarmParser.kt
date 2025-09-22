@@ -336,4 +336,3 @@ class FarmParser(private val simulationData: SimulationData) {
         return true
     }
 }
-

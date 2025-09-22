@@ -3,9 +3,9 @@ package de.unisaarland.cs.se.selab.incidents
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger.logIncident
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
-import de.unisaarland.cs.se.selab.log.Logger.logIncident
 
 /**
  * city expansion incident

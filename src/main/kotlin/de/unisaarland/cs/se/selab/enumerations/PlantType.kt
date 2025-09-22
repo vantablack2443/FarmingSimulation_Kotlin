@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.enumerations
 
-
 /**
  * enumeration for plant type
  */
