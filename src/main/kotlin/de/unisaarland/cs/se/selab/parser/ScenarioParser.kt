@@ -45,10 +45,10 @@ class ScenarioParser(private val simData: SimulationData) {
     private val cloudToTile: MutableMap<Cloud, Tile> = mutableMapOf()
 
     // Map from tick to cloud creation incidents
-    private var cloudCreationIncidents: MutableMap<Int, MutableList<Incident>> = mutableMapOf()
+    private val cloudCreationIncidents: MutableMap<Int, MutableList<Incident>> = mutableMapOf()
 
     // For double-checking against sowing plan tiles
-    private var cityExpansionTiles: MutableList<Tile> = mutableListOf()
+    private val cityExpansionTiles: MutableList<Tile> = mutableListOf()
 
     /**
      * Parses the scenario files and runs the checks validity
