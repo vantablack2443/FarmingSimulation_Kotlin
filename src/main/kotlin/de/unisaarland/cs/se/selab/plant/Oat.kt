@@ -57,11 +57,7 @@ class Oat : FieldPlant() {
         } else if (tick - OAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
         } else { // %20 reduction per tick
-            var counter = tick - OAT_HARVEST_END
-            while (counter > 0) {
-                this.harvestEstimate = (LATE_HARVEST_PENALTY_FIELDS * this.harvestEstimate).toInt()
-                counter--
-            }
+            this.harvestEstimate = (LATE_HARVEST_PENALTY_FIELDS * this.harvestEstimate).toInt()
         }
     }
 
