@@ -53,6 +53,9 @@ object Logger {
         logs(LogType.INFO, message)
     }
 
+    /**
+     *Logs if the file read is invalid
+     */
     fun logInvalidFile(filename: String) {
         val message = "Initialization Info: $filename is invalid"
         logs(LogType.IMPORTANT, message)
@@ -310,7 +313,8 @@ object Logger {
     }
 
     /**
-     * Logs the end of the simulation and statistics calculation.
+     * Logs the end of the simulation and statistics calculation. THIS IS STILL INCOMPLETE, NEED
+     * TO ADD STATISTICS. 3 LOGS WITHIN
      */
     fun logStatistics() {
         val message = "Simulation Info: Simulation statistics are calculated."
