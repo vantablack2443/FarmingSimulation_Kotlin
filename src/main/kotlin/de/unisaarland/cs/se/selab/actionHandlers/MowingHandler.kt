@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.actionHandlers
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
@@ -33,24 +34,36 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
                 performAction(machine, tile)
                 farm.tileHashMap.add(tile.id)
                 continueAction(machine, farm, operableTiles)
+                machine.currentTile = machine.homeShed
+                machine.resetElapsedTime()
                 farm.machineHashMap.add(machine.id)
+                Logger.logMachineFinish(machine.id, machine.homeShed.id)
                 break
             }
         }
     }
 
     /**
-     * idk abt this
+     * performs the action of mowing
+     * @param machine the machine that performs the action
+     * @param tile the tile that the action would be performed in
      */
     override fun performAction(
         machine: Machine,
         tile: Tile
     ) {
+        Logger.logFarmAction(machine.id, ActionType.MOW, tile.id, machine.duration)
         machine.currentTile = tile
         machine.updateElapsedTime()
         tile.plant?.actionsNeeded?.remove(ActionType.MOW)
     }
 
+    /**
+     * helper function for startPhase
+     * @param machine the machine that will do the actions
+     * @param farm the farm that owns the teils and machine
+     * @param operableTiles the tiles that should be performed on
+     */
     private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>) {
         while (machine.canPerform()) {
             val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
@@ -89,6 +102,6 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         plant: PlantType,
         yearTick: Int
     ): List<Tile> {
-        TODO()
+        throw NotImplementedError("getOperableTiles is not implemented in MowingHandler")
     }
 }
