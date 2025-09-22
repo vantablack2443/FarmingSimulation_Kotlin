@@ -7,9 +7,7 @@ import de.unisaarland.cs.se.selab.actionHandlers.IncidentHandler
 import de.unisaarland.cs.se.selab.actionHandlers.MowingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.SowingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.WeedingHandler
-import de.unisaarland.cs.se.selab.cloud.Cloud
 import de.unisaarland.cs.se.selab.cloudHandler.CloudHandler
-import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -30,14 +28,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     var map = data.map
     private val cloudHandler = CloudHandler(map)
     init {
-        val clouds = data.getClouds()
-        val mapping = mutableMapOf<Coordinate, Cloud>()
+        val clouds = data.getClouds().sortedBy { it.id }
         cloudHandler.setMaxCloudID(clouds.maxOf { it.id })
         for (cloud in clouds) {
-            mapping[cloud.location] = cloud
+            cloudHandler.addCloud(cloud)
         }
-        cloudHandler.setCloudMapping(mapping)
-        cloudHandler.setCloudsList(clouds.sortedBy { it.id }.toMutableList())
     }
     private val incidentHandler = IncidentHandler(this.map)
     init {

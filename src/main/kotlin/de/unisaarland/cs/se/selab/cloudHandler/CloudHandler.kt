@@ -17,29 +17,22 @@ const val MIN_RAIN_AMOUNT = 5000
  */
 class CloudHandler(val simulationMap: SimulationMap) {
     // Add code that will update maxCloudInt
-    private lateinit var coordinateToCloud: MutableMap<Coordinate, Cloud>
-    private lateinit var cloudsList: MutableList<Cloud>
+    val coordinateToCloud: MutableMap<Coordinate, Cloud> = mutableMapOf()
+    val cloudsList: MutableList<Cloud> = mutableListOf()
     private var maxCloudID = 0
-    private var map = simulationMap
+    private val map = simulationMap
 
     // This set is used to track clouds that have merged or dissipated. Will be used to remove clouds from the map
-    private var removedClouds: MutableSet<Int> = mutableSetOf()
+    private val removedClouds: MutableSet<Int> = mutableSetOf()
 
     // Used to hold the merged clouds temporarily while movement is in progress
-    private var mergedList: MutableList<Cloud> = mutableListOf()
+    private val mergedList: MutableList<Cloud> = mutableListOf()
 
     /**
      * setter for max cloud ID
      */
     fun setMaxCloudID(maxCloudID: Int) {
         this.maxCloudID = maxCloudID
-    }
-
-    /**
-     * setter for coordinate to cloud mapping
-     */
-    fun setCloudMapping(mapping: MutableMap<Coordinate, Cloud>) {
-        coordinateToCloud = mapping
     }
 
     /**
@@ -71,7 +64,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
     private fun checkRain(cloud: Cloud, tile: Tile): Int {
         if (tile.currentMoisture == null) return cloud.amount
         if (cloud.amount >= MIN_RAIN_AMOUNT) {
-            val neededMoisture = tile.maxMoisture!! - tile.currentMoisture!!
+            val neededMoisture = tile.maxMoisture?.minus(tile.currentMoisture ?: 0) ?: 0
             return minOf(neededMoisture, cloud.amount)
         }
         return 0
@@ -142,7 +135,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
      */
     private fun moveCloud(cloud: Cloud) {
         // Clouds are always on a valid tile
-        val tile: Tile = map.getTileByCoordinate(cloud.location) as Tile
+        val tile: Tile = map.getTileByCoordinate(cloud.location) ?: return
 
         // Village Dissipation?
         if (tile.category == TileType.VILLAGE) {
@@ -167,7 +160,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
         var mergedOrDissipated = false
         while (moves < cloud.maxTraversibleTiles) {
             // Move the cloud in the airflow direction, or mark it as stuck if it can't move
-            val currTile = map.getTileByCoordinate(cloud.location) as Tile
+            val currTile = map.getTileByCoordinate(cloud.location) ?: return
             val direction = currTile.direction
             val nextTile = map.getNeighbor(currTile, direction)
             // If the neighbor tile is null, mark the cloud as stuck and check for dissipation(duration Check)
@@ -185,7 +178,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
 
             // Check for merge and merge if necessary
             if (checkMerge(nextTile)) {
-                val targetCloud = coordinateToCloud[nextTile.location]!!
+                val targetCloud = coordinateToCloud[nextTile.location] ?: continue
                 val newCloud = merge(cloud, targetCloud)
                 Logger.logCloudMerge(
                     cloud.id,
@@ -211,7 +204,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
         }
 
         cloud.duration = maxOf(cloud.duration - 1, 0)
-        val currTile = map.getTileByCoordinate(cloud.location) as Tile
+        val currTile = map.getTileByCoordinate(cloud.location) ?: return
         if (checkDurationDissipate(cloud)) {
             dissipate(cloud, currTile, false)
         }
@@ -238,7 +231,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * does updates after the end of cloud movement
      */
     private fun handlePostMovement(cloud: Cloud) {
-        val currTile = map.getTileByCoordinate(cloud.location) as Tile
+        val currTile = map.getTileByCoordinate(cloud.location) ?: return
         if (simulationMap.nextTileNullButAirflow(currTile)) {
             cloud.isStuck = true
         }
@@ -311,7 +304,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * checks if the tile is a village tile
      */
     private fun checkVillageDissipate(tile: Tile): Boolean {
-        val tile: Tile = map.getTileByCoordinate(tile.location) as Tile
         return tile.category == TileType.VILLAGE
     }
 
@@ -376,12 +368,5 @@ class CloudHandler(val simulationMap: SimulationMap) {
      */
     fun getCloudByCoordinate(coordinate: Coordinate): Cloud? {
         return this.coordinateToCloud[coordinate]
-    }
-
-    /**
-     * sets the clouds list
-     */
-    fun setCloudsList(list: MutableList<Cloud>) {
-        this.cloudsList = list
     }
 }
