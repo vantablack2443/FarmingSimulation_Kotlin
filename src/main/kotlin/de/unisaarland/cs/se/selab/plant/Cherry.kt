@@ -1,7 +1,9 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST
+import kotlin.math.floor
 
 const val CHERRY_SUNLIGHT = 120
 const val CHERRY_MOISTURE = 150
@@ -14,6 +16,7 @@ const val CHERRY_HARVEST_START = 13
 const val CHERRY_HARVEST_END = 14
 const val CHERRY_BLOOM_START = 8
 const val CHERRY_BLOOM_END = 9
+const val CHERRY_LATE_HARVEST_PENALTY = 0.7
 
 /**
  * apple class
@@ -33,44 +36,46 @@ class Cherry : PlantationPlant() {
     override var bloomingTime: Duration? = Duration(CHERRY_BLOOM_START, CHERRY_BLOOM_END)
 
     override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * animalAttackPenalty
+        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * pollination
+        this.harvestEstimate = floor(newEstimate).toInt()
     }
 
     override fun doAnimalAttack() {
-        TODO("Not yet implemented")
+        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
     }
 
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
+    override fun doBeeHappy(effect: Int) {
+        this.pollination *= effect
     }
 
     override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+        return tick in CHERRY_BLOOM_START..CHERRY_BLOOM_END
     }
 
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
+        if (tick in CHERRY_HARVEST_START..CHERRY_HARVEST_END) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+        }
+        if (tick == CHERRY_HARVEST_END + 1) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+            this.lateActions.add(ActionType.HARVEST)
+        }
     }
 
-    override fun needsCutting(tick: Int) {
-        // TODO
-    }
-
-    override fun needsMowing(tick: Int) {
-        // TODO
-    }
 
     override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick <= CHERRY_HARVEST_END) {
-            return
-        } else if (tick - CHERRY_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+        if (tick - CHERRY_HARVEST_END > 1) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
-        } else { // up to 1 tick late, reduce by half
-            this.harvestEstimate /= 2
+        }
+        if (tick - CHERRY_HARVEST_END == 1) {
+            // up to 2 ticks late, reduce by 10% per tick
+            val newEstimate = floor(this.harvestEstimate * CHERRY_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
     }
 

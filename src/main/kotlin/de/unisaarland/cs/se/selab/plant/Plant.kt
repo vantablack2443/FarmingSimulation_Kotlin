@@ -32,7 +32,9 @@ abstract class Plant {
     open fun doBeeHappy(effect: Int) {
         return
     }
-    abstract fun applyPollinationBuff(): Unit
+    open fun applyPollinationBuff() {
+        return
+    }
     abstract fun resetHarvestEstimate(): Unit
     abstract fun applyLateHarvestPenalty(tick: Int): Unit
 

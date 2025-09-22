@@ -89,29 +89,6 @@ class Apple : PlantationPlant() {
     }
 
     /**
-     * checks if the plant needs cutting in this tick
-     */
-    override fun needsCutting(tick: Int) {
-        val cuttingDone = cuttingTime.filter { it.second }
-        if (cuttingDone.isEmpty()) {
-            this.actionsNeeded.add(ActionType.CUT)
-        }
-    }
-
-    /**
-     * checks if the plant needs mowing in this tick
-     */
-    override fun needsMowing(tick: Int) {
-        for (element in mowingTime) {
-            val duration = element.first
-            val done = element.second
-            if (duration.inRange(tick) && !done) {
-                actionsNeeded.add(ActionType.MOW)
-            }
-        }
-    }
-
-    /**
      * updates harvest estimate based on the late penalty ; tick is year tick
      */
     override fun applyLateHarvestPenalty(tick: Int) {
