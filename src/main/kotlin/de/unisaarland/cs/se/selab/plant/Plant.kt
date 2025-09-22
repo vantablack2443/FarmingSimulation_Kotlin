@@ -12,8 +12,9 @@ abstract class Plant {
     open var neededSunlight: Int = -1
     open var harvestingTime: Duration = Duration(-1, -1)
     open var bloomingTime: Duration? = null
-    open var pollination: Int = 0
+    open var pollination: Double = 1.0
     open var animalAttack: Boolean = false
+    open var animalAttackPenalty: Double = 1.0
     open var actionsNeeded: MutableList<ActionType> = mutableListOf()
     open var lateActions: MutableList<ActionType> = mutableListOf()
     abstract fun needsHarvesting(tick: Int): Unit
@@ -28,7 +29,9 @@ abstract class Plant {
 
     abstract fun animalAttackPenalty(): Unit
     abstract fun doAnimalAttack(): Unit
-    abstract fun doBeeHappy(effect: Int): Unit
+    open fun doBeeHappy(effect: Int) {
+        return
+    }
     abstract fun applyPollinationBuff(): Unit
     abstract fun resetHarvestEstimate(): Unit
     abstract fun applyLateHarvestPenalty(tick: Int): Unit
