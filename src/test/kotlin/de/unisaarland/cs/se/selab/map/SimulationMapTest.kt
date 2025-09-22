@@ -1,7 +1,6 @@
 package de.unisaarland.cs.se.selab.map
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
-import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -44,11 +43,6 @@ class SimulationMapTest {
     @Test
     fun testGetTilesByRadius() {
         assertEquals(listOf(tiles[1]), map.getTilesByRadius(tiles[0], 1)) // on or the edge of the map    }
-
-        @Test
-        fun testGetNeighbor() {
-            assertNull(map.getNeighbor(tiles[0]), Direction.NORTH_WEST)
-        }
     }
 
     @Test
