@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.actionHandlers
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger.logFarmAction
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
@@ -64,8 +65,12 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         machine.currentTile = tile
         machine.updateElapsedTime()
+
         val plant = tile.plant
         plant?.actionsNeeded?.remove(ActionType.CUT)
+
+        // Log the action
+        logFarmAction(machine.farmID, ActionType.CUT, tile.id, machine.duration)
     }
 
     /**
@@ -95,6 +100,10 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             machine.updateElapsedTime()
             nextTile.plant?.actionsNeeded?.remove(ActionType.CUT)
             farm.tileHashMap.add(nextTile.id)
+
+            // Log the action
+            logFarmAction(machine.farmID, ActionType.CUT, nextTile.id, machine.duration)
+
             continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
         } else {
             machine.currentTile = machine.homeShed
@@ -153,21 +162,9 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      *THINGS BELOW SO THAT THIS SHIT BUILDS
      */
 
-    /**
-//    private fun hasCuttingMachinesLeft(farm: Farm): Boolean {
-//        // Return true if there is at least one machine not in the machineHashMap
-//        return farm.getMachines().any { machine ->
-//            !farm.machineHashMap.contains(machine.id)
-//        }
-//    }
-*/
     // Implement missing abstract methods from ActionHandler
     override fun startPhase(farm: Farm, machine: Machine) {
         // Provide a minimal implementation or throw if not used
-        throw NotImplementedError("startPhase(farm, machine) is not implemented in CuttingHandler")
-    }
-
-    override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
         throw NotImplementedError("startPhase(farm, machine) is not implemented in CuttingHandler")
     }
 

@@ -24,21 +24,20 @@ class Oat : FieldPlant() {
     override var harvestingTime = Duration(OAT_HARVEST_START, OAT_HARVEST_END)
 
     override fun needsHarvesting(tick: Int) {
-        if ((OAT_HARVEST_START ..OAT_HARVEST_END).contains(tick)) {
+        if ((OAT_HARVEST_START..OAT_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVEST)
         }
     }
 
     // USES SIM-TICK
     override fun needsWeeding(tick: Int) {
-        //In the first 3 ticks after sowing
-        if (((sownTick + OAT_WEED_START_OFFSET)..(sownTick + OAT_WEED_END_OFFSET)).contains(tick)){
+        // In the first 3 ticks after sowing
+        if (((sownTick + OAT_WEED_START_OFFSET)..(sownTick + OAT_WEED_END_OFFSET)).contains(tick)) {
             actionsNeeded.add(ActionType.WEED)
         }
     }
 
     // OAT does not require pollination. Does not bloom
-
 
     override fun checkLateSowing() {
         if (sownTick - OAT_SOW_END == 1 || sownTick - OAT_SOW_END == 2) {

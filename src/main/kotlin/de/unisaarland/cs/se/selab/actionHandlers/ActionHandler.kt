@@ -21,22 +21,59 @@ abstract class ActionHandler(
 ) {
     val operableTiles: List<Tile> = mutableListOf()
     val tileMap: HashSet<Int> = hashSetOf()
-    abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int): Unit
-    abstract fun startPhase(farm: Farm, machine: Machine): Unit
-    abstract fun performAction(machine: Machine, tile: Tile): Unit
-    abstract fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile>
+
+    /**
+     * Starts phase with parameters farm, yearTick and simTick
+     */
+    abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int)
+
+    /**
+     * Starts phase with parameters farm and machine
+     */
+    abstract fun startPhase(farm: Farm, machine: Machine)
+
+    /**
+     * Performs action inside concrete action class with parameters machine and tile
+     */
+    abstract fun performAction(machine: Machine, tile: Tile)
+
+    /**
+     * Gets operable tiles based on farm
+     */
     abstract fun getOperableTiles(farm: Farm): List<Tile>
+
+    /**
+     * Gets operable tiles based on farm, plantType and yearTick
+     */
     abstract fun getOperableTiles(farm: Farm, plant: PlantType, yearTick: Int): List<Tile>
+
+    /**
+     * Updates the tile hash map of the farm with the given tile
+     */
     fun updateTileMap(farm: Farm, tile: Tile) {
-        TODO()
-    }
-    fun updateMachineMap(farm: Farm, machine: Machine) {
-        TODO()
-    }
-    fun returnToShed(machine: Machine) {
-        TODO()
+        // TODO implementation just to build
+        farm.tileHashMap.contains(tile.id)
     }
 
+    /**
+     * Updates the machine hash map of the farm with the given machine
+     */
+    fun updateMachineMap(farm: Farm, machine: Machine) {
+        // TODO
+        farm.machineHashMap.contains(machine.id)
+    }
+
+    /**
+     * Returns the machine to the shed after completing its action
+     */
+    fun returnToShed(machine: Machine) {
+        // TODO
+        machine.currentHarvest ?: return
+    }
+
+    /**
+     * Clears the tile hash maps
+     */
     fun clearSets(farm: Farm) {
         farm.machineHashMap.clear()
         farm.tileHashMap.clear()

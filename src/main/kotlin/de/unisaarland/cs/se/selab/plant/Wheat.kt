@@ -44,7 +44,6 @@ class Wheat : FieldPlant() {
 
     // WHEAT does not require pollination. Does not bloom
 
-
     // Needs to convert sownTick: simTick to yearTick here!!!!!
     override fun checkLateSowing() {
         if (sownTick - WHEAT_SOW_END == 1 || sownTick - WHEAT_SOW_END == 2) {

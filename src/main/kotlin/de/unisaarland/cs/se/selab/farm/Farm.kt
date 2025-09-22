@@ -78,10 +78,17 @@ class Farm(
         return harvestPerPlant
     }
 
+    /**
+     * Gets sowing plan by tick
+     */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
         // TODO()
+        return listOf()
     }
 
+    /**
+     * removes the executed sowing plans from the farm's list of sowing plans
+     */
     fun removeSowingPlans(executedPlans: List<SowingPlan>) {
         // TODO
     }
@@ -110,10 +117,17 @@ class Farm(
         return amount
     }
 
+    /**
+     * sets the fields of the farm to the new list of fields
+     */
     fun setFields(newFields: MutableList<Tile>) {
         this.fields.clear()
         this.fields.addAll(newFields)
     }
+
+    /**
+     * sets the plantation of the farm to the new list of plantations
+     */
     fun setPlantation(newPlantation: MutableList<Tile>) {
         this.plantation.clear()
         this.plantation.addAll(newPlantation)

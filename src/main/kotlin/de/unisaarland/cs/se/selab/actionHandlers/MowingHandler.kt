@@ -66,16 +66,6 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
     }
 
     /**
-     * which to use
-     */
-    override fun getOperableTiles(
-        farm: Farm,
-        plant: PlantType
-    ): List<Tile> {
-        TODO()
-    }
-
-    /**
      * gets all tiles that needs mowing
      * @param farm all mowable tiles are stored in farm
      */
