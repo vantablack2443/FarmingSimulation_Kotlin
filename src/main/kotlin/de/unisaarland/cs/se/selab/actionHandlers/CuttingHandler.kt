@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger.logFarmAction
+import de.unisaarland.cs.se.selab.log.Logger.logMachineFinish
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
@@ -96,17 +97,13 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
 
         val nextTile = neighborTiles.firstOrNull()
         if (nextTile != null) {
-            machine.currentTile = nextTile
-            machine.updateElapsedTime()
-            nextTile.plant?.actionsNeeded?.remove(ActionType.CUT)
             farm.tileHashMap.add(nextTile.id)
-
-            // Log the action
-            logFarmAction(machine.farmID, ActionType.CUT, nextTile.id, machine.duration)
-
+            performAction(machine, nextTile)
             continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
         } else {
             machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
+            logMachineFinish(machine.farmID, machine.id)
         }
     }
 

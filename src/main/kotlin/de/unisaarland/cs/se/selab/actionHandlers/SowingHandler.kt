@@ -253,11 +253,6 @@ class SowingHandler(
         return
     }
 
-    override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
-        // TODO
-        return listOf()
-    }
-
     override fun getOperableTiles(farm: Farm): List<Tile> {
         // TODO
         return listOf()

@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger.logFarmAction
+import de.unisaarland.cs.se.selab.log.Logger.logMachineFinish
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
@@ -47,6 +48,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             }
             // Perform action with the given machine
         }
+        logMachineFinish(machine.farmID, machine.id)
     }
 
     /**
@@ -84,20 +86,16 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
 
             val nextTile = neighborTiles.firstOrNull()
             if (nextTile != null) {
-                machine.currentTile = nextTile
-                machine.updateElapsedTime()
-                nextTile.plant?.actionsNeeded?.remove(ActionType.WEED)
-
-                // Log the action
-                logFarmAction(machine.farmID, ActionType.WEED, tile.id, machine.duration)
-
+                performAction(machine, nextTile)
                 continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
             } else {
                 machine.currentTile = machine.homeShed
+                machine.resetElapsedTime()
             }
             return
         }
         machine.currentTile = machine.homeShed // Return to shed if time is up
+        machine.resetElapsedTime()
     }
 
     /**
