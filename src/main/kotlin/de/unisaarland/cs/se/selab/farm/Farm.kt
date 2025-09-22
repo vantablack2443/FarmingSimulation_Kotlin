@@ -12,8 +12,8 @@ class Farm(
     private val id: Int,
     private val name: String,
     private val farmstead: List<Tile>,
-    private val fields: List<Tile>,
-    private val plantation: List<Tile>,
+    private val fields: MutableList<Tile>,
+    private val plantation: MutableList<Tile>,
     private val machines: List<Machine>,
     private val sowingPlans: MutableMap<Int, List<SowingPlan>>,
     private val harvestPerPlant: MutableMap<PlantType, Int>
@@ -79,7 +79,7 @@ class Farm(
     }
 
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        // TODO
+        // TODO()
     }
 
     fun removeSowingPlans(executedPlans: List<SowingPlan>) {
@@ -108,5 +108,14 @@ class Farm(
             amount += currentHarvest.getAmount()
         }
         return amount
+    }
+
+    fun setFields(newFields: MutableList<Tile>) {
+        this.fields.clear()
+        this.fields.addAll(newFields)
+    }
+    fun setPlantation(newPlantation: MutableList<Tile>) {
+        this.plantation.clear()
+        this.plantation.addAll(newPlantation)
     }
 }

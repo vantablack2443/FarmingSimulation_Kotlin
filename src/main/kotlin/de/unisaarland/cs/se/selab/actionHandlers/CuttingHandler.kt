@@ -8,6 +8,8 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
 
+
+//ISSUES WITH ADDING INTO HASHMAP; FARM NEEDS TO BE PASSED IN CONTINUE action
 /**
  * Handles the cutting phase of the simulation, where machines are assigned to tiles
  * to perform the CUT action on plants that require it.
@@ -43,6 +45,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
                 performAction(machine, tile)
+                updateMachineMap(farm, machine)
             }
         }
     }
@@ -163,6 +166,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     }
 
     override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
+        throw NotImplementedError("startPhase(farm, machine) is not implemented in CuttingHandler")
     }
 
     override fun getOperableTiles(
