@@ -57,7 +57,6 @@ class FarmParser(private val simulationData: SimulationData) {
         } catch (exception: ValidationException) {
             throw ValidationException(exception, json)
         }
-
     }
 
     private fun parseFarms(farms: JsonArray) {
@@ -277,7 +276,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val machineNames = mutableSetOf<String>()
 
         for (machine in simulationData.getMachines()) {
-            if ((!machineIds.add(machine.id)) || !machineNames.add(machine.name)) {
+            if (!machineIds.add(machine.id) || !machineNames.add(machine.name)) {
                 return false
             }
         }
@@ -343,4 +342,3 @@ class FarmParser(private val simulationData: SimulationData) {
         return true
     }
 }
-
