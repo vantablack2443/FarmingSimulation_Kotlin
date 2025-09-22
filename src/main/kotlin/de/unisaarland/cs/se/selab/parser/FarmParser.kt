@@ -337,7 +337,3 @@ class FarmParser(private val simulationData: SimulationData) {
     }
 }
 
-/**
- * This is a custom exception
- */
-class ValidationException : Exception("Validation Exception, missing or invalid fields")

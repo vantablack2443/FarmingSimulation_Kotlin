@@ -5,10 +5,10 @@ import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.tile.Tile
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.text.category
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class SimulationMapTest {
     private lateinit var map: SimulationMap
@@ -85,7 +85,8 @@ class SimulationMapTest {
                     -1,
                     1
                 ),
-                TileType.MEADOW, TileShape.SQUARE, airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+                TileType.MEADOW, TileShape.SQUARE, airflow = null, direction = null, shed = null,
+                possiblePlants = null, maxMoisture = null
             )
         )
         Tiles.add(
@@ -95,7 +96,8 @@ class SimulationMapTest {
                     0,
                     2
                 ),
-                TileType.ROAD, TileShape.OCTAGONAL, airflow = null, direction = null, shed = null, possiblePlants = null, maxMoisture = null
+                TileType.ROAD, TileShape.OCTAGONAL, airflow = null, direction = null, shed = null,
+                possiblePlants = null, maxMoisture = null
             )
         ) // Fixed enum usage
 
@@ -285,62 +287,77 @@ class SimulationMapTest {
 
     @Test
     fun testIsReachable() {
+        // TODO
     }
 
     @Test
     fun testGetAccessibleTiles() {
+        // TODO
     }
 
     @Test
     fun testFindTargetShed() {
+        // TODO
     }
 
     @Test
     fun testGetPlantableTiles() {
+        // TODO
     }
 
     @Test
     fun testFilterForPlantable() {
+        // TODO
     }
 
     @Test
     fun testFilterByType() {
+        // TODO
     }
 
     @Test
     fun testGetTiles() {
+        // TODO
     }
 
     @Test
     fun testSetTiles() {
+        // TODO
     }
 
     @Test
     fun getTileByCoordinate() {
+        // TODO
     }
 
     @Test
     fun getTileByID() {
+        // TODO
     }
 
     @Test
     fun getTilesByRadius() {
+        // TODO
     }
 
     @Test
     fun getNeighbor() {
+        // TODO
     }
 
     @Test
     fun isReachable() {
+        // TODO
     }
 
     @Test
     fun getAccessibleTiles() {
+        // TODO
     }
 
     @Test
     fun findTargetShed() {
+        // TODO
     }
 
     @Test
@@ -351,17 +368,21 @@ class SimulationMapTest {
 
     @Test
     fun filterForPlantable() {
+        // TODO
     }
 
     @Test
     fun filterByType() {
+        // TODO
     }
 
     @Test
     fun getTiles() {
+        // TODO
     }
 
     @Test
     fun setTiles() {
+        // TODO
     }
 }
