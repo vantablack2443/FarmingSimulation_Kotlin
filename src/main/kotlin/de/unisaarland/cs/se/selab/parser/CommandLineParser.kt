@@ -62,7 +62,7 @@ class CommandLineParser {
             if (!arg.startsWith("--")) continue
             val name = arg.removePrefix("--")
             val command = commands.find { it.name == name }
-                ?: throw ParsingException("Invalid command in command line")
+                ?: throw ParsingException("Invalid command $name in command line")
             if (command.expected) {
                 if (i + 1 >= args.size) {
                     throw ParsingException("Command $name needs a value")
@@ -85,11 +85,6 @@ class CommandLineParser {
  * custom parsing exception for when CLI commands are invalid
  */
 class ParsingException : Exception {
-    var filePath: String? = null
-    constructor(cause: Throwable, filePath: String) : super(cause) {
-        this.filePath = filePath
-    }
-
     // constructor(cause: Throwable) : super(cause)
     constructor(message: String) : super(message)
     constructor() : super()

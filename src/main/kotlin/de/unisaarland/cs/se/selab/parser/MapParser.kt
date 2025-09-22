@@ -49,13 +49,18 @@ class MapParser(private val simData: SimulationData) {
      * parses the given map config file
      */
     fun parse(json: String) {
-        val file = File(json)
-        val jsonString = file.readText()
-        val tiles = Json.parseToJsonElement(jsonString).jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
-        parseCreateTiles(tiles)
-        simData.setTiles(tileIDMap)
-        simData.setMap(SimulationMap(tileCoordinates))
-        Logger.logParsing(true, file.name)
+        try {
+            val file = File(json)
+            val jsonString = file.readText()
+            val tiles = Json.parseToJsonElement(jsonString)
+                .jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
+            parseCreateTiles(tiles)
+            simData.setTiles(tileIDMap)
+            simData.setMap(SimulationMap(tileCoordinates))
+            Logger.logParsing(true, file.name)
+        } catch (exception: ValidationException) {
+            throw ValidationException(exception, json)
+        }
     }
 
     /**
