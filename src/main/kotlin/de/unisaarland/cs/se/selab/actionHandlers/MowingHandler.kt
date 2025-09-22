@@ -83,6 +83,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         val operableTiles: MutableList<Tile> = mutableListOf()
         for (tile in farm.getPlantation()) {
             if (tile.id in farm.tileHashMap) continue
+            if (tile.plantationDamaged != null && tile.plantationDamaged == true) continue
             if (tile.requiresMowing()) {
                 operableTiles.add(tile)
             }

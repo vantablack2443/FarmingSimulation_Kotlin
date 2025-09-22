@@ -8,8 +8,7 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
 
-
-//ISSUES WITH ADDING INTO HASHMAP; FARM NEEDS TO BE PASSED IN CONTINUE action
+// ISSUES WITH ADDING INTO HASHMAP; FARM NEEDS TO BE PASSED IN CONTINUE action
 /**
  * Handles the cutting phase of the simulation, where machines are assigned to tiles
  * to perform the CUT action on plants that require it.
@@ -45,7 +44,9 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
                 performAction(machine, tile)
-                updateMachineMap(farm, machine)
+                farm.tileHashMap.add(tile.id)
+                continueAction(machine, tile, farm, operableTiles)
+                farm.machineHashMap.add(machine.id)
             }
         }
     }
@@ -65,7 +66,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         machine.updateElapsedTime()
         val plant = tile.plant
         plant?.actionsNeeded?.remove(ActionType.CUT)
-        continueAction(machine, tile)
     }
 
     /**
@@ -76,27 +76,29 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      * @param machine The machine performing the action.
      * @param tile The current tile being processed.
      */
-    private fun continueAction(machine: Machine, tile: Tile) {
+    private fun continueAction(machine: Machine, tile: Tile, farm: Farm, operableTiles: MutableList<Tile>) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
             return
         }
 
-        // Get neighboring tiles within radius 2
-        val neighborTiles = this.simulationMap.getTilesByRadius(tile, 2)
-            .filter { it.plant != null && it.plant!!.actionsNeeded.contains(ActionType.CUT) }
+        // Get neighboring tiles within radius 2 that are also in operableTiles and reachable
+        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
+        val neighborTiles = tilesInRadius
+            .filter { it in operableTiles }
             .filter { simulationMap.isReachable(machine, it) }
-            .sortedBy { it.id } // Sort by ID to prioritize lowest ID
+            .sortedBy { it.id } // Sort by ID
 
         val nextTile = neighborTiles.firstOrNull()
         if (nextTile != null) {
             machine.currentTile = nextTile
             machine.updateElapsedTime()
             nextTile.plant?.actionsNeeded?.remove(ActionType.CUT)
-            continueAction(machine, nextTile) // Recursively continue action
+            farm.tileHashMap.add(nextTile.id)
+            continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
+        } else {
+            machine.currentTile = machine.homeShed
         }
-        machine.currentTile = machine.homeShed
-        // No more tiles to go to
     }
 
     /**
