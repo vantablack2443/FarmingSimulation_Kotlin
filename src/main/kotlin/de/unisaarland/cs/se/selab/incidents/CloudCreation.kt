@@ -52,13 +52,6 @@ class CloudCreation(
     }
 
     /**
-     * setter for cloud handler
-     */
-    fun setCloudHandler(cloudHandler: CloudHandler) {
-        this.cloudHandler = cloudHandler
-    }
-
-    /**
      * creates a new cloud instance and adds it into cloud handler mapping
      */
     private fun createCloud(tile: Tile): Cloud {

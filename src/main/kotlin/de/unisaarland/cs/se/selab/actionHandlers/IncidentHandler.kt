@@ -27,11 +27,4 @@ class IncidentHandler(var map: SimulationMap) {
             incident.execute(this.map, yearTick)
         }
     }
-
-    /**
-     * sets the incidents list (is used in simulation)
-     */
-    fun setIncidents(incidents: List<Incident>) {
-        this.incidents = incidents.toList()
-    }
 }

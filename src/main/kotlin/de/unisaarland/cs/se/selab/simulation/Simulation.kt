@@ -44,9 +44,9 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         var incidents = data.getIncidents()
         var cloudCreations = incidents.filter { it.type == IncidentType.CLOUD_CREATION }
         for (element in cloudCreations) {
-            if (element is CloudCreation) element.setCloudHandler(this.cloudHandler)
+            if (element is CloudCreation) element.cloudHandler = this.cloudHandler
         }
-        incidentHandler.setIncidents(incidents)
+        incidentHandler.incidents = incidents
     }
     private var harvestEstimator = HarvestEstimateHandler(this.map)
     private var actionHandler = ActionPhaseHandler(data.getFarms())
