@@ -16,7 +16,7 @@ const val MAX_YEAR_TICK = 24
  Main Function
  **/
 fun main(args: Array<String>) {
-    val parser = CommandLineParser()
+    val cliParser = CommandLineParser()
         .required("map")
         .required("farms")
         .required("scenario")
@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
         .optional("out")
         .optional("help", false)
 
-    val result = parser.parse(args)
+    val result = cliParser.parse(args)
 
     val out = result["out"]
     if (out != null) {
@@ -54,7 +54,7 @@ fun main(args: Array<String>) {
         Logger.logSimulationStart(startYearTick)
         simulation.run()
     } catch (exception: ParsingException) {
-        println("Command line parsing failed: ${exception.message}")
+        Logger.printer.write("Command line parsing failed: ${exception.message ?: "unknown error"}")
         Logger.printer.flush()
         return
     } catch (exception: ValidationException) {

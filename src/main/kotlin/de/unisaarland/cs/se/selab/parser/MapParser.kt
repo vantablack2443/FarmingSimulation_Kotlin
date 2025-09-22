@@ -42,8 +42,8 @@ class ValidationException : Exception {
  * Map parser class
  */
 class MapParser(private val simData: SimulationData) {
-    private lateinit var tileIDMap: MutableMap<Int, Tile>
-    private lateinit var tileCoordinates: MutableMap<Coordinate, Tile>
+    private val tileIDMap: MutableMap<Int, Tile> = mutableMapOf()
+    private val tileCoordinates: MutableMap<Coordinate, Tile> = mutableMapOf()
 
     /**
      * parses the given map config file

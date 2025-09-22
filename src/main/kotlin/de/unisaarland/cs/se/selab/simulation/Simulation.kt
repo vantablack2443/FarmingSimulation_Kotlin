@@ -28,10 +28,10 @@ const val MAX_YEAR_TICK = 24
 class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTick: Int) {
     var currentTick: Int = 0
     var map = data.map
-    private var cloudHandler = CloudHandler(map)
+    private val cloudHandler = CloudHandler(map)
     init {
-        var clouds = data.getClouds()
-        var mapping = mutableMapOf<Coordinate, Cloud>()
+        val clouds = data.getClouds()
+        val mapping = mutableMapOf<Coordinate, Cloud>()
         cloudHandler.setMaxCloudID(clouds.maxOf { it.id })
         for (cloud in clouds) {
             mapping[cloud.location] = cloud
@@ -39,26 +39,26 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         cloudHandler.setCloudMapping(mapping)
         cloudHandler.setCloudsList(clouds.sortedBy { it.id }.toMutableList())
     }
-    private var incidentHandler = IncidentHandler(this.map)
+    private val incidentHandler = IncidentHandler(this.map)
     init {
-        var incidents = data.getIncidents()
-        var cloudCreations = incidents.filter { it.type == IncidentType.CLOUD_CREATION }
+        val incidents = data.getIncidents()
+        val cloudCreations = incidents.filter { it.type == IncidentType.CLOUD_CREATION }
         for (element in cloudCreations) {
             if (element is CloudCreation) element.cloudHandler = this.cloudHandler
         }
         incidentHandler.incidents = incidents
     }
-    private var harvestEstimator = HarvestEstimateHandler(this.map)
-    private var actionHandler = ActionPhaseHandler(data.getFarms())
-    private var harvestPerPlant: MutableMap<PlantType, Int> = mutableMapOf()
+    private val harvestEstimator = HarvestEstimateHandler(this.map)
+    private val actionHandler = ActionPhaseHandler(data.getFarms())
+    private val harvestPerPlant: MutableMap<PlantType, Int> = mutableMapOf()
 
     init {
-        var plantData = actionHandler.getPlantData()
-        var sowingHandler = SowingHandler(this.map, plantData)
-        var harvestingHandler = HarvestingHandler(this.map, plantData)
-        var mowingHandler = MowingHandler(this.map, plantData)
-        var cuttingHandler = CuttingHandler(this.map, plantData)
-        var weedingHandler = WeedingHandler(this.map, plantData)
+        val plantData = actionHandler.getPlantData()
+        val sowingHandler = SowingHandler(this.map, plantData)
+        val harvestingHandler = HarvestingHandler(this.map, plantData)
+        val mowingHandler = MowingHandler(this.map, plantData)
+        val cuttingHandler = CuttingHandler(this.map, plantData)
+        val weedingHandler = WeedingHandler(this.map, plantData)
         actionHandler.setSowingHandler(sowingHandler)
         actionHandler.setHarvestingHandler(harvestingHandler)
         actionHandler.setMowingHandler(mowingHandler)

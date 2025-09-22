@@ -32,8 +32,8 @@ class FarmParser(private val simulationData: SimulationData) {
     private lateinit var farmNames: List<String>
     private lateinit var machineIDs: List<Int>
     private lateinit var machineNames: List<String>
-    private lateinit var sowingPlanIDs: MutableList<Int>
-    private lateinit var sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>>
+    private val sowingPlanIDs: MutableList<Int> = mutableListOf()
+    private val sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
 
     /**
      * main parse function
@@ -96,7 +96,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val allMachines = parseMachines(farm)
 
         val sowingPlanMap = parseSowingPlans(farm)
-        val farm = Farm(
+        val parsedFarm = Farm(
             id,
             name,
             farmsteadTiles,
@@ -106,9 +106,9 @@ class FarmParser(private val simulationData: SimulationData) {
             sowingPlanMap,
             mutableMapOf()
         )
-        validateSowingPlanPlants(farm)
-        updateMachineFarmID(farm)
-        return farm
+        validateSowingPlanPlants(parsedFarm)
+        updateMachineFarmID(parsedFarm)
+        return parsedFarm
     }
 
     /**
@@ -160,8 +160,8 @@ class FarmParser(private val simulationData: SimulationData) {
             ?: throw ValidationException("Machines not specified")
         val mapOfMachines = mutableMapOf<Int, Machine>()
         for (machine in machines) {
-            val machine = parseMachine(machine as JsonObject)
-            mapOfMachines[machine.id] = machine
+            val parsedMachine = parseMachine(machine as JsonObject)
+            mapOfMachines[parsedMachine.id] = parsedMachine
         }
         simulationData.setMachines(mapOfMachines)
         machineIDs = simulationData.getMachines().map { it.id }
@@ -368,7 +368,7 @@ class FarmParser(private val simulationData: SimulationData) {
     private fun validateMachineLocation(tileID: Int) {
         val tile = simulationData.getTileById(tileID)
         if (tile?.category != TileType.FARMSTEAD || tile.shed != true) {
-            throw ValidationException("Invalid machine location on tile ${tile?.id}")
+            throw ValidationException("Invalid machine location on tile ${tile?.id ?: "null id"}")
         }
     }
 
@@ -417,10 +417,10 @@ class FarmParser(private val simulationData: SimulationData) {
                 if (tile.category != TileType.FIELD) { throw ValidationException("All tiles must be FIELD") }
             }
         } else {
-            val fields = tiles.filter { it.category == TileType.FIELD }
-            if (fields.isEmpty()) throw ValidationException("At least one tile must be a field")
+            val fieldTiles = tiles.filter { it.category == TileType.FIELD }
+            if (fieldTiles.isEmpty()) throw ValidationException("At least one tile must be a field")
         }
-        val farmIDs = tiles.filter { it.farmID != null }.map { it.farmID!! }
+        val farmIDs = tiles.filter { it.farmID != null }.map { it.farmID }
         if (farmIDs.distinct().size != 1) {
             throw ValidationException("All fields must belong to the same farm")
         }
