@@ -22,27 +22,32 @@ class Pumpkin: FieldPlant() {
     override var harvestingTime = Duration(PUMPKIN_HARVEST_START, PUMPKIN_HARVEST_END)
 
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
+        if((PUMPKIN_HARVEST_START .. PUMPKIN_HARVEST_END).contains(tick)){
+            actionsNeeded.add(ActionType.HARVEST)
+        }
     }
 
-    override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun needsWeeding(simTick: Int) {
+        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
+            actionsNeeded.add(ActionType.WEED)
+        }
     }
 
-    override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
+    override fun isBlooming(simTick: Int): Boolean {
+        // Two ticks after sowing
+        // For two ticks
+        if (((sownTick + 3)..(sownTick + 4)).contains(simTick)) {
+            return true
+        }
+        return false
     }
 
-    override fun doAnimalAttack() {
-        TODO("Not yet implemented")
-    }
-
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
+    override fun doBeeHappy(effect: Double) {
+        this.pollination *= effect
     }
 
     override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
+        this.harvestEstimate = (this.harvestEstimate * pollination).toInt()
     }
 
     override fun checkLateSowing() {
@@ -51,22 +56,17 @@ class Pumpkin: FieldPlant() {
         }
     }
 
-    override fun needsWeeding(tick: Int) {
-        // TODO
-    }
-
-    override fun applyLateHarvestPenalty(tick: Int) {
-       if (tick > PUMPKIN_HARVEST_END) {
-           this.harvestEstimate = 0
-       }
-    }
-
-
     override fun applyLateSowingPenalty() {
         var counter = sownTick - PUMPKIN_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (PENALTY_POINT_EIGHT * this.harvestEstimate).toInt()
+            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
+        }
+    }
+
+    override fun applyLateHarvestPenalty(tick: Int) {
+        if (tick > PUMPKIN_HARVEST_END) {
+            this.harvestEstimate = 0
         }
     }
 
