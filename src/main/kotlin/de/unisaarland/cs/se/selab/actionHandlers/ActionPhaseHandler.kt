@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.plantdata.PlantData
 /**
  * Handles the action phase of the simulation
  */
-class ActionPhaseHandler(farms: List<Farm>) {
+class ActionPhaseHandler(private val farms: List<Farm>) {
     private lateinit var sowingHandler: SowingHandler
     private lateinit var harvestingHandler: HarvestingHandler
     private lateinit var weedingHandler: WeedingHandler
@@ -70,5 +70,8 @@ class ActionPhaseHandler(farms: List<Farm>) {
     fun farmPhase(currentyearTick: Int, simTick: Int) {
         // TODO just for detekt check
         currentyearTick + simTick
+        for (farm in farms) {
+            farm.updateNeededActions(currentyearTick)
+        }
     }
 }

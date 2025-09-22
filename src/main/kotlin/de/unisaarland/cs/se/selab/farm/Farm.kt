@@ -95,6 +95,14 @@ class Farm(
     }
 
     /**
+     * updates the actions needed list of the tiles in the farm for the current year tick
+     */
+    fun updateNeededActions(currentYearTick: Int) {
+        // TODO
+        currentYearTick + 1
+    }
+
+    /**
      * returns the overall sum of the harvest
      */
     fun calculateTotalHarvest(): Int {
