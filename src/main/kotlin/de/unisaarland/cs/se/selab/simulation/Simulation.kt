@@ -77,7 +77,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             cloudHandler.moveClouds()
             actionHandler.farmPhase(currentYearTick, currentTick)
             applyIncidents(this.currentYearTick)
-            harvestEstimator.estimateHarvest(currentYearTick)
+            harvestEstimator.estimateHarvest()
         }
         terminate()
     }

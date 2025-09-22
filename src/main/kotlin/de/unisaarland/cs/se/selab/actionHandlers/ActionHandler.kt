@@ -21,22 +21,65 @@ abstract class ActionHandler(
 ) {
     val operableTiles: List<Tile> = mutableListOf()
     val tileMap: HashSet<Int> = hashSetOf()
+
+    /**
+     * Starts phase with parameters farm, yearTick and simTick
+     */
     abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int): Unit
+
+    /**
+     * Starts phase with parameters farm and machine
+     */
     abstract fun startPhase(farm: Farm, machine: Machine): Unit
+
+    /**
+     * Performs action inside concrete action class with parameters machine and tile
+     */
     abstract fun performAction(machine: Machine, tile: Tile): Unit
+
+    /**
+     * Gets operable tiles based on farm, and the plantType. Implementation detail is different
+     * for each concrete definition of getOperableTiles
+     */
     abstract fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile>
+
+    /**
+     * Gets operable tiles based on farm
+     */
     abstract fun getOperableTiles(farm: Farm): List<Tile>
+
+    /**
+     * Gets operable tiles based on farm, plantType and yearTick
+     */
     abstract fun getOperableTiles(farm: Farm, plant: PlantType, yearTick: Int): List<Tile>
+
+    /**
+     * Updates the tile hash map of the farm with the given tile
+     */
     fun updateTileMap(farm: Farm, tile: Tile) {
-        TODO()
-    }
-    fun updateMachineMap(farm: Farm, machine: Machine) {
-        TODO()
-    }
-    fun returnToShed(machine: Machine) {
-        TODO()
+        // TODO implementation just to build
+        farm.tileHashMap.contains(tile.id)
     }
 
+    /**
+     * Updates the machine hash map of the farm with the given machine
+     */
+    fun updateMachineMap(farm: Farm, machine: Machine) {
+        // TODO
+        farm.machineHashMap.contains(machine.id)
+    }
+
+    /**
+     * Returns the machine to the shed after completing its action
+     */
+    fun returnToShed(machine: Machine) {
+        // TODO
+        machine.currentHarvest ?: return
+    }
+
+    /**
+     * Clears the tile hash maps
+     */
     fun clearSets(farm: Farm) {
         farm.machineHashMap.clear()
         farm.tileHashMap.clear()

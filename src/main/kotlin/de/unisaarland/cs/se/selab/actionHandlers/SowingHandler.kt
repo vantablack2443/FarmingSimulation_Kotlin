@@ -147,7 +147,8 @@ class SowingHandler(
                 nextMachine,
                 nextTile,
                 ActionType.SOW
-            )
+                tilesToSow)
+
             while (nextMachine.canPerform() && continueTile != null) {
                 // Update machine's elapsed time
                 nextMachine.updateElapsedTime()
@@ -170,11 +171,12 @@ class SowingHandler(
                     nextMachine,
                     continueTile,
                     ActionType.SOW
+                    tilesToSow
                 )
             }
 
             // Try to return machine to shed
-            //Reset elapsed  time on machine
+            // Reset elapsed  time on machine
             nextMachine.resetElapsedTime()
 
             val returnShed: Tile? = this.simulationMap.findTargetShed(
@@ -186,7 +188,7 @@ class SowingHandler(
             // If no shed is reachable, the machine is stuck
             if (returnShed == null) {
                 nextMachine.isStuck = true
-            } else{
+            } else {
                 nextMachine.currentTile = returnShed
                 nextMachine.homeShed = returnShed
             }
@@ -240,5 +242,25 @@ class SowingHandler(
 
         // REMOVE THE SORTING PART IF THE MACHINE LIST IS MAINTAINED IN ORDER
         return machines.sortedWith(compareBy({ it.duration }, { it.id }))
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine) {
+        // TODO
+        return
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
+        // TODO
+        return
+    }
+
+    override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
+        // TODO
+        return listOf()
+    }
+
+    override fun getOperableTiles(farm: Farm): List<Tile> {
+        // TODO
+        return listOf()
     }
 }
