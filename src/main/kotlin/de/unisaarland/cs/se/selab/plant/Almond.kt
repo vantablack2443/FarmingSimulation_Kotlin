@@ -1,7 +1,9 @@
 
 package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST
+import kotlin.math.floor
 
 const val ALMOND_SUNLIGHT = 130
 const val ALMOND_MOISTURE = 400
@@ -15,7 +17,7 @@ const val ALMOND_HARVEST_START = 16
 const val ALMOND_HARVEST_END = 18
 const val ALMOND_BLOOM_START = 4
 const val ALMOND_BLOOM_END = 4
-const val PENALTY_POINT_NINE = 0.9
+const val ALMOND_LATE_HARVEST_PENALTY = 0.9
 
 /**
  * almond class
@@ -36,44 +38,45 @@ class Almond : PlantationPlant() {
     override var bloomingTime: Duration? = Duration(ALMOND_BLOOM_START, ALMOND_BLOOM_END)
 
     override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * animalAttackPenalty
+        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
+        val newEstimate = this.harvestEstimate * pollination
+        this.harvestEstimate = floor(newEstimate).toInt()
     }
 
     override fun doAnimalAttack() {
-        TODO("Not yet implemented")
+        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
     }
 
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
+    override fun doBeeHappy(effect: Double) {
+        this.pollination *= effect
     }
 
     override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+        return tick in ALMOND_BLOOM_START..ALMOND_BLOOM_END
     }
 
     override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun needsCutting(tick: Int) {
-        // TODO
-    }
-
-    override fun needsMowing(tick: Int) {
-        // TODO
+        if (tick in ALMOND_HARVEST_START..ALMOND_HARVEST_END) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+        }
+        if (tick == ALMOND_HARVEST_END + 1) {
+            this.actionsNeeded.add(ActionType.HARVEST)
+            this.lateActions.add(ActionType.HARVEST)
+        }
     }
 
     override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick <= ALMOND_HARVEST_END) {
-            return
-        } else if (tick - ALMOND_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+        if (tick - ALMOND_HARVEST_END > 1) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
-        } else { // up to 2 ticks late, reduce by 10% per tick
-            this.harvestEstimate = (this.harvestEstimate * PENALTY_POINT_NINE).toInt()
+        }
+        if (tick - ALMOND_HARVEST_END == 1) {
+            // up to 2 ticks late, reduce by 10% per tick
+            val newEstimate = floor(this.harvestEstimate * ALMOND_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
     }
 

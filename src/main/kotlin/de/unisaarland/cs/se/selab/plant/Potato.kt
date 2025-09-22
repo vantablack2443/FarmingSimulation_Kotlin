@@ -21,52 +21,36 @@ class Potato : FieldPlant() {
     override var sowingTime: Duration = Duration(POTATO_SOW_START, POTATO_SOW_END)
     override var harvestingTime: Duration = Duration(POTATO_HARVEST_START, POTATO_HARVEST_END)
 
-    override fun needsHarvesting(tick: Int) {
-        TODO("Not yet implemented")
+    override fun needsHarvesting(yearTick: Int) {
+        if (POTATO_HARVEST_START <= yearTick && yearTick <= POTATO_HARVEST_END) {
+            actionsNeeded.add(ActionType.HARVEST)
+        }
     }
 
-    override fun isBlooming(tick: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun needsWeeding(simTick: Int) {
+        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
+            actionsNeeded.add(ActionType.WEED)
+        }
     }
 
-    override fun animalAttackPenalty() {
-        TODO("Not yet implemented")
-    }
-
-    override fun doAnimalAttack() {
-        TODO("Not yet implemented")
-    }
-
-    override fun doBeeHappy() {
-        TODO("Not yet implemented")
-    }
-
-    override fun applyPollinationBuff() {
-        TODO("Not yet implemented")
-    }
-
+    // SownTick: SimTick needs to be converted to yearTick here
     override fun checkLateSowing() {
         if (sownTick - POTATO_SOW_END <= 2) {
             lateActions.add(ActionType.SOW)
         }
     }
 
-    override fun needsWeeding(tick: Int) {
-        // TODO
+    override fun applyLateSowingPenalty() {
+        var counter = sownTick - POTATO_SOW_END
+        while (counter > 0) {
+            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            counter--
+        }
     }
 
     override fun applyLateHarvestPenalty(tick: Int) {
         if (tick > POTATO_HARVEST_END) {
             this.harvestEstimate = 0
-        }
-    }
-
-
-    override fun applyLateSowingPenalty() {
-        var counter = sownTick - POTATO_SOW_END
-        while (counter > 0) {
-            this.harvestEstimate = (PENALTY_POINT_EIGHT * this.harvestEstimate).toInt()
-            counter--
         }
     }
 

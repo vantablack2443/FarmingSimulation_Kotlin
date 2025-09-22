@@ -1,7 +1,6 @@
 package de.unisaarland.cs.se.selab.map
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
-import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -133,7 +132,7 @@ class SimulationMap(
      * get accessible tiles of the map for a farm
      * (Helper Function)
      */
-    fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
+    private fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
         val reach: MutableList<Tile> = mutableListOf()
         reach += if (radius == -1) {
             tiles.values.toList()
@@ -159,7 +158,7 @@ class SimulationMap(
      * Gets next possible tile for continuing action
      * just the lowest id reachable tile for radius 2
      */
-    fun tileForContinueAction(machine: Machine, currentTile: Tile, action: ActionType, planTiles: List<Tile>): Tile? {
+    fun tileForContinueAction(machine: Machine, planTiles: List<Tile>): Tile? {
         val carryingHarvest: Boolean = machine.currentHarvest != null
         val reachable = getReachableTiles(machine, 2, carryingHarvest)
         val possibleTiles = planTiles.intersect(reachable.toSet()).sortedBy { it.id }
