@@ -17,7 +17,15 @@ abstract class Plant {
     open var actionsNeeded: MutableList<ActionType> = mutableListOf()
     open var lateActions: MutableList<ActionType> = mutableListOf()
     abstract fun needsHarvesting(tick: Int): Unit
-    abstract fun isBlooming(tick: Int): Boolean
+
+    /**
+     * Default function to be overridden when necessary by the concrete plant
+     * Returns false if the plant does not have a blooming phase
+     */
+    fun isBlooming(tick: Int): Boolean {
+        return false
+    }
+
     abstract fun animalAttackPenalty(): Unit
     abstract fun doAnimalAttack(): Unit
     abstract fun doBeeHappy(): Unit
