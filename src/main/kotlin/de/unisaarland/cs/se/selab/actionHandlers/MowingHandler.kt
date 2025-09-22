@@ -53,7 +53,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
 
     private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>) {
         while (machine.canPerform()) {
-            val accessibleTiles = simulationMap.getAccessibleTiles(machine, 2, false)
+            val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
             for (tile in operableTiles) {
                 val opTile = tile.id in farm.tileHashMap
                 if (tile in accessibleTiles && !opTile) {
