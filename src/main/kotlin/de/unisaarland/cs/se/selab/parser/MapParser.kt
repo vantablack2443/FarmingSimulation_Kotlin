@@ -78,7 +78,7 @@ class MapParser(private val simData: SimulationData) {
     private fun parseTile(tile: JsonObject): Tile {
         val id = tile["id"]?.jsonPrimitive?.int ?: throw ValidationException()
         if (id < 0) throw ValidationException("Tile ID negative")
-        val type = tile["category"] ?.jsonPrimitive?.content ?: throw ValidationException()
+        val type = tile["category"] ?.jsonPrimitive?.content ?: throw ValidationException("Missing tile type")
         if (type !in TileType.entries.toString()) throw ValidationException("invalid tile type")
         val category = TileType.valueOf(type.uppercase())
         val coordinates = tile["location"] ?.jsonPrimitive?.content

@@ -16,7 +16,7 @@ const val PUMPKIN_BLOOM_END_OFFSET = 4
 /**
  * Pumpkin class
  */
-class Pumpkin : FieldPlant() {
+class Pumpkin: FieldPlant() {
     override var neededSunlight = PUMPKIN_SUNLIGHT
     override var neededMoisture = PUMPKIN_MOISTURE
     override var harvestEstimate = PUMPKIN_HARVEST
@@ -25,7 +25,7 @@ class Pumpkin : FieldPlant() {
 
     // USES YEAR-TICK
     override fun needsHarvesting(tick: Int) {
-        if ((PUMPKIN_HARVEST_START..PUMPKIN_HARVEST_END).contains(tick)) {
+        if((PUMPKIN_HARVEST_START .. PUMPKIN_HARVEST_END).contains(tick)){
             actionsNeeded.add(ActionType.HARVEST)
         }
     }

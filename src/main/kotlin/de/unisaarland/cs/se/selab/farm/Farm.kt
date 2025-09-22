@@ -79,16 +79,11 @@ class Farm(
     }
 
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        // TODO following code is just for the build
-        val list = mutableListOf<Int>()
-        list.add(simTick)
+        // TODO()
     }
 
     fun removeSowingPlans(executedPlans: List<SowingPlan>) {
         // TODO
-        if (executedPlans.isEmpty()) {
-            return
-        }
     }
 
     /**

@@ -19,13 +19,9 @@ abstract class FieldPlant : Plant() {
      *  applyLateSowingPenalty since sownTick initialized in sowingHandler
      *  and can be accessed directly from within the concrete plant
      */
-    open fun applyMissedWeedingPenalty() {
+    override fun applyMissedWeedingPenalty() {
         this.harvestEstimate = (MISSED_WEEDING_PENALTY * this.harvestEstimate).toInt()
     }
-
-    abstract fun checkLateSowing()
-    abstract fun needsWeeding(tick: Int)
-    abstract fun applyLateSowingPenalty()
 
     /**
      * Does Animal Attack on the plant
@@ -43,4 +39,5 @@ abstract class FieldPlant : Plant() {
     override fun animalAttackPenalty() {
         this.harvestEstimate = (animalAttackPenalty * this.harvestEstimate).toInt()
     }
+
 }

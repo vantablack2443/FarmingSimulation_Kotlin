@@ -80,10 +80,12 @@ class Almond : PlantationPlant() {
         }
     }
 
+
     /**
      * reset harvest estimate
      */
     override fun resetHarvestEstimate() {
         this.harvestEstimate = ALMOND_HARVEST
     }
+
 }
