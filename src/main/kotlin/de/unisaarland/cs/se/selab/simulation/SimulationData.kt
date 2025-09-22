@@ -167,24 +167,10 @@ class SimulationData {
     }
 
     /**
-     * returns farms sorted by ID
-     */
-    fun getMachines(): List<Machine> {
-        return machines.values.toList().sortedBy { it.id }
-    }
-
-    /**
      * returns sowing plans
      */
     fun getSowingPlans(): List<SowingPlan> {
         return this.sowingPlans.values.flatten()
-    }
-
-    /**
-     * get sowing plan by ID
-     */
-    fun getSowingPlanByID(id: Int): SowingPlan? {
-        return sowingPlans[id]
     }
 
     /**

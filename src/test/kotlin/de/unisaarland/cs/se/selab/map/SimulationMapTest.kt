@@ -12,43 +12,42 @@ import kotlin.test.assertNull
 
 class SimulationMapTest {
     private lateinit var map: SimulationMap
-    private lateinit var Tiles: MutableList<Tile>
+    private lateinit var tiles: MutableList<Tile>
 
     @BeforeEach
     fun setUp() {
         // i sent the old setup function definition to mahmoud
-        Tiles = mutableListOf(
+        tiles = mutableListOf(
             Tile(0, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE),
             Tile(1, Coordinate(0, 0), TileType.FIELD, TileShape.OCTAGONAL),
             Tile(2, Coordinate(1, 0), TileType.PLANTATION, TileShape.OCTAGONAL),
             Tile(3, Coordinate(0, 1), TileType.FARMSTEAD, TileShape.SQUARE),
             Tile(54, Coordinate(10, 10), TileType.VILLAGE, TileShape.OCTAGONAL)
         )
-        val tileMap = Tiles.associateBy { it.location }.toMutableMap()
+        val tileMap = tiles.associateBy { it.location }.toMutableMap()
         map = SimulationMap(tileMap)
     }
 
-
     @Test
     fun testGetTileByCoordinate() {
-        assertEquals(Tiles[1], map.getTileByCoordinate(Coordinate(0, 0)))
-        assertEquals(Tiles[0], map.getTileByCoordinate(Coordinate(-1, -1)))
+        assertEquals(tiles[1], map.getTileByCoordinate(Coordinate(0, 0)))
+        assertEquals(tiles[0], map.getTileByCoordinate(Coordinate(-1, -1)))
         assertNull(map.getTileByCoordinate(Coordinate(99, 121)))
     }
 
     @Test
     fun testGetTileByID() {
-        assertEquals(Tiles[3], map.getTileByID(54))
+        assertEquals(tiles[3], map.getTileByID(54))
         assertNull(map.getTileByID(9999))
     }
 
     @Test
     fun testGetTilesByRadius() {
-        assertEquals(listOf(Tiles[1]), map.getTilesByRadius(Tiles[0], 1)) // on or the edge of the map    }
+        assertEquals(listOf(tiles[1]), map.getTilesByRadius(tiles[0], 1)) // on or the edge of the map    }
 
         @Test
         fun testGetNeighbor() {
-            assertNull(map.getNeighbor(Tiles[0]), Direction.NORTH_WEST)
+            assertNull(map.getNeighbor(tiles[0]), Direction.NORTH_WEST)
         }
     }
 
