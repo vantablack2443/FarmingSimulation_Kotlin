@@ -35,7 +35,7 @@ class SowingHandler(
         // Loop through all sowing plans and try to execute each
         val plansExecuted: MutableList<SowingPlan> = mutableListOf()
         for (plan in sowingPlans) {
-            val planSuccess: Boolean = tryPlan(farm, plan, yearTick)
+            val planSuccess: Boolean = tryPlan(farm, plan, simTick)
             // Add plan to executed list if successful
             if (planSuccess) {
                 plansExecuted.add(plan)
@@ -50,12 +50,12 @@ class SowingHandler(
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        yearTick: Int
+        simTick: Int
     ): List<Tile> {
         val operableTiles = mutableListOf<Tile>()
         for (tile in farm.getFields()) {
             // ???? WHY DOES IsSowable REQUIRE THE PLANT PARAMETER
-            if (tile.currentCrop == plant && tile.isSowable(plant, yearTick)) {
+            if (tile.currentCrop == plant && tile.isSowable(plant, simTick)) {
                 operableTiles.add(tile)
             }
         }
@@ -83,9 +83,9 @@ class SowingHandler(
         return sowingPlans
     }
 
-    private fun getTilesToSow(farm: Farm, plan: SowingPlan, yearTick: Int): List<Tile> {
+    private fun getTilesToSow(farm: Farm, plan: SowingPlan, simTick: Int): List<Tile> {
         // Gets all sowable tiles for the given plant type
-        val plantableTilesFarm = getOperableTiles(farm, plan.getPlant(), yearTick)
+        val plantableTilesFarm = getOperableTiles(farm, plan.getPlant(), simTick)
 
         // Get the intersection of the plantable tiles from the farm and the tiles in the plan
         val planTileID = plan.getSowingTiles().map { it.id }.toSet()
@@ -96,9 +96,9 @@ class SowingHandler(
         return tilesToSow.sortedBy { it.id }
     }
 
-    private fun tryPlan(farm: Farm, plan: SowingPlan, yearTick: Int): Boolean {
+    private fun tryPlan(farm: Farm, plan: SowingPlan, simTick: Int): Boolean {
         // Get all tiles belonging to the farm that can be sown for the given plan
-        val tilesToSow = getTilesToSow(farm, plan, yearTick)
+        val tilesToSow = getTilesToSow(farm, plan, simTick)
 
         // Return if there are no tiles to sow
         if (tilesToSow.isEmpty()) {

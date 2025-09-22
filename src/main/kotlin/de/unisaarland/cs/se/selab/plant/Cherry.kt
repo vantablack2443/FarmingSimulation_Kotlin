@@ -67,7 +67,6 @@ class Cherry : PlantationPlant() {
         }
     }
 
-
     override fun applyLateHarvestPenalty(tick: Int) {
         if (tick - CHERRY_HARVEST_END > 1) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0

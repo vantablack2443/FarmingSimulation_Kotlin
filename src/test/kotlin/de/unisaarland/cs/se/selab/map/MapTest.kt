@@ -5,7 +5,10 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn

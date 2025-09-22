@@ -33,7 +33,4 @@ abstract class PlantationPlant : Plant() {
     override fun applyMowingPenalty() {
         harvestEstimate *= (MISSED_MOWING_PENALTY * harvestEstimate).toInt()
     }
-
-
-
 }
