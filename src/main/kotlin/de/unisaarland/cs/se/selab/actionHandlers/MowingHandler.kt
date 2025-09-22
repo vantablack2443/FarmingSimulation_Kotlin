@@ -104,7 +104,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        yearTick: Int
+        simTick: Int
     ): List<Tile> {
         throw NotImplementedError("getOperableTiles is not implemented in MowingHandler")
     }
