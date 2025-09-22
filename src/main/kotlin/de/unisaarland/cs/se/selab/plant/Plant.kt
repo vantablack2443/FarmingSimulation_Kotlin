@@ -22,13 +22,13 @@ abstract class Plant {
      * Default function to be overridden when necessary by the concrete plant
      * Returns false if the plant does not have a blooming phase
      */
-    fun isBlooming(tick: Int): Boolean {
+    open fun isBlooming(tick: Int): Boolean {
         return false
     }
 
     abstract fun animalAttackPenalty(): Unit
     abstract fun doAnimalAttack(): Unit
-    abstract fun doBeeHappy(): Unit
+    abstract fun doBeeHappy(effect: Int): Unit
     abstract fun applyPollinationBuff(): Unit
     abstract fun resetHarvestEstimate(): Unit
     abstract fun applyLateHarvestPenalty(tick: Int): Unit
