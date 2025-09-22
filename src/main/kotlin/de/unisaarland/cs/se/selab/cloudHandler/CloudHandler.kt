@@ -173,11 +173,10 @@ class CloudHandler(val simulationMap: SimulationMap) {
             if (checkVillageDissipate(nextTile)) {
                 dissipate(cloud, nextTile, true)
                 mergedOrDissipated = true
-                break
             }
 
             // Check for merge and merge if necessary
-            if (checkMerge(nextTile)) {
+            if (!mergedOrDissipated && checkMerge(nextTile)) {
                 val targetCloud = coordinateToCloud[nextTile.location] ?: continue
                 val newCloud = merge(cloud, targetCloud)
                 Logger.logCloudMerge(
@@ -193,6 +192,9 @@ class CloudHandler(val simulationMap: SimulationMap) {
                 // Dissipate will add the new cloud to removed clouds
                 // Will be removed after appending to the two lists if required
                 mergedOrDissipated = true
+            }
+
+            if (mergedOrDissipated) {
                 break
             }
 
