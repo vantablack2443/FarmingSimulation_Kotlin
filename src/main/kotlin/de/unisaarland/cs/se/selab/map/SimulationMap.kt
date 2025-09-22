@@ -36,14 +36,13 @@ class SimulationMap(
 
     /**
      * gets all tiles in the specified radius of given tile
-     * (not optimized yet, imo doesn't need optimization)
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
         val cord = tile.location
         val tiles: MutableList<Tile> = mutableListOf()
         for (i in (cord.x - (radius * 2))..(cord.x + (radius * 2))) {
             for (j in (cord.y - (radius * 2))..(cord.y + (radius * 2))) {
-                if (abs(i - cord.x) + abs(j - cord.y) > radius * 2) {
+                if (abs(i - cord.x) + abs(j - cord.y) > radius * 2 || (i == cord.x && j == cord.y)) {
                     continue
                 }
                 val tile = getTileByCoordinate(Coordinate(i, j))
@@ -92,9 +91,17 @@ class SimulationMap(
      * check if the destination tile is reachable from the current machine location
      */
     fun isReachable(machine: Machine, destination: Tile): Boolean {
-        val start: Tile = machine.currentTile
         val carryingHarvest: Boolean = machine.currentHarvest != null
-        val tileList: List<Tile> = getReachableTiles(machine, -1, carryingHarvest)
+        val reachable = getReachableTiles(machine, -1, carryingHarvest)
+        return destination in reachable
+    }
+
+    /**
+     * Actual BFS done here. returns all the reachable tiles according to the radius.
+     */
+    fun getReachableTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
+        val start: Tile = machine.currentTile
+        val tileList: List<Tile> = getAccessibleTiles(machine, radius, carryingHarvest)
         val visited: MutableSet<Tile> = mutableSetOf()
         val queue: ArrayDeque<Tile> = ArrayDeque()
 
@@ -103,8 +110,6 @@ class SimulationMap(
 
         while (queue.isNotEmpty()) {
             val currTile: Tile = queue.removeFirst()
-            // use id if location doesnt work
-            if (currTile.location == destination.location) return true
 
             val neighbors: MutableList<Tile> = mutableListOf()
             for (direction in Direction.entries) {
@@ -121,13 +126,14 @@ class SimulationMap(
                 }
             }
         }
-        return false
+        return visited.toList()
     }
 
     /**
-     * get reachable tiles for harvesting phase
+     * get accessible tiles of the map for a farm
+     * (Helper Function)
      */
-    fun getReachableTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
+    fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
         val reach: MutableList<Tile> = mutableListOf()
         reach += if (radius == -1) {
             tiles.values.toList()
@@ -151,10 +157,14 @@ class SimulationMap(
 
     /**
      * Gets next possible tile for continuing action
+     * just the lowest id reachable tile for radius 2
      */
-    fun tileForContinueAction(machine: Machine, currentTile: Tile, action: ActionType): Tile? {
-        // TODO
-        return TODO("Provide the return value")
+    fun tileForContinueAction(machine: Machine, currentTile: Tile, action: ActionType, planTiles: List<Tile>): Tile? {
+        val carryingHarvest: Boolean = machine.currentHarvest != null
+        val reachable = getReachableTiles(machine, 2, carryingHarvest)
+        val possibleTiles = planTiles.intersect(reachable.toSet()).sortedBy { it.id }
+        if (possibleTiles.isNotEmpty()) return possibleTiles.first()
+        return null
     }
 
     /**
@@ -163,7 +173,7 @@ class SimulationMap(
      * returns null if no shed on the farm is reachable
      */
     fun findTargetShed(machine: Machine, farmSheds: List<Tile>, carryingHarvest: Boolean): Tile? {
-        val reach = getReachableTiles(machine, -1, carryingHarvest)
+        val reach = getAccessibleTiles(machine, -1, carryingHarvest)
         val reachableSheds = farmSheds.intersect(reach.toSet())
         if (machine.homeShed in reachableSheds) return machine.homeShed
         // assumes farm sheds are ordered by id
@@ -199,6 +209,7 @@ class SimulationMap(
      * For move cloud optimization
      */
     fun nextTileNullButAirflow(tile: Tile): Boolean {
-        // TODO
+        val nextTile = getNeighbor(tile, tile.direction)
+        return nextTile == null
     }
 }
