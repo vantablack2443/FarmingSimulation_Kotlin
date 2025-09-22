@@ -9,6 +9,7 @@ class ActionPhaseHandler(farms: List<Farm>) {
     private lateinit var weedingHandler: WeedingHandler
     private lateinit var cuttingHandler: CuttingHandler
     private lateinit var mowingHandler: MowingHandler
+    private lateinit var irrigationHandler: IrrigationHandler
     private val plantData = PlantData()
 
     fun getPlantData(): PlantData {
