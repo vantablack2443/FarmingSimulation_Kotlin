@@ -21,21 +21,23 @@ class Potato : FieldPlant() {
     override var sowingTime: Duration = Duration(POTATO_SOW_START, POTATO_SOW_END)
     override var harvestingTime: Duration = Duration(POTATO_HARVEST_START, POTATO_HARVEST_END)
 
-    override fun needsHarvesting(yearTick: Int) {
-        if (POTATO_HARVEST_START <= yearTick && yearTick <= POTATO_HARVEST_END) {
+    // USES YEAR-TICK
+    override fun needsHarvesting(tick: Int) {
+        if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVEST)
         }
     }
 
-    override fun needsWeeding(simTick: Int) {
-        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
+    // USES SIM-TICK
+    override fun needsWeeding(tick: Int) {
+        if ((tick - sownTick) % 2 == 0 && tick != sownTick) {
             actionsNeeded.add(ActionType.WEED)
         }
     }
 
     // SownTick: SimTick needs to be converted to yearTick here
     override fun checkLateSowing() {
-        if (sownTick - POTATO_SOW_END <= 2) {
+        if (sownTick - POTATO_SOW_END == 1 || sownTick - POTATO_SOW_END == 2) {
             lateActions.add(ActionType.SOW)
         }
     }

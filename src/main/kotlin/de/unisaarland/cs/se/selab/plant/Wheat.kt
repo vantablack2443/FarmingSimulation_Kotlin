@@ -13,6 +13,8 @@ const val WHEAT_BLOOM_START = 9
 const val WHEAT_BLOOM_END = 9
 const val WHEAT_HARVEST_START = 11
 const val WHEAT_HARVEST_END = 13
+const val WHEAT_WEED_START_OFFSET = 4
+const val WHEAT_WEED_END_OFFSET = 10
 
 /**
  * Wheat class
@@ -26,15 +28,16 @@ class Wheat : FieldPlant() {
     override var bloomingTime: Duration? = Duration(WHEAT_BLOOM_START, WHEAT_BLOOM_END)
 
     override fun needsHarvesting(tick: Int) {
-        if ((WHEAT_HARVEST_START .. WHEAT_HARVEST_END).contains(tick)) {
+        if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVEST)
         }
     }
 
-    override fun needsWeeding(simTick: Int) {
+    // USES SIM-TICK
+    override fun needsWeeding(tick: Int) {
         // Weed 3 ticks and 10 ticks after sowing
         // Refer to specification for more details -> 3 ticks after tick x means on the x + 4th tick
-        if (simTick == sownTick + 4 || simTick == sownTick + 10) {
+        if (tick == sownTick + WHEAT_WEED_START_OFFSET || tick == sownTick + WHEAT_WEED_END_OFFSET) {
             actionsNeeded.add(ActionType.WEED)
         }
     }
