@@ -11,6 +11,7 @@ import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.incidents.Incident
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -53,35 +54,40 @@ class ScenarioParser(private val simData: SimulationData) {
      * Parses the scenario files and runs the checks validity
      */
     fun parse(jsonPath: String) {
-        // Read file
-        val jsonFile = File(jsonPath).readText()
-        // Parse file
-        val jsonData = Json.parseToJsonElement(jsonFile).jsonObject
-        // Get incidents array
-        val incidents = jsonData[INCIDENT_STRING]?.jsonArray ?: throw ValidationException()
-        // Get clouds array
-        val clouds = jsonData[CLOUDS_STRING]?.jsonArray ?: throw ValidationException()
+        try {
+            // Read file
+            val jsonFile = File(jsonPath).readText()
+            // Parse file
+            val jsonData = Json.parseToJsonElement(jsonFile).jsonObject
+            // Get incidents array
+            val incidents = jsonData[INCIDENT_STRING]?.jsonArray ?: throw ValidationException()
+            // Get clouds array
+            val clouds = jsonData[CLOUDS_STRING]?.jsonArray ?: throw ValidationException()
 
-        // Parse incidents
-        parseIncidents(incidents)
-        // Parse clouds
-        parseClouds(clouds)
+            // Parse incidents
+            parseIncidents(incidents)
+            // Parse clouds
+            parseClouds(clouds)
 
-        // Validate City Expansion Incidents
-        checkValid(validateCityExpansion(simData.getIncidents().toList()))
+            // Validate City Expansion Incidents
+            checkValid(validateCityExpansion(simData.getIncidents().toList()))
 
-        // Validate Cloud Creation Incidents for villages
-        checkValid(validateCloudCreationWithVillages(simData.getIncidents().toList()))
+            // Validate Cloud Creation Incidents for villages
+            checkValid(validateCloudCreationWithVillages(simData.getIncidents().toList()))
 
-        // Validate Cloud Creation and Overlapping clouds !!!!
-        checkValid(checkOverlappingCloudCreation())
+            // Validate Cloud Creation and Overlapping clouds !!!!
+            checkValid(checkOverlappingCloudCreation())
 
-        // Cross-check sowing plans
-        // Since there has to be at least one field tile till the end of the simulation, the function will compare
-        // with all possible city expansion incidents
-        val sowingPlanMap = simData.getSowingPlans()
-        for (sowingPlans in sowingPlanMap.values) {
-            checkValid(checkSowingPlanFields(sowingPlans))
+            // Cross-check sowing plans
+            // Since there has to be at least one field tile till the end of the simulation, the function will compare
+            // with all possible city expansion incidents
+            val sowingPlanMap = simData.getSowingPlanMapping()
+            for (sowingPlans in sowingPlanMap.values) {
+                checkValid(checkSowingPlanFields(sowingPlans))
+            }
+            Logger.logParsing(true, File(jsonPath).name)
+        } catch (exception: ValidationException) {
+            throw ValidationException(exception, jsonPath)
         }
     }
 
@@ -473,27 +479,15 @@ class ScenarioParser(private val simData: SimulationData) {
     }
 
     private fun validateLocation(t: Tile): Boolean {
-        if (cloudToTile.containsValue(t)) {
-            return false
-        } else {
-            return true
-        }
+        return !cloudToTile.containsValue(t)
     }
 
     private fun validateUniqueCloudIDs(id: Int): Boolean {
-        if (cloudIDs.contains(id)) {
-            return false
-        } else {
-            return true
-        }
+        return !cloudIDs.contains(id)
     }
 
     private fun validateUniqueIncidentIDs(id: Int): Boolean {
-        if (incidentIDs.contains(id)) {
-            return false
-        } else {
-            return true
-        }
+        return !incidentIDs.contains(id)
     }
 
     /**

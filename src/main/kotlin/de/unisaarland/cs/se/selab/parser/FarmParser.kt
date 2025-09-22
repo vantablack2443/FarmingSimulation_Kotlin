@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
@@ -29,28 +30,34 @@ class FarmParser(private val simulationData: SimulationData) {
     // TODO add a function that initializes machines' farmID when parsing is done
 
     fun parse(json: String) {
-        val file = File(json)
-        val jsonString = file.readText()
-        val jsonObject = Json.parseToJsonElement(jsonString).jsonObject
+        try {
+            val file = File(json)
+            val jsonString = file.readText()
+            val jsonObject = Json.parseToJsonElement(jsonString).jsonObject
 
-        // Parse main components
-        val farms = jsonObject["farms"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
+            // Parse main components
+            val farms = jsonObject["farms"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
 
-        parseFarms(farms)
+            parseFarms(farms)
 
-        for (farm in simulationData.farms.values) {
-            if (!validateFarmTiles(farm)) {
+            for (farm in simulationData.getFarms()) {
+                if (!validateFarmTiles(farm)) {
+                    throw ValidationException()
+                }
+            }
+
+            if (!validateUniqueAttributes()) {
                 throw ValidationException()
             }
+            if (!crossValidateFarmMachine()) {
+                throw ValidationException()
+            }
+            // logging should be done here as file valid
+            Logger.logParsing(true, file.name)
+        } catch (exception: ValidationException) {
+            throw ValidationException(exception, json)
         }
 
-        if (!validateUniqueAttributes()) {
-            throw ValidationException()
-        }
-        if (!crossValidateFarmMachine()) {
-            throw ValidationException()
-        }
-        // logging should be done here as file valid
     }
 
     private fun parseFarms(farms: JsonArray) {
@@ -62,8 +69,8 @@ class FarmParser(private val simulationData: SimulationData) {
             mapOfFarms[farm.getId()] = farm
         }
         simulationData.setFarms(mapOfFarms)
-        farmIDs = simulationData.farms.values.map { it.getId() }
-        farmNames = simulationData.farms.values.map { it.getName() }
+        farmIDs = simulationData.getFarms().map { it.getId() }
+        farmNames = simulationData.getFarms().map { it.getName() }
     }
 
     private fun parseFarm(farm: JsonObject): Farm {
@@ -76,19 +83,19 @@ class FarmParser(private val simulationData: SimulationData) {
         val farmsteads = farm["farmsteads"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
         val farmsteadTiles = farmsteads.map { farmstead ->
             val tileID = farmstead.jsonPrimitive.int
-            simulationData.tiles[tileID] ?: throw ValidationException()
+            simulationData.getTileById(tileID) ?: throw ValidationException()
         }
 
         val fields = farm["fields"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
         val fieldTiles = fields.map { field ->
             val tileID = field.jsonPrimitive.int
-            simulationData.tiles[tileID] ?: throw ValidationException()
+            simulationData.getTileById(tileID) ?: throw ValidationException()
         }
 
         val plantations = farm["plantations"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
         val plantationTiles = plantations.map { plantation ->
             val tileID = plantation.jsonPrimitive.int
-            simulationData.tiles[tileID] ?: throw ValidationException()
+            simulationData.getTileById(tileID) ?: throw ValidationException()
         }
 
         parseMachines(farm["machines"]?.jsonPrimitive?.jsonArray ?: throw ValidationException())
@@ -96,7 +103,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val machines = farm["machines"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
         val allMachines = machines.map { machine ->
             val machineID = machine.jsonPrimitive.int
-            simulationData.machines[machineID] ?: throw ValidationException()
+            simulationData.getMachineById(machineID) ?: throw ValidationException()
         }
 
         parseSowingPlans(farm["sowingPlans"]?.jsonPrimitive?.jsonArray ?: throw ValidationException())
@@ -104,7 +111,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val sowingPlans = farm["sowingPlans"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
         val allSowingPlans = sowingPlans.map { sowingPlan ->
             val sowingPlanID = sowingPlan.jsonPrimitive.int
-            simulationData.sowingPlans[sowingPlanID] ?: throw ValidationException()
+            simulationData.getSowingPlanByID(sowingPlanID) ?: throw ValidationException()
         }
         val sowingPlanMap: MutableMap<Int, List<SowingPlan>> = mutableMapOf()
         allSowingPlans.forEachIndexed { index, sowingPlanList ->
@@ -130,8 +137,8 @@ class FarmParser(private val simulationData: SimulationData) {
             mapOfMachines[machine.id] = machine
         }
         simulationData.setMachines(mapOfMachines)
-        machineIDs = simulationData.machines.values.map { it.id }
-        machineNames = simulationData.machines.values.map { it.name }
+        machineIDs = simulationData.getMachines().map { it.id }
+        machineNames = simulationData.getMachines().map { it.name }
     }
 
     private fun parseMachine(m: JsonObject): Machine {
@@ -158,7 +165,7 @@ class FarmParser(private val simulationData: SimulationData) {
 
         val location = m["location"]?.jsonPrimitive?.int ?: throw ValidationException()
         if (location < 0) throw ValidationException()
-        val tile: Tile = simulationData.tiles[location] ?: throw ValidationException()
+        val tile: Tile = simulationData.getTileById(location) ?: throw ValidationException()
 
         val isValid = validateMachineLocation(location) && validateActionsAndPlants(actions, plants)
         if (!isValid) {
@@ -180,7 +187,7 @@ class FarmParser(private val simulationData: SimulationData) {
             mapOfSowingPlans[tick]
         }
         simulationData.setSowingPlans(mapOfSowingPlans)
-        sowingPlanIDs = simulationData.sowingPlans.values.flatten().map { it.getId() }
+        sowingPlanIDs = simulationData.getSowingPlans().map { it.getId() }
         sowingPlanTicks = simulationData.sowingPlans
     }
 
@@ -200,7 +207,7 @@ class FarmParser(private val simulationData: SimulationData) {
 
             if (location < 0 || radius < 0) throw ValidationException()
 
-            val centerTile = simulationData.tiles[location] ?: throw ValidationException()
+            val centerTile = simulationData.getTileById(location) ?: throw ValidationException()
             val radiusTiles = simulationData.map.getTilesByRadius(centerTile, radius)
 
             if (!validateSowingPlanLocation(radiusTiles, true)) {
@@ -210,7 +217,7 @@ class FarmParser(private val simulationData: SimulationData) {
             val tileArray = plan["tiles"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
             val arrayOfTiles = tileArray.map { tileJson ->
                 val tileID = tileJson.jsonPrimitive.int
-                simulationData.tiles[tileID] ?: throw ValidationException()
+                simulationData.getTileById(tileID) ?: throw ValidationException()
             }
             if (!validateSowingPlanLocation(arrayOfTiles, false)) {
                 throw ValidationException()
@@ -250,7 +257,7 @@ class FarmParser(private val simulationData: SimulationData) {
     }
 
     private fun validateMachineLocation(tileID: Int): Boolean {
-        val tile = simulationData.tiles[tileID]
+        val tile = simulationData.getTileById(tileID)
         return tile?.category == TileType.FARMSTEAD && tile.shed == true
     }
 
@@ -259,7 +266,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val farmIds = mutableSetOf<Int>()
         val farmNames = mutableSetOf<String>()
 
-        for (farm in simulationData.farms.values) {
+        for (farm in simulationData.getFarms()) {
             if (!farmIds.add(farm.getId()) || !farmNames.add(farm.getName())) {
                 return false
             }
@@ -269,7 +276,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val machineIds = mutableSetOf<Int>()
         val machineNames = mutableSetOf<String>()
 
-        for (machine in simulationData.machines.values) {
+        for (machine in simulationData.getMachines()) {
             if ((!machineIds.add(machine.id)) || !machineNames.add(machine.name)) {
                 return false
             }
@@ -278,14 +285,14 @@ class FarmParser(private val simulationData: SimulationData) {
         // Check unique sowing plan attributes
         val sowingPlanIds = mutableSetOf<Int>()
 
-        for (plan in simulationData.sowingPlans.values) {
-            if (!sowingPlanIds.add(plan.id)) { return false }
+        for (plan in simulationData.getSowingPlans()) {
+            if (!sowingPlanIds.add(plan.getId())) { return false }
         }
         return true
     }
 
     private fun crossValidateFarmMachine(): Boolean {
-        for (farm in simulationData.farms.values) {
+        for (farm in simulationData.getFarms()) {
             // Get all farmstead tiles with sheds on them
             val shedTiles: List<Tile> = farm.getFarmstead().filter { it.shed == true }
             for (machine in farm.getMachines()) {
@@ -337,7 +344,3 @@ class FarmParser(private val simulationData: SimulationData) {
     }
 }
 
-/**
- * This is a custom exception
- */
-class ValidationException : Exception("Validation Exception, missing or invalid fields")
