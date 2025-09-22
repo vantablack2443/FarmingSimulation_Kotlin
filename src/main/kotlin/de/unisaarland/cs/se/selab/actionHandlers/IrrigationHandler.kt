@@ -30,13 +30,13 @@ class IrrigationHandler(
         var operableTiles = mutableListOf<Tile>()
         for (tile in f.getFields()) {
             if (!tile.hasPlantGrowing()) continue
-            if (tile.currentMoisture!! < tile.maxMoisture!!) {
+            if (tile.needsIrrigation()) {
                 operableTiles.add(tile)
             }
         }
         for (tile in f.getPlantation()) {
             if (!tile.hasPlantGrowing()) continue
-            if (tile.currentMoisture!! < tile.maxMoisture!!) {
+            if (tile.needsIrrigation()) {
                 operableTiles.add(tile)
             }
         }
