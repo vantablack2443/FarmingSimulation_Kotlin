@@ -105,7 +105,11 @@ class Tile(
      * checks if the tile needs irrigation
      */
     fun needsIrrigation(): Boolean {
-        TODO()
+        return if (plant == null) {
+            false
+        } else {
+            currentMoisture!! < plant!!.neededMoisture
+        }
     }
 
     /**
