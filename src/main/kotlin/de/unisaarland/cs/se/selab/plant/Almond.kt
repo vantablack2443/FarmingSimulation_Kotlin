@@ -26,11 +26,16 @@ class Almond : PlantationPlant() {
     override var neededSunlight = ALMOND_SUNLIGHT
     override var neededMoisture = ALMOND_MOISTURE
     override var harvestEstimate = ALMOND_HARVEST
-    override var cuttingTime = mutableListOf(
+    override var actionsNeeded = mutableListOf<ActionType>()
+    override var lateActions = mutableListOf<ActionType>()
+    override var animalAttack = false
+    override var pollination = 1.0
+    override var animalAttackPenalty = 1.0
+    override val cuttingTime = mutableListOf(
         Pair(Duration(ALMOND_CUT_START, ALMOND_CUT_END), false),
         Pair(Duration(ALMOND_CUT_START_ALT, ALMOND_CUT_END_ALT), false)
     )
-    override var mowingTime = mutableListOf(
+    override val mowingTime = mutableListOf(
         Pair(Duration(ALMOND_MOW_START_END, ALMOND_MOW_START_END), false),
         Pair(Duration(ALMOND_MOW_ALTERNATE, ALMOND_MOW_ALTERNATE), false)
     )

@@ -26,7 +26,11 @@ class Wheat : FieldPlant() {
     override var sowingTime: Duration = Duration(WHEAT_SOW_START, WHEAT_SOW_END)
     override var harvestingTime = Duration(WHEAT_HARVEST_START, WHEAT_HARVEST_END)
     override var bloomingTime: Duration? = Duration(WHEAT_BLOOM_START, WHEAT_BLOOM_END)
-
+    override var animalAttack = false
+    override var pollination = 1.0
+    override var animalAttackPenalty = 1.0
+    override var actionsNeeded = mutableListOf<ActionType>()
+    override var lateActions = mutableListOf<ActionType>()
     override fun needsHarvesting(tick: Int) {
         if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVEST)

@@ -25,11 +25,16 @@ class Grape : PlantationPlant() {
     override var neededSunlight = GRAPE_SUNLIGHT
     override var neededMoisture = GRAPE_MOISTURE
     override var harvestEstimate = GRAPE_HARVEST
-    override var cuttingTime = mutableListOf(
+    override var actionsNeeded = mutableListOf<ActionType>()
+    override var lateActions = mutableListOf<ActionType>()
+    override var animalAttack = false
+    override var pollination = 1.0
+    override var animalAttackPenalty = 1.0
+    override val cuttingTime = mutableListOf(
         Pair(Duration(GRAPE_CUT_START, GRAPE_CUT_END), false),
         Pair(Duration(GRAPE_CUT_ALT, GRAPE_CUT_ALT), false)
     )
-    override var mowingTime = mutableListOf(
+    override val mowingTime = mutableListOf(
         Pair(Duration(GRAPE_MOW_START_END, GRAPE_MOW_START_END), false),
         Pair(Duration(GRAPE_MOW_ALTERNATE, GRAPE_MOW_ALTERNATE), false)
     )

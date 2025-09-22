@@ -8,8 +8,8 @@ const val MISSED_MOWING_PENALTY = 0.9
  * abstract class for plantation plants
  */
 abstract class PlantationPlant : Plant() {
-    open var cuttingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
-    open var mowingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
+    open val cuttingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
+    open val mowingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
     override fun needsCutting(tick: Int) {
         val cuttingDone = cuttingTime.filter { it.second }
         if (cuttingDone.isEmpty()) {

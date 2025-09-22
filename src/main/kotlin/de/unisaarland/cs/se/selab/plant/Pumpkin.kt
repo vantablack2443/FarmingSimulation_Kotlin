@@ -22,6 +22,12 @@ class Pumpkin : FieldPlant() {
     override var harvestEstimate = PUMPKIN_HARVEST
     override var sowingTime: Duration = Duration(PUMPKIN_SOW_START, PUMPKIN_SOW_END)
     override var harvestingTime = Duration(PUMPKIN_HARVEST_START, PUMPKIN_HARVEST_END)
+    override var actionsNeeded = mutableListOf<ActionType>()
+    override var lateActions = mutableListOf<ActionType>()
+    override var animalAttack = false
+    override var pollination = 1.0
+    override var animalAttackPenalty = 1.0
+    override var bloomingTime: Duration? = null
 
     // USES YEAR-TICK
     override fun needsHarvesting(tick: Int) {

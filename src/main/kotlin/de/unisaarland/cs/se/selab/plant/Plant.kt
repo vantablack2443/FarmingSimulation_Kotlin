@@ -7,16 +7,16 @@ import de.unisaarland.cs.se.selab.enumerations.PlantType
  * abstract plant class
  */
 abstract class Plant {
-    open var harvestEstimate: Int = -1
-    open var neededMoisture: Int = -1
-    open var neededSunlight: Int = -1
-    open var harvestingTime: Duration = Duration(-1, -1)
-    open var bloomingTime: Duration? = null
-    open var pollination: Double = 1.0
-    open var animalAttack: Boolean = false
-    open var animalAttackPenalty: Double = 1.0
-    open var actionsNeeded: MutableList<ActionType> = mutableListOf()
-    open var lateActions: MutableList<ActionType> = mutableListOf()
+    abstract var harvestEstimate: Int
+    abstract var neededMoisture: Int
+    abstract var neededSunlight: Int
+    abstract var harvestingTime: Duration
+    abstract var bloomingTime: Duration?
+    abstract var pollination: Double
+    abstract var animalAttack: Boolean
+    abstract var animalAttackPenalty: Double
+    abstract var actionsNeeded: MutableList<ActionType>
+    abstract var lateActions: MutableList<ActionType>
 
     /**
      * Default function to be overridden when necessary by the concrete plant
