@@ -56,7 +56,7 @@ class MapParser(private val simData: SimulationData) {
                 .jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
             parseCreateTiles(tiles)
             simData.setTiles(tileIDMap)
-            simData.setMap(SimulationMap(tileCoordinates))
+            simData.map = SimulationMap(tileCoordinates)
             Logger.logParsing(true, file.name)
         } catch (exception: ValidationException) {
             throw ValidationException(exception, json)

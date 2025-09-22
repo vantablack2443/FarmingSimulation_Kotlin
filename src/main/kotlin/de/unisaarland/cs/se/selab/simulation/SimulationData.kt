@@ -68,13 +68,6 @@ class SimulationData {
     }
 
     /**
-     * setter for the simulation mapping
-     */
-    fun setMap(m: SimulationMap) {
-        map = m
-    }
-
-    /**
      * setter for the ID to tile mapping
      */
     fun setTiles(tiles: MutableMap<Int, Tile>) {

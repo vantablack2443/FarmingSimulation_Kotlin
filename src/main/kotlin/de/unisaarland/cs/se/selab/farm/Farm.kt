@@ -101,7 +101,7 @@ class Farm(
         var amount = harvestPerPlant.values.sum()
         for (machine in machines) {
             val currentHarvest = machine.currentHarvest ?: continue
-            amount += currentHarvest.getAmount()
+            amount += currentHarvest.harvestAmount
         }
         return amount
     }
@@ -113,7 +113,7 @@ class Farm(
         var amount = harvestPerPlant.getOrDefault(plant, 0)
         for (machine in machines) {
             val currentHarvest = machine.currentHarvest ?: continue
-            amount += currentHarvest.getAmount()
+            amount += currentHarvest.harvestAmount
         }
         return amount
     }
