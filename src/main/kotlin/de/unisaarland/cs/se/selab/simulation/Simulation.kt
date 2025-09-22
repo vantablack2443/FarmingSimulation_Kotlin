@@ -37,6 +37,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             mapping[cloud.location] = cloud
         }
         cloudHandler.setCloudMapping(mapping)
+        cloudHandler.setCloudsList(clouds.sortedBy { it.id }.toMutableList())
     }
     private var incidentHandler = IncidentHandler(this.map)
     init {

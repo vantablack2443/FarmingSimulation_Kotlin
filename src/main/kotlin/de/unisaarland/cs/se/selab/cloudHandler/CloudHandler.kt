@@ -377,4 +377,11 @@ class CloudHandler(val simulationMap: SimulationMap) {
     fun getCloudByCoordinate(coordinate: Coordinate): Cloud? {
         return this.coordinateToCloud[coordinate]
     }
+
+    /**
+     * sets the clouds list
+     */
+    fun setCloudsList(list: MutableList<Cloud>) {
+        this.cloudsList = list
+    }
 }
