@@ -7,6 +7,14 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
 
+/**
+ * Abstract class representing a generic action handler for different phases of the simulation.
+ * It provides common functionalities and enforces implementation of specific methods
+ * for handling actions on tiles using machines.
+ *
+ * @param simulationMap The simulation map used to determine tile relationships and reachability.
+ * @param plantdata The plant data used for accessing plant-related information.
+ */
 abstract class ActionHandler(
     val simulationMap: SimulationMap,
     val plantdata: PlantData

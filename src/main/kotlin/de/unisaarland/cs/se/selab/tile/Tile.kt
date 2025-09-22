@@ -15,7 +15,7 @@ import de.unisaarland.cs.se.selab.plant.Plant
 class Tile(
     val id: Int,
     val location: Coordinate,
-    val category: TileType,
+    var category: TileType,
     val shape: TileShape
 ) {
     var currentCrop: PlantType? = null
