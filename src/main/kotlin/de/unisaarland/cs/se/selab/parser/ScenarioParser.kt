@@ -467,15 +467,14 @@ class ScenarioParser(private val simData: SimulationData) {
         // Checks for positive amount
         checkValid(amount > 0)
 
-        val c = Cloud(id, tile.location, duration, amount)
+        val createdCloud = Cloud(id, tile.location, duration, amount)
 
         // Add cloud to CloudToTile Map
-        cloudToTile[c] = tile
-
+        cloudToTile[createdCloud] = tile
         // Add cloudID to cloudIDs list
         cloudIDs.add(id)
 
-        return c
+        return createdCloud
     }
 
     private fun validateLocation(t: Tile): Boolean {
