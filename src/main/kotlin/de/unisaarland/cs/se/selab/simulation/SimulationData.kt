@@ -152,10 +152,25 @@ class SimulationData {
     }
 
     /**
+     * return sowing plan with given ID
+     */
+    fun getSowingPlanByID(id: Int): SowingPlan? {
+        val plans = sowingPlans.values.flatten()
+        return plans.find { it.getId() == id }
+    }
+
+    /**
+     * return all machines
+     */
+    fun getMachines(): List<Machine> {
+        return this.machines.values.toList().sortedBy { it.id }
+    }
+
+    /**
      * returns sowing plans
      */
-    fun getSowingPlans(): Map<Int, List<SowingPlan>> {
-        return this.sowingPlans
+    fun getSowingPlans(): List<SowingPlan> {
+        return this.sowingPlans.values.flatten()
     }
 
     /**
@@ -170,5 +185,16 @@ class SimulationData {
      */
     fun getMachineById(id: Int): Machine? {
         return machines[id]
+    }
+
+    /**
+     * sets sowing plan mapping
+     */
+    fun setSowingPlanMapping(plans: MutableMap<Int, List<SowingPlan>>) {
+        this.sowingPlans = plans
+    }
+
+    fun getSowingPlanMapping(): MutableMap<Int, List<SowingPlan>> {
+        return this.sowingPlans
     }
 }

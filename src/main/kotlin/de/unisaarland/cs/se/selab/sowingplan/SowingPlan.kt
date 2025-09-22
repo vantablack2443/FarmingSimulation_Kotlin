@@ -3,6 +3,9 @@ package de.unisaarland.cs.se.selab.sowingplan
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.tile.Tile
 
+/**
+ * SowingPlan data class
+ */
 class SowingPlan(
     private val id: Int,
     private val plant: PlantType,
