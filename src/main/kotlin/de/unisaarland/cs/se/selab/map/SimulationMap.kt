@@ -133,7 +133,7 @@ class SimulationMap(
      * get accessible tiles of the map for a farm
      * (Helper Function)
      */
-    fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
+    private fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
         val reach: MutableList<Tile> = mutableListOf()
         reach += if (radius == -1) {
             tiles.values.toList()
