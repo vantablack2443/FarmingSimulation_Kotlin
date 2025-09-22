@@ -11,8 +11,6 @@ import de.unisaarland.cs.se.selab.tile.Tile
 
 /**
  * handler to perform the mowing action on the given farm and machine
- * @param simulationMap map of the simulation
- * @param plantdata timing data on the plants
  */
 class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
 
