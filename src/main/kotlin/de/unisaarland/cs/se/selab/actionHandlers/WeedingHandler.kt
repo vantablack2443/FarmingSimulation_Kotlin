@@ -19,7 +19,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
 
     /**
      * Starts the weeding phase for a specific machine, assigning it to operable tiles.
-     *
+     * Machine passed should not be in the MachineMap
      * @param farm The farm containing the tiles and machines.
      * @param machine The machine to be used for weeding.
      */
@@ -34,16 +34,15 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             return
         }
         for (tile in operableTiles) {
-            if (tile.id in farm.tileHashMap) {
+            val plantType = tile.currentCrop
+            if (tile.id in farm.tileHashMap || plantType == null) {
                 continue // Skip if tile is already handled
             }
-
-            val plantType = tile.currentCrop ?: continue // Don't really need to do this if operable tiles checks
-            // Skip if no crop
             if (plantsThisMachineCanWorkOn.contains(plantType)) {
                 if (simulationMap.isReachable(machine, tile)) {
                     performAction(machine, tile)
-                    updateMachineMap(farm, machine)
+                    continueAction(machine, tile, farm, operableTiles)
+                    farm.machineHashMap.add(machine.id)
                     break
                 }
             }
@@ -66,7 +65,6 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         machine.updateElapsedTime()
         val plant = tile.plant
         plant?.actionsNeeded?.remove(ActionType.WEED)
-        continueAction(machine, tile)
     }
 
     /**
@@ -77,15 +75,16 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      * @param machine The machine performing the action.
      * @param tile The current tile being processed.
      */
-    private fun continueAction(machine: Machine, tile: Tile) {
+    private fun continueAction(machine: Machine, tile: Tile, farm: Farm, operableTiles: MutableList<Tile>) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
             return
         }
 
         // Get neighboring tiles within radius 2
-        val neighborTiles = this.simulationMap.getTilesByRadius(tile, 2)
-            .filter { it.plant != null && it.plant!!.actionsNeeded.contains(ActionType.WEED) }
+        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
+        val neighborTiles = tilesInRadius
+            .filter { it in operableTiles }
             .filter { simulationMap.isReachable(machine, it) }
             .sortedBy { it.id } // Sort by ID
 
@@ -94,7 +93,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             machine.currentTile = nextTile
             machine.updateElapsedTime()
             nextTile.plant?.actionsNeeded?.remove(ActionType.WEED)
-            continueAction(machine, nextTile) // Recursively continue action
+            continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
         } else {
             machine.currentTile = machine.homeShed
         }
