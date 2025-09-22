@@ -123,28 +123,44 @@ class Tile(
      * checks if weeding required
      */
     fun requiresWeeding(): Boolean {
-        TODO()
+        val actionsNeeded = this.plant?.actionsNeeded
+        if (actionsNeeded == null) {
+            return false
+        } else {
+            return ActionType.WEED in actionsNeeded
+        }
     }
 
     /**
      * checks if cutting required
      */
     fun requiresCutting(): Boolean {
-        TODO()
+        val actionsNeeded = this.plant?.actionsNeeded
+        if (actionsNeeded == null) {
+            return false
+        } else {
+            return ActionType.MOW in actionsNeeded
+        }
     }
 
     /**
      * checks if there is a plant on the tile
      */
     fun hasPlantGrowing(): Boolean {
-        TODO()
+        if (this.category == TileType.FIELD) {
+            return plant != null
+        }
+        if (this.category == TileType.PLANTATION) {
+            return plantationDamaged == false
+        }
+        return false
     }
 
     /**
      * check if the tile belongs to the given farm
      */
     fun isOwnedBY(farmID: Int): Boolean {
-        TODO()
+        return farmID == this.farmID
     }
 
     /**

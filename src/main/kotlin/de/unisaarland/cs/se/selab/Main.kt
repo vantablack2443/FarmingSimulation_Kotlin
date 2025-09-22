@@ -45,16 +45,16 @@ fun main(args: Array<String>) {
         val parser = Parser()
         val simData = parser.parse(
             listOf(
-                result["map"] ?: throw ParsingException(),
-                result["farms"] ?: throw ParsingException(),
-                result["scenario"] ?: throw ParsingException()
+                result["map"] ?: throw ParsingException("Missing map file"),
+                result["farms"] ?: throw ParsingException("Missing farms file"),
+                result["scenario"] ?: throw ParsingException("Missing scenario file")
             )
         )
         val simulation = Simulation(simData, maxTicks, startYearTick)
         Logger.logSimulationStart(startYearTick)
         simulation.run()
     } catch (exception: ParsingException) {
-        Logger.logInvalidFile(exception.filePath ?: "null file")
+        println("Command line parsing failed: ${exception.message}")
         Logger.printer.flush()
         return
     } catch (exception: ValidationException) {
