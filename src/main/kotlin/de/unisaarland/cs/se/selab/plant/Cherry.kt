@@ -3,6 +3,8 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST_END
+import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST_START
 import kotlin.math.floor
 
 const val CHERRY_SUNLIGHT = 120
@@ -12,8 +14,6 @@ const val CHERRY_CUT_END = 22
 const val CHERRY_CUT_START_ALT = 3
 const val CHERRY_CUT_END_ALT = 4
 const val CHERRY_MOW_START_END = 11
-const val CHERRY_HARVEST_START = 13
-const val CHERRY_HARVEST_END = 14
 const val CHERRY_BLOOM_START = 8
 const val CHERRY_BLOOM_END = 9
 const val CHERRY_LATE_HARVEST_PENALTY = 0.7

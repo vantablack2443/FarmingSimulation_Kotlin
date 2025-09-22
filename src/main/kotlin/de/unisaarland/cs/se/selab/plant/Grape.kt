@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST_START_END
 import kotlin.math.floor
 
 const val GRAPE_SUNLIGHT = 150
@@ -12,7 +13,6 @@ const val GRAPE_CUT_END = 16
 const val GRAPE_CUT_ALT = 14
 const val GRAPE_MOW_START_END = 7
 const val GRAPE_MOW_ALTERNATE = 13
-const val GRAPE_HARVEST_TIME = 17
 const val GRAPE_BLOOM_START = 12
 const val GRAPE_BLOOM_END = 13
 const val GRAPE_LATE_HARVEST_PENALTY = 0.95
@@ -33,7 +33,7 @@ class Grape : PlantationPlant() {
         Pair(Duration(GRAPE_MOW_START_END, GRAPE_MOW_START_END), false),
         Pair(Duration(GRAPE_MOW_ALTERNATE, GRAPE_MOW_ALTERNATE), false)
     )
-    override var harvestingTime = Duration(GRAPE_HARVEST_TIME, GRAPE_HARVEST_TIME)
+    override var harvestingTime = Duration(GRAPE_HARVEST_START_END, GRAPE_HARVEST_START_END)
     override var bloomingTime: Duration? = Duration(GRAPE_BLOOM_START, GRAPE_BLOOM_END)
 
     override fun animalAttackPenalty() {
@@ -50,23 +50,23 @@ class Grape : PlantationPlant() {
     }
 
     override fun needsHarvesting(tick: Int) {
-        if (tick == GRAPE_HARVEST_TIME) {
+        if (tick == GRAPE_HARVEST_START_END) {
             this.actionsNeeded.add(ActionType.HARVEST)
         }
-        if (tick in GRAPE_HARVEST_TIME + 1..GRAPE_HARVEST_TIME + 3) {
+        if (tick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
             this.actionsNeeded.add(ActionType.HARVEST)
             this.lateActions.add(ActionType.HARVEST)
         }
     }
 
     override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick - GRAPE_HARVEST_TIME > 3) { // more than 3 ticks late, set to 0
+        if (tick - GRAPE_HARVEST_START_END > 3) { // more than 3 ticks late, set to 0
             this.harvestEstimate = 0
             return
         }
         var effect = GRAPE_LATE_HARVEST_PENALTY
         var counter = tick
-        while (counter <= GRAPE_HARVEST_TIME + 3) {
+        while (counter <= GRAPE_HARVEST_START_END + 3) {
             effect *= GRAPE_LATE_HARVEST_PENALTY
             counter++
         }

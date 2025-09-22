@@ -23,11 +23,11 @@ const val POTATO_HARVEST_END = 20
 
 // WHEAT loses 20% harvest per tick in tick 14, 15
 const val WHEAT_HARVEST_START = 11
-const val WHEAT_HARVEST_END = 15
+const val WHEAT_HARVEST_END = 13
 
 // OAT loses 20% harvest per tick in tick 17, 18
 const val OAT_HARVEST_START = 13
-const val OAT_HARVEST_END = 18
+const val OAT_HARVEST_END = 16
 
 // PUMPKIN loses all harvest after 20
 const val PUMPKIN_HARVEST_START = 17
@@ -39,15 +39,14 @@ const val APPLE_HARVEST_END = 19
 
 // ALMOND loses 10% harvest in tick 20
 const val ALMOND_HARVEST_START = 16
-const val ALMOND_HARVEST_END = 20
+const val ALMOND_HARVEST_END = 18
 
 // CHERRY loses 30% harvest in tick 15
 const val CHERRY_HARVEST_START = 13
-const val CHERRY_HARVEST_END = 15
+const val CHERRY_HARVEST_END = 14
 
 // GRAPE loses 5% harvest per tick in tick 18, 19, 20
-const val GRAPE_HARVEST_START = 17
-const val GRAPE_HARVEST_END = 20
+const val GRAPE_HARVEST_START_END = 17
 
 // harvest estimates
 const val ALMOND_HARVEST = 800000
@@ -90,7 +89,7 @@ class PlantData {
         APPLE_HARVEST_START..APPLE_HARVEST_END to PlantType.APPLE,
         ALMOND_HARVEST_START..ALMOND_HARVEST_END to PlantType.ALMOND,
         CHERRY_HARVEST_START..CHERRY_HARVEST_END to PlantType.CHERRY,
-        GRAPE_HARVEST_START..GRAPE_HARVEST_END to PlantType.GRAPE
+        GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END to PlantType.GRAPE
     )
 
     /**

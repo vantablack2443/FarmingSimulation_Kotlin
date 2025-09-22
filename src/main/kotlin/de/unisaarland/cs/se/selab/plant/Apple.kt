@@ -3,6 +3,8 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST_END
+import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST_START
 import kotlin.math.floor
 
 const val APPLE_SUNLIGHT = 50
@@ -13,8 +15,6 @@ const val APPLE_CUT_START_ALT = 3
 const val APPLE_CUT_END_ALT = 4
 const val APPLE_MOW_START_END = 11
 const val APPLE_MOW_ALTERNATE = 17
-const val APPLE_HARVEST_START = 17
-const val APPLE_HARVEST_END = 19
 const val APPLE_BLOOM_START = 8
 const val APPLE_BLOOM_END = 9
 const val ANIMAL_ATTACK_PENALTY = 0.9

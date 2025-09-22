@@ -3,6 +3,8 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST_END
+import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST_START
 import kotlin.math.floor
 
 const val ALMOND_SUNLIGHT = 130
@@ -13,8 +15,6 @@ const val ALMOND_CUT_START_ALT = 3
 const val ALMOND_CUT_END_ALT = 4
 const val ALMOND_MOW_START_END = 11
 const val ALMOND_MOW_ALTERNATE = 17
-const val ALMOND_HARVEST_START = 16
-const val ALMOND_HARVEST_END = 18
 const val ALMOND_BLOOM_START = 4
 const val ALMOND_BLOOM_END = 4
 const val ALMOND_LATE_HARVEST_PENALTY = 0.9
