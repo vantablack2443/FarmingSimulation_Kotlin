@@ -10,13 +10,13 @@ const val MISSED_MOWING_PENALTY = 0.9
 abstract class PlantationPlant : Plant() {
     open var cuttingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
     open var mowingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
-    open fun needsCutting(tick: Int) {
+    override fun needsCutting(tick: Int) {
         val cuttingDone = cuttingTime.filter { it.second }
         if (cuttingDone.isEmpty()) {
             this.actionsNeeded.add(ActionType.CUT)
         }
     }
-    open fun needsMowing(tick: Int) {
+    override fun needsMowing(tick: Int) {
         for (element in mowingTime) {
             val duration = element.first
             val done = element.second
@@ -26,11 +26,11 @@ abstract class PlantationPlant : Plant() {
         }
     }
 
-    open fun applyCuttingPenalty() {
+    override fun applyCuttingPenalty() {
         harvestEstimate /= 2
     }
 
-    open fun applyMowingPenalty() {
+    override fun applyMowingPenalty() {
         harvestEstimate *= (MISSED_MOWING_PENALTY * harvestEstimate).toInt()
     }
 
