@@ -38,7 +38,7 @@ class SimulationData {
     private var machines: MutableMap<Int, Machine> = mutableMapOf()
     private var incidents: MutableMap<Int, Incident> = mutableMapOf()
     private var clouds: MutableMap<Int, Cloud> = mutableMapOf()
-    private var sowingPlans: MutableMap<Int, List<SowingPlan>> = mutableMapOf() // mapping tick
+    private var sowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf() // mapping tick
     private var sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
     init {
         sunlightData[1] = SUN_JAN_NOV
@@ -107,13 +107,6 @@ class SimulationData {
      */
     fun setClouds(clouds: MutableMap<Int, Cloud>) {
         this.clouds = clouds
-    }
-
-    /**
-     * setter for TICK to sowing plan mapping
-     */
-    fun setSowingPlans(plans: MutableMap<Int, List<SowingPlan>>) {
-        this.sowingPlans = plans
     }
 
     /**
@@ -190,14 +183,14 @@ class SimulationData {
     /**
      * sets sowing plan mapping
      */
-    fun setSowingPlanMapping(plans: MutableMap<Int, List<SowingPlan>>) {
+    fun setSowingPlanMapping(plans: MutableMap<Int, MutableList<SowingPlan>>) {
         this.sowingPlans = plans
     }
 
     /**
      * returns the sowing plan mapping
      */
-    fun getSowingPlanMapping(): MutableMap<Int, List<SowingPlan>> {
+    fun getSowingPlanMapping(): MutableMap<Int, MutableList<SowingPlan>> {
         return this.sowingPlans
     }
 }

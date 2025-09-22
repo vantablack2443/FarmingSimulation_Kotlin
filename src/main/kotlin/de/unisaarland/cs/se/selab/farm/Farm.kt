@@ -15,7 +15,7 @@ class Farm(
     private val fields: MutableList<Tile>,
     private val plantation: MutableList<Tile>,
     private val machines: List<Machine>,
-    private val sowingPlans: MutableMap<Int, List<SowingPlan>>,
+    private val sowingPlans: MutableMap<Int, MutableList<SowingPlan>>,
     private val harvestPerPlant: MutableMap<PlantType, Int>
 ) {
 
@@ -67,7 +67,7 @@ class Farm(
     /**
      * Returns sowing plans of the farm
      */
-    fun getSowingPlans(): MutableMap<Int, List<SowingPlan>> {
+    fun getSowingPlans(): MutableMap<Int, MutableList<SowingPlan>> {
         return sowingPlans
     }
 
