@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
+import de.unisaarland.cs.se.selab.log.Logger.logIncident
 
 /**
  * city expansion incident
@@ -20,13 +21,14 @@ class CityExpansion(
         this.tile.category = TileType.VILLAGE
         removeFromFarms(tile)
         this.tile.farmID = null
+        logIncident(id, IncidentType.CITY_EXPANSION, listOf(tile.id))
     }
 
     private fun removeFromFarms(tile: Tile) {
-        val farmid = tile.farmID ?: return
+        val farmId = tile.farmID ?: return
 
         for (farm in farms) {
-            if (farm.getId() == farmid) {
+            if (farm.getId() == farmId) {
                 val fields: MutableList<Tile> = farm.getFields().toMutableList()
                 if (fields.contains(tile)) {
                     fields.remove(tile)

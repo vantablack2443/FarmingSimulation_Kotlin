@@ -24,9 +24,10 @@ abstract class ActionHandler(
     abstract fun startPhase(farm: Farm, yearTick: Int, simTick: Int): Unit
     abstract fun startPhase(farm: Farm, machine: Machine): Unit
     abstract fun performAction(machine: Machine, tile: Tile): Unit
-    abstract fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile>
     abstract fun getOperableTiles(farm: Farm): List<Tile>
     abstract fun getOperableTiles(farm: Farm, plant: PlantType, yearTick: Int): List<Tile>
+
+
     fun updateTileMap(farm: Farm, tile: Tile) {
         TODO()
     }
