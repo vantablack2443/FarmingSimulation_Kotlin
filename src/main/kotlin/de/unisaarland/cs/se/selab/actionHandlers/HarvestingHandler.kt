@@ -33,13 +33,15 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         return
     }
 
-    override fun getOperableTiles(
-        farm: Farm,
-        plant: PlantType
-    ): List<Tile> {
-        // TODO
-        return listOf()
-    }
+    /** why was this deleted in actionhandler?
+     * override fun getOperableTiles(
+     *         farm: Farm,
+     *         plant: PlantType
+     *     ): List<Tile> {
+     *         // TODO
+     *         return listOf()
+     *     }
+     */
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
         // TODO

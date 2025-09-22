@@ -8,7 +8,6 @@ import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.FieldPlant
 import de.unisaarland.cs.se.selab.plant.Oat
-import de.unisaarland.cs.se.selab.plant.PENALTY_POINT_NINE
 import de.unisaarland.cs.se.selab.plant.Plant
 import de.unisaarland.cs.se.selab.plant.PlantationPlant
 import de.unisaarland.cs.se.selab.plant.Potato
@@ -18,6 +17,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
 const val FIFTY = 50
+const val PENALTY_POINT_NINE = 0.9
 
 /**
  * This class is responsible for estimating the harvest of all plantable tiles on the map.

@@ -12,6 +12,11 @@ const val FALLOW_DURATION = 4
  * drought incident
  */
 class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius: Int) : Incident(id, tick, type) {
+    /**
+     * executes the drought incident
+     * @param simulationMap the map of the simulation the incidents will be executed on
+     * @param yearTick the tick the incident will be simulated on
+     */
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val incidentTiles: List<Tile> = simulationMap.filterForPlantable(simulationMap.getTilesByRadius(tile, radius))
         for (tile in incidentTiles) {

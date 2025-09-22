@@ -9,6 +9,8 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.plant.Plant
 
+const val FOUR = 4
+
 /**
  * tile class
  */
@@ -34,16 +36,19 @@ class Tile(
     /**
      * checks if the tile is sowable with the given plant in the given year
      */
-    fun isSowable(plant: PlantType, yearTick: Int): Boolean {
-        TODO()
+    fun isSowable(plant: PlantType, simTick: Int): Boolean {
+        if (fallowDuration == null) return false
+        if (fallowDuration!!.inRange(simTick)) return false
+        if (possiblePlants?.contains(plant) != true) return false
+        return true
     }
 
     /**
      * checks if the plant can be harvested from the tile
      */
-    fun isHarvestable(plant: PlantType): Boolean {
-        TODO()
-    }
+//    fun isHarvestable(plant: PlantType): Boolean {
+//        TODO()
+//    }
 
     /**
      * increases the current moisture
@@ -77,14 +82,16 @@ class Tile(
      * gets the actions needed list from the plant
      */
     fun getActions(): List<ActionType> {
-        TODO()
+        if (plant == null) return emptyList()
+        return plant!!.actionsNeeded
     }
 
     /**
      * gets the late actions  list from the plant
      */
     fun getLateActions(): List<ActionType> {
-        TODO()
+        if (plant == null) return emptyList()
+        return plant!!.lateActions
     }
 
     /**
@@ -97,8 +104,15 @@ class Tile(
     /**
      * perform harvest
      */
-    fun harvest() {
-        TODO()
+    fun harvest(simTick: Int) {
+        if (plant == null) return
+        if (category == TileType.PLANTATION) {
+            plant!!.harvestEstimate = 0
+        }
+        if (category == TileType.FIELD) {
+            plant = null
+            fallowDuration = Duration(simTick + 1, simTick + FOUR)
+        }
     }
 
     /**
@@ -116,7 +130,12 @@ class Tile(
      * checks if mowing needed
      */
     fun requiresMowing(): Boolean {
-        TODO()
+        val actionsNeeded = this.plant?.actionsNeeded
+        return if (actionsNeeded == null) {
+            false
+        } else {
+            ActionType.MOW in actionsNeeded
+        }
     }
 
     /**
@@ -124,10 +143,10 @@ class Tile(
      */
     fun requiresWeeding(): Boolean {
         val actionsNeeded = this.plant?.actionsNeeded
-        if (actionsNeeded == null) {
-            return false
+        return if (actionsNeeded == null) {
+            false
         } else {
-            return ActionType.WEED in actionsNeeded
+            ActionType.WEED in actionsNeeded
         }
     }
 
@@ -136,10 +155,10 @@ class Tile(
      */
     fun requiresCutting(): Boolean {
         val actionsNeeded = this.plant?.actionsNeeded
-        if (actionsNeeded == null) {
-            return false
+        return if (actionsNeeded == null) {
+            false
         } else {
-            return ActionType.MOW in actionsNeeded
+            ActionType.MOW in actionsNeeded
         }
     }
 

@@ -76,7 +76,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 
     // System Tests
-    "systemtestImplementation"("selab.systemtest:systemtest-api:0.7.1") { isChanging = true }
+    "systemtestImplementation"("selab.systemtest:systemtest-api:0.7.2") { isChanging = true }
     "systemtestImplementation"("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     "systemtestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }
