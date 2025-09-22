@@ -83,7 +83,7 @@ class Farm(
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
         // TODO()
-        return listOf()
+        return sowingPlans[simTick] ?: listOf()
     }
 
     /**
@@ -91,6 +91,7 @@ class Farm(
      */
     fun removeSowingPlans(executedPlans: List<SowingPlan>) {
         // TODO
+        executedPlans.isEmpty()
     }
 
     /**

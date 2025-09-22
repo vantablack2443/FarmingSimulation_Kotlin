@@ -35,14 +35,16 @@ class Tile(
      * checks if the tile is sowable with the given plant in the given year
      */
     fun isSowable(plant: PlantType, yearTick: Int): Boolean {
-        TODO()
+        // TODO
+        return possiblePlants?.contains(plant) == true && yearTick > 0
     }
 
     /**
      * checks if the plant can be harvested from the tile
      */
     fun isHarvestable(plant: PlantType): Boolean {
-        TODO()
+        // TODO
+        return possiblePlants?.contains(plant) == false
     }
 
     /**

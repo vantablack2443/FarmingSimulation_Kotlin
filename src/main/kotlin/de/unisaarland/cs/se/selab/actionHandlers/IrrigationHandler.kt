@@ -135,7 +135,9 @@ class IrrigationHandler(
         error("startPhase(farm, yearTick, simTick) is not implemented in IrrigationHandler")
     }
 
-    override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
-        error("performAction() is not implemented in IrrigationHandler")
-    }
+    /** why was this deleted in actionhandler?
+     * override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
+     *         error("performAction() is not implemented in IrrigationHandler")
+     *     }
+     */
 }

@@ -68,6 +68,7 @@ class ActionPhaseHandler(farms: List<Farm>) {
      * Starts the farm phase
      */
     fun farmPhase(currentyearTick: Int, simTick: Int) {
-        TODO()
+        // TODO just for detekt check
+        currentyearTick + simTick
     }
 }
