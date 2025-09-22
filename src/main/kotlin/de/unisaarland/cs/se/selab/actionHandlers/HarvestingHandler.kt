@@ -45,7 +45,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
         // TODO
-        return listOf()
+        return emptyList()
     }
 
     override fun getOperableTiles(
@@ -54,6 +54,6 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         yearTick: Int
     ): List<Tile> {
         // TODO
-        return listOf()
+        return emptyList()
     }
 }

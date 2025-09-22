@@ -255,6 +255,6 @@ class SowingHandler(
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
         // TODO
-        return listOf()
+        return emptyList()
     }
 }

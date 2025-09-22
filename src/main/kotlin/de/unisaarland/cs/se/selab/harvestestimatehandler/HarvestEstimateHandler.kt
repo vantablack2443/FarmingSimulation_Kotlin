@@ -67,7 +67,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * Applies all relevant penalties to the harvest estimate of a plantation tile.
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
-        logMissedActions(t.id, t.plant?.lateActions ?: emptyList())
+        logMissedActions(t.id, t.plant?.lateActions.orEmpty())
 
         applySunlight(t)
         applyMoisture(t)
