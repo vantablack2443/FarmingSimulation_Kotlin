@@ -16,12 +16,6 @@ import de.unisaarland.cs.se.selab.tile.Tile
  * @param plantdata The plant data used for accessing plant-related information.
  */
 class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
-    /**
-     * Not implemented: Throws an error if called.
-     */
-    override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
-        error("startPhase(farm, yearTick, simTick) is not implemented in WeedingHandler")
-    }
 
     /**
      * Starts the weeding phase for a specific machine, assigning it to operable tiles.
@@ -33,6 +27,8 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         farm: Farm,
         machine: Machine
     ) {
+        val plantsThisMachineCanWorkOn: List<PlantType> = machine.plants
+
         val operableTiles = getOperableTiles(farm)
         if (operableTiles.isEmpty()) {
             return
@@ -41,11 +37,15 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             if (tile.id in farm.tileHashMap) {
                 continue // Skip if tile is already handled
             }
-            val plantType = tile.currentCrop
-            if (plantType == null) continue // Skip if no crop
-            val machinablePlants: List<PlantType> = machine.plants
-            if (machinablePlants.contains(plantType)) {
-                performAction(machine, tile)
+
+            val plantType = tile.currentCrop ?: continue // Don't really need to do this if operable tiles checks
+            // Skip if no crop
+            if (plantsThisMachineCanWorkOn.contains(plantType)) {
+                if (simulationMap.isReachable(machine, tile)) {
+                    performAction(machine, tile)
+                    updateMachineMap(farm, machine)
+                    break
+                }
             }
             // Perform action with the given machine
         }
@@ -135,5 +135,12 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         yearTick: Int
     ): List<Tile> {
         error("getOperableTiles(farm, plant, yearTick) is not implemented in WeedingHandler")
+    }
+
+    /**
+     * Not implemented: Throws an error if called.
+     */
+    override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
+        error("startPhase(farm, yearTick, simTick) is not implemented in WeedingHandler")
     }
 }
