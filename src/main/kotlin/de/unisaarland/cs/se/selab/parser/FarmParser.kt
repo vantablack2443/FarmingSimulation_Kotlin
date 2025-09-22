@@ -270,7 +270,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val machineNames = mutableSetOf<String>()
 
         for (machine in simulationData.machines.values) {
-            if ((!machineIds.add(machine.id)) || !machineNames.add(machine.name)) {
+            if (!machineIds.add(machine.id) || !machineNames.add(machine.name)) {
                 return false
             }
         }

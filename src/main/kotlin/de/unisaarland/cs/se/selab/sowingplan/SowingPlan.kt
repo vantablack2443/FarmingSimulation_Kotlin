@@ -9,11 +9,23 @@ class SowingPlan(
     private val tick: Int,
     private val affectedTiles: List<Tile>
 ) {
+    /**
+     * Get id
+     */
     fun getId(): Int = id
 
+    /**
+     * Get affected tiles
+     */
     fun getSowingTiles(): List<Tile> = affectedTiles
 
+    /**
+     * Get plant
+     */
     fun getPlant(): PlantType = plant
 
+    /**
+     * Get tick
+     */
     fun getTick(): Int = tick
 }
