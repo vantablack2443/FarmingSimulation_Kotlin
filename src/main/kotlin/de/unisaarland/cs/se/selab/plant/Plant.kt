@@ -12,15 +12,26 @@ abstract class Plant {
     open var neededSunlight: Int = -1
     open var harvestingTime: Duration = Duration(-1, -1)
     open var bloomingTime: Duration? = null
-    open var pollination: Int = 0
+    open var pollination: Double = 1.0
     open var animalAttack: Boolean = false
+    open var animalAttackPenalty: Double = 1.0
     open var actionsNeeded: MutableList<ActionType> = mutableListOf()
     open var lateActions: MutableList<ActionType> = mutableListOf()
     abstract fun needsHarvesting(tick: Int): Unit
-    abstract fun isBlooming(tick: Int): Boolean
+
+    /**
+     * Default function to be overridden when necessary by the concrete plant
+     * Returns false if the plant does not have a blooming phase
+     */
+    open fun isBlooming(tick: Int): Boolean {
+        return false
+    }
+
     abstract fun animalAttackPenalty(): Unit
     abstract fun doAnimalAttack(): Unit
-    abstract fun doBeeHappy(): Unit
+    open fun doBeeHappy(effect: Int) {
+        return
+    }
     abstract fun applyPollinationBuff(): Unit
     abstract fun resetHarvestEstimate(): Unit
     abstract fun applyLateHarvestPenalty(tick: Int): Unit
