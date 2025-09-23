@@ -77,18 +77,34 @@ class MapParser(private val simData: SimulationData) {
         }
     }
 
+    private fun getTileID(json: JsonObject): Int {
+        return json["id"]?.jsonPrimitive?.int ?: throw ValidationException("Tile ID missing")
+    }
+
+    private fun getTileCategory(json: JsonObject): String {
+        return json["category"]?.jsonPrimitive?.content ?: throw ValidationException("Missing tile type")
+    }
+
+    private fun getTileCoordinates(json: JsonObject): JsonObject {
+        return json["coordinates"]?.jsonObject ?: throw ValidationException("Missing tile coordinates")
+    }
+
     /**
      * parses a single tile object
      */
     private fun parseTile(tile: JsonObject): Tile {
-        val id = tile["id"]?.jsonPrimitive?.int ?: throw ValidationException()
+        val id = getTileID(tile)
         if (id < 0) throw ValidationException("Tile ID negative")
-        val type = tile["category"] ?.jsonPrimitive?.content ?: throw ValidationException("Missing tile type")
+
+        val type = getTileCategory(tile)
         if (type !in TileType.entries.toString()) throw ValidationException("invalid tile type")
         val category = TileType.valueOf(type.uppercase())
-        val coordinates = tile["location"] ?.jsonPrimitive?.content
-            ?: throw ValidationException("Missing tile coordinates")
-        val (x, y) = coordinates.removeSurrounding("(", ")").split(',').map { it.toInt() }
+
+        val coordinates = getTileCoordinates(tile)
+        val x = coordinates["x"]?.jsonPrimitive?.int
+        val y = coordinates["y"]?.jsonPrimitive?.int
+        if (x == null || y == null) throw ValidationException("Missing x or y coordinate")
+
         val location = Coordinate(x, y)
         val shape = getShapeByCoordinate(location)
         val parsedTile = Tile(id, location, category, shape)
@@ -108,14 +124,22 @@ class MapParser(private val simData: SimulationData) {
      * parse the airflow and direction for a tile; throw exception if type village
      */
     private fun parseAirflow(tile: JsonObject, category: TileType): Pair<Boolean, Direction> {
-        if (category != TileType.VILLAGE) {
-            val airflow = tile["airflow"]?.jsonPrimitive?.boolean
-                ?: throw ValidationException("Missing tile airflow")
-            val angle = tile["direction"]?.jsonPrimitive?.int ?: throw ValidationException()
-            val direction = Direction.getDirectionByAngle(angle)
-            return Pair(airflow, direction)
+        if (category == TileType.VILLAGE) {
+            if (tile["airflow"] != null) {
+                throw ValidationException("Village tile cannot have airflow")
+            }
+            return Pair(false, Direction.entries.first())
         }
-        throw ValidationException("Village tile cannot have airflow")
+
+        val airflow = tile["airflow"]?.jsonPrimitive?.boolean
+            ?: throw ValidationException("Missing tile airflow")
+        if (!airflow) {
+            return Pair(false, Direction.entries.first())
+        }
+        val angle = tile["direction"]?.jsonPrimitive?.content
+            ?: throw ValidationException("Missing tile direction while airflow is true")
+        val direction = Direction.getDirectionByAngle(angle)
+        return Pair(true, direction)
     }
 
     /**
@@ -293,6 +317,6 @@ class MapParser(private val simData: SimulationData) {
         val y = coordinate.y
         if (x % 2 == 0 && y % 2 == 0) return TileShape.OCTAGONAL
         if (x % 2 == 1 && y % 2 == 1) return TileShape.SQUARE
-        throw ValidationException()
+        throw ValidationException("Invalid tile coordinates")
     }
 }
