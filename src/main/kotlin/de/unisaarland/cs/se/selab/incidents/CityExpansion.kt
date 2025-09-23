@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.incidents
 
+// import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
-import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger.logIncident
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -17,28 +17,48 @@ class CityExpansion(
     val tile: Tile,
     val farms: List<Farm>
 ) : Incident(id, tick, type) {
+
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
-        this.tile.category = TileType.VILLAGE
-        removeFromFarms(tile)
+//        this.tile.category = TileType.VILLAGE
+
+        /*
+        * Change Farm and Machine
+        * 1. Find the farm that owns the tile (using farmID)
+        * 2. Remove the tile from the farm's fields or plantation list
+        * 3. Check if any machines are currently on that tile and set them to stuck
+         */
+        changeFarmAndMachine(tile)
         this.tile.farmID = null
         logIncident(id, IncidentType.CITY_EXPANSION, listOf(tile.id))
     }
 
-    private fun removeFromFarms(tile: Tile) {
+    private fun changeFarmAndMachine(tile: Tile) {
         val farmId = tile.farmID ?: return
-
         for (farm in farms) {
             if (farm.getId() == farmId) {
-                val fields: MutableList<Tile> = farm.getFields().toMutableList()
-                if (fields.contains(tile)) {
-                    fields.remove(tile)
-                    farm.setFields(fields)
-                }
-                if (farm.getPlantation().contains(tile)) {
-                    val plantations: MutableList<Tile> = farm.getPlantation().toMutableList()
-                    plantations.remove(tile)
-                    farm.setPlantation(plantations)
-                }
+                removeTileFromFarm(tile, farm)
+                setMachinesStuckOnTile(tile, farm)
+            }
+        }
+    }
+
+    private fun removeTileFromFarm(tile: Tile, farm: Farm) {
+        val fields = farm.getFields().toMutableList()
+        if (fields.contains(tile)) {
+            fields.remove(tile)
+            farm.setFields(fields)
+        }
+        val plantations = farm.getPlantation().toMutableList()
+        if (plantations.contains(tile)) {
+            plantations.remove(tile)
+            farm.setPlantation(plantations)
+        }
+    }
+
+    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
+        for (machine in farm.getMachines()) {
+            if (machine.currentTile == tile) {
+                machine.isStuck = true
             }
         }
     }

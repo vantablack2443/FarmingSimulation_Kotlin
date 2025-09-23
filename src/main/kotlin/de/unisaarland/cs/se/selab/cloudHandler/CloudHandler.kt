@@ -277,10 +277,16 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * creates a new instance of the merged cloud
      */
     private fun createMergedCloud(cloud: Cloud, targetCloud: Cloud): Cloud {
+        val newDuration: Int = if (targetCloud.duration != -1 && cloud.duration != -1) {
+            minOf(targetCloud.duration, cloud.duration)
+        } else {
+            maxOf(targetCloud.duration, cloud.duration)
+        }
+
         val newCloud = Cloud(
             id = maxCloudID + 1,
             location = targetCloud.location,
-            duration = minOf(targetCloud.duration, cloud.duration),
+            duration = newDuration,
             amount = targetCloud.amount + cloud.amount
         )
         newCloud.maxTraversibleTiles = maxOf(cloud.maxTraversibleTiles, targetCloud.maxTraversibleTiles)
