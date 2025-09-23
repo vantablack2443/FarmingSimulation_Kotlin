@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.incidents
 
-// import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
+import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger.logIncident
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -19,7 +19,19 @@ class CityExpansion(
 ) : Incident(id, tick, type) {
 
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
-//        this.tile.category = TileType.VILLAGE
+        this.tile.category = TileType.VILLAGE
+
+        this.tile.currentCrop = null
+        this.tile.airflow = null
+        this.tile.direction = null
+        this.tile.shed = null
+        this.tile.possiblePlants = null
+        this.tile.maxMoisture = null
+        this.tile.currentMoisture = null
+        this.tile.currentSunlight = 0
+        this.tile.plant = null
+        this.tile.plantationDamaged = null
+        this.tile.fallowDuration = null
 
         /*
         * Change Farm and Machine
