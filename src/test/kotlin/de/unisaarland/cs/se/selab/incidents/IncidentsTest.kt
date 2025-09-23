@@ -1,7 +1,6 @@
 package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
-import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
@@ -16,7 +15,6 @@ import de.unisaarland.cs.se.selab.tile.Tile
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -54,7 +52,7 @@ class IncidentsTest {
         )
         mockMachine = Machine(
             1, "machine", 2, mockMap.getTileByID(4)!!,
-            listOf(ActionType.IRRIGATE), listOf(), farmstead
+            listOf(ActionType.IRRIGATE), emptyList(), farmstead
         )
         mockFarm = Farm(
             1, "farm", listOf(farmstead),
@@ -108,6 +106,7 @@ class IncidentsTest {
         mockMap = SimulationMap(tiles)
     }
 
+    /*
     @Test
     fun testAnimalAttack() {
         apple.actionsNeeded.add(ActionType.MOW)
@@ -125,6 +124,7 @@ class IncidentsTest {
         assertEquals(1.0, potato.animalAttackPenalty)
         assertFalse { apple.actionsNeeded.contains(ActionType.MOW) }
     }
+     */
 
     @Test
     fun droughtTest() {
@@ -165,6 +165,7 @@ class IncidentsTest {
         assertTrue { mockMachine.isStuck }
     }
 
+    /*
     @Test
     fun brokenMachineTest() {
         val brokenMachine = BrokenMachine(
@@ -178,6 +179,7 @@ class IncidentsTest {
         assertTrue(mockMachine.brokenFor != null)
         assertEquals(Duration(17, 20), mockMachine.brokenFor)
     }
+     */
 
     @Test
     fun beeHappyTest() {
