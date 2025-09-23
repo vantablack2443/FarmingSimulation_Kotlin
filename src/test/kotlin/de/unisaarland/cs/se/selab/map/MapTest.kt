@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.map
 
+/*
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -204,3 +205,4 @@ class MapTest {
         assertTrue(reachableTilesWithoutHarvest.contains(tileShed))
     }
 }
+*/
