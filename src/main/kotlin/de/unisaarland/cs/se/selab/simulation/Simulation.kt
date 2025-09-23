@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.actionHandlers.ActionPhaseHandler
 import de.unisaarland.cs.se.selab.actionHandlers.CuttingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.HarvestingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.IncidentHandler
+import de.unisaarland.cs.se.selab.actionHandlers.IrrigationHandler
 import de.unisaarland.cs.se.selab.actionHandlers.MowingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.SowingHandler
 import de.unisaarland.cs.se.selab.actionHandlers.WeedingHandler
@@ -54,11 +55,13 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         val mowingHandler = MowingHandler(this.map, plantData)
         val cuttingHandler = CuttingHandler(this.map, plantData)
         val weedingHandler = WeedingHandler(this.map, plantData)
+        val irrigationHandler = IrrigationHandler(this.map, plantData)
         actionHandler.setSowingHandler(sowingHandler)
         actionHandler.setHarvestingHandler(harvestingHandler)
         actionHandler.setMowingHandler(mowingHandler)
         actionHandler.setCuttingHandler(cuttingHandler)
         actionHandler.setWeedingHandler(weedingHandler)
+        actionHandler.setIrrigationHandler(irrigationHandler)
     }
 
     /**
