@@ -45,7 +45,7 @@ abstract class ActionHandler(
     /**
      * Gets operable tiles based on farm, plantType and yearTick
      */
-    abstract fun getOperableTiles(farm: Farm, plant: PlantType, simTick: Int): List<Tile>
+    abstract fun getOperableTiles(farm: Farm, plant: PlantType, yearTick: Int): List<Tile>
 
     /**
      * Updates the tile hash map of the farm with the given tile
