@@ -20,9 +20,9 @@ enum class Direction {
         /**
          * converts angles to direction enum
          */
-        fun getDirectionByAngle(angle: Int): Direction {
+        fun getDirectionByAngle(angle: String): Direction {
             return when (angle) {
-                0 -> NORTH
+                N_ANGLE -> NORTH
                 NE_ANGLE -> NORTH_EAST
                 E_ANGLE -> EAST
                 SE_ANGLE -> SOUTH_EAST
@@ -36,10 +36,11 @@ enum class Direction {
     }
 }
 
-const val NE_ANGLE = 45
-const val E_ANGLE = 90
-const val SE_ANGLE = 135
-const val S_ANGLE = 180
-const val SW_ANGLE = 225
-const val W_ANGLE = 270
-const val NW_ANGLE = 315
+const val N_ANGLE = "0"
+const val NE_ANGLE = "45"
+const val E_ANGLE = "90"
+const val SE_ANGLE = "135"
+const val S_ANGLE = "180"
+const val SW_ANGLE = "225"
+const val W_ANGLE = "270"
+const val NW_ANGLE = "315"
