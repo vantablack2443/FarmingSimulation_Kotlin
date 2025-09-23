@@ -123,9 +123,9 @@ class IncidentsTest {
         )
         animalAttack.execute(mockMap, 17)
         assertEquals(0.9, apple.animalAttackPenalty)
-        assertEquals(0.5, grape.animalAttackPenalty)
-        assertEquals(0.5, oat.animalAttackPenalty)
-        assertEquals(0.5, potato.animalAttackPenalty)
+        assertEquals(1.0, grape.animalAttackPenalty)
+        assertEquals(1.0, oat.animalAttackPenalty)
+        assertEquals(1.0, potato.animalAttackPenalty)
         assertFalse { apple.actionsNeeded.contains(ActionType.MOW) }
     }
 
