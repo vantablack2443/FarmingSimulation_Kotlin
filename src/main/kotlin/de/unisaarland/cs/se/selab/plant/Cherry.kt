@@ -25,8 +25,8 @@ class Cherry : PlantationPlant() {
     override var neededSunlight = CHERRY_SUNLIGHT
     override var neededMoisture = CHERRY_MOISTURE
     override var harvestEstimate = CHERRY_HARVEST
-    override var actionsNeeded = mutableListOf<ActionType>()
-    override var lateActions = mutableListOf<ActionType>()
+    override val actionsNeeded = mutableListOf<ActionType>()
+    override val lateActions = mutableListOf<ActionType>()
     override var animalAttack = false
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0

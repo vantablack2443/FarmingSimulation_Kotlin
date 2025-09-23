@@ -26,8 +26,8 @@ class Almond : PlantationPlant() {
     override var neededSunlight = ALMOND_SUNLIGHT
     override var neededMoisture = ALMOND_MOISTURE
     override var harvestEstimate = ALMOND_HARVEST
-    override var actionsNeeded = mutableListOf<ActionType>()
-    override var lateActions = mutableListOf<ActionType>()
+    override val actionsNeeded = mutableListOf<ActionType>()
+    override val lateActions = mutableListOf<ActionType>()
     override var animalAttack = false
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0

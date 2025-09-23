@@ -22,8 +22,8 @@ class Oat : FieldPlant() {
     override var harvestEstimate = OAT_HARVEST
     override var sowingTime: Duration = Duration(OAT_SOW_START, OAT_SOW_END)
     override var harvestingTime = Duration(OAT_HARVEST_START, OAT_HARVEST_END)
-    override var actionsNeeded = mutableListOf<ActionType>()
-    override var lateActions = mutableListOf<ActionType>()
+    override val actionsNeeded = mutableListOf<ActionType>()
+    override val lateActions = mutableListOf<ActionType>()
     override var bloomingTime: Duration? = null
     override var animalAttack = false
     override var pollination = 1.0
