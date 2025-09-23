@@ -496,7 +496,12 @@ class ScenarioParser(private val simData: SimulationData) {
         val newVillageIDs = cityExpansionTiles.map { it.id }.toSet()
         for (plan in plans) {
             val potentialTilesInPlan = plan.getSowingTiles().filter { it.id !in newVillageIDs }
-            if (potentialTilesInPlan.none { it.category == TileType.FIELD }) return false
+            if (potentialTilesInPlan.none {
+                    it.category == TileType.FIELD && it.possiblePlants?.contains(plan.getPlant()) == true
+                }
+            ) {
+                return false
+            }
         }
         return true
     }
