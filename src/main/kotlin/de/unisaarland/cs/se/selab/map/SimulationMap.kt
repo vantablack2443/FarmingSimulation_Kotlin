@@ -38,6 +38,7 @@ class SimulationMap(
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
         val cord = tile.location
+        /*
         val tiles: MutableList<Tile> = mutableListOf()
         for (i in (cord.x - (radius * 2))..(cord.x + (radius * 2))) {
             for (j in (cord.y - (radius * 2))..(cord.y + (radius * 2))) {
@@ -50,6 +51,14 @@ class SimulationMap(
                     tiles.add(newTile)
                 }
             }
+        }*/
+        val neighbors = cord.getNeighborsInRadius(radius)
+        val tiles = mutableListOf<Tile>()
+        for (n in neighbors) {
+            val newTile = getTileByCoordinate(n)
+            if (newTile != null) {
+                tiles.add(newTile)
+            }
         }
         return tiles
     }
@@ -58,6 +67,11 @@ class SimulationMap(
      * gets the neighbouring tile according to its airflow direction
      */
     fun getNeighbor(tile: Tile, direction: Direction?): Tile? {
+        if (direction == null) return null
+        val neighbor = tile.location.getNeighbor(direction)
+        if (neighbor != null) { return tiles[neighbor] }
+        return null
+        /*
         var neighbour: Tile? = null
         if (direction == null) return null
         if (tile.shape == TileShape.SQUARE) {
@@ -83,7 +97,7 @@ class SimulationMap(
                 Direction.NORTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y - 1)]
             }
         }
-        return neighbour
+        return neighbour*/
     }
 
     /**
