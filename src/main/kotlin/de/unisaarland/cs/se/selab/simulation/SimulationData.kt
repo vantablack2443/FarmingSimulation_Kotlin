@@ -1,4 +1,189 @@
 package de.unisaarland.cs.se.selab.simulation
 
+import de.unisaarland.cs.se.selab.cloud.Cloud
+import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.incidents.Incident
+import de.unisaarland.cs.se.selab.machine.Machine
+import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.sowingplan.SowingPlan
+import de.unisaarland.cs.se.selab.tile.Tile
+
+const val SUN_JAN_NOV = 98
+const val SUN_FEB_OCT = 112
+const val SUN_MARCH_SEP = 126
+const val SUN_APR = 140
+const val SUN_MAY_JUN_JUL = 168
+const val SUN_AUG = 154
+const val SUN_DEC = 84
+
+const val FEB_TICK = 3
+const val MARCH_TICK = 5
+const val APR_TICK = 7
+const val MAY_TICK = 9
+const val JUN_TICK = 11
+const val JUL_TICK = 13
+const val AUG_TICK = 15
+const val SEP_TICK = 17
+const val OCT_TICK = 19
+const val NOV_TICK = 21
+const val DEC_TICK = 23
+
+/**
+ * simulation data class stores the necessary mappings
+ */
 class SimulationData {
+    lateinit var map: SimulationMap // take a look at this later
+    private val tiles: MutableMap<Int, Tile> = mutableMapOf()
+    private val farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
+    private val machines: MutableMap<Int, Machine> = mutableMapOf()
+    private val incidents: MutableMap<Int, Incident> = mutableMapOf()
+    private val clouds: MutableMap<Int, Cloud> = mutableMapOf()
+    private val sowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf() // mapping tick
+    private val sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
+    init {
+        sunlightData[1] = SUN_JAN_NOV
+        sunlightData[2] = SUN_JAN_NOV
+        sunlightData[FEB_TICK] = SUN_FEB_OCT
+        sunlightData[FEB_TICK + 1] = SUN_FEB_OCT
+        sunlightData[MARCH_TICK] = SUN_MARCH_SEP
+        sunlightData[MARCH_TICK + 1 ] = SUN_MARCH_SEP
+        sunlightData[APR_TICK] = SUN_APR
+        sunlightData[APR_TICK + 1] = SUN_APR
+        sunlightData[MAY_TICK] = SUN_MAY_JUN_JUL
+        sunlightData[MAY_TICK + 1] = SUN_MAY_JUN_JUL
+        sunlightData[JUN_TICK] = SUN_MAY_JUN_JUL
+        sunlightData[JUN_TICK + 1] = SUN_MAY_JUN_JUL
+        sunlightData[JUL_TICK] = SUN_MAY_JUN_JUL
+        sunlightData[JUL_TICK + 1] = SUN_MAY_JUN_JUL
+        sunlightData[AUG_TICK] = SUN_AUG
+        sunlightData[AUG_TICK + 1] = SUN_AUG
+        sunlightData[SEP_TICK] = SUN_MARCH_SEP
+        sunlightData[SEP_TICK + 1] = SUN_MARCH_SEP
+        sunlightData[OCT_TICK] = SUN_FEB_OCT
+        sunlightData[OCT_TICK + 1] = SUN_FEB_OCT
+        sunlightData[NOV_TICK] = SUN_JAN_NOV
+        sunlightData[NOV_TICK + 1] = SUN_JAN_NOV
+        sunlightData[DEC_TICK] = SUN_DEC
+        sunlightData[DEC_TICK + 1] = SUN_DEC
+    }
+
+    /**
+     * setter for the ID to tile mapping
+     */
+    fun addTileToMapping(tile: Tile) {
+        this.tiles[tile.id] = tile
+    }
+
+    /**
+     * setter for the ID to farm mapping
+     */
+    fun addFarmToMapping(farm: Farm) {
+        this.farms[farm.getId()] = farm
+    }
+
+    /**
+     * setter for the ID to machine mapping
+     */
+    fun addMachineToMapping(machine: Machine) {
+        this.machines[machine.id] = machine
+    }
+
+    /**
+     * setter for the TICK to Incident mapping
+     */
+    fun addIncidentToMapping(incident: Incident) {
+        this.incidents[incident.id] = incident
+    }
+
+    /**
+     * setter for ID to cloud mapping
+     */
+    fun addCloudToMapping(cloud: Cloud) {
+        this.clouds[cloud.id] = cloud
+    }
+
+    /**
+     * get the sunlight amount for the given tick
+     */
+    fun getSunlightAmount(currentYear: Int): Int {
+        return sunlightData.getOrDefault(currentYear, 0)
+    }
+
+    /**
+     * returns all the tiles sorted by the ascending ID
+     */
+    fun getTiles(): List<Tile> {
+        return tiles.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns the incidents sorted by ascending ID
+     */
+    fun getIncidents(): List<Incident> {
+        return incidents.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns the clouds listed by ascending ID
+     */
+    fun getClouds(): List<Cloud> {
+        return clouds.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns farms sorted by ID
+     */
+    fun getFarms(): List<Farm> {
+        return this.farms.values.toList().sortedBy { it.getId() }
+    }
+
+    /**
+     * return sowing plan with given ID
+     */
+    fun getSowingPlanByID(id: Int): SowingPlan? {
+        val plans = sowingPlans.values.flatten()
+        return plans.find { it.getId() == id }
+    }
+
+    /**
+     * return all machines
+     */
+    fun getMachines(): List<Machine> {
+        return this.machines.values.toList().sortedBy { it.id }
+    }
+
+    /**
+     * returns sowing plans
+     */
+    fun getSowingPlans(): List<SowingPlan> {
+        return this.sowingPlans.values.flatten()
+    }
+
+    /**
+     * get tile by ID
+     */
+    fun getTileById(id: Int): Tile? {
+        return tiles[id]
+    }
+
+    /**
+     * get machine by ID
+     */
+    fun getMachineById(id: Int): Machine? {
+        return machines[id]
+    }
+
+    /**
+     * sets sowing plan mapping
+     */
+    fun addSowingPlansToMapping(plans: MutableList<SowingPlan>, tick: Int) {
+        this.sowingPlans[tick] = plans
+    }
+
+    /**
+     * returns the sowing plan mapping
+     */
+    fun getSowingPlanMapping(): MutableMap<Int, MutableList<SowingPlan>> {
+        return this.sowingPlans
+    }
 }

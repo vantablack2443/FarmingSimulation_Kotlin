@@ -9,122 +9,172 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.plant.Plant
 
+const val FOUR = 4
+
 /**
  * tile class
  */
 class Tile(
     val id: Int,
     val location: Coordinate,
-    val category: TileType,
-    val shape: TileShape,
-    val airflow: Boolean?,
-    val direction: Direction?,
-    val shed: Boolean?,
-    val possiblePlants: List<PlantType>?,
-    val maxMoisture: Int?
+    var category: TileType,
+    val shape: TileShape
 ) {
+    var currentCrop: PlantType? = null
+    var airflow: Boolean? = null
+    var direction: Direction? = null
+    var shed: Boolean? = null
+    var possiblePlants: List<PlantType>? = mutableListOf()
+    var maxMoisture: Int? = null
     var currentMoisture: Int? = null
     var currentSunlight: Int = 0
     var plant: Plant? = null
-    val farmID: Int? = null
+    var farmID: Int? = null
     var plantationDamaged: Boolean? = null
     var fallowDuration: Duration? = null
 
     /**
      * checks if the tile is sowable with the given plant in the given year
      */
-    fun isSowable(plant: PlantType, yearTick: Int): Boolean {
-        TODO()
+    fun isSowable(plant: PlantType, simTick: Int): Boolean {
+        return fallowDuration?.inRange(simTick) == false &&
+            possiblePlants?.contains(plant) == true
     }
 
     /**
      * checks if the plant can be harvested from the tile
      */
-    fun isHarvestable(plant: PlantType): Boolean {
-        TODO()
-    }
+//    fun isHarvestable(plant: PlantType): Boolean {
+//        TODO()
+//    }
 
     /**
      * increases the current moisture
      */
     fun increaseMoistureByAmount(amount: Int) {
-        TODO()
+        val newMoisture = currentMoisture?.plus(amount)
+        if (newMoisture != null) {
+            maxMoisture?.let {
+                if (newMoisture > it) currentMoisture = maxMoisture
+                return
+            }
+            currentMoisture = newMoisture
+        }
     }
 
     /**
-     * decreases the current moisture
+     * decreases the current moisture by given amount
      */
     fun decreaseMoistureByAmount(amount: Int) {
-        TODO()
+        val newMoisture = currentMoisture?.minus(amount)
+        if (newMoisture != null) {
+            if (newMoisture < 0) {
+                currentMoisture = 0
+                return
+            }
+            currentMoisture = newMoisture
+        }
     }
 
     /**
      * gets the actions needed list from the plant
      */
     fun getActions(): List<ActionType> {
-        TODO()
+        return plant?.actionsNeeded ?: return emptyList()
     }
 
     /**
      * gets the late actions  list from the plant
      */
     fun getLateActions(): List<ActionType> {
-        TODO()
+        return plant?.lateActions ?: return emptyList()
     }
 
     /**
      * returns the plant if the tile has one
      */
-    fun getPlant(): Plant {
-        TODO()
-    }
+//    fun getPlant(): Plant {
+//        TODO()
+//    }
 
     /**
      * perform harvest
      */
-    fun harvest() {
-        TODO()
+    fun harvest(simTick: Int) {
+        val p = plant ?: return
+        if (category == TileType.PLANTATION) {
+            p.harvestEstimate = 0
+        }
+        if (category == TileType.FIELD) {
+            plant = null
+            fallowDuration = Duration(simTick + 1, simTick + FOUR)
+        }
     }
 
     /**
      * checks if the tile needs irrigation
      */
     fun needsIrrigation(): Boolean {
-        TODO()
+        return plant?.let { p ->
+            currentMoisture?.let { m -> m < p.neededMoisture }
+        } ?: false
     }
 
     /**
      * checks if mowing needed
      */
     fun requiresMowing(): Boolean {
-        TODO()
+        return ActionType.MOW in plant?.actionsNeeded.orEmpty()
     }
 
     /**
      * checks if weeding required
      */
     fun requiresWeeding(): Boolean {
-        TODO()
+        val actionsNeeded = this.plant?.actionsNeeded
+        return if (actionsNeeded == null) {
+            false
+        } else {
+            ActionType.WEED in actionsNeeded
+        }
     }
 
     /**
      * checks if cutting required
      */
     fun requiresCutting(): Boolean {
-        TODO()
+        val actionsNeeded = this.plant?.actionsNeeded
+        return if (actionsNeeded == null) {
+            false
+        } else {
+            ActionType.MOW in actionsNeeded
+        }
     }
 
     /**
      * checks if there is a plant on the tile
      */
     fun hasPlantGrowing(): Boolean {
-        TODO()
+        if (this.category == TileType.FIELD) {
+            return plant != null
+        }
+        if (this.category == TileType.PLANTATION) {
+            return plantationDamaged == false
+        }
+        return false
     }
 
     /**
      * check if the tile belongs to the given farm
      */
     fun isOwnedBY(farmID: Int): Boolean {
-        TODO()
+        return farmID == this.farmID
+    }
+
+    /**
+     * setter for the current sunlight amount
+     */
+    fun setSunlight(sunlight: Int) {
+        this.currentSunlight = sunlight
     }
 }

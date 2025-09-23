@@ -3,17 +3,32 @@ package de.unisaarland.cs.se.selab.sowingplan
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.tile.Tile
 
-class SowingPlan (
-    private val id : Int,
-    private val plant : PlantType,
-    private val tick : Int,
-    private val affectedTiles : List<Tile>
+/**
+ * SowingPlan data class
+ */
+class SowingPlan(
+    private val id: Int,
+    private val plant: PlantType,
+    private val tick: Int,
+    private val affectedTiles: List<Tile>
 ) {
+    /**
+     * Get id
+     */
+    fun getId(): Int = id
 
-    fun getSowingTiles() : List<Tile> = affectedTiles
+    /**
+     * Get affected tiles
+     */
+    fun getSowingTiles(): List<Tile> = affectedTiles
 
-    fun getPlant() : PlantType = plant
+    /**
+     * Get plant
+     */
+    fun getPlant(): PlantType = plant
 
-    fun getTick() : Int = tick
-
+    /**
+     * Get tick
+     */
+    fun getTick(): Int = tick
 }
