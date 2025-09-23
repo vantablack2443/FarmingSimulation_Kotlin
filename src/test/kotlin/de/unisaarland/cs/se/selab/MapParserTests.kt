@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertEquals
@@ -92,6 +93,12 @@ class MapParserTests {
           "id": 0,
           "coordinates": { "x": 1, "y": 1 },
           "category": "VILLAGE"
+        },
+        {
+          "id": 1,
+          "coordinates": { "x": 2, "y": 2 },
+          "category": "FOREST",
+          "airflow": false
         }
       ]
     }
@@ -100,14 +107,11 @@ class MapParserTests {
         tempFile.writeText(jsonString)
         val simData = SimulationData()
         val parser = MapParser(simData)
-        parser.parse(tempFile.absolutePath)
-        tempFile.deleteOnExit()
-        val map = simData.map
 
-        val village = map.getTileByID(0) ?: error("Village tile not found")
-        val tiles = map.getTilesByRadius(village, 1)
-        for (tile in tiles) {
-            assertFalse(tile.category == TileType.FOREST)
+        assertThrows(de.unisaarland.cs.se.selab.parser.ValidationException::class.java) {
+            parser.parse(tempFile.absolutePath)
         }
+
+        tempFile.deleteOnExit()
     }
 }
