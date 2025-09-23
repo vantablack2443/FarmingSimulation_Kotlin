@@ -31,11 +31,11 @@ class Cherry : PlantationPlant() {
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
-        Pair(Duration(CHERRY_CUT_START, CHERRY_CUT_END), false),
-        Pair(Duration(CHERRY_CUT_START_ALT, CHERRY_CUT_END_ALT), false)
+        CustomPair(Duration(CHERRY_CUT_START, CHERRY_CUT_END), false),
+        CustomPair(Duration(CHERRY_CUT_START_ALT, CHERRY_CUT_END_ALT), false)
     )
     override val mowingTime = mutableListOf(
-        Pair(Duration(CHERRY_MOW_START_END, CHERRY_MOW_START_END), false)
+        CustomPair(Duration(CHERRY_MOW_START_END, CHERRY_MOW_START_END), false)
     )
     override var harvestingTime = Duration(CHERRY_HARVEST_START, CHERRY_HARVEST_END)
     override var bloomingTime: Duration? = Duration(CHERRY_BLOOM_START, CHERRY_BLOOM_END)
