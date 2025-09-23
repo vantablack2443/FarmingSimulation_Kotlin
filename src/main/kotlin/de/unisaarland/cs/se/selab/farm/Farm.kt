@@ -19,8 +19,8 @@ class Farm(
     private val harvestPerPlant: MutableMap<PlantType, Int>
 ) {
 
-    val machineHashMap: MutableSet<Int> = mutableSetOf()
-    val tileHashMap: MutableSet<Int> = mutableSetOf()
+    val machineHashMap: HashSet<Int> = hashSetOf()
+    val tileHashMap: HashSet<Int> = hashSetOf()
 
     /**
      * Getter methods for private attributes

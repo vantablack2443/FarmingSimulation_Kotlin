@@ -31,12 +31,12 @@ class Grape : PlantationPlant() {
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
-        Pair(Duration(GRAPE_CUT_START, GRAPE_CUT_END), false),
-        Pair(Duration(GRAPE_CUT_ALT, GRAPE_CUT_ALT), false)
+        CustomPair(Duration(GRAPE_CUT_START, GRAPE_CUT_END), false),
+        CustomPair(Duration(GRAPE_CUT_ALT, GRAPE_CUT_ALT), false)
     )
     override val mowingTime = mutableListOf(
-        Pair(Duration(GRAPE_MOW_START_END, GRAPE_MOW_START_END), false),
-        Pair(Duration(GRAPE_MOW_ALTERNATE, GRAPE_MOW_ALTERNATE), false)
+        CustomPair(Duration(GRAPE_MOW_START_END, GRAPE_MOW_START_END), false),
+        CustomPair(Duration(GRAPE_MOW_ALTERNATE, GRAPE_MOW_ALTERNATE), false)
     )
     override var harvestingTime = Duration(GRAPE_HARVEST_START_END, GRAPE_HARVEST_START_END)
     override var bloomingTime: Duration? = Duration(GRAPE_BLOOM_START, GRAPE_BLOOM_END)
@@ -77,5 +77,8 @@ class Grape : PlantationPlant() {
         }
         val newEstimate = this.harvestEstimate * effect
         this.harvestEstimate = newEstimate.toInt()
+    }
+    override fun resetMowingTime(startTick: Int) {
+        return
     }
 }
