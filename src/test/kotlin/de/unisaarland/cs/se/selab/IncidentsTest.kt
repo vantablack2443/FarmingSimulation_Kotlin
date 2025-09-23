@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
@@ -8,6 +9,7 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.incidents.AnimalAttack
+import de.unisaarland.cs.se.selab.incidents.BrokenMachine
 import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.machine.Machine
@@ -162,11 +164,15 @@ class IncidentsTest {
 
     @Test
     fun brokenMachineTest() {
-        TODO()
-    }
-
-    @Test
-    fun cloudCreationTest() {
-        TODO()
+        val brokenMachine = BrokenMachine(
+            4,
+            16,
+            IncidentType.BROKEN_MACHINE,
+            mockMachine,
+            Duration(17, 20)
+        )
+        brokenMachine.execute(mockMap, 17)
+        assertTrue(mockMachine.brokenFor != null)
+        assertEquals(Duration(17, 20), mockMachine.brokenFor)
     }
 }
