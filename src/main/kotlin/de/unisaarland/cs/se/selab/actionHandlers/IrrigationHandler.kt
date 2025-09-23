@@ -65,6 +65,14 @@ class IrrigationHandler(
         }
     }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
+
     /**
      * Performs the irrigation action on the specified tile using the given machine.
      */
@@ -76,6 +84,14 @@ class IrrigationHandler(
         val maxMoisture = tile.maxMoisture ?: error("Max moisture null or invalid")
         val amount = maxMoisture - currentMoisture
         tile.increaseMoistureByAmount(amount)
+    }
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
+        return
     }
 
     /**

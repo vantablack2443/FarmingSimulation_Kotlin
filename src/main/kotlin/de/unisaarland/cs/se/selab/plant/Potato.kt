@@ -27,6 +27,9 @@ class Potato : FieldPlant() {
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
 
+    override val cuttingTime = mutableListOf<CustomPair>()
+    override val mowingTime = mutableListOf<CustomPair>()
+
     // USES YEAR-TICK
     override fun needsHarvesting(tick: Int) {
         if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
