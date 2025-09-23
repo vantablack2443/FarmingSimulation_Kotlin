@@ -1,5 +1,4 @@
 package de.unisaarland.cs.se.selab.plant
-import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 
 const val MISSED_MOWING_PENALTY = 0.9
@@ -8,8 +7,6 @@ const val MISSED_MOWING_PENALTY = 0.9
  * abstract class for plantation plants
  */
 abstract class PlantationPlant : Plant() {
-    open val cuttingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
-    open val mowingTime: MutableList<Pair<Duration, Boolean>> = mutableListOf()
     override fun needsCutting(tick: Int) {
         val cuttingDone = cuttingTime.filter { it.second }
         if (cuttingDone.isEmpty()) {
@@ -32,5 +29,20 @@ abstract class PlantationPlant : Plant() {
 
     override fun applyMowingPenalty() {
         harvestEstimate *= (MISSED_MOWING_PENALTY * harvestEstimate).toInt()
+    }
+
+    /**
+     * resets mowing time after animal attack
+     */
+    override fun resetMowingTime(startTick: Int) {
+        for (element in this.mowingTime) {
+            // if mowing needed to be done
+            if (element.first.inRange(startTick) && !element.second) {
+                element.second = true
+            }
+            if (element.first.inRange(startTick + 1) && !element.second) {
+                element.second = true
+            }
+        }
     }
 }
