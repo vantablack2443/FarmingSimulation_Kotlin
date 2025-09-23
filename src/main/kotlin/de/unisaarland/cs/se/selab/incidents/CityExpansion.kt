@@ -26,19 +26,31 @@ class CityExpansion(
 
     private fun removeFromFarms(tile: Tile) {
         val farmId = tile.farmID ?: return
-
         for (farm in farms) {
             if (farm.getId() == farmId) {
-                val fields: MutableList<Tile> = farm.getFields().toMutableList()
-                if (fields.contains(tile)) {
-                    fields.remove(tile)
-                    farm.setFields(fields)
-                }
-                if (farm.getPlantation().contains(tile)) {
-                    val plantations: MutableList<Tile> = farm.getPlantation().toMutableList()
-                    plantations.remove(tile)
-                    farm.setPlantation(plantations)
-                }
+                removeTileFromFarm(tile, farm)
+                setMachinesStuckOnTile(tile, farm)
+            }
+        }
+    }
+
+    private fun removeTileFromFarm(tile: Tile, farm: Farm) {
+        val fields = farm.getFields().toMutableList()
+        if (fields.contains(tile)) {
+            fields.remove(tile)
+            farm.setFields(fields)
+        }
+        val plantations = farm.getPlantation().toMutableList()
+        if (plantations.contains(tile)) {
+            plantations.remove(tile)
+            farm.setPlantation(plantations)
+        }
+    }
+
+    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
+        for (machine in farm.getMachines()) {
+            if (machine.currentTile == tile) {
+                machine.isStuck = true
             }
         }
     }

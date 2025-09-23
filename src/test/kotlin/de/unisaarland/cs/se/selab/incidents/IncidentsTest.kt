@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.duration.Duration

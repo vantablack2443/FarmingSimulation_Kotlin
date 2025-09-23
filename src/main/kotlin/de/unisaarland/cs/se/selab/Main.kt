@@ -58,7 +58,7 @@ fun main(args: Array<String>) {
         Logger.printer.flush()
         return
     } catch (exception: ValidationException) {
-        Logger.logParsing(false, exception.filePath ?: "null file")
+        Logger.logInvalidFile(exception.filePath ?: "null file")
         return
     }
     Logger.printer.flush()
@@ -92,6 +92,6 @@ private fun validateLogLevel(result: CommandLineParser.ParsingResult) {
     if (logType.uppercase() !in setOf("DEBUG", "INFO", "IMPORTANT")) {
         throw ParsingException("Log level should be either DEBUG, INFO or IMPORTANT")
     }
-    val logLevel = LogType.valueOf(logType)
+    val logLevel = LogType.valueOf(logType.uppercase())
     Logger.setLevel(logLevel)
 }
