@@ -37,10 +37,8 @@ class Tile(
      * checks if the tile is sowable with the given plant in the given year
      */
     fun isSowable(plant: PlantType, simTick: Int): Boolean {
-        if (fallowDuration == null) return false
-        if (fallowDuration!!.inRange(simTick)) return false
-        if (possiblePlants?.contains(plant) != true) return false
-        return true
+        return fallowDuration?.inRange(simTick) == false &&
+            possiblePlants?.contains(plant) == true
     }
 
     /**
@@ -82,16 +80,14 @@ class Tile(
      * gets the actions needed list from the plant
      */
     fun getActions(): List<ActionType> {
-        if (plant == null) return emptyList()
-        return plant!!.actionsNeeded
+        return plant?.actionsNeeded ?: return emptyList()
     }
 
     /**
      * gets the late actions  list from the plant
      */
     fun getLateActions(): List<ActionType> {
-        if (plant == null) return emptyList()
-        return plant!!.lateActions
+        return plant?.lateActions ?: return emptyList()
     }
 
     /**
@@ -105,9 +101,9 @@ class Tile(
      * perform harvest
      */
     fun harvest(simTick: Int) {
-        if (plant == null) return
+        val p = plant ?: return
         if (category == TileType.PLANTATION) {
-            plant!!.harvestEstimate = 0
+            p.harvestEstimate = 0
         }
         if (category == TileType.FIELD) {
             plant = null
@@ -119,23 +115,16 @@ class Tile(
      * checks if the tile needs irrigation
      */
     fun needsIrrigation(): Boolean {
-        return if (plant == null) {
-            false
-        } else {
-            currentMoisture!! < plant!!.neededMoisture
-        }
+        return plant?.let { p ->
+            currentMoisture?.let { m -> m < p.neededMoisture }
+        } ?: false
     }
 
     /**
      * checks if mowing needed
      */
     fun requiresMowing(): Boolean {
-        val actionsNeeded = this.plant?.actionsNeeded
-        return if (actionsNeeded == null) {
-            false
-        } else {
-            ActionType.MOW in actionsNeeded
-        }
+        return ActionType.MOW in plant?.actionsNeeded.orEmpty()
     }
 
     /**
