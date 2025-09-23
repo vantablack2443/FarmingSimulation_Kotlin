@@ -8,7 +8,9 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.incidents.AnimalAttack
+import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.Drought
+import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.Plant
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class IncidentsTest {
     private lateinit var mockMap: SimulationMap
@@ -29,9 +32,40 @@ class IncidentsTest {
     private lateinit var grapeTile: Tile
     private lateinit var appleTile: Tile
     private lateinit var potatoTile: Tile
+    private lateinit var mockMachine: Machine
 
     @BeforeEach
     fun setUp() {
+        createMap()
+        apple = Plant.createPlant(PlantType.APPLE)
+        grape = Plant.createPlant(PlantType.GRAPE)
+        potato = Plant.createPlant(PlantType.POTATO)
+        oat = Plant.createPlant(PlantType.OAT)
+        potatoTile.plant = potato
+        oatTile.plant = oat
+        grapeTile.plant = grape
+        appleTile.plant = apple
+        val farmFields = mockMap.getPlantableTiles().filter { it.category == TileType.FIELD } + oatTile + potatoTile
+        val farmstead = Tile(
+            40,
+            Coordinate(9, 3),
+            TileType.FARMSTEAD,
+            TileShape.SQUARE
+        )
+        mockMachine = Machine(
+            1, "machine", 2, mockMap.getTileByID(4)!!,
+            listOf(ActionType.IRRIGATE), listOf(), farmstead
+        )
+        mockFarm = Farm(
+            1, "farm", listOf(farmstead),
+            farmFields.toMutableList(), mutableListOf(appleTile, grapeTile),
+            mutableListOf(mockMachine), mutableMapOf(), mutableMapOf()
+        )
+        mockMap.tiles.values.forEach {
+            it.farmID = mockFarm.getId()
+        }
+    }
+    private fun createMap() {
         potatoTile = Tile(
             1,
             Coordinate(6, 0),
@@ -46,6 +80,7 @@ class IncidentsTest {
         )
         grapeTile = Tile(8, Coordinate(4, 4), TileType.PLANTATION, TileShape.OCTAGONAL)
         appleTile = Tile(10, Coordinate(6, 4), TileType.PLANTATION, TileShape.OCTAGONAL)
+        val villageTile = Tile(11, Coordinate(5, 1), TileType.VILLAGE, TileShape.SQUARE)
         val fieldTiles = listOf(
             Tile(4, Coordinate(6, 2), TileType.FIELD, TileShape.OCTAGONAL),
             Tile(5, Coordinate(8, 2), TileType.FIELD, TileShape.OCTAGONAL)
@@ -60,30 +95,17 @@ class IncidentsTest {
             oatTile.location to oatTile,
             grapeTile.location to grapeTile,
             appleTile.location to appleTile,
-            roadTile.location to roadTile
+            roadTile.location to roadTile,
+            villageTile.location to villageTile
         )
         forestTiles.forEach { tiles[it.location] = it }
         fieldTiles.forEach { tiles[it.location] = it }
         mockMap = SimulationMap(tiles)
-        apple = Plant.createPlant(PlantType.APPLE)
-        grape = Plant.createPlant(PlantType.GRAPE)
-        potato = Plant.createPlant(PlantType.POTATO)
-        oat = Plant.createPlant(PlantType.OAT)
-        potatoTile.plant = potato
-        oatTile.plant = oat
-        grapeTile.plant = grape
-        appleTile.plant = apple
-        val farmFields = fieldTiles + oatTile + potatoTile
-        mockFarm = Farm(
-            1, "farm", listOf(),
-            farmFields.toMutableList(), mutableListOf(appleTile, grapeTile),
-            mutableListOf(), mutableMapOf(), mutableMapOf()
-        )
-        apple.actionsNeeded.add(ActionType.MOW)
     }
 
     @Test
     fun testAnimalAttack() {
+        apple.actionsNeeded.add(ActionType.MOW)
         val animalAttack = AnimalAttack(
             1,
             16,
@@ -121,7 +143,21 @@ class IncidentsTest {
 
     @Test
     fun testCityExpansion() {
-        TODO()
+        val affectedTile = mockMap.getTileByID(4)!!
+        val cityExpansion = CityExpansion(
+            3,
+            16,
+            IncidentType.CITY_EXPANSION,
+            affectedTile,
+            listOf(mockFarm)
+        )
+        cityExpansion.execute(mockMap, 17)
+        assertEquals(TileType.VILLAGE, affectedTile.category)
+        assert(!mockFarm.getFields().contains(affectedTile))
+        assertNull(affectedTile.currentMoisture)
+        assertNull(affectedTile.currentSunlight)
+        assertNull(affectedTile.plant)
+        assertTrue { mockMachine.isStuck }
     }
 
     @Test
