@@ -317,6 +317,6 @@ class MapParser(private val simData: SimulationData) {
         val y = coordinate.y
         if (x % 2 == 0 && y % 2 == 0) return TileShape.OCTAGONAL
         if (x % 2 == 1 && y % 2 == 1) return TileShape.SQUARE
-        throw ValidationException()
+        throw ValidationException("Invalid tile coordinates")
     }
 }
