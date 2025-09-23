@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.duration.Duration
@@ -8,10 +8,6 @@ import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
-import de.unisaarland.cs.se.selab.incidents.AnimalAttack
-import de.unisaarland.cs.se.selab.incidents.BrokenMachine
-import de.unisaarland.cs.se.selab.incidents.CityExpansion
-import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.Plant
