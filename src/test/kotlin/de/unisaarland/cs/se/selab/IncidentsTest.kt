@@ -15,6 +15,7 @@ import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.plant.FieldPlant
 import de.unisaarland.cs.se.selab.plant.Plant
 import de.unisaarland.cs.se.selab.tile.Tile
 import org.junit.jupiter.api.BeforeEach
@@ -27,7 +28,7 @@ import kotlin.test.assertTrue
 class IncidentsTest {
     private lateinit var mockMap: SimulationMap
     private lateinit var mockFarm: Farm
-    private lateinit var potato: Plant
+    private lateinit var potato: FieldPlant
     private lateinit var oat: Plant
     private lateinit var grape: Plant
     private lateinit var apple: Plant
@@ -42,7 +43,8 @@ class IncidentsTest {
         createMap()
         apple = Plant.createPlant(PlantType.APPLE)
         grape = Plant.createPlant(PlantType.GRAPE)
-        potato = Plant.createPlant(PlantType.POTATO)
+        potato = Plant.createPlant(PlantType.POTATO) as FieldPlant
+        potato.sownTick = 10
         oat = Plant.createPlant(PlantType.OAT)
         potatoTile.plant = potato
         oatTile.plant = oat
@@ -198,5 +200,24 @@ class IncidentsTest {
         assertEquals(1.0, grape.pollination)
         assertEquals(1.0, oat.pollination)
         assertEquals(1.0, potato.pollination)
+    }
+
+    @Test
+    fun beeHappyOnFields() {
+        val beeHappy = BeeHappy(
+            6,
+            14,
+            IncidentType.BEE_HAPPY,
+            35,
+            mockMap.getTileByCoordinate(Coordinate(8, 2))!!,
+            4
+        )
+        val pumpkin = Plant.createPlant(PlantType.PUMPKIN) as FieldPlant
+        pumpkin.sownTick = 10
+        val pumpkinTile = mockMap.getTileByCoordinate(Coordinate(6, 2))!!
+        pumpkinTile.plant = pumpkin
+        beeHappy.execute(mockMap, 14) // potato and pumpkin blooming
+        assertEquals(1.0, potato.pollination)
+        assertEquals(1.35, pumpkin.pollination)
     }
 }
