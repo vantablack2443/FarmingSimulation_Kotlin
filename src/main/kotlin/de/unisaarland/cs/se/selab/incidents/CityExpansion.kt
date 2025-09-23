@@ -19,12 +19,12 @@ class CityExpansion(
 ) : Incident(id, tick, type) {
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         this.tile.category = TileType.VILLAGE
-        removeFromFarms(tile)
+        removeFromFarmsAndStuckMachine(tile)
         this.tile.farmID = null
         logIncident(id, IncidentType.CITY_EXPANSION, listOf(tile.id))
     }
 
-    private fun removeFromFarms(tile: Tile) {
+    private fun removeFromFarmsAndStuckMachine(tile: Tile) {
         val farmId = tile.farmID ?: return
 
         for (farm in farms) {
@@ -38,6 +38,12 @@ class CityExpansion(
                     val plantations: MutableList<Tile> = farm.getPlantation().toMutableList()
                     plantations.remove(tile)
                     farm.setPlantation(plantations)
+                }
+                // Set isStuck to true for any machine currently on this tile in this farm
+                for (machine in farm.getMachines()) {
+                    if (machine.currentTile == tile) {
+                        machine.isStuck = true
+                    }
                 }
             }
         }
