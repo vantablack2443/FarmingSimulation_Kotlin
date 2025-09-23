@@ -168,7 +168,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        simTick: Int
+        tick: Int
     ): List<Tile> {
         throw NotImplementedError(" is not implemented in CuttingHandler")
     }

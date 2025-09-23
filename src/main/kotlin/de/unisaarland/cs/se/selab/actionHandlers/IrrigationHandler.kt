@@ -127,7 +127,7 @@ class IrrigationHandler(
      * These functions aren't implemented inside IrrigationHandler, probably declare them as open in
      * ActionHandler and then override them in the classes that need them.
      */
-    override fun getOperableTiles(farm: Farm, plant: PlantType, yearTick: Int): List<Tile> {
+    override fun getOperableTiles(farm: Farm, plant: PlantType, tick: Int): List<Tile> {
         error("getOperableTiles(farm, plant, yearTick) is not implemented in IrrigationHandler")
     }
 
