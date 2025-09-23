@@ -55,7 +55,10 @@ class FarmParser(private val simulationData: SimulationData) {
             validateUniqueAttributes()
             crossValidateFarmMachine()
             validateTileFarms()
-            simulationData.setSowingPlanMapping(this.sowingPlanTicks)
+            for (tick in this.sowingPlanTicks.keys) {
+                val plans = sowingPlanTicks[tick] ?: continue
+                simulationData.addSowingPlansToMapping(plans, tick)
+            }
             // logging should be done here as file valid
             Logger.logParsing(true, file.name)
         } catch (exception: ValidationException) {
@@ -73,8 +76,8 @@ class FarmParser(private val simulationData: SimulationData) {
             val farm = parseFarm(farmObject)
             // gets ID and then sets one by one to mapofFarms
             mapOfFarms[farm.getId()] = farm
+            simulationData.addFarmToMapping(farm)
         }
-        simulationData.setFarms(mapOfFarms)
         farmIDs = simulationData.getFarms().map { it.getId() }
         farmNames = simulationData.getFarms().map { it.getName() }
     }
@@ -162,8 +165,8 @@ class FarmParser(private val simulationData: SimulationData) {
         for (machine in machines) {
             val parsedMachine = parseMachine(machine as JsonObject)
             mapOfMachines[parsedMachine.id] = parsedMachine
+            simulationData.addMachineToMapping(parsedMachine)
         }
-        simulationData.setMachines(mapOfMachines)
         machineIDs = simulationData.getMachines().map { it.id }
         machineNames = simulationData.getMachines().map { it.name }
         return mapOfMachines.values.toList().sortedBy { it.id }

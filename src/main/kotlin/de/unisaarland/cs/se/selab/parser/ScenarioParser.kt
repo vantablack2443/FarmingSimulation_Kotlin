@@ -96,8 +96,8 @@ class ScenarioParser(private val simData: SimulationData) {
         for (incident in incidents) {
             val i = parseIncident(incident.jsonObject)
             incidentMap[i.id] = i
+            simData.addIncidentToMapping(i)
         }
-        simData.setIncidents(incidentMap)
     }
 
     private fun parseIncident(obj: JsonObject): Incident {
@@ -436,8 +436,8 @@ class ScenarioParser(private val simData: SimulationData) {
         for (cloud in clouds) {
             val c = parseCloud(cloud.jsonObject)
             cloudMap[c.id] = c
+            simData.addCloudToMapping(c)
         }
-        simData.setClouds(cloudMap)
     }
 
     private fun parseCloud(c: JsonObject): Cloud {

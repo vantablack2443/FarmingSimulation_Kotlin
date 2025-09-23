@@ -33,13 +33,13 @@ const val DEC_TICK = 23
  */
 class SimulationData {
     lateinit var map: SimulationMap // take a look at this later
-    private var tiles: MutableMap<Int, Tile> = mutableMapOf()
-    private var farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
-    private var machines: MutableMap<Int, Machine> = mutableMapOf()
-    private var incidents: MutableMap<Int, Incident> = mutableMapOf()
-    private var clouds: MutableMap<Int, Cloud> = mutableMapOf()
-    private var sowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf() // mapping tick
-    private var sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
+    private val tiles: MutableMap<Int, Tile> = mutableMapOf()
+    private val farms: MutableMap<Int, Farm> = mutableMapOf() // ID to Farm
+    private val machines: MutableMap<Int, Machine> = mutableMapOf()
+    private val incidents: MutableMap<Int, Incident> = mutableMapOf()
+    private val clouds: MutableMap<Int, Cloud> = mutableMapOf()
+    private val sowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf() // mapping tick
+    private val sunlightData: MutableMap<Int, Int> = mutableMapOf() // tick to average value
     init {
         sunlightData[1] = SUN_JAN_NOV
         sunlightData[2] = SUN_JAN_NOV
@@ -70,36 +70,36 @@ class SimulationData {
     /**
      * setter for the ID to tile mapping
      */
-    fun setTiles(tiles: MutableMap<Int, Tile>) {
-        this.tiles = tiles
+    fun addTileToMapping(tile: Tile) {
+        this.tiles[tile.id] = tile
     }
 
     /**
      * setter for the ID to farm mapping
      */
-    fun setFarms(farms: MutableMap<Int, Farm>) {
-        this.farms = farms
+    fun addFarmToMapping(farm: Farm) {
+        this.farms[farm.getId()] = farm
     }
 
     /**
      * setter for the ID to machine mapping
      */
-    fun setMachines(machines: MutableMap<Int, Machine>) {
-        this.machines = machines
+    fun addMachineToMapping(machine: Machine) {
+        this.machines[machine.id] = machine
     }
 
     /**
      * setter for the TICK to Incident mapping
      */
-    fun setIncidents(incidents: MutableMap<Int, Incident>) {
-        this.incidents = incidents
+    fun addIncidentToMapping(incident: Incident) {
+        this.incidents[incident.id] = incident
     }
 
     /**
      * setter for ID to cloud mapping
      */
-    fun setClouds(clouds: MutableMap<Int, Cloud>) {
-        this.clouds = clouds
+    fun addCloudToMapping(cloud: Cloud) {
+        this.clouds[cloud.id] = cloud
     }
 
     /**
@@ -176,8 +176,8 @@ class SimulationData {
     /**
      * sets sowing plan mapping
      */
-    fun setSowingPlanMapping(plans: MutableMap<Int, MutableList<SowingPlan>>) {
-        this.sowingPlans = plans
+    fun addSowingPlansToMapping(plans: MutableList<SowingPlan>, tick: Int) {
+        this.sowingPlans[tick] = plans
     }
 
     /**
