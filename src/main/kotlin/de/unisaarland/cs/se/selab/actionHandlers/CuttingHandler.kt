@@ -162,7 +162,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     // Implement missing abstract methods from ActionHandler
     override fun startPhase(farm: Farm, machine: Machine) {
         // Provide a minimal implementation or throw if not used
-        throw NotImplementedError("startPhase(farm, machine) is not implemented in CuttingHandler")
+        return
     }
 
     override fun getOperableTiles(
@@ -170,6 +170,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         plant: PlantType,
         tick: Int
     ): List<Tile> {
-        throw NotImplementedError(" is not implemented in CuttingHandler")
+        return emptyList()
     }
 }

@@ -15,13 +15,6 @@ import de.unisaarland.cs.se.selab.tile.Tile
 class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
 
     /**
-     * not used for mowing handler
-     */
-    override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
-        throw NotImplementedError("getOperableTiles is not implemented in MowingHandler")
-    }
-
-    /**
      * start the mowing handler
      * @param farm the farm mowing would be performed on
      * @param machine the machine that would perform mowing
@@ -104,6 +97,13 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         plant: PlantType,
         tick: Int
     ): List<Tile> {
-        throw NotImplementedError("getOperableTiles is not implemented in MowingHandler")
+        return emptyList()
+    }
+
+    /**
+     * not used for mowing handler
+     */
+    override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
+        return
     }
 }

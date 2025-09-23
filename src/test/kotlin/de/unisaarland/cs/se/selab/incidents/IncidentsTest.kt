@@ -8,11 +8,6 @@ import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
-import de.unisaarland.cs.se.selab.incidents.AnimalAttack
-import de.unisaarland.cs.se.selab.incidents.BeeHappy
-import de.unisaarland.cs.se.selab.incidents.BrokenMachine
-import de.unisaarland.cs.se.selab.incidents.CityExpansion
-import de.unisaarland.cs.se.selab.incidents.Drought
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.FieldPlant
@@ -165,7 +160,7 @@ class IncidentsTest {
         assertEquals(TileType.VILLAGE, affectedTile.category)
         assert(!mockFarm.getFields().contains(affectedTile))
         assertNull(affectedTile.currentMoisture)
-        assertNull(affectedTile.currentSunlight)
+        assertEquals(0, affectedTile.currentSunlight)
         assertNull(affectedTile.plant)
         assertTrue { mockMachine.isStuck }
     }
