@@ -19,32 +19,38 @@ class CityExpansion(
 ) : Incident(id, tick, type) {
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         this.tile.category = TileType.VILLAGE
-        removeFromFarmsAndStuckMachine(tile)
+        removeFromFarms(tile)
         this.tile.farmID = null
         logIncident(id, IncidentType.CITY_EXPANSION, listOf(tile.id))
     }
 
-    private fun removeFromFarmsAndStuckMachine(tile: Tile) {
+    private fun removeFromFarms(tile: Tile) {
         val farmId = tile.farmID ?: return
-
         for (farm in farms) {
             if (farm.getId() == farmId) {
-                val fields: MutableList<Tile> = farm.getFields().toMutableList()
-                if (fields.contains(tile)) {
-                    fields.remove(tile)
-                    farm.setFields(fields)
-                }
-                if (farm.getPlantation().contains(tile)) {
-                    val plantations: MutableList<Tile> = farm.getPlantation().toMutableList()
-                    plantations.remove(tile)
-                    farm.setPlantation(plantations)
-                }
-                // Set isStuck to true for any machine currently on this tile in this farm
-                for (machine in farm.getMachines()) {
-                    if (machine.currentTile == tile) {
-                        machine.isStuck = true
-                    }
-                }
+                removeTileFromFarm(tile, farm)
+                setMachinesStuckOnTile(tile, farm)
+            }
+        }
+    }
+
+    private fun removeTileFromFarm(tile: Tile, farm: Farm) {
+        val fields = farm.getFields().toMutableList()
+        if (fields.contains(tile)) {
+            fields.remove(tile)
+            farm.setFields(fields)
+        }
+        val plantations = farm.getPlantation().toMutableList()
+        if (plantations.contains(tile)) {
+            plantations.remove(tile)
+            farm.setPlantation(plantations)
+        }
+    }
+
+    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
+        for (machine in farm.getMachines()) {
+            if (machine.currentTile == tile) {
+                machine.isStuck = true
             }
         }
     }
