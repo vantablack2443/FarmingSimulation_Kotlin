@@ -51,7 +51,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        yearTick: Int
+        tick: Int
     ): List<Tile> {
         // TODO
         return emptyList()
