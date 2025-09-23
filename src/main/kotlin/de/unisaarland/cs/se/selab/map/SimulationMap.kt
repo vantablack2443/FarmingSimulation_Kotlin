@@ -44,10 +44,10 @@ class SimulationMap(
                 if (abs(i - cord.x) + abs(j - cord.y) > radius * 2 || (i == cord.x && j == cord.y)) {
                     continue
                 }
-                val tile = getTileByCoordinate(Coordinate(i, j))
+                val newTile = getTileByCoordinate(Coordinate(i, j))
                 // Here it will also try to get invalid tiles such as (9,4) but getTileByCoordinate will return null
-                if (tile != null) {
-                    tiles.add(tile)
+                if (newTile != null) {
+                    tiles.add(newTile)
                 }
             }
         }
