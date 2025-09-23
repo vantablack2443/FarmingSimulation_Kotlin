@@ -9,6 +9,7 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.incidents.AnimalAttack
+import de.unisaarland.cs.se.selab.incidents.BeeHappy
 import de.unisaarland.cs.se.selab.incidents.BrokenMachine
 import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.Drought
@@ -63,9 +64,9 @@ class IncidentsTest {
             farmFields.toMutableList(), mutableListOf(appleTile, grapeTile),
             mutableListOf(mockMachine), mutableMapOf(), mutableMapOf()
         )
-        mockMap.tiles.values.forEach {
-            it.farmID = mockFarm.getId()
-        }
+        mockFarm.getFields().forEach { it.farmID = mockFarm.getId() }
+        mockFarm.getPlantation().forEach { it.farmID = mockFarm.getId() }
+        mockFarm.getFarmstead().forEach { it.farmID = mockFarm.getId() }
     }
     private fun createMap() {
         potatoTile = Tile(
@@ -92,6 +93,10 @@ class IncidentsTest {
             Tile(23, Coordinate(10, 4), TileType.FOREST, TileShape.OCTAGONAL)
         )
         val roadTile = Tile(20, Coordinate(7, 3), TileType.ROAD, TileShape.SQUARE)
+        val meadowTiles = listOf(
+            Tile(45, Coordinate(5, 3), TileType.MEADOW, TileShape.SQUARE),
+            Tile(46, Coordinate(5, -1), TileType.MEADOW, TileShape.SQUARE)
+        )
         val tiles = mutableMapOf(
             potatoTile.location to potatoTile,
             oatTile.location to oatTile,
@@ -102,6 +107,7 @@ class IncidentsTest {
         )
         forestTiles.forEach { tiles[it.location] = it }
         fieldTiles.forEach { tiles[it.location] = it }
+        meadowTiles.forEach { tiles[it.location] = it }
         mockMap = SimulationMap(tiles)
     }
 
@@ -174,5 +180,23 @@ class IncidentsTest {
         brokenMachine.execute(mockMap, 17)
         assertTrue(mockMachine.brokenFor != null)
         assertEquals(Duration(17, 20), mockMachine.brokenFor)
+    }
+
+    @Test
+    fun beeHappyTest() {
+        val beeHappy = BeeHappy(
+            5,
+            16,
+            IncidentType.BEE_HAPPY,
+            30,
+            mockMap.getTileByCoordinate(Coordinate(8, 2))!!,
+            4
+        )
+
+        beeHappy.execute(mockMap, 9) // apple is blooming
+        assertEquals(1.3, apple.pollination)
+        assertEquals(1.0, grape.pollination)
+        assertEquals(1.0, oat.pollination)
+        assertEquals(1.0, potato.pollination)
     }
 }
