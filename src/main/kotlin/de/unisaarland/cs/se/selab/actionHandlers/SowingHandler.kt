@@ -55,7 +55,7 @@ class SowingHandler(
         val operableTiles = mutableListOf<Tile>()
         for (tile in farm.getFields()) {
             // ???? WHY DOES IsSowable REQUIRE THE PLANT PARAMETER
-            if (tile.currentCrop == plant && tile.isSowable(plant, simTick)) {
+            if (tile.currentCrop == plant && tile.isSowable(plant, tick)) {
                 operableTiles.add(tile)
             }
         }
