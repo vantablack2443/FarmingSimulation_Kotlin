@@ -8,7 +8,7 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
  */
 class IncidentHandler(var map: SimulationMap) {
     lateinit var incidents: List<Incident>
-    private var activeIncidents = mutableListOf<Incident>()
+    private val activeIncidents = mutableListOf<Incident>()
 
     /**
      * function for updating the active incidents list per tick

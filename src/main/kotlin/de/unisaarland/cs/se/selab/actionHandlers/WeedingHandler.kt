@@ -106,7 +106,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     override fun getOperableTiles(farm: Farm): MutableList<Tile> {
         val tiles = farm.getPlantation()
-            .filter { it.plant != null && it.plant!!.actionsNeeded.contains(ActionType.WEED) }
+            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.WEED) ?: false }
             .sortedBy { it.id }
             .toMutableList()
         return tiles
