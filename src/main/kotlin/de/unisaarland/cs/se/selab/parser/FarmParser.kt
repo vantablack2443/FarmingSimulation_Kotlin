@@ -74,7 +74,7 @@ class FarmParser(private val simulationData: SimulationData) {
         for (farmJson in farms) {
             val farmObject = farmJson.jsonObject
             val farm = parseFarm(farmObject)
-            // gets ID and then sets one by one to mapofFarms
+            // gets ID and then sets one by one to mapOfFarms
             mapOfFarms[farm.getId()] = farm
             simulationData.addFarmToMapping(farm)
         }
@@ -118,7 +118,7 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse farmsteads
      */
     private fun parseFarmsteadTiles(farm: JsonObject): MutableList<Tile> {
-        val farmsteads = farm["farmsteads"]?.jsonPrimitive?.jsonArray
+        val farmsteads = farm["farmsteads"]?.jsonArray
             ?: throw ValidationException("Farmsteads not specified")
         val farmsteadTiles = farmsteads.map { farmstead ->
             val tileID = farmstead.jsonPrimitive.int
@@ -132,7 +132,7 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse field tiles
      */
     private fun parseFieldTiles(farm: JsonObject): MutableList<Tile> {
-        val fields = farm[FIELDS]?.jsonPrimitive?.jsonArray
+        val fields = farm[FIELDS]?.jsonArray
             ?: throw ValidationException("Fields not specified")
         val fieldTiles = fields.map { field ->
             val tileID = field.jsonPrimitive.int
@@ -146,7 +146,7 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse plantation tiles
      */
     private fun parsePlantationTiles(farm: JsonObject): MutableList<Tile> {
-        val plantations = farm["plantations"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
+        val plantations = farm["plantations"]?.jsonArray ?: throw ValidationException("Plantations not specified")
         val plantationTiles = plantations.map { plantation ->
             val tileID = plantation.jsonPrimitive.int
             simulationData.getTileById(tileID)
@@ -159,11 +159,10 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function that parses machine array
      */
     private fun parseMachines(farm: JsonObject): List<Machine> {
-        val machines = farm["machines"]?.jsonArray?.jsonPrimitive?.jsonArray
-            ?: throw ValidationException("Machines not specified")
+        val machines = farm["machines"]?.jsonArray ?: throw ValidationException("Machines not specified")
         val mapOfMachines = mutableMapOf<Int, Machine>()
         for (machine in machines) {
-            val parsedMachine = parseMachine(machine as JsonObject)
+            val parsedMachine = parseMachine(machine.jsonObject)
             mapOfMachines[parsedMachine.id] = parsedMachine
             simulationData.addMachineToMapping(parsedMachine)
         }
@@ -207,14 +206,13 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse machine actions
      */
     private fun parseMachineActions(machine: JsonObject): List<ActionType> {
-        val actions = machine["actions"]?.jsonPrimitive?.jsonArray
-            ?: throw ValidationException("Actions not specified")
+        val actions = machine["actions"]?.jsonArray ?: throw ValidationException("Actions not specified")
         if (actions.isEmpty()) throw ValidationException("Empty actions list")
         val actionsArray: List<String> = actions.map { action ->
             action.jsonPrimitive.content.uppercase()
         }
         for (action in actionsArray) {
-            if (action !in setOf(ActionType.entries.toString())) {
+            if (action !in ActionType.entries.map { it.name }) {
                 throw ValidationException("Action $action is invalid")
             }
         }
@@ -226,12 +224,11 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse plants specified in machine
      */
     private fun parseMachinePlants(machine: JsonObject): List<PlantType> {
-        val plants = machine["plants"]?.jsonArray?.jsonArray
-            ?: throw ValidationException("Plants not specified")
+        val plants = machine["plants"]?.jsonArray ?: throw ValidationException("Plants not specified")
         if (plants.isEmpty()) throw ValidationException()
         val plantsArray = plants.map { it.jsonPrimitive.content.uppercase() }
         for (plant in plantsArray) {
-            if (plant !in setOf(PlantType.entries.toString())) {
+            if (plant !in PlantType.entries.map { it.name }) {
                 throw ValidationException("Plant $plant is invalid")
             }
         }
@@ -256,8 +253,7 @@ class FarmParser(private val simulationData: SimulationData) {
      * parses sowing plan array of the farm
      */
     private fun parseSowingPlans(farm: JsonObject): MutableMap<Int, MutableList<SowingPlan>> {
-        val plans = farm["sowingPlans"]?.jsonPrimitive?.jsonArray
-            ?: throw ValidationException()
+        val plans = farm["sowingPlans"]?.jsonArray ?: throw ValidationException()
         val mapOfSowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
         for (plan in plans) {
             val sowingPlan = parseSowingPlan(plan as JsonObject)
@@ -267,8 +263,8 @@ class FarmParser(private val simulationData: SimulationData) {
             listOfPlans.add(sowingPlan)
             mapOfSowingPlans[tick] = listOfPlans
         }
-        // simulationData.setSowingPlanMapping(mapOfSowingPlans)
-        // sowingPlanIDs = simulationData.getSowingPlans().map { it.getId() }
+//         simulationData.setSowingPlanMapping(mapOfSowingPlans)
+//         sowingPlanIDs = simulationData.getSowingPlans().map { it.getId() }
         return mapOfSowingPlans
     }
 
