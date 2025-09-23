@@ -45,7 +45,7 @@ class FarmParser(private val simulationData: SimulationData) {
             val jsonObject = Json.parseToJsonElement(jsonString).jsonObject
 
             // Parse main components
-            val farms = jsonObject["farms"]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
+            val farms = jsonObject["farms"]?.jsonArray ?: throw ValidationException()
 
             parseFarms(farms)
 
