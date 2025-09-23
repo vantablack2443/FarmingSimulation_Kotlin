@@ -43,12 +43,12 @@ class SimulationMapTest {
 
     @Test
     fun testGetTilesByRadius() {
-        assertEquals(listOf(tiles[1]), map.getTilesByRadius(tiles[0], 1)) // on or the edge of the map    }
+        assertEquals(listOf(tiles[1]), map.getTilesByRadius(tiles[0], 1)) // on or the edge of the map
+    }
 
-        @Test
-        fun testGetNeighbor() {
-            assertNull(map.getNeighbor(tiles[0]), Direction.NORTH_WEST)
-        }
+    @Test
+    fun testGetNeighbor() {
+        assertNull(map.getNeighbor(tiles[0], Direction.NORTH_WEST))
     }
 
     @Test

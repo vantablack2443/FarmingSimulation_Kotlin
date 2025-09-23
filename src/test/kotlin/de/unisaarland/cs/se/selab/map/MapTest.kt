@@ -196,7 +196,7 @@ class MapTest {
             on { homeShed } doReturn tileShed
         }
 
-        val reachableTilesWithoutHarvest = testMap.getAccessibleTiles(machine, -1, false)
+        val reachableTilesWithoutHarvest = testMap.getReachableTiles(machine, -1, false)
         assertTrue(reachableTilesWithoutHarvest.contains(tileA))
         assertTrue(reachableTilesWithoutHarvest.contains(tileB))
         assertTrue(reachableTilesWithoutHarvest.contains(tileC))
