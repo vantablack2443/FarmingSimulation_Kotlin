@@ -113,7 +113,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     }
 
     /**
-     * ALL THIS SHIT BELOW IS SO THAT IT BUILDS; WE NEED TO FIX STUFF
+     * ALL THINGS BELOW IS SO THAT IT BUILDS;
      *
      * Not implemented: Throws an error if called.
      */
@@ -126,13 +126,13 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         plant: PlantType,
         tick: Int
     ): List<Tile> {
-        error("getOperableTiles(farm, plant, yearTick) is not implemented in WeedingHandler")
+        return emptyList()
     }
 
     /**
      * Not implemented: Throws an error if called.
      */
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
-        error("startPhase(farm, yearTick, simTick) is not implemented in WeedingHandler")
+        return
     }
 }

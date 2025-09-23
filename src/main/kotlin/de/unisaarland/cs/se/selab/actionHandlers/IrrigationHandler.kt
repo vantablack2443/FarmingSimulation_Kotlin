@@ -128,11 +128,11 @@ class IrrigationHandler(
      * ActionHandler and then override them in the classes that need them.
      */
     override fun getOperableTiles(farm: Farm, plant: PlantType, tick: Int): List<Tile> {
-        error("getOperableTiles(farm, plant, yearTick) is not implemented in IrrigationHandler")
+        return emptyList()
     }
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
-        error("startPhase(farm, yearTick, simTick) is not implemented in IrrigationHandler")
+        return
     }
 
     /** why was this deleted in actionhandler?
