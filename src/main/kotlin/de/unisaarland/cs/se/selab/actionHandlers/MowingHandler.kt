@@ -21,14 +21,18 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      */
     override fun startPhase(
         farm: Farm,
-        machine: Machine
+        machine: Machine,
+        yearTick: Int
     ) {
         val operableTiles = getOperableTiles(farm)
+        this.operableTiles = operableTiles
+        this.tileMap = farm.tileHashMap
         for (tile in operableTiles) {
             if (tile.currentCrop in machine.plants && simulationMap.isReachable(machine, tile)) {
                 performAction(machine, tile)
                 farm.tileHashMap.add(tile.id)
-                continueAction(machine, farm, operableTiles)
+                this.tileMap.add(tile.id)
+                continueAction(machine, farm, operableTiles, yearTick)
                 machine.currentTile = machine.homeShed
                 machine.resetElapsedTime()
                 farm.machineHashMap.add(machine.id)
@@ -45,12 +49,21 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      */
     override fun performAction(
         machine: Machine,
-        tile: Tile
+        tile: Tile,
+        yearTick: Int
     ) {
         Logger.logFarmAction(machine.id, ActionType.MOW, tile.id, machine.duration)
         machine.currentTile = tile
         machine.updateElapsedTime()
-        tile.plant?.actionsNeeded?.remove(ActionType.MOW)
+        val plant = tile.plant
+        if (plant != null) {
+            plant.actionsNeeded.remove(ActionType.MOW)
+            for (element in plant.mowingTime) {
+                if (element.first.inRange(yearTick)) {
+                    element.second = true
+                }
+            }
+        }
     }
 
     /**
@@ -59,14 +72,15 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      * @param farm the farm that owns the teils and machine
      * @param operableTiles the tiles that should be performed on
      */
-    private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>) {
+    private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>, yearTick: Int) {
         while (machine.canPerform()) {
             val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
             for (tile in operableTiles) {
-                val opTile = tile.id in farm.tileHashMap
+                val opTile = tile.id in this.tileMap
                 if (tile in accessibleTiles && !opTile) {
-                    performAction(machine, tile)
+                    performAction(machine, tile, yearTick)
                     farm.tileHashMap.add(tile.id)
+                    this.tileMap.add(tile.id)
                     break
                 }
             }
@@ -104,6 +118,14 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      * not used for mowing handler
      */
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
+        return
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine) {
+        return
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
         return
     }
 }
