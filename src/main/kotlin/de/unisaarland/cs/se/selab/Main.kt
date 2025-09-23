@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
 
     val out = result["out"]
     if (out != null) {
-        Logger.printer = PrintWriter(out)
+        Logger.printer = PrintWriter(System.out)
     }
 
     if (result["help"] == "") {
