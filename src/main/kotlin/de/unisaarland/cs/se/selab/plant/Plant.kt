@@ -15,8 +15,8 @@ abstract class Plant {
     abstract var pollination: Double
     abstract var animalAttack: Boolean
     abstract var animalAttackPenalty: Double
-    abstract var actionsNeeded: MutableList<ActionType>
-    abstract var lateActions: MutableList<ActionType>
+    abstract val actionsNeeded: MutableList<ActionType>
+    abstract val lateActions: MutableList<ActionType>
 
     /**
      * Default function to be overridden when necessary by the concrete plant
