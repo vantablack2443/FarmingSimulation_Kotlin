@@ -25,12 +25,28 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         return
     }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
     override fun performAction(
         machine: Machine,
         tile: Tile
     ) {
         // TODO
         return
+    }
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
+        TODO("Not yet implemented")
     }
 
     /** why was this deleted in actionhandler?

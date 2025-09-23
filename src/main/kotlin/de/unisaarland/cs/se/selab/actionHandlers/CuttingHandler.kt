@@ -174,7 +174,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     }
 
     /**
-     *THINGS BELOW SO THAT THIS SHIT BUILDS
+     *THINGS BELOW SO THAT THIS BUILDS
      */
 
     // Implement missing abstract methods from ActionHandler
