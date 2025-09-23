@@ -124,7 +124,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        yearTick: Int
+        tick: Int
     ): List<Tile> {
         error("getOperableTiles(farm, plant, yearTick) is not implemented in WeedingHandler")
     }

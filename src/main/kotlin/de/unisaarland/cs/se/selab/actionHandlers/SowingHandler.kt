@@ -50,7 +50,7 @@ class SowingHandler(
     override fun getOperableTiles(
         farm: Farm,
         plant: PlantType,
-        simTick: Int
+        tick: Int
     ): List<Tile> {
         val operableTiles = mutableListOf<Tile>()
         for (tile in farm.getFields()) {
