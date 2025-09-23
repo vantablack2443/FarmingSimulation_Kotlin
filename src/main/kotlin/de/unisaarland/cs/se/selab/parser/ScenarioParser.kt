@@ -379,7 +379,7 @@ class ScenarioParser(private val simData: SimulationData) {
         incidentTick: Int,
         incidentID: Int
     ): List<Tile> {
-        lateinit var villageTiles: MutableList<Tile>
+        val villageTiles: MutableList<Tile> = mutableListOf()
         for (cityExpansion in cityExpansions) {
             if (cityExpansion.tick < incidentTick ||
                 (cityExpansion.tick == incidentTick && cityExpansion.id < incidentID)
