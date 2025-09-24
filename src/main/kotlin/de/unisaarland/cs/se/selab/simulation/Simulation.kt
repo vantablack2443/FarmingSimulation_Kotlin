@@ -30,7 +30,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     private val cloudHandler = CloudHandler(map)
     init {
         val clouds = data.getClouds().sortedBy { it.id }
-        cloudHandler.setMaxCloudID(clouds.maxOf { it.id })
+        if (clouds.isEmpty()) {
+            cloudHandler.setMaxCloudID(
+                0
+            )
+        } else { cloudHandler.setMaxCloudID(clouds.maxOf { it.id }) }
         for (cloud in clouds) {
             cloudHandler.addCloud(cloud)
         }
@@ -47,6 +51,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     private val harvestEstimator = HarvestEstimateHandler(this.map)
     private val actionHandler = ActionPhaseHandler(data.getFarms())
     private val harvestPerPlant: MutableMap<PlantType, Int> = mutableMapOf()
+    init {
+        for (plantType in PlantType.entries) {
+            harvestPerPlant[plantType] = 0
+        }
+    }
 
     init {
         val plantData = actionHandler.getPlantData()
