@@ -50,5 +50,12 @@ class FarmParserTest {
         val farm1 = farm[0]
         assertEquals(0, farm1.getId())
         assertEquals("Very Cool Farm", farm1.getName())
-
+        assertEquals(1, farm1.getFarmstead().size)
+        assertEquals(1, farm1.getFields().size)
+        assertEquals(1, farm1.getPlantation().size)
+        assertEquals(1, farm1.getMachines().size)
+        assertEquals(0, farm1.getMachines()[0].id)
+        assertEquals("Tractor", farm1.getMachines()[0].name)
+        assertEquals(4, farm1.getMachines()[0].duration)
+        assertEquals(2, farm1.getMachines()[0].actions.size)
 }
