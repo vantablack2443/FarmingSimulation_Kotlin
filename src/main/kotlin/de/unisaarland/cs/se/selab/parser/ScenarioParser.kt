@@ -453,7 +453,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Checks if ID is positive
         checkValid(location >= 0)
         // Checks if this tile exists on the map and returns its coordinate
-        val tile: Tile = simData.getTileById(id) ?: throw ValidationException()
+        val tile: Tile = simData.getTileById(location) ?: throw ValidationException()
         // Checks if the tile already has a cloud on it
         checkValid(validateLocation(tile))
 
