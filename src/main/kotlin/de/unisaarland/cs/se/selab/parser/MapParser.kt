@@ -56,6 +56,7 @@ class MapParser(private val simData: SimulationData) {
             val tiles = Json.parseToJsonElement(jsonString)
                 .jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
             parseCreateTiles(tiles)
+            validateNeighborFarms()
             simData.map = SimulationMap(tileCoordinates)
             Logger.logParsing(file.name)
         } catch (exception: ValidationException) {
@@ -333,6 +334,23 @@ class MapParser(private val simData: SimulationData) {
                 throw ValidationException("Mismatch of tile shape and direction")
             }
             else -> return
+        }
+    }
+
+    /**
+     * validate that farmsteads don't adjoin other farm's plantations or fields
+     */
+    private fun validateNeighborFarms() {
+        val farmsteads = tileIDMap.values.filter { it.category == TileType.FARMSTEAD }
+        for (farmstead in farmsteads) {
+            val neighborCoordinates = farmstead.location.getImmediateNeighbors()
+            val neighbors = neighborCoordinates.map { this.tileCoordinates.getOrDefault(it, null) }
+                .filter { it?.category in setOf(TileType.FIELD, TileType.PLANTATION) }
+            for (tile in neighbors) {
+                if (tile?.farmID != farmstead.farmID) {
+                    throw ValidationException("farmsteads can't adjoin other farm's plantable tiles")
+                }
+            }
         }
     }
 }
