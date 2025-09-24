@@ -32,12 +32,12 @@ class Apple : PlantationPlant() {
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
-        Pair(Duration(APPLE_CUT_START, APPLE_CUT_END), false),
-        Pair(Duration(APPLE_CUT_START_ALT, APPLE_CUT_END_ALT), false)
+        CustomPair(Duration(APPLE_CUT_START, APPLE_CUT_END), false),
+        CustomPair(Duration(APPLE_CUT_START_ALT, APPLE_CUT_END_ALT), false)
     )
     override val mowingTime = mutableListOf(
-        Pair(Duration(APPLE_MOW_START_END, APPLE_MOW_START_END), false),
-        Pair(Duration(APPLE_MOW_ALTERNATE, APPLE_MOW_ALTERNATE), false)
+        CustomPair(Duration(APPLE_MOW_START_END, APPLE_MOW_START_END), false),
+        CustomPair(Duration(APPLE_MOW_ALTERNATE, APPLE_MOW_ALTERNATE), false)
     )
     override var harvestingTime = Duration(APPLE_HARVEST_START, APPLE_HARVEST_END)
     override var bloomingTime: Duration? = Duration(APPLE_BLOOM_START, APPLE_BLOOM_END)

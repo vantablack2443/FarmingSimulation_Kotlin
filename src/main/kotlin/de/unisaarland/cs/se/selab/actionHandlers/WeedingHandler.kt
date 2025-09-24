@@ -135,4 +135,20 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         return
     }
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
+        return
+    }
+
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
 }

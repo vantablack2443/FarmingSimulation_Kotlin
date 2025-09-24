@@ -248,8 +248,24 @@ class SowingHandler(
         return
     }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
+
     override fun performAction(machine: Machine, tile: Tile) {
         // TODO
+        return
+    }
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
         return
     }
 

@@ -25,6 +25,7 @@ class AnimalAttack(
         for (tile in affectedTiles) {
             val tilePlant = tile.plant ?: continue
             tilePlant.doAnimalAttack()
+            tilePlant.resetMowingTime(yearTick)
         }
     }
 }

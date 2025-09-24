@@ -29,6 +29,9 @@ class Pumpkin : FieldPlant() {
     override var animalAttackPenalty = 1.0
     override var bloomingTime: Duration? = null
 
+    override val cuttingTime = mutableListOf<CustomPair>()
+    override val mowingTime = mutableListOf<CustomPair>()
+
     // USES YEAR-TICK
     override fun needsHarvesting(tick: Int) {
         if ((PUMPKIN_HARVEST_START..PUMPKIN_HARVEST_END).contains(tick)) {

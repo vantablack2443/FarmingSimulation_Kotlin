@@ -31,6 +31,10 @@ class Wheat : FieldPlant() {
     override var animalAttackPenalty = 1.0
     override val actionsNeeded = mutableListOf<ActionType>()
     override val lateActions = mutableListOf<ActionType>()
+
+    override val cuttingTime = mutableListOf<CustomPair>()
+    override val mowingTime = mutableListOf<CustomPair>()
+
     override fun needsHarvesting(tick: Int) {
         if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVESTING)

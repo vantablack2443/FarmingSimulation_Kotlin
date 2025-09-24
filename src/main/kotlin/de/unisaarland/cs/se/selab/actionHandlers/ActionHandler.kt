@@ -19,8 +19,7 @@ abstract class ActionHandler(
     val simulationMap: SimulationMap,
     val plantdata: PlantData
 ) {
-    val operableTiles: List<Tile> = mutableListOf()
-    val tileMap: HashSet<Int> = hashSetOf()
+    var operableTiles: List<Tile> = mutableListOf()
 
     /**
      * Starts phase with parameters farm, yearTick and simTick
@@ -33,9 +32,19 @@ abstract class ActionHandler(
     abstract fun startPhase(farm: Farm, machine: Machine)
 
     /**
+     * start phase, year tick used in mowing handler
+     */
+    abstract fun startPhase(farm: Farm, machine: Machine, yearTick: Int)
+
+    /**
      * Performs action inside concrete action class with parameters machine and tile
      */
     abstract fun performAction(machine: Machine, tile: Tile)
+
+    /**
+     * performs action, year tick needed for cutting and mowing times
+     */
+    abstract fun performAction(machine: Machine, tile: Tile, yearTick: Int)
 
     /**
      * Gets operable tiles based on farm
