@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.parser
 
 import de.unisaarland.cs.se.selab.simulation.SimulationData
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -9,7 +9,6 @@ class FarmParserTest {
 
     @Test
     fun testParseValidFarmConfig() {
-
         val jsonString = """
         {
           "farms": [
@@ -35,7 +34,7 @@ class FarmParserTest {
           ]
         }
 
-    """.trimIndent()
+        """.trimIndent()
 
         val tempFile = File.createTempFile("testFarm", ".json")
         tempFile.writeText(jsonString)
@@ -58,4 +57,5 @@ class FarmParserTest {
         assertEquals("Tractor", farm1.getMachines()[0].name)
         assertEquals(4, farm1.getMachines()[0].duration)
         assertEquals(2, farm1.getMachines()[0].actions.size)
+    }
 }

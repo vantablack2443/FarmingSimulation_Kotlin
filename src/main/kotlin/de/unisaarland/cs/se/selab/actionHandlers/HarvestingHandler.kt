@@ -27,7 +27,7 @@ class HarvestingHandler(
             return
         }
 
-        //  get OperableTiles takes care of the prioritzation of the tiles-- changed the signature in the diagram
+        //  get OperableTiles takes care of the prioritization of the tiles-- changed the signature in the diagram
         val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
         for (tile in operableTiles) {
             val availableMachine = getAvailableMachine(farm, tile) ?: continue
@@ -45,7 +45,7 @@ class HarvestingHandler(
         farm: Farm,
         machine: Machine
     ) {
-        TODO("Not yet implemented")
+        return
     }
 
     override fun startPhase(
@@ -53,14 +53,14 @@ class HarvestingHandler(
         machine: Machine,
         yearTick: Int
     ) {
-        TODO("Not yet implemented")
+        return
     }
 
     override fun performAction(
         machine: Machine,
         tile: Tile
     ) {
-        TODO("Not yet implemented")
+        return
     }
 
     override fun performAction(
@@ -68,11 +68,11 @@ class HarvestingHandler(
         tile: Tile,
         yearTick: Int
     ) {
-        TODO("Not yet implemented")
+        return
     }
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
-        TODO("Not yet implemented")
+        return listOf()
     }
 
     override fun getOperableTiles(
@@ -80,7 +80,7 @@ class HarvestingHandler(
         plant: PlantType,
         tick: Int
     ): List<Tile> {
-        TODO("Not yet implemented")
+        return listOf()
     }
 
     private fun continueAction(
