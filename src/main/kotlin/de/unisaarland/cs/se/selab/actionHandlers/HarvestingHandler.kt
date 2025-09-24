@@ -8,7 +8,6 @@ import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
-import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.machine.PlantAndHarvest
 
@@ -28,15 +27,12 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         //  get OperableTiles takes care of the prioritzation of the tiles-- changed the signature in the diagram
         val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
         for( tile in operableTiles){
-            val availableMachine = getAvailableMachine(farm, tile)
-            if(availableMachine == null){
-                return
-            }
+            val availableMachine = getAvailableMachine(farm, tile) ?: continue
             operableTiles.remove(tile)
-            doHarvest(farm,availableMachine, tile, yearTick)
-            if(availableMachine.canPerform(){
-                    continueAction(farm,availableMachine, simTick, tile)
-                })
+            doHarvest(farm,availableMachine, tile, yearTick, operableTiles)
+            if(availableMachine.canPerform()){
+                    continueAction(farm,availableMachine, yearTick, tile, operableTiles)
+                }
                 this.simulationMap.findTargetShed(availableMachine, farm.getShedTiles(), true)
             farm.machineHashMap.remove(availableMachine.id)
 
@@ -85,7 +81,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         TODO("Not yet implemented")
     }
 
-    private fun continueAction(farm : Farm,machine : Machine, simTick : Int, tileToBaseOn : Tile){
+    private fun continueAction(farm : Farm,machine : Machine, yearTick: Int, tileToBaseOn : Tile, operableTiles : MutableList<Tile>) {
         if(!machine.canPerform()) {
             return
         }
@@ -95,20 +91,20 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         }
         for(tile in toContinueOn){
             if(this.simulationMap.isReachable(machine,tile)){
-                doHarvest(farm,machine,tile)
+                doHarvest(farm, machine, tile, yearTick, operableTiles)
                 operableTiles.remove(tile)
-                continueAction(farm, machine, simTick, tile )
+                continueAction(farm, machine, yearTick , tile, operableTiles)
             }
 
         }
 
     }
 
-    private fun doHarvest(farm : Farm,machine: Machine, tile: Tile, yearTick: Int) : Unit{
+    private fun doHarvest(farm : Farm,machine: Machine, tile: Tile, yearTick: Int, operableTiles: MutableList<Tile>) {
         // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
         machine.currentTile = tile
         machine.updateElapsedTime()
-        machine.currentHarvest = PlantAndHarvest(tile.currentCrop!!, tile.plant.harvestEstimate)
+        machine.currentHarvest = PlantAndHarvest(tile.currentCrop!!, tile.plant!!.harvestEstimate)
         tile.plant?.harvestEstimate = 0
         if(tile.category == TileType.FIELD){
             tile.plant= null
