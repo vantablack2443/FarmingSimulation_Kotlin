@@ -333,7 +333,7 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function that parses field tiles of the sowing plan
      */
     private fun parseSowingPlanFields(plan: JsonObject): List<Tile> {
-        val tileArray = plan[FIELDS]?.jsonPrimitive?.jsonArray ?: throw ValidationException()
+        val tileArray = plan[FIELDS]?.jsonArray ?: throw ValidationException()
         val fieldTileIDs = tileArray.map { it.jsonPrimitive.int }
         val fieldTiles = fieldTileIDs.map {
             simulationData.getTileById(it)
