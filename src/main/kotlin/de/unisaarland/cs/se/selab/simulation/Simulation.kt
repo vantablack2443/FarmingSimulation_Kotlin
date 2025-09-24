@@ -167,7 +167,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             Logger.logTotalFarmHarvest(farm.getId(), totalHarvest)
         }
         calculateHarvestPerPlant()
-        harvestPerPlant.forEach { (plant, amount) -> Logger.logHarvestPerPlant(plant, amount) }
+        // Log statistics for all plant types in enum order
+        for (plant in PlantType.entries) {
+            val amount = harvestPerPlant[plant] ?: 0
+            Logger.logHarvestPerPlant(plant, amount)
+        }
         val remainingHarvest = calculateRemainingHarvest()
         Logger.logRemainingHarvest(remainingHarvest)
     }
