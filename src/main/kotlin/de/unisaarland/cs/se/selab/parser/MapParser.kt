@@ -111,6 +111,7 @@ class MapParser(private val simData: SimulationData) {
         val (airflow, direction) = parseAirflow(tile, category)
         parsedTile.airflow = airflow
         parsedTile.direction = direction
+        if (direction != null) validateShapeToDirection(shape, direction)
         parseFarmID(tile, parsedTile)
         parseFarmstead(tile, parsedTile)
         parsePlantableTiles(tile, parsedTile)
@@ -123,23 +124,23 @@ class MapParser(private val simData: SimulationData) {
     /**
      * parse the airflow and direction for a tile; throw exception if type village
      */
-    private fun parseAirflow(tile: JsonObject, category: TileType): Pair<Boolean, Direction> {
+    private fun parseAirflow(tile: JsonObject, category: TileType): Pair<Boolean, Direction?> {
         if (category == TileType.VILLAGE) {
             if (tile["airflow"] != null) {
                 throw ValidationException("Village tile cannot have airflow")
             }
-            return Pair(false, Direction.entries.first())
+            return Pair(false, null)
         }
 
         val airflow = tile["airflow"]?.jsonPrimitive?.boolean
             ?: throw ValidationException("Missing tile airflow")
-        if (!airflow) {
-            return Pair(false, Direction.entries.first())
+        if (airflow) {
+            val angle = tile["direction"]?.jsonPrimitive?.content
+                ?: throw ValidationException("Missing tile direction while airflow is true")
+            val direction = Direction.getDirectionByAngle(angle)
+            return Pair(true, direction)
         }
-        val angle = tile["direction"]?.jsonPrimitive?.content
-            ?: throw ValidationException("Missing tile direction while airflow is true")
-        val direction = Direction.getDirectionByAngle(angle)
-        return Pair(true, direction)
+        return Pair(false, null)
     }
 
     /**
@@ -213,7 +214,7 @@ class MapParser(private val simData: SimulationData) {
     private fun parseCapacity(jsonObject: JsonObject, tile: Tile) {
         val capacity = jsonObject["capacity"]?.jsonPrimitive?.int
             ?: throw ValidationException("missing capacity")
-        if (capacity < 0) throw ValidationException("capacity must be positive")
+        if (capacity < 1) throw ValidationException("capacity must be positive")
         tile.maxMoisture = capacity
         tile.currentMoisture = capacity
     }
@@ -318,5 +319,19 @@ class MapParser(private val simData: SimulationData) {
         if (x % 2 == 0 && y % 2 == 0) return TileShape.OCTAGONAL
         if (x % 2 == 1 && y % 2 == 1) return TileShape.SQUARE
         throw ValidationException("Invalid tile coordinates")
+    }
+
+    /**
+     * validates shape to direction match
+     */
+    private fun validateShapeToDirection(shape: TileShape, direction: Direction) {
+        when (shape) {
+            TileShape.SQUARE -> if (direction in
+                setOf(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
+            ) {
+                throw ValidationException("Mismatch of tile shape and direction")
+            }
+            else -> return
+        }
     }
 }
