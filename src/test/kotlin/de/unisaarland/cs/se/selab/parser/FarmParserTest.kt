@@ -1,7 +1,9 @@
 package de.unisaarland.cs.se.selab.parser
 
+import de.unisaarland.cs.se.selab.simulation.SimulationData
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.io.File
 
 class FarmParserTest {
 
@@ -10,21 +12,43 @@ class FarmParserTest {
 
         val jsonString = """
         {
-            "farms": [
+          "farms": [
+            {
+              "id": 0,
+              "name": "Very Cool Farm",
+              "farmsteads": [0],
+              "fields": [2],
+              "plantations": [1],
+              "machines": [
                 {
-                    "id": 1,
-                    "name": "Sunny Farm",
-                    "initialMoney": 1000,
-                    "startingTileID": 10
-                },
-                {
-                    "id": 2,
-                    "name": "Green Acres",
-                    "initialMoney": 1500,
-                    "startingTileID": 20
+                  "id": 0,
+                  "name": "Tractor",
+                  "actions": ["SOWING", "IRRIGATING"],
+                  "plants": ["PUMPKIN", "WHEAT"],
+                  "duration": 4,
+                  "location": 0
                 }
-            ]
+              ],
+              "sowingPlans": [
+              ]
+            }
+          ]
         }
+
     """.trimIndent()
+
+        val tempFile = File.createTempFile("testFarm", ".json")
+        tempFile.writeText(jsonString)
+        val simData = SimulationData()
+        val parser = FarmParser(simData)
+        parser.parse(tempFile.absolutePath)
+        tempFile.deleteOnExit()
+        val farm = simData.getFarms()
+
+        assertEquals(1, farm.size)
+
+        val farm1 = farm[0]
+        assertEquals(0, farm1.getId())
+        assertEquals("Very Cool Farm", farm1.getName())
 
 }
