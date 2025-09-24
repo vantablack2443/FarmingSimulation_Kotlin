@@ -9,9 +9,9 @@ enum class PlantType {
     OAT,
     PUMPKIN,
     APPLE,
+    GRAPE,
     ALMOND,
-    CHERRY,
-    GRAPE;
+    CHERRY;
 
     /**
      * companion object
