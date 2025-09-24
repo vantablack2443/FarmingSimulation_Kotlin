@@ -66,7 +66,7 @@ class Almond : PlantationPlant() {
 
     override fun needsHarvesting(tick: Int) {
         if (tick in ALMOND_HARVEST_START..ALMOND_HARVEST_END) {
-            this.actionsNeeded.add(ActionType.HARVESTINGING)
+            this.actionsNeeded.add(ActionType.HARVESTING)
         }
         if (tick == ALMOND_HARVEST_END + 1) {
             this.actionsNeeded.add(ActionType.HARVESTING)
