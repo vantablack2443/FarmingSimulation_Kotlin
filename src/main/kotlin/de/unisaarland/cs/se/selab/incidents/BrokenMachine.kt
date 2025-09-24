@@ -1,6 +1,4 @@
-package de.unisaarland.cs.se.selab.incidentsimport
-
-import de.unisaarland.cs.se.selab.incidents.Incident
+package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
