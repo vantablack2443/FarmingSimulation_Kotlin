@@ -23,6 +23,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
+import kotlin.math.abs
 
 /**
  * custom exception
@@ -316,8 +317,8 @@ class MapParser(private val simData: SimulationData) {
     private fun getShapeByCoordinate(coordinate: Coordinate): TileShape {
         val x = coordinate.x
         val y = coordinate.y
-        if (x % 2 == 0 && y % 2 == 0) return TileShape.OCTAGONAL
-        if (x % 2 == 1 && y % 2 == 1) return TileShape.SQUARE
+        if (abs(x) % 2 == 0 && abs(y) % 2 == 0) return TileShape.OCTAGONAL
+        if (abs(x) % 2 == 1 && abs(y) % 2 == 1) return TileShape.SQUARE
         throw ValidationException("Invalid tile coordinates")
     }
 
