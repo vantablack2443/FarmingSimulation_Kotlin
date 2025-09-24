@@ -31,6 +31,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         // Get all plantation tiles that have a plant needing CUTTING
         val operableTiles = getOperableTiles(farm)
+        this.operableTiles = operableTiles
 
         if (operableTiles.isEmpty()) {
             return
@@ -45,9 +46,10 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             val availableMachines = getAvailableMachines(farm, plantType)
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
-                performAction(machine, tile)
+                performAction(machine, tile, yearTick)
                 farm.tileHashMap.add(tile.id)
-                continueAction(machine, tile, farm, operableTiles)
+                farm.tileHashMap.add(tile.id)
+                continueAction(machine, tile, farm, operableTiles, yearTick)
                 farm.machineHashMap.add(machine.id)
             }
         }
@@ -62,13 +64,21 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     override fun performAction(
         machine: Machine,
-        tile: Tile
+        tile: Tile,
+        yearTick: Int
     ) {
         machine.currentTile = tile
         machine.updateElapsedTime()
 
         val plant = tile.plant
         plant?.actionsNeeded?.remove(ActionType.CUTTING)
+        if (plant != null) {
+            for (element in plant.cuttingTime) {
+                if (element.first.inRange(yearTick)) {
+                    element.second = true
+                }
+            }
+        }
 
         // Log the action
         logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
@@ -82,7 +92,13 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      * @param machine The machine performing the action.
      * @param tile The current tile being processed.
      */
-    private fun continueAction(machine: Machine, tile: Tile, farm: Farm, operableTiles: MutableList<Tile>) {
+    private fun continueAction(
+        machine: Machine,
+        tile: Tile,
+        farm: Farm,
+        operableTiles: MutableList<Tile>,
+        yearTick: Int
+    ) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
             return
@@ -98,8 +114,8 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         val nextTile = neighborTiles.firstOrNull()
         if (nextTile != null) {
             farm.tileHashMap.add(nextTile.id)
-            performAction(machine, nextTile)
-            continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
+            performAction(machine, nextTile, yearTick)
+            continueAction(machine, nextTile, farm, operableTiles, yearTick) // Recursively continue action
         } else {
             machine.currentTile = machine.homeShed
             machine.resetElapsedTime()
@@ -156,7 +172,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     }
 
     /**
-     *THINGS BELOW SO THAT THIS SHIT BUILDS
+     *THINGS BELOW SO THAT THIS BUILDS
      */
 
     // Implement missing abstract methods from ActionHandler
@@ -171,5 +187,13 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         tick: Int
     ): List<Tile> {
         return emptyList()
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
+        return
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine, yearTick: Int) {
+        return
     }
 }

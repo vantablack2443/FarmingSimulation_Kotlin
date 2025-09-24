@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
 import de.unisaarland.cs.se.selab.enumerations.PlantType
+import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -22,8 +23,8 @@ class IrrigationHandler(
      * Handles the main logic of the irrigation phase, starting by getting operable tiles and then
      * checks for the target tile to perform actions and also for action continuation
      */
-    override fun startPhase(farm: Farm, machine: Machine) {
-        val operableTiles = getOperableTiles(farm).toMutableList()
+    fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
+        val operableTiles = getOperableTiles(farm, tileType).toMutableList()
         if (operableTiles.isEmpty()) {
             return
         }
@@ -65,6 +66,14 @@ class IrrigationHandler(
         }
     }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
+
     /**
      * Performs the irrigation action on the specified tile using the given machine.
      */
@@ -76,6 +85,14 @@ class IrrigationHandler(
         val maxMoisture = tile.maxMoisture ?: error("Max moisture null or invalid")
         val amount = maxMoisture - currentMoisture
         tile.increaseMoistureByAmount(amount)
+    }
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
+        return
     }
 
     /**
@@ -90,15 +107,16 @@ class IrrigationHandler(
     /**
      * Returns a list of operable tiles that need irrigation and are not already handled in the current tick.
      */
-    override fun getOperableTiles(farm: Farm): List<Tile> {
+    fun getOperableTiles(farm: Farm, tileType: TileType): List<Tile> {
         val operableTiles = mutableListOf<Tile>()
-        for (tile in farm.getFields()) {
-            if (!tile.hasPlantGrowing()) continue
-            if (tile.needsIrrigation() && tile.id !in farm.tileHashMap) {
-                operableTiles.add(tile)
-            }
+        var tiles = emptyList<Tile>()
+        if (tileType == TileType.FIELD) {
+            tiles = farm.getFields()
         }
-        for (tile in farm.getPlantation()) {
+        if (tileType == TileType.PLANTATION) {
+            tiles = farm.getPlantation()
+        }
+        for (tile in tiles) {
             if (!tile.hasPlantGrowing()) continue
             if (tile.needsIrrigation() && tile.id !in farm.tileHashMap) {
                 operableTiles.add(tile)
@@ -133,6 +151,14 @@ class IrrigationHandler(
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         return
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine) {
+        return
+    }
+
+    override fun getOperableTiles(farm: Farm): List<Tile> {
+        return emptyList()
     }
 
     /** why was this deleted in actionhandler?

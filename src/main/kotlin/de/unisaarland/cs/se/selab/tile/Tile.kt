@@ -9,8 +9,6 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.plant.Plant
 
-const val FOUR = 4
-
 /**
  * tile class
  */
@@ -100,16 +98,16 @@ class Tile(
     /**
      * perform harvest
      */
-    fun harvest(simTick: Int) {
-        val p = plant ?: return
-        if (category == TileType.PLANTATION) {
-            p.harvestEstimate = 0
-        }
-        if (category == TileType.FIELD) {
-            plant = null
-            fallowDuration = Duration(simTick + 1, simTick + FOUR)
-        }
-    }
+//    fun harvest(simTick: Int) {
+//        val p = plant ?: return
+//        if (category == TileType.PLANTATION) {
+//            p.harvestEstimate = 0
+//        }
+//        if (category == TileType.FIELD) {
+//            plant = null
+//            fallowDuration = Duration(simTick + 1, simTick + FOUR)
+//        }
+//    }
 
     /**
      * checks if the tile needs irrigation

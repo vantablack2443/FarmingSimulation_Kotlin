@@ -1,0 +1,235 @@
+{
+  "tiles": [
+    {
+      "id": 0,
+      "coordinates": { "x": -1, "y": -1 },
+      "category": "FARMSTEAD",
+      "farm": 0,
+      "shed": true,
+      "airflow": false
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 1, "y": -1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 3, "y": -1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": 5, "y": -1 },
+      "category": "MEADOW",
+      "airflow": true
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": 7, "y": -1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 5,
+      "coordinates": { "x": 9, "y": -1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 6,
+      "coordinates": { "x": -1, "y": 1 },
+      "category": "MEADOW",
+      "airflow": true,
+      "direction": "135"
+    },
+    {
+      "id": 7,
+      "coordinates": { "x": 1, "y": 1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 10,
+      "coordinates": { "x": 7, "y": 1 },
+      "category": "MEADOW",
+      "airflow": true,
+      "direction": "315"
+    },
+    {
+      "id": 11,
+      "coordinates": { "x": 9, "y": 1 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 12,
+      "coordinates": { "x": -1, "y": 3 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 13,
+      "coordinates": { "x": 1, "y": 3 },
+      "category": "MEADOW",
+      "airflow": true
+    },
+    {
+      "id": 17,
+      "coordinates": { "x": 7, "y": 3 },
+      "category": "MEADOW",
+      "airflow": true
+    },
+    {
+      "id": 18,
+      "coordinates": { "x": 9, "y": 3 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 19,
+      "coordinates": { "x": -1, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 20,
+      "coordinates": { "x": 1, "y": 5 },
+      "category": "MEADOW",
+      "airflow": true,
+      "direction": "90"
+    },
+    {
+      "id": 21,
+      "coordinates": { "x": 3, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 22,
+      "coordinates": { "x": 5, "y": 5 },
+      "category": "MEADOW",
+      "airflow": true
+    },
+    {
+      "id": 23,
+      "coordinates": { "x": 7, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 24,
+      "coordinates": { "x": 9, "y": 5 },
+      "category": "MEADOW",
+      "airflow": true,
+      "direction": "315"
+    },
+    {
+      "id": 25,
+      "coordinates": { "x": 0, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 26,
+      "coordinates": { "x": 2, "y": 0 },
+      "category": "ROAD",
+      "airflow": true
+    },
+    {
+      "id": 27,
+      "coordinates": { "x": 4, "y": 0 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 10500,
+      "possiblePlants": ["WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 28,
+      "coordinates": { "x": 6, "y": 0 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 29,
+      "coordinates": { "x": 8, "y": 0 },
+      "category": "PLANTATION",
+      "farm": 0,
+      "capacity": 12500,
+      "plant": "APPLE",
+      "airflow": false
+    },
+    {
+      "id": 30,
+      "coordinates": { "x": 0, "y": 2 },
+      "category": "FOREST",
+      "airflow": true
+    },
+    {
+      "id": 31,
+      "coordinates": { "x": 2, "y": 2 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 14500,
+      "possiblePlants": ["WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 32,
+      "coordinates": { "x": 4, "y": 2 },
+      "category": "ROAD",
+      "airflow": true,
+      "direction": "45"
+    },
+    {
+      "id": 33,
+      "coordinates": { "x": 6, "y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 34,
+      "coordinates": { "x": 8, "y": 2 },
+      "category": "FOREST",
+      "airflow": true,
+      "direction": "90"
+    },
+    {
+      "id": 35,
+      "coordinates": { "x": 0, "y": 4 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 36,
+      "coordinates": { "x": 2, "y": 4 },
+      "category": "ROAD",
+      "airflow": true
+    },
+    {
+      "id": 37,
+      "coordinates": { "x": 4, "y": 4 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 15000,
+      "possiblePlants": ["WHEAT", "CORN"],
+      "airflow": false
+    },
+    {
+      "id": 38,
+      "coordinates": { "x": 6, "y": 4 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 15,
+      "coordinates": { "x": 8, "y": 4 },
+      "category": "PLANTATION",
+      "farm": 0,
+      "capacity": 9200,
+      "plant": "ALMOND",
+      "airflow": false
+    }
+  ]
+}

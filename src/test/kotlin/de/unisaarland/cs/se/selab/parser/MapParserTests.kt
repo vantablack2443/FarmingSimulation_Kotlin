@@ -1,11 +1,9 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.parser
 
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
-import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.simulation.SimulationData
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertEquals
@@ -80,8 +78,8 @@ class MapParserTests {
 
         val farmstead = map.getTileByID(0)
         val field = map.getTileByID(1)
-        assertFalse(farmstead?.shape == TileShape.OCTAGONAL)
-        assertFalse(field?.shape == TileShape.SQUARE)
+        Assertions.assertFalse(farmstead?.shape == TileShape.OCTAGONAL)
+        Assertions.assertFalse(field?.shape == TileShape.SQUARE)
     }
 
     @Test
@@ -108,7 +106,7 @@ class MapParserTests {
         val simData = SimulationData()
         val parser = MapParser(simData)
 
-        assertThrows(de.unisaarland.cs.se.selab.parser.ValidationException::class.java) {
+        Assertions.assertThrows(ValidationException::class.java) {
             parser.parse(tempFile.absolutePath)
         }
 

@@ -188,7 +188,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
                     nextTile.id
                 )
                 // Check rain for the new cloud
-                tryRainAndDissipate(nextTile, newCloud)
+                // tryRainAndDissipate(nextTile, newCloud)
                 // Dissipate will add the new cloud to removed clouds
                 // Will be removed after appending to the two lists if required
                 mergedOrDissipated = true

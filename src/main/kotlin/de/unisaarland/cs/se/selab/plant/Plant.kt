@@ -4,6 +4,11 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 
 /**
+ * custom mutable pair fot cutting and mowing times
+ */
+data class CustomPair(var first: Duration = Duration(-1, -1), var second: Boolean = false)
+
+/**
  * abstract plant class
  */
 abstract class Plant {
@@ -17,6 +22,8 @@ abstract class Plant {
     abstract var animalAttackPenalty: Double
     abstract val actionsNeeded: MutableList<ActionType>
     abstract val lateActions: MutableList<ActionType>
+    abstract val cuttingTime: MutableList<CustomPair>
+    abstract val mowingTime: MutableList<CustomPair>
 
     /**
      * Default function to be overridden when necessary by the concrete plant
@@ -100,6 +107,11 @@ abstract class Plant {
      * updates harvest estimate based on late sowing penalty
      */
     open fun applyLateSowingPenalty() { return }
+
+    /**
+     * resets the mowing time after animal attack
+     */
+    open fun resetMowingTime(startTick: Int) { return }
 
     /**
      * Factory method to create plants based on PlantType
