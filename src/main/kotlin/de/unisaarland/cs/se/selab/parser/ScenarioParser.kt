@@ -85,7 +85,7 @@ class ScenarioParser(private val simData: SimulationData) {
             for (sowingPlans in sowingPlanMap.values) {
                 checkValid(checkSowingPlanFields(sowingPlans))
             }
-            Logger.logParsing(true, File(jsonPath).name)
+            Logger.logParsing(File(jsonPath).name)
         } catch (exception: ValidationException) {
             throw ValidationException(exception, jsonPath)
         }

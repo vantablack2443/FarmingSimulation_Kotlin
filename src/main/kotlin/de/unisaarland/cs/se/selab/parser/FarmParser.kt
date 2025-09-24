@@ -60,7 +60,7 @@ class FarmParser(private val simulationData: SimulationData) {
                 simulationData.addSowingPlansToMapping(plans, tick)
             }
             // logging should be done here as file valid
-            Logger.logParsing(true, file.name)
+            Logger.logParsing(file.name)
         } catch (exception: ValidationException) {
             throw ValidationException(exception, json)
         }
