@@ -20,7 +20,6 @@ abstract class ActionHandler(
     val plantdata: PlantData
 ) {
     var operableTiles: List<Tile> = mutableListOf()
-    var tileMap: HashSet<Int> = hashSetOf()
 
     /**
      * Starts phase with parameters farm, yearTick and simTick

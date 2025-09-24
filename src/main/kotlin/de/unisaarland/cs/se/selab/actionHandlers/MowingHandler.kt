@@ -26,12 +26,10 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
     ) {
         val operableTiles = getOperableTiles(farm)
         this.operableTiles = operableTiles
-        this.tileMap = farm.tileHashMap
         for (tile in operableTiles) {
             if (tile.currentCrop in machine.plants && simulationMap.isReachable(machine, tile)) {
                 performAction(machine, tile)
                 farm.tileHashMap.add(tile.id)
-                this.tileMap.add(tile.id)
                 continueAction(machine, farm, operableTiles, yearTick)
                 machine.currentTile = machine.homeShed
                 machine.resetElapsedTime()
@@ -76,11 +74,10 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         while (machine.canPerform()) {
             val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
             for (tile in operableTiles) {
-                val opTile = tile.id in this.tileMap
+                val opTile = tile.id in farm.tileHashMap
                 if (tile in accessibleTiles && !opTile) {
                     performAction(machine, tile, yearTick)
                     farm.tileHashMap.add(tile.id)
-                    this.tileMap.add(tile.id)
                     break
                 }
             }

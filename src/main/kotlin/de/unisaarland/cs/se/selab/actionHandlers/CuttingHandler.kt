@@ -36,7 +36,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         if (operableTiles.isEmpty()) {
             return
         }
-        this.tileMap = farm.tileHashMap
 
         // For each operable tile, try to assign a machine and perform the action
         for (tile in operableTiles) {
@@ -49,7 +48,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             if (machine != null) {
                 performAction(machine, tile, yearTick)
                 farm.tileHashMap.add(tile.id)
-                this.tileMap.add(tile.id)
+                farm.tileHashMap.add(tile.id)
                 continueAction(machine, tile, farm, operableTiles, yearTick)
                 farm.machineHashMap.add(machine.id)
             }
@@ -115,7 +114,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         val nextTile = neighborTiles.firstOrNull()
         if (nextTile != null) {
             farm.tileHashMap.add(nextTile.id)
-            this.tileMap.add(nextTile.id)
             performAction(machine, nextTile, yearTick)
             continueAction(machine, nextTile, farm, operableTiles, yearTick) // Recursively continue action
         } else {
