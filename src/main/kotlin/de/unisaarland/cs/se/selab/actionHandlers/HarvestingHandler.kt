@@ -72,7 +72,7 @@ class HarvestingHandler(
     }
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
-        return listOf()
+        return emptyList()
     }
 
     override fun getOperableTiles(
@@ -80,7 +80,7 @@ class HarvestingHandler(
         plant: PlantType,
         tick: Int
     ): List<Tile> {
-        return listOf()
+        return emptyList()
     }
 
     private fun continueAction(
@@ -114,8 +114,12 @@ class HarvestingHandler(
         // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
         machine.currentTile = tile
         machine.updateElapsedTime()
-        machine.currentHarvest = PlantAndHarvest(tile.currentCrop!!, tile.plant!!.harvestEstimate)
-        tile.plant?.harvestEstimate = 0
+        val currentCrop = tile.currentCrop
+        val plant = tile.plant
+        if (currentCrop != null && plant != null) {
+            machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
+            plant.harvestEstimate = 0
+        }
         if (tile.category == TileType.FIELD) {
             tile.plant = null
         }
@@ -143,6 +147,6 @@ class HarvestingHandler(
     private fun getOperableTiles(farm: Farm, harvestablePlantTiles: List<PlantType>): MutableList<Tile> {
         val plantationTiles = farm.getPlantation().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
         val fieldTiles = farm.getFields().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
-        return (plantationTiles.sortedBy { it.id } + fieldTiles.sortedBy { it.id }) as MutableList<Tile>
+        return (plantationTiles.sortedBy { it.id } + fieldTiles.sortedBy { it.id }).toMutableList()
     }
 }
