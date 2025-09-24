@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
 import de.unisaarland.cs.se.selab.enumerations.PlantType
+import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -22,7 +23,7 @@ class IrrigationHandler(
      * Handles the main logic of the irrigation phase, starting by getting operable tiles and then
      * checks for the target tile to perform actions and also for action continuation
      */
-    override fun startPhase(farm: Farm, machine: Machine) {
+    fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
         val operableTiles = getOperableTiles(farm).toMutableList()
         if (operableTiles.isEmpty()) {
             return
@@ -148,6 +149,10 @@ class IrrigationHandler(
     }
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
+        return
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine) {
         return
     }
 
