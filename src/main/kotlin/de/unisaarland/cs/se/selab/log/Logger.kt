@@ -56,7 +56,7 @@ object Logger {
      *Logs if the file read is invalid
      */
     fun logInvalidFile(filename: String) {
-        val message = "Initialization Info: $filename is invalid"
+        val message = "Initialization Info: $filename is invalid."
         logs(LogType.IMPORTANT, message)
     }
 
