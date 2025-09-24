@@ -9,8 +9,6 @@ import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.plant.Plant
 
-const val FOUR = 4
-
 /**
  * tile class
  */
