@@ -100,16 +100,16 @@ class Tile(
     /**
      * perform harvest
      */
-    fun harvest(simTick: Int) {
-        val p = plant ?: return
-        if (category == TileType.PLANTATION) {
-            p.harvestEstimate = 0
-        }
-        if (category == TileType.FIELD) {
-            plant = null
-            fallowDuration = Duration(simTick + 1, simTick + FOUR)
-        }
-    }
+//    fun harvest(simTick: Int) {
+//        val p = plant ?: return
+//        if (category == TileType.PLANTATION) {
+//            p.harvestEstimate = 0
+//        }
+//        if (category == TileType.FIELD) {
+//            plant = null
+//            fallowDuration = Duration(simTick + 1, simTick + FOUR)
+//        }
+//    }
 
     /**
      * checks if the tile needs irrigation
