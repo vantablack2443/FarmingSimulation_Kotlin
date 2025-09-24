@@ -48,7 +48,7 @@ object Logger {
      */
     fun logParsing(filename: String) {
         val message = "Initialization Info: $filename successfully parsed and" +
-                " validated."
+            " validated."
         logs(LogType.INFO, message)
     }
 
