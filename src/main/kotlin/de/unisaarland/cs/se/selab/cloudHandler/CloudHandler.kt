@@ -62,8 +62,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * checks how much water the cloud can rain down on the given tile
      */
     private fun checkRain(cloud: Cloud, tile: Tile): Int {
-        if (tile.currentMoisture == null) return cloud.amount
         if (cloud.amount >= MIN_RAIN_AMOUNT) {
+            if (tile.currentMoisture == null) return cloud.amount
             val neededMoisture = tile.maxMoisture?.minus(tile.currentMoisture ?: 0) ?: 0
             return minOf(neededMoisture, cloud.amount)
         }
@@ -350,9 +350,12 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * logs all cloud positions at the end of movement phase
      */
     private fun logCloudPositions() {
+        // only for plantable tiles
         for (cloud in cloudsList) {
             val tile = map.getTileByCoordinate(cloud.location) ?: return
-            Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
+            if (tile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
+                Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
+            }
         }
     }
 
