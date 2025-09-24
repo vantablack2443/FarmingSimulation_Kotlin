@@ -234,7 +234,7 @@ class SowingHandler(
     private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
         val machines = mutableListOf<Machine>()
         for (machine in farm.getMachines()) {
-            if (!machine.isStuck && machine.plants.contains(plantType) && machine.actions.contains(ActionType.SOW)) {
+            if (!machine.isStuck && machine.plants.contains(plantType) && machine.actions.contains(ActionType.SOWING)) {
                 machines.add(machine)
             }
         }

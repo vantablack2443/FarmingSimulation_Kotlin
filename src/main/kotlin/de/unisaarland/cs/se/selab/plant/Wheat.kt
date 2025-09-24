@@ -33,7 +33,7 @@ class Wheat : FieldPlant() {
     override val lateActions = mutableListOf<ActionType>()
     override fun needsHarvesting(tick: Int) {
         if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
-            actionsNeeded.add(ActionType.HARVEST)
+            actionsNeeded.add(ActionType.HARVESTING)
         }
     }
 
@@ -42,7 +42,7 @@ class Wheat : FieldPlant() {
         // Weed 3 ticks and 10 ticks after sowing
         // Refer to specification for more details -> 3 ticks after tick x means on the x + 4th tick
         if (tick == sownTick + WHEAT_WEED_START_OFFSET || tick == sownTick + WHEAT_WEED_END_OFFSET) {
-            actionsNeeded.add(ActionType.WEED)
+            actionsNeeded.add(ActionType.WEEDING)
         }
     }
 
@@ -51,7 +51,7 @@ class Wheat : FieldPlant() {
     // Needs to convert sownTick: simTick to yearTick here!!!!!
     override fun checkLateSowing() {
         if (sownTick - WHEAT_SOW_END == 1 || sownTick - WHEAT_SOW_END == 2) {
-            lateActions.add(ActionType.SOW)
+            lateActions.add(ActionType.SOWING)
         }
     }
 

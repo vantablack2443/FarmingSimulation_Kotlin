@@ -13,7 +13,7 @@ abstract class PlantationPlant : Plant() {
     override fun needsCutting(tick: Int) {
         val cuttingDone = cuttingTime.filter { it.second }
         if (cuttingDone.isEmpty()) {
-            this.actionsNeeded.add(ActionType.CUT)
+            this.actionsNeeded.add(ActionType.CUTTING)
         }
     }
     override fun needsMowing(tick: Int) {
@@ -21,7 +21,7 @@ abstract class PlantationPlant : Plant() {
             val duration = element.first
             val done = element.second
             if (duration.inRange(tick) && !done) {
-                actionsNeeded.add(ActionType.MOW)
+                actionsNeeded.add(ActionType.MOWING)
             }
         }
     }

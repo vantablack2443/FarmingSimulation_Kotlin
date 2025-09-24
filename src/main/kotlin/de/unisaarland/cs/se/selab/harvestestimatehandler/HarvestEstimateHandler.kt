@@ -89,15 +89,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return // null check first
 
         val lateActions = plant.lateActions
-        if (ActionType.SOW in lateActions) {
-            lateActions.remove(ActionType.SOW)
+        if (ActionType.SOWING in lateActions) {
+            lateActions.remove(ActionType.SOWING)
             (plant as? FieldPlant)?.applyLateSowingPenalty()
         }
 
         /*val lateActions = t.plant?.lateActions ?: return
 
-        if (lateActions.contains(ActionType.SOW)) {
-            lateActions.remove(ActionType.SOW)
+        if (lateActions.contains(ActionType.SOWING)) {
+            lateActions.remove(ActionType.SOWING)
             (t.plant as FieldPlant).applyLateSowingPenalty()
         }*/
     }
@@ -157,16 +157,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return
         val lateActions = plant.lateActions
 
-        while (ActionType.WEED in lateActions) {
-            lateActions.remove(ActionType.WEED)
+        while (ActionType.WEEDING in lateActions) {
+            lateActions.remove(ActionType.WEEDING)
             (plant as? FieldPlant)?.applyMissedWeedingPenalty()
         }
 
         // when we sow, we set the plant attribute on the tile right?
         /*val lateActions = t.plant?.lateActions ?: return
 
-        while (lateActions.contains(ActionType.WEED)) {
-            lateActions.remove(ActionType.WEED)
+        while (lateActions.contains(ActionType.WEEDING)) {
+            lateActions.remove(ActionType.WEEDING)
             (t.plant as FieldPlant).applyMissedWeedingPenalty()
         }*/
     }
@@ -182,15 +182,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return
         val lateActions = plant.lateActions
 
-        if (ActionType.HARVEST in lateActions) {
-            lateActions.remove(ActionType.HARVEST)
+        if (ActionType.HARVESTING in lateActions) {
+            lateActions.remove(ActionType.HARVESTING)
             plant.applyLateHarvestPenalty(yearTick)
         }
 
         /*val lateActions = t.plant?.lateActions ?: return
 
-        if (lateActions.contains(ActionType.HARVEST)) {
-            lateActions.remove(ActionType.HARVEST)
+        if (lateActions.contains(ActionType.HARVESTING)) {
+            lateActions.remove(ActionType.HARVESTING)
             t.plant?.applyLateHarvestPenalty(yearTick)
         }*/
     }
@@ -202,16 +202,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return
         val lateActions = plant.lateActions
 
-        if (ActionType.CUT in lateActions) {
-            lateActions.remove(ActionType.CUT)
+        if (ActionType.CUTTING in lateActions) {
+            lateActions.remove(ActionType.CUTTING)
             (plant as? PlantationPlant)?.applyCuttingPenalty()
         }
 
         /*val lateActions = t.plant?.lateActions ?: return
 
         // no while loop since cutting can be done only once per harvest cycle
-        if (lateActions.contains(ActionType.CUT)) {
-            lateActions.remove(ActionType.CUT)
+        if (lateActions.contains(ActionType.CUTTING)) {
+            lateActions.remove(ActionType.CUTTING)
             (t.plant as PlantationPlant).applyCuttingPenalty()
         }*/
     }
@@ -222,8 +222,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun applyMissedMowing(t: Tile) {
         val lateActions = t.plant?.lateActions ?: return
 
-        while (lateActions.contains(ActionType.MOW)) {
-            lateActions.remove(ActionType.MOW)
+        while (lateActions.contains(ActionType.MOWING)) {
+            lateActions.remove(ActionType.MOWING)
             (t.plant as? PlantationPlant)?.applyMowingPenalty()
         }
     }

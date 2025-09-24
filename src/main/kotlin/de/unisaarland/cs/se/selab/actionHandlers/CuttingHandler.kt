@@ -68,10 +68,10 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         machine.updateElapsedTime()
 
         val plant = tile.plant
-        plant?.actionsNeeded?.remove(ActionType.CUT)
+        plant?.actionsNeeded?.remove(ActionType.CUTTING)
 
         // Log the action
-        logFarmAction(machine.farmID, ActionType.CUT, tile.id, machine.duration)
+        logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
     }
 
     /**
@@ -116,7 +116,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     override fun getOperableTiles(farm: Farm): MutableList<Tile> {
         val tiles = farm.getPlantation()
-            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.CUT) ?: false }
+            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.CUTTING) ?: false }
             .sortedBy { it.id }
             .toMutableList()
         return tiles
@@ -132,7 +132,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
         return farm.getMachines().filter {
-            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(ActionType.CUT)
+            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(ActionType.CUTTING)
         }.sortedWith(compareBy({ it.duration }, { it.id }))
     }
 

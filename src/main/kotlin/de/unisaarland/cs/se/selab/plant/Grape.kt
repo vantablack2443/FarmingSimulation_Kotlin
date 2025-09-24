@@ -56,11 +56,11 @@ class Grape : PlantationPlant() {
 
     override fun needsHarvesting(tick: Int) {
         if (tick == GRAPE_HARVEST_START_END) {
-            this.actionsNeeded.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
         }
         if (tick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
-            this.actionsNeeded.add(ActionType.HARVEST)
-            this.lateActions.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
+            this.lateActions.add(ActionType.HARVESTING)
         }
     }
 

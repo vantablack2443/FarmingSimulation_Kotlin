@@ -47,10 +47,10 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         machine: Machine,
         tile: Tile
     ) {
-        Logger.logFarmAction(machine.id, ActionType.MOW, tile.id, machine.duration)
+        Logger.logFarmAction(machine.id, ActionType.MOWING, tile.id, machine.duration)
         machine.currentTile = tile
         machine.updateElapsedTime()
-        tile.plant?.actionsNeeded?.remove(ActionType.MOW)
+        tile.plant?.actionsNeeded?.remove(ActionType.MOWING)
     }
 
     /**
