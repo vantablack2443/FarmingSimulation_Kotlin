@@ -42,7 +42,14 @@ class CloudHandler(val simulationMap: SimulationMap) {
     fun moveClouds() {
         // Move clouds in clouds
         for (cloud in cloudsList) {
-            if (cloud.isStuck) continue
+            val currTile = map.getTileByCoordinate(cloud.location) ?: continue
+            if (cloud.isStuck) {
+                // if a cloud is stuck on plantable tile, it reduces the sunlight by 50h
+                if (currTile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
+                    reduceSunlight(MAX_SUNLIGHT_REDUCTION, currTile)
+                }
+                continue
+            }
             moveCloud(cloud)
         }
         // Move newly merged clouds
