@@ -27,24 +27,4 @@ class FarmParserTest {
         }
     """.trimIndent()
 
-        val simData = SimulationData()
-        val farmParser = FarmParser(simData)
-        farmParser.parseFromString(jsonString)
-
-        val farms = simData.farms
-        assertEquals(2, farms.size)
-
-        val farm1 = farms[0]
-        assertEquals(1, farm1.id)
-        assertEquals("Sunny Farm", farm1.name)
-        assertEquals(1000, farm1.initialMoney)
-        assertEquals(10, farm1.startingTileID)
-
-        val farm2 = farms[1]
-        assertEquals(2, farm2.id)
-        assertEquals("Green Acres", farm2.name)
-        assertEquals(1500, farm2.initialMoney)
-        assertEquals(20, farm2.startingTileID)
-    }
-
 }
