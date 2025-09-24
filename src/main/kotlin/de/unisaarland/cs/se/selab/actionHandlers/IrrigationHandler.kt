@@ -24,7 +24,7 @@ class IrrigationHandler(
      * checks for the target tile to perform actions and also for action continuation
      */
     fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
-        val operableTiles = getOperableTiles(farm).toMutableList()
+        val operableTiles = getOperableTiles(farm, tileType).toMutableList()
         if (operableTiles.isEmpty()) {
             return
         }
@@ -107,15 +107,16 @@ class IrrigationHandler(
     /**
      * Returns a list of operable tiles that need irrigation and are not already handled in the current tick.
      */
-    override fun getOperableTiles(farm: Farm): List<Tile> {
+    fun getOperableTiles(farm: Farm, tileType: TileType): List<Tile> {
         val operableTiles = mutableListOf<Tile>()
-        for (tile in farm.getFields()) {
-            if (!tile.hasPlantGrowing()) continue
-            if (tile.needsIrrigation() && tile.id !in farm.tileHashMap) {
-                operableTiles.add(tile)
-            }
+        var tiles = emptyList<Tile>()
+        if (tileType == TileType.FIELD) {
+            tiles = farm.getFields()
         }
-        for (tile in farm.getPlantation()) {
+        if (tileType == TileType.PLANTATION) {
+            tiles = farm.getPlantation()
+        }
+        for (tile in tiles) {
             if (!tile.hasPlantGrowing()) continue
             if (tile.needsIrrigation() && tile.id !in farm.tileHashMap) {
                 operableTiles.add(tile)
@@ -154,6 +155,10 @@ class IrrigationHandler(
 
     override fun startPhase(farm: Farm, machine: Machine) {
         return
+    }
+
+    override fun getOperableTiles(farm: Farm): List<Tile> {
+        return emptyList()
     }
 
     /** why was this deleted in actionhandler?
