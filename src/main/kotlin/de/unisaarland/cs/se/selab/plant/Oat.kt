@@ -34,7 +34,7 @@ class Oat : FieldPlant() {
 
     override fun needsHarvesting(tick: Int) {
         if ((OAT_HARVEST_START..OAT_HARVEST_END).contains(tick)) {
-            actionsNeeded.add(ActionType.HARVEST)
+            actionsNeeded.add(ActionType.HARVESTING)
         }
     }
 
@@ -42,7 +42,7 @@ class Oat : FieldPlant() {
     override fun needsWeeding(tick: Int) {
         // In the first 3 ticks after sowing
         if (((sownTick + OAT_WEED_START_OFFSET)..(sownTick + OAT_WEED_END_OFFSET)).contains(tick)) {
-            actionsNeeded.add(ActionType.WEED)
+            actionsNeeded.add(ActionType.WEEDING)
         }
     }
 
@@ -50,7 +50,7 @@ class Oat : FieldPlant() {
 
     override fun checkLateSowing() {
         if (sownTick - OAT_SOW_END == 1 || sownTick - OAT_SOW_END == 2) {
-            lateActions.add(ActionType.SOW)
+            lateActions.add(ActionType.SOWING)
         }
     }
 

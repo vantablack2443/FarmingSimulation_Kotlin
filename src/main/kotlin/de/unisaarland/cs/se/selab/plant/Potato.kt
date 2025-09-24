@@ -33,21 +33,21 @@ class Potato : FieldPlant() {
     // USES YEAR-TICK
     override fun needsHarvesting(tick: Int) {
         if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
-            actionsNeeded.add(ActionType.HARVEST)
+            actionsNeeded.add(ActionType.HARVESTING)
         }
     }
 
     // USES SIM-TICK
     override fun needsWeeding(tick: Int) {
         if ((tick - sownTick) % 2 == 0 && tick != sownTick) {
-            actionsNeeded.add(ActionType.WEED)
+            actionsNeeded.add(ActionType.WEEDING)
         }
     }
 
     // SownTick: SimTick needs to be converted to yearTick here
     override fun checkLateSowing() {
         if (sownTick - POTATO_SOW_END == 1 || sownTick - POTATO_SOW_END == 2) {
-            lateActions.add(ActionType.SOW)
+            lateActions.add(ActionType.SOWING)
         }
     }
 

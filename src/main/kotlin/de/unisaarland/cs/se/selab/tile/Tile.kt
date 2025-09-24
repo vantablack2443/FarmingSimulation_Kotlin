@@ -124,7 +124,7 @@ class Tile(
      * checks if mowing needed
      */
     fun requiresMowing(): Boolean {
-        return ActionType.MOW in plant?.actionsNeeded.orEmpty()
+        return ActionType.MOWING in plant?.actionsNeeded.orEmpty()
     }
 
     /**
@@ -135,7 +135,7 @@ class Tile(
         return if (actionsNeeded == null) {
             false
         } else {
-            ActionType.WEED in actionsNeeded
+            ActionType.WEEDING in actionsNeeded
         }
     }
 
@@ -147,7 +147,7 @@ class Tile(
         return if (actionsNeeded == null) {
             false
         } else {
-            ActionType.MOW in actionsNeeded
+            ActionType.MOWING in actionsNeeded
         }
     }
 

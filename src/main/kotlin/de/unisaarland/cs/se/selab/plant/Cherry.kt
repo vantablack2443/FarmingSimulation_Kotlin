@@ -64,11 +64,11 @@ class Cherry : PlantationPlant() {
 
     override fun needsHarvesting(tick: Int) {
         if (tick in CHERRY_HARVEST_START..CHERRY_HARVEST_END) {
-            this.actionsNeeded.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
         }
         if (tick == CHERRY_HARVEST_END + 1) {
-            this.actionsNeeded.add(ActionType.HARVEST)
-            this.lateActions.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
+            this.lateActions.add(ActionType.HARVESTING)
         }
     }
 

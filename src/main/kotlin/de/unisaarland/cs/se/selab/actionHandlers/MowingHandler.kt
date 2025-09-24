@@ -52,12 +52,12 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         tile: Tile,
         yearTick: Int
     ) {
-        Logger.logFarmAction(machine.id, ActionType.MOW, tile.id, machine.duration)
+        Logger.logFarmAction(machine.id, ActionType.MOWING, tile.id, machine.duration)
         machine.currentTile = tile
         machine.updateElapsedTime()
         val plant = tile.plant
         if (plant != null) {
-            plant.actionsNeeded.remove(ActionType.MOW)
+            plant.actionsNeeded.remove(ActionType.MOWING)
             for (element in plant.mowingTime) {
                 if (element.first.inRange(yearTick)) {
                     element.second = true

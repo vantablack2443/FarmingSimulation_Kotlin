@@ -56,7 +56,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
 
     }
     private fun doHarvest(farm : Farm,machine: Machine, tile: Tile, yearTick: Int) : Unit{
-        // logger.logFarmAction(machine.id, ActionType.HARVEST, tile.id)
+        // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
         machine.currentTile = tile
         machine.updateElapsedTime()
         machine.currentHarvest= (tile.currentCrop, tile.plant.harvestEtimate)
@@ -75,7 +75,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
 
         val machines = mutableListOf<Machine>
         for (machine in farm.getMachines()){
-            if( !machine.isStuck && machine.plants.contains(tile.currentCrop)&& machine.actions.contains(ActionType.HARVEST))
+            if( !machine.isStuck && machine.plants.contains(tile.currentCrop)&& machine.actions.contains(ActionType.HARVESTING))
 
                 if(this.simulationMap.isReachable(machine, tile))
                     machines.add(machine)

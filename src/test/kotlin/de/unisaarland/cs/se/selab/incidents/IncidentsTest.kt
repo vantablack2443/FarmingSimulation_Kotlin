@@ -52,7 +52,7 @@ class IncidentsTest {
         )
         mockMachine = Machine(
             1, "machine", 2, mockMap.getTileByID(4)!!,
-            listOf(ActionType.IRRIGATE), emptyList(), farmstead
+            listOf(ActionType.IRRIGATING), emptyList(), farmstead
         )
         mockFarm = Farm(
             1, "farm", listOf(farmstead),
@@ -109,7 +109,7 @@ class IncidentsTest {
     /*
     @Test
     fun testAnimalAttack() {
-        apple.actionsNeeded.add(ActionType.MOW)
+        apple.actionsNeeded.add(ActionType.MOWING)
         val animalAttack = AnimalAttack(
             1,
             16,
@@ -122,7 +122,7 @@ class IncidentsTest {
         assertEquals(1.0, grape.animalAttackPenalty)
         assertEquals(1.0, oat.animalAttackPenalty)
         assertEquals(1.0, potato.animalAttackPenalty)
-        assertFalse { apple.actionsNeeded.contains(ActionType.MOW) }
+        assertFalse { apple.actionsNeeded.contains(ActionType.MOWING) }
     }
      */
 

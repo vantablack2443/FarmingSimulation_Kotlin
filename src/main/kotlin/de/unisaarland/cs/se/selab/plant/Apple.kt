@@ -85,11 +85,11 @@ class Apple : PlantationPlant() {
      */
     override fun needsHarvesting(tick: Int) {
         if (tick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
-            this.actionsNeeded.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
         }
         if (tick == APPLE_HARVEST_END + 1 || tick == APPLE_HARVEST_END + 2) {
-            this.actionsNeeded.add(ActionType.HARVEST)
-            this.lateActions.add(ActionType.HARVEST)
+            this.actionsNeeded.add(ActionType.HARVESTING)
+            this.lateActions.add(ActionType.HARVESTING)
         }
     }
 

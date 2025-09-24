@@ -347,13 +347,13 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to validate matching action and plant types
      */
     private fun validateActionsAndPlants(actions: List<ActionType>, plants: List<PlantType>) {
-        if (actions.contains(ActionType.SOW) || actions.contains(ActionType.WEED)) {
+        if (actions.contains(ActionType.SOWING) || actions.contains(ActionType.WEEDING)) {
             val nonFieldPlants = plants.filter { !PlantType.isFieldPlant(it.toString()) }
             if (nonFieldPlants.isNotEmpty()) {
                 throw ValidationException("Mismatch of machine action and plant type")
             }
         }
-        if (actions.contains(ActionType.CUT) || actions.contains(ActionType.MOW)) {
+        if (actions.contains(ActionType.CUTTING) || actions.contains(ActionType.MOWING)) {
             val nonPlantationPlants = plants.filter { !PlantType.isPlantationPlant(it.toString()) }
             if (nonPlantationPlants.isNotEmpty()) {
                 throw ValidationException("Mismatch of machine action and plant type")
