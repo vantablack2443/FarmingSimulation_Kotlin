@@ -16,7 +16,8 @@ const val FALLOW_DURATION = 4
 /**
  * handler for performing HARVESTING
  */
-class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
+class HarvestingHandler(simulationMap: SimulationMap,
+                        plantdata: PlantData) : ActionHandler(simulationMap, plantdata) {
 
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int){
         val harvestablePlantTypes : List<PlantType> = this.plantdata.getHarvestablePlantTypes(yearTick)
@@ -29,7 +30,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         for( tile in operableTiles){
             val availableMachine = getAvailableMachine(farm, tile) ?: continue
             operableTiles.remove(tile)
-            doHarvest(farm,availableMachine, tile, yearTick, operableTiles)
+            doHarvest(farm,availableMachine, tile, yearTick)
             if(availableMachine.canPerform()){
                     continueAction(farm,availableMachine, yearTick, tile, operableTiles)
                 }
@@ -81,17 +82,19 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
         TODO("Not yet implemented")
     }
 
-    private fun continueAction(farm : Farm,machine : Machine, yearTick: Int, tileToBaseOn : Tile, operableTiles : MutableList<Tile>) {
+    private fun continueAction(farm : Farm,machine : Machine, yearTick: Int,
+                               tileToBaseOn : Tile, operableTiles : MutableList<Tile>) {
         if(!machine.canPerform()) {
             return
         }
-        val toContinueOn =  this.simulationMap.getReachableTiles(machine, 2, true) .filter { it.currentCrop == tileToBaseOn.currentCrop}
+        val toContinueOn =  this.simulationMap.getReachableTiles(machine,
+            2, true) .filter { it.currentCrop == tileToBaseOn.currentCrop}
         if(toContinueOn.isEmpty()) {
             return
         }
         for(tile in toContinueOn){
             if(this.simulationMap.isReachable(machine,tile)){
-                doHarvest(farm, machine, tile, yearTick, operableTiles)
+                doHarvest(farm, machine, tile, yearTick)
                 operableTiles.remove(tile)
                 continueAction(farm, machine, yearTick , tile, operableTiles)
             }
@@ -100,7 +103,7 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
 
     }
 
-    private fun doHarvest(farm : Farm,machine: Machine, tile: Tile, yearTick: Int, operableTiles: MutableList<Tile>) {
+    private fun doHarvest(farm : Farm,machine: Machine, tile: Tile, yearTick: Int)  {
         // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
         machine.currentTile = tile
         machine.updateElapsedTime()
@@ -118,10 +121,11 @@ class HarvestingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Ac
 
         val machines = mutableListOf<Machine>()
         for (machine in farm.getMachines()){
-            if(!machine.isStuck && machine.plants.contains(tile.currentCrop)&& machine.actions.contains(ActionType.HARVESTING))
-
+            if(!machine.isStuck
+                && machine.plants.contains(tile.currentCrop)&& machine.actions.contains(ActionType.HARVESTING)) {
                 if(this.simulationMap.isReachable(machine, tile))
                     machines.add(machine)
+            }
         }
 
         val sortedMachines = machines.sortedWith(compareBy ({ it.duration}, {it.id}))
