@@ -50,6 +50,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     private val harvestEstimator = HarvestEstimateHandler(this.map)
     private val actionHandler = ActionPhaseHandler(data.getFarms())
     private val harvestPerPlant: MutableMap<PlantType, Int> = mutableMapOf()
+    init {
+        for (plantType in PlantType.entries) {
+            harvestPerPlant[plantType] = 0
+        }
+    }
 
     init {
         val plantData = actionHandler.getPlantData()
