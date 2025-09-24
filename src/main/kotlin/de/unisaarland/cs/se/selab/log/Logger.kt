@@ -43,13 +43,12 @@ object Logger {
     }
 
     /**
-     * Logs the result of parsing a file.
-     * @param valid Whether the file was valid.
+     * Logs the successful result of parsing a file.
      * @param filename The name of the file parsed.
      */
-    fun logParsing(valid: Boolean, filename: String) {
+    fun logParsing(filename: String) {
         val message = "Initialization Info: $filename successfully parsed and" +
-            " validated. $valid"
+            " validated."
         logs(LogType.INFO, message)
     }
 

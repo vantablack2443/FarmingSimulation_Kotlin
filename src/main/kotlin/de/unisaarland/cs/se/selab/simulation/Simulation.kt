@@ -29,7 +29,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     private val cloudHandler = CloudHandler(map)
     init {
         val clouds = data.getClouds().sortedBy { it.id }
-        cloudHandler.setMaxCloudID(clouds.maxOf { it.id })
+        if (clouds.isEmpty()) {
+            cloudHandler.setMaxCloudID(
+                0
+            )
+        } else { cloudHandler.setMaxCloudID(clouds.maxOf { it.id }) }
         for (cloud in clouds) {
             cloudHandler.addCloud(cloud)
         }
