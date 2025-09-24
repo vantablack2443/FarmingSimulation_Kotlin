@@ -11,7 +11,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 class Farm(
     private val id: Int,
     private val name: String,
-    private val farmstead: List<Tile>,
+    private val farmsteads: List<Tile>,
     private val fields: MutableList<Tile>,
     private val plantation: MutableList<Tile>,
     private val machines: List<Machine>,
@@ -40,7 +40,7 @@ class Farm(
      * Returns farmstead tiles of the farm
      */
     fun getFarmstead(): List<Tile> {
-        return farmstead
+        return farmsteads
     }
 
     /**
@@ -97,9 +97,11 @@ class Farm(
     /**
      * updates the actions needed list of the tiles in the farm for the current year tick
      */
-    fun updateNeededActions(currentYearTick: Int) {
+    fun updateNeededActions(yearTick: Int, simTick: Int) {
         // TODO
-        currentYearTick + 1
+        yearTick + 1
+        simTick + 1
+        // These lines are BS
     }
 
     /**
@@ -140,5 +142,18 @@ class Farm(
     fun setPlantation(newPlantation: MutableList<Tile>) {
         this.plantation.clear()
         this.plantation.addAll(newPlantation)
+    }
+
+    /**
+     * returns a list of sheds on a farm
+     */
+    fun getShedTiles(): List<Tile> {
+        val sheds: MutableList<Tile> = mutableListOf()
+        for (farmstead in farmsteads) {
+            if (farmstead.shed == true) {
+                sheds.add(farmstead)
+            }
+        }
+        return sheds
     }
 }

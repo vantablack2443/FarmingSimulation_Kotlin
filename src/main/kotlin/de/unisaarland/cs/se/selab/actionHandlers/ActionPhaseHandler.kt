@@ -1,6 +1,8 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
+import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 
 /**
@@ -67,11 +69,22 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
     /**
      * Starts the farm phase
      */
-    fun farmPhase(currentyearTick: Int, simTick: Int) {
+    fun farmPhase(yearTick: Int, simTick: Int) {
         // TODO just for detekt check
-        currentyearTick + simTick
         for (farm in farms) {
-            farm.updateNeededActions(currentyearTick)
+            farm.updateNeededActions(yearTick, simTick)
+        }
+        for (farm in farms) {
+            Logger.logFarmStart(farm.getId())
+            sowingHandler.startPhase(farm, yearTick, simTick)
+            harvestingHandler.startPhase(farm, yearTick, simTick)
+            cuttingHandler.startPhase(farm, yearTick, simTick)
+            for (machine in farm.getMachines()) {
+                irrigationHandler.startPhase(farm, machine, TileType.FIELD)
+                weedingHandler.startPhase(farm, machine)
+                irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
+                mowingHandler.startPhase(farm, machine, yearTick)
+            }
         }
     }
 }
