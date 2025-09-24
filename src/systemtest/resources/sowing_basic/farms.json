@@ -10,8 +10,8 @@
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["SOWING"],
-          "plants": ["WHEAT"],
+          "actions": ["SOWING", "HARVESTING"],
+          "plants": ["WHEAT", "APPLE"],
           "duration": 4,
           "location": 0
         }
@@ -35,8 +35,8 @@
         {
           "id": 1,
           "name": "Motorboat",
-          "actions": ["SOWING"],
-          "plants": ["WHEAT"],
+          "actions": ["SOWING","HARVESTING"],
+          "plants": ["WHEAT", "APPLE"],
           "duration": 4,
           "location": 18
         }
