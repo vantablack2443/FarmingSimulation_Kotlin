@@ -126,7 +126,7 @@ class FarmParser(private val simulationData: SimulationData) {
         val plantationTiles = parsePlantationTiles(farm, id)
 
         // A farm needs to have at least one PLANTATION OR one FIELD
-        if (farmsteadTiles.isEmpty() && plantationTiles.isEmpty()) {
+        if (fieldTiles.isEmpty() && plantationTiles.isEmpty()) {
             throw ValidationException("No FIELD tiles AND PLANTATION tiles")
         }
 
