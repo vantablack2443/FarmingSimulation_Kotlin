@@ -7,6 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineActionPlantFalse
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineActionPlantTrue
 
 /**
@@ -27,6 +28,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(ValidateMachineActionPlantTrue())
+        testSuite.registerTest(ValidateMachineActionPlantFalse())
     }
 
     /**
