@@ -24,7 +24,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         machine: Machine,
         yearTick: Int
     ) {
-        val operableTiles = getOperableTiles(farm)
+        val operableTiles = getOperableTiles(farm, actionType = ActionType.MOWING)
         this.operableTiles = operableTiles
         for (tile in operableTiles) {
             if (tile.currentCrop in machine.plants && simulationMap.isReachable(machine, tile)) {

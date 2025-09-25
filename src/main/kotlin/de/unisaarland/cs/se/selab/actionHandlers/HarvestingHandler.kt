@@ -26,9 +26,10 @@ class HarvestingHandler(
         if (harvestablePlantTypes.isEmpty()) {
             return
         }
-
+        // using the operableTiles from the ActionHandler
+        val operableTiles = getOperableTiles(farm, ActionType.HARVESTING)
         //  get OperableTiles takes care of the prioritization of the tiles-- changed the signature in the diagram
-        val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
+//        val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
         for (tile in operableTiles) {
             val availableMachine = getAvailableMachine(farm, tile) ?: continue
             operableTiles.remove(tile)

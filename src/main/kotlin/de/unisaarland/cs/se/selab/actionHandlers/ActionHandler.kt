@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.machine.Machine
@@ -86,5 +87,21 @@ abstract class ActionHandler(
     fun clearSets(farm: Farm) {
         farm.machineHashMap.clear()
         farm.tileHashMap.clear()
+    }
+
+    /**
+     * Gets all tiles (plantation and field) on which the action can be performed,
+     * with plantation tiles first, then field tiles, both sorted by id.
+     */
+    fun getOperableTiles(farm: Farm, actionType: ActionType): MutableList<Tile> {
+        val plantationTiles = farm.getPlantation()
+            .filter { it.id !in farm.tileHashMap }
+            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(actionType) == true }
+            .sortedBy { it.id }
+        val fieldTiles = farm.getFields()
+            .filter { it.id !in farm.tileHashMap }
+            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(actionType) == true }
+            .sortedBy { it.id }
+        return (plantationTiles + fieldTiles).toMutableList()
     }
 }
