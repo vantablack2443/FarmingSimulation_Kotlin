@@ -12,14 +12,14 @@ class MachineWrongShed : ExampleSystemTestExtension() {
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "farmParserTests/farmsMachineWrongShed.json"
     override val scenario = "farmParserTests/scenario.json"
-    override val map = "farmParserTests/mapForFarmNoPlantables.json"
+    override val map = "farmParserTests/map.json"
 
     override val logLevel = "DEBUG"
     override val maxTicks = 0
     override val startYearTick = 1
 
     override suspend fun run() {
-        skipLines(1)
+        assertNextLine("[INFO] Initialization Info: map.json successfully parsed and validated.")
         assertNextLine("[IMPORTANT] Initialization Info: farmsMachineWrongShed.json is invalid.")
     }
 }
