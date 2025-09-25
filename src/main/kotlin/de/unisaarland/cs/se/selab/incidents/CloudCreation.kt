@@ -27,7 +27,7 @@ class CloudCreation(
     lateinit var cloudHandler: CloudHandler
 
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
-        val affectedTiles = simulationMap.getTilesByRadius(tile, radius)
+        val affectedTiles = (simulationMap.getTilesByRadius(tile, radius) + tile)
             .filter { it.category != TileType.VILLAGE }
             .sortedBy { it.id }
         val tileIDs = affectedTiles.map { it.id }
@@ -46,6 +46,8 @@ class CloudCreation(
                     this.duration,
                     tile.id
                 )
+                cloudHandler.cloudsList.add(newCloud)
+                cloudHandler.cloudsList.remove(targetCloud)
             } else {
                 cloudHandler.addCloud(cloud)
             }
@@ -56,8 +58,8 @@ class CloudCreation(
      * creates a new cloud instance and adds it into cloud handler mapping
      */
     private fun createCloud(tile: Tile): Cloud {
-        val newID = cloudHandler.getMaxCloudID()
-        cloudHandler.setMaxCloudID(newID + 1)
+        val newID = cloudHandler.getMaxCloudID() + 1
+        cloudHandler.setMaxCloudID(newID)
         val newCloud = Cloud(newID, tile.location, this.duration, this.amount)
         return newCloud
     }

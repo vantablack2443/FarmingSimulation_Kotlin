@@ -14,6 +14,8 @@ class IncidentHandler(var map: SimulationMap) {
      * function for updating the active incidents list per tick
      */
     fun updateIncidentsForTick(simTick: Int) {
+        // Incident Handler gets a list of incidents ordered by ID from the simulation (Init)
+        // The filtered list here contains all the incidents for a given tick ordered by ID in ascending order
         activeIncidents.clear()
         val currentIncidents = incidents.filter { it.tick == simTick }
         activeIncidents.addAll(currentIncidents)

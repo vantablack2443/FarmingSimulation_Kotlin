@@ -40,7 +40,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * Called from the simulation once per tick
      */
     fun moveClouds() {
-        // Move clouds in clouds
         for (cloud in cloudsList) {
             val currTile = map.getTileByCoordinate(cloud.location) ?: continue
             if (cloud.isStuck) {
@@ -275,8 +274,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
         // Add the new cloud to the merged list
         mergedList.add(newCloud)
         // Update the coordinate to cloud mapping with new cloud at the location
-        // coordinateToCloud[newCloud.location] = newCloud
-        addCloud(newCloud)
+        coordinateToCloud[newCloud.location] = newCloud
+        // addCloud(newCloud)
         return newCloud
     }
 

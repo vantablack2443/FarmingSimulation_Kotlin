@@ -157,7 +157,8 @@ class Tile(
             return plant != null
         }
         if (this.category == TileType.PLANTATION) {
-            return plantationDamaged == false
+            // plantationDamaged can be null or false -> Plant is growing on the tile
+            return plantationDamaged != true
         }
         return false
     }
