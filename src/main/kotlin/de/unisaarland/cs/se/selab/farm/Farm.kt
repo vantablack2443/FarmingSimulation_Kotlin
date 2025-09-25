@@ -82,7 +82,6 @@ class Farm(
      * Gets sowing plan by tick
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        // TODO()
         return sowingPlans[simTick].orEmpty()
     }
 
@@ -98,10 +97,16 @@ class Farm(
      * updates the actions needed list of the tiles in the farm for the current year tick
      */
     fun updateNeededActions(yearTick: Int, simTick: Int) {
-        // TODO
-        yearTick + 1
-        simTick + 1
-        // These lines are BS
+        for (field in fields) {
+            val plant = field.plant ?: continue
+            plant.needsHarvesting(yearTick)
+            plant.needsWeeding(simTick)
+        }
+        for (plantn in plantation) {
+            val plant = plantn.plant ?: continue
+            plant.needsMowing(simTick)
+            plant.needsCutting(simTick)
+        }
     }
 
     /**
@@ -123,6 +128,7 @@ class Farm(
         var amount = harvestPerPlant.getOrDefault(plant, 0)
         for (machine in machines) {
             val currentHarvest = machine.currentHarvest ?: continue
+            if (currentHarvest.plant != plant) continue
             amount += currentHarvest.harvestAmount
         }
         return amount

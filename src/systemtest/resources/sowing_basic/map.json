@@ -49,12 +49,14 @@
     {
       "id": 6,
       "coordinates": { "x": 3, "y": 3 },
-      "category": "VILLAGE"
+      "category": "FOREST",
+      "airflow": false
     },
     {
       "id": 7,
       "coordinates": { "x": 5, "y": 3 },
-      "category": "VILLAGE"
+      "category": "FOREST",
+      "airflow": false
     },
     {
       "id": 8,

@@ -1,0 +1,49 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Farm",
+      "farmsteads": [300],
+      "fields": [13, 40],
+      "plantations": [18],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Tractor",
+          "actions": ["SOWING"],
+          "plants": ["PUMPKIN", "WHEAT"],
+          "duration": 4,
+          "location": 300
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 20,
+          "tick": 1,
+          "plant": "WHEAT",
+          "fields": [13, 40, 22, 24]
+          }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Another Farm",
+      "farmsteads": [30],
+      "fields": [22, 24],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 1,
+          "name": "machine",
+          "actions": ["SOWING"],
+          "plants": ["POTATO"],
+          "duration": 4,
+          "location": 30
+        }
+      ],
+      "sowingPlans": [
+      ]
+    }
+  ]
+}
+

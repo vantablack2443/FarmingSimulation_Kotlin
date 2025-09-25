@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab.enumerations
 
+import de.unisaarland.cs.se.selab.parser.ValidationException
+
 /**
  * enumeration for direction
  */
@@ -30,7 +32,7 @@ enum class Direction {
                 SW_ANGLE -> SOUTH_WEST
                 W_ANGLE -> WEST
                 NW_ANGLE -> NORTH_WEST
-                else -> error("Invalid angle $angle")
+                else -> throw ValidationException("Invalid angle $angle")
             }
         }
     }

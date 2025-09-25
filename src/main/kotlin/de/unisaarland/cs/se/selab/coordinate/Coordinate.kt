@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.coordinate
 
 import de.unisaarland.cs.se.selab.enumerations.Direction
+import kotlin.math.abs
 
 /**
  * coordinate class to model 2d-points
@@ -29,7 +30,7 @@ data class Coordinate(
      * helper function for get neighbor
      */
     private fun isSquare(): Boolean {
-        return this.x % 2 == 1 && this.y % 2 == 1
+        return abs(this.x) % 2 == 1 && abs(this.y) % 2 == 1
     }
 
     /**

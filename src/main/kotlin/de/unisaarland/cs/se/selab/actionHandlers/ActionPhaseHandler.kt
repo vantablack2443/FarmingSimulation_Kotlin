@@ -85,6 +85,8 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
                 irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
                 mowingHandler.startPhase(farm, machine, yearTick)
             }
+            // Log end farm actions
+            Logger.logFarmEnd(farm.getId())
         }
     }
 }

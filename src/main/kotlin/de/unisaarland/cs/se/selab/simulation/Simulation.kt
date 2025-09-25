@@ -77,7 +77,8 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
      * runs the simulation
      */
     fun run() {
-        while (startNextTick()) {
+        while (canStartNextTick()) {
+            Logger.logTickStart(currentTick, currentYearTick)
             updatePlantationHarvestEstimate()
             updateSunlight(this.currentYearTick)
             reduceMoisture()
@@ -85,25 +86,24 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             actionHandler.farmPhase(currentYearTick, currentTick)
             applyIncidents(this.currentYearTick)
             harvestEstimator.estimateHarvest(currentYearTick)
+            updateTick()
         }
         terminate()
     }
 
     /**
-     * checks if the next tick can be continued and if so, updates the ticks
+     * checks if the next tick can be continued
      */
-    private fun startNextTick(): Boolean {
-        if (currentTick + 1 > maxTicks) {
-            return false
-        }
-        if (currentYearTick + 1 > MAX_YEAR_TICK) {
-            currentYearTick = 1
-        } else {
-            currentYearTick++
-        }
+    private fun canStartNextTick(): Boolean {
+        return currentTick + 1 < this.maxTicks
+    }
+
+    /**
+     * updates next tick
+     */
+    private fun updateTick() {
         currentTick++
-        Logger.logTickStart(currentTick, currentYearTick)
-        return true
+        if (currentYearTick + 1 > MAX_YEAR_TICK) currentYearTick = 1 else currentYearTick++
     }
 
     /**
@@ -136,10 +136,14 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         var countPlantations = 0
         // update the moisture in plantations and check if it goes below the threshold for the plant
         for (tile in plantations) {
-            tile.decreaseMoistureByAmount(MOISTURE_WITH_PLANT)
-            val currentMoisture = tile.currentMoisture ?: continue
-            val neededMoisture = tile.plant?.neededMoisture ?: continue
-            if (currentMoisture < neededMoisture) countPlantations++
+            // If plantation is damaged (hit by drought), there are no plants growing on it
+            if (tile.plantationDamaged == false) {
+                val moistureAmount = if (tile.plant == null) MOISTURE_WITHOUT_PLANT else MOISTURE_WITH_PLANT
+                tile.decreaseMoistureByAmount(moistureAmount)
+                val currentMoisture = tile.currentMoisture ?: continue
+                val neededMoisture = tile.plant?.neededMoisture ?: continue
+                if (currentMoisture < neededMoisture) countPlantations++
+            }
         }
         return countPlantations
     }
