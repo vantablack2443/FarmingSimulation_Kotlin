@@ -167,6 +167,13 @@ class SimulationData {
     }
 
     /**
+     * get cloud by ID
+     */
+    fun getCloudById(id: Int): Cloud? {
+        return clouds[id]
+    }
+
+    /**
      * get machine by ID
      */
     fun getMachineById(id: Int): Machine? {
