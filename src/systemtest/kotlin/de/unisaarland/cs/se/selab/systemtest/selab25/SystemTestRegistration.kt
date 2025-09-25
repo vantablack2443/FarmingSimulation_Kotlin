@@ -3,6 +3,8 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingSameFarmTilesFalse
 
@@ -22,6 +24,8 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         testSuite.registerTest(SowingSameFarmTilesFalse())
         testSuite.registerTest(SowingSameFarmTilesFalse())
+        testSuite.registerTest(FarmNoPlantableTiles())
+        testSuite.registerTest(MachineWrongShed())
     }
 
     /**
@@ -32,6 +36,8 @@ object SystemTestRegistration {
      */
     fun registerSystemTestsMutantValidation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
+        testSuite.registerTest(FarmNoPlantableTiles())
+        testSuite.registerTest(MachineWrongShed())
     }
 
     /**
