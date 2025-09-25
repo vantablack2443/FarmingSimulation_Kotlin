@@ -126,13 +126,13 @@ class FarmParser(private val simulationData: SimulationData) {
         val plantationTiles = parsePlantationTiles(farm, id)
 
         // A farm needs to have at least one PLANTATION OR one FIELD
-        if (farmsteadTiles.isEmpty() && plantationTiles.isEmpty()) {
+        if (fieldTiles.isEmpty() && plantationTiles.isEmpty()) {
             throw ValidationException("No FIELD tiles AND PLANTATION tiles")
         }
 
         val allMachines = parseMachines(farm, id)
 
-        val sowingPlanMap = parseSowingPlans(farm)
+        val sowingPlanMap = parseSowingPlans(farm, id)
         val parsedFarm = Farm(
             id,
             name,
@@ -349,11 +349,11 @@ class FarmParser(private val simulationData: SimulationData) {
     /**
      * parses sowing plan array of the farm
      */
-    private fun parseSowingPlans(farm: JsonObject): MutableMap<Int, MutableList<SowingPlan>> {
+    private fun parseSowingPlans(farm: JsonObject, farmID: Int): MutableMap<Int, MutableList<SowingPlan>> {
         val plans = farm["sowingPlans"]?.jsonArray ?: throw ValidationException()
         val mapOfSowingPlans: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
         for (plan in plans) {
-            val sowingPlan = parseSowingPlan(plan as JsonObject)
+            val sowingPlan = parseSowingPlan(plan as JsonObject, farmID)
             // Group sowing plans by tick
             val tick = sowingPlan.getTick()
             val listOfPlans = mapOfSowingPlans.getOrPut(tick) { mutableListOf() }
@@ -368,7 +368,7 @@ class FarmParser(private val simulationData: SimulationData) {
     /**
      * parses a single sowing plan
      */
-    private fun parseSowingPlan(plan: JsonObject): SowingPlan {
+    private fun parseSowingPlan(plan: JsonObject, farmID: Int): SowingPlan {
         // Uniqueness checked using validateUniqueAttributes function
         val id = plan[ID]?.jsonPrimitive?.int ?: throw ValidationException("Sowing plan ID missing")
         if (id < 0) throw ValidationException("ID must be non-negative")
@@ -379,9 +379,9 @@ class FarmParser(private val simulationData: SimulationData) {
         val plantType = parsePlant(plan)
 
         val affectedTiles = if (plan[FIELDS] != null) {
-            parseSowingPlanTiles(plan, true)
+            parseSowingPlanTiles(plan, true, farmID)
         } else {
-            parseSowingPlanTiles(plan, false)
+            parseSowingPlanTiles(plan, false, farmID)
         }
         // Adding sowingPlans to the list of all sowingPlans (from all farms)
         val sowingPlan = SowingPlan(id, plantType, tick, affectedTiles)
@@ -408,8 +408,8 @@ class FarmParser(private val simulationData: SimulationData) {
     /**
      * helper function that parses the affected tiles of the sowing plan
      */
-    private fun parseSowingPlanTiles(plan: JsonObject, fields: Boolean): List<Tile> {
-        if (fields) return parseSowingPlanFields(plan)
+    private fun parseSowingPlanTiles(plan: JsonObject, fields: Boolean, farmID: Int): List<Tile> {
+        if (fields) return parseSowingPlanFields(plan, farmID)
 
         // need to check that both location AND radius are present
         // Negation -> OR
@@ -425,14 +425,14 @@ class FarmParser(private val simulationData: SimulationData) {
         val centerTile = simulationData.getTileById(location) ?: throw ValidationException()
         val radiusTiles = simulationData.map.getTilesByRadius(centerTile, radius)
         val tiles = radiusTiles.plus(centerTile)
-        validateSowingPlanLocation(tiles, false)
+        validateSowingPlanLocation(tiles, false, farmID)
         return tiles
     }
 
     /**
      * helper function that parses field tiles of the sowing plan
      */
-    private fun parseSowingPlanFields(plan: JsonObject): List<Tile> {
+    private fun parseSowingPlanFields(plan: JsonObject, farmID: Int): List<Tile> {
         val tileArray = plan[FIELDS]?.jsonArray ?: throw ValidationException()
         val fieldTileIDs = tileArray.map { it.jsonPrimitive.int }
         val fieldTiles = fieldTileIDs.map {
@@ -443,7 +443,7 @@ class FarmParser(private val simulationData: SimulationData) {
             }
             tile
         }
-        validateSowingPlanLocation(fieldTiles, true)
+        validateSowingPlanLocation(fieldTiles, true, farmID)
         return fieldTiles
     }
 
@@ -517,16 +517,26 @@ class FarmParser(private val simulationData: SimulationData) {
      * fields == true, meaning that the list only contains field tiles), and if false, checks if there is at least one
      *     field tile in the list and also checks the farmIDs.
      *
-     *     Change added -> Assume that the tiles don't have to belong to one farm
+     *     Assumption: At least one tile has to belong to the owner farm
      */
-    private fun validateSowingPlanLocation(tiles: List<Tile>, fields: Boolean) {
+    private fun validateSowingPlanLocation(tiles: List<Tile>, fields: Boolean, farmID: Int) {
         if (fields) {
             for (tile in tiles) {
                 if (tile.category != TileType.FIELD) { throw ValidationException("All tiles must be FIELD") }
             }
+            // Check if at least one tile belongs to the owner farm
+            if (tiles.none {
+                    it.farmID == farmID
+                }
+            ) { throw ValidationException("Sowing Plan does not contain a tile that belongs to the farm") }
         } else {
             val fieldTiles = tiles.filter { it.category == TileType.FIELD }
             if (fieldTiles.isEmpty()) throw ValidationException("At least one tile must be a field")
+            // Check if at least one tile belongs to the owner farm
+            if (fieldTiles.none {
+                    it.farmID == farmID
+                }
+            ) { throw ValidationException("Sowing Plan does not contain a tile that belongs to the farm") }
         }
 
         // Change added -> Assume that the tiles don't have to belong to one farm

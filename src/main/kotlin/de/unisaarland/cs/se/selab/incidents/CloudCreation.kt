@@ -46,6 +46,8 @@ class CloudCreation(
                     this.duration,
                     tile.id
                 )
+                cloudHandler.cloudsList.add(newCloud)
+                cloudHandler.cloudsList.remove(targetCloud)
             } else {
                 cloudHandler.addCloud(cloud)
             }

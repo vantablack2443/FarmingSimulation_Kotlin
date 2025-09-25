@@ -329,9 +329,14 @@ class ScenarioParser(private val simData: SimulationData) {
             // Find any overlap between newVillages and adjoining tiles
             val newVillagesTiles = tiles.intersect(newVillages).toList()
 
-            if (tiles.none { it.category == TileType.VILLAGE } ||
+            if (tiles.none { it.category == TileType.VILLAGE } &&
                 newVillagesTiles.none { it.category == TileType.VILLAGE }
             ) {
+                return false
+            }
+
+            // Check that there is no adjoining forest - AhhWildBoarInCity?
+            if (tiles.any { it.category == TileType.FOREST }) {
                 return false
             }
 
