@@ -335,6 +335,11 @@ class ScenarioParser(private val simData: SimulationData) {
                 return false
             }
 
+            // Check that there is no adjoining forest - AhhWildBoarInCity?
+            if (tiles.any { it.category == TileType.FOREST }) {
+                return false
+            }
+
             // Check if the incident Tile is a FIELDS or ROAD
             if (cityExpansionIncident.tile.category != TileType.FIELD &&
                 cityExpansionIncident.tile.category != TileType.ROAD
