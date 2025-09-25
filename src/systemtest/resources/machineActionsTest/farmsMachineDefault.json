@@ -1,0 +1,73 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "Farm",
+      "farmsteads": [1],
+      "fields": [3, 25],
+      "plantations": [14],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Tractor",
+          "actions": ["SOWING", "HARVESTING", "IRRIGATING", "MOWING", "WEEDING", "CUTTING"],
+          "plants": ["PUMPKIN", "WHEAT", "APPLE"],
+          "duration": 4,
+          "location": 1
+        },
+        {
+          "id": 2,
+          "name": "irrigator",
+          "actions": ["IRRIGATING"],
+          "plants": ["APPLE"],
+          "duration": 4,
+          "location": 1
+        }
+
+      ],
+      "sowingPlans": [
+        {
+          "id": 10,
+          "tick": 0,
+          "plant": "WHEAT",
+          "location": 20,
+          "radius": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Another Farm",
+      "farmsteads": [7],
+      "fields": [18, 29],
+      "plantations": [27, 28],
+      "machines": [
+        {
+          "id": 3,
+          "name": "simple machine",
+          "actions": ["SOWING"],
+          "plants": ["PUMPKIN"],
+          "duration": 4,
+          "location": 7
+        },
+        {
+          "id": 4,
+          "name": "harvesting machine",
+          "actions": ["HARVESTING"],
+          "plants": ["APPLE"],
+          "duration": 8,
+          "location": 7
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 20,
+          "tick": 0,
+          "plant": "PUMPKIN",
+          "fields": [18, 29]
+        }
+      ]
+    }
+  ]
+}
+

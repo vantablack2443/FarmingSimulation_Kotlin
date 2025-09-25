@@ -4,6 +4,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 
@@ -23,6 +24,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
+        testSuite.registerTest(MachineDefaultAction())
     }
 
     /**
