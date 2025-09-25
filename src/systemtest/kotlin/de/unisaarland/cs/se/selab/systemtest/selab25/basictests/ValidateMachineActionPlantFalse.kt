@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * tests if machine actions should match plant types
  */
 class ValidateMachineActionPlantFalse : ExampleSystemTestExtension() {
-    override val name = "Validate Machine Action and Plant"
+    override val name = "ValidateMachineActionPlantFalse"
     override val description = "Tests matching between action and plant types"
 
     // Paths are relative from the `src/systemtest/resources` directory.
