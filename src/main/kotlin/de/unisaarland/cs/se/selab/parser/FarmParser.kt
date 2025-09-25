@@ -133,13 +133,18 @@ class FarmParser(private val simulationData: SimulationData) {
         val allMachines = parseMachines(farm, id)
 
         val sowingPlanMap = parseSowingPlans(farm, id)
+        // Sort plans by ID for every tick - sortBy sorts in place
+        for (plansPerTick in sowingPlanMap.values) {
+            plansPerTick.sortBy { it.getId() }
+        }
+
         val parsedFarm = Farm(
             id,
             name,
-            farmsteadTiles,
-            fieldTiles,
-            plantationTiles,
-            allMachines,
+            farmsteadTiles.sortedBy { it.id },
+            fieldTiles.sortedBy { it.id }.toMutableList(),
+            plantationTiles.sortedBy { it.id }.toMutableList(),
+            allMachines.sortedBy { it.id }.toMutableList(),
             sowingPlanMap,
             mutableMapOf()
         )

@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.actionHandlers
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plant.Plant
@@ -31,6 +32,8 @@ class SowingHandler(
         // Get all sowing plans for the current tick in a year, ordered by tick then id
         // Assumes the ordering is handled by the function
         val sowingPlans: List<SowingPlan> = getSowingPlans(farm, sowablePlantTypes, simTick)
+        // Log active sowing Plans
+        Logger.logFarmSowingPlan(farm.getId(), sowingPlans.map { it.getId() })
 
         // Loop through all sowing plans and try to execute each
         val plansExecuted: MutableList<SowingPlan> = mutableListOf()
@@ -145,6 +148,9 @@ class SowingHandler(
             nextTile.plant = plant
             nextTile.currentCrop = plan.getPlant()
 
+            // Logs action and sowing
+            logAction(nextMachine, nextTile, plan)
+
             // Continue action with machine while adding tiles sowed to the hashmap
             var continueTile: Tile? = this.simulationMap.tileForContinueAction(
                 nextMachine,
@@ -162,6 +168,9 @@ class SowingHandler(
                     val plantContinue = Plant.createPlant(plan.getPlant())
                     continueTile.plant = plantContinue
                     continueTile.currentCrop = plan.getPlant()
+
+                    // Logs action and sowing
+                    logAction(nextMachine, continueTile, plan)
 
                     // Add tile to the hashmap to avoid re-sowing
                     farm.tileHashMap.add(continueTile.id)
@@ -192,10 +201,26 @@ class SowingHandler(
                 nextMachine.homeShed = returnShed
             }
 
+            logReturn(nextMachine, returnShed)
+
             nextTile = getNextTile(tilesToSow, farm)
         }
 
         return hasSown
+    }
+
+    private fun logAction(machine: Machine, tile: Tile, plan: SowingPlan) {
+        // Logs action and sowing
+        Logger.logFarmAction(machine.id, ActionType.SOWING, tile.id, machine.duration)
+        Logger.logSowing(machine.id, plan.getPlant(), plan.getId())
+    }
+
+    private fun logReturn(machine: Machine, tile: Tile?) {
+        if (tile == null) {
+            Logger.logMachineReturnFail(machine.id)
+        } else {
+            Logger.logMachineFinish(machine.id, tile.id)
+        }
     }
 
     /**

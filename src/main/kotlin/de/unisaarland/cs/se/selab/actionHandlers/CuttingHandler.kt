@@ -30,7 +30,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         // Get all plantation tiles that have a plant needing CUTTING
-        val operableTiles = getOperableTiles(farm)
+        val operableTiles = getOperableTiles(farm, ActionType.CUTTING)
         this.operableTiles = operableTiles
 
         if (operableTiles.isEmpty()) {
@@ -84,6 +84,10 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
     }
 
+    override fun getOperableTiles(farm: Farm): List<Tile> {
+        return emptyList()
+    }
+
     /**
      * Continues the CUT action by finding neighboring tiles within a radius of 2
      * that also require the CUT action and are reachable by the machine.
@@ -123,20 +127,20 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         }
     }
 
-    /**
-     * Retrieves all plantation tiles that have a plant requiring the CUT action.
-     * The tiles are sorted by their ID.
-     *
-     * @param farm The farm containing the plantation tiles.
-     * @return A mutable list of tiles that require the CUT action.
-     */
-    override fun getOperableTiles(farm: Farm): MutableList<Tile> {
-        val tiles = farm.getPlantation()
-            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.CUTTING) ?: false }
-            .sortedBy { it.id }
-            .toMutableList()
-        return tiles
-    }
+//    /**
+//     * Retrieves all plantation tiles that have a plant requiring the CUT action.
+//     * The tiles are sorted by their ID.
+//     *
+//     * @param farm The farm containing the plantation tiles.
+//     * @return A mutable list of tiles that require the CUT action.
+//     */
+//    override fun getOperableTiles(farm: Farm, actionType: ActionType): MutableList<Tile> {
+//        val tiles = farm.getPlantation()
+//            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.CUTTING) ?: false }
+//            .sortedBy { it.id }
+//            .toMutableList()
+//        return tiles
+//    }
 
     /**
      * Retrieves a list of available machines that can perform the CUT action

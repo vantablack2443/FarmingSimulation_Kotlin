@@ -29,7 +29,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         val plantsThisMachineCanWorkOn: List<PlantType> = machine.plants
 
-        val operableTiles = getOperableTiles(farm)
+        val operableTiles = getOperableTiles(farm, ActionType.WEEDING)
         if (operableTiles.isEmpty()) {
             return
         }

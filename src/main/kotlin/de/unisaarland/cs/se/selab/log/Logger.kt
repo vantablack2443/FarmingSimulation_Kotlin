@@ -47,8 +47,7 @@ object Logger {
      * @param filename The name of the file parsed.
      */
     fun logParsing(filename: String) {
-        val message = "Initialization Info: $filename successfully parsed and" +
-            " validated."
+        val message = "Initialization Info: $filename successfully parsed and validated."
         logs(LogType.INFO, message)
     }
 
@@ -65,8 +64,7 @@ object Logger {
      * @param yearTick The tick within the year when the simulation starts.
      */
     fun logSimulationStart(yearTick: Int) {
-        val message = "Simulation Info: Simulation started at tick $yearTick within the" +
-            " year."
+        val message = "Simulation Info: Simulation started at tick $yearTick within the year."
         logs(LogType.INFO, message)
     }
 
@@ -152,22 +150,22 @@ object Logger {
     }
 
     /**
-     * Logs the dissipation of a cloud.
-     * @param cloudID The ID of the cloud.
-     * @param tileID The tile where the cloud dissipated.
-     */
-    fun logDissipation(cloudID: Int, tileID: Int) {
-        val message = "Cloud Dissipation: Cloud $cloudID dissipates on tile $tileID."
-        logs(LogType.INFO, message)
-    }
-
-    /**
      * Logs when a cloud gets stuck on a tile.
      * @param cloudID The ID of the cloud.
      * @param tileID The tile where the cloud is stuck.
      */
     fun logCloudStuck(cloudID: Int, tileID: Int) {
         val message = "Cloud Dissipation: Cloud $cloudID got stuck on tile $tileID."
+        logs(LogType.INFO, message)
+    }
+
+    /**
+     * Logs the dissipation of a cloud.
+     * @param cloudID The ID of the cloud.
+     * @param tileID The tile where the cloud dissipated.
+     */
+    fun logDissipation(cloudID: Int, tileID: Int) {
+        val message = "Cloud Dissipation: Cloud $cloudID dissipates on tile $tileID."
         logs(LogType.INFO, message)
     }
 
