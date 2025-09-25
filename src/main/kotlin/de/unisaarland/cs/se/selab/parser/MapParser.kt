@@ -195,6 +195,7 @@ class MapParser(private val simData: SimulationData) {
             }
             tile.plant = plant
             tile.currentCrop = PlantType.valueOf(plantType.uppercase())
+            parseCapacity(jsonObject, tile)
         }
 
         if (tile.category == TileType.FIELD) {
