@@ -137,11 +137,13 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         // update the moisture in plantations and check if it goes below the threshold for the plant
         for (tile in plantations) {
             // If plantation is damaged (hit by drought), there are no plants growing on it
-            val moistureAmount = if (tile.plantationDamaged == false) MOISTURE_WITH_PLANT else MOISTURE_WITHOUT_PLANT
-            tile.decreaseMoistureByAmount(moistureAmount)
-            val currentMoisture = tile.currentMoisture ?: continue
-            val neededMoisture = tile.plant?.neededMoisture ?: continue
-            if (currentMoisture < neededMoisture) countPlantations++
+            if (tile.plantationDamaged == false) {
+                val moistureAmount = if (tile.plant == null) MOISTURE_WITHOUT_PLANT else MOISTURE_WITH_PLANT
+                tile.decreaseMoistureByAmount(moistureAmount)
+                val currentMoisture = tile.currentMoisture ?: continue
+                val neededMoisture = tile.plant?.neededMoisture ?: continue
+                if (currentMoisture < neededMoisture) countPlantations++
+            }
         }
         return countPlantations
     }
