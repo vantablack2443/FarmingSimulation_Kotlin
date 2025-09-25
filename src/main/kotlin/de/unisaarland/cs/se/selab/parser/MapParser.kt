@@ -260,7 +260,7 @@ class MapParser(private val simData: SimulationData) {
     }
 
     /**
-     * validate tha=e adjoining tiles based on the tile category
+     * validate the adjoining tiles based on the tile category
      */
     private fun validateNeighbors(tile: Tile) {
         val neighboringTiles = mutableListOf<Tile>()
