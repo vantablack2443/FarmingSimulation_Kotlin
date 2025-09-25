@@ -35,19 +35,12 @@ class CloudCreation(
 
         for (tile in affectedTiles) {
             val cloud = createCloud(tile)
-            if (cloudHandler.checkMerge(tile)) {
-                val targetCloud = cloudHandler.getCloudByCoordinate(tile.location) ?: continue
-                val newCloud = cloudHandler.merge(cloud, targetCloud)
-                Logger.logCloudMerge(
-                    targetCloud.id,
-                    cloud.id,
-                    newCloud.id,
-                    this.amount,
-                    this.duration,
-                    tile.id
-                )
+            val existingCloud = cloudHandler.coordinateToCloud[tile.location]
+            // check for merges
+            if (existingCloud != null) {
+                val newCloud = cloudHandler.merge(cloud, existingCloud)
                 cloudHandler.cloudsList.add(newCloud)
-                cloudHandler.cloudsList.remove(targetCloud)
+                cloudHandler.cloudsList.remove(existingCloud)
             } else {
                 cloudHandler.addCloud(cloud)
             }
