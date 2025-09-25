@@ -35,7 +35,6 @@ class CloudCreation(
 
         for (tile in affectedTiles) {
             val cloud = createCloud(tile)
-            cloudHandler.addCloud(cloud)
             if (cloudHandler.checkMerge(tile)) {
                 val targetCloud = cloudHandler.getCloudByCoordinate(tile.location) ?: continue
                 val newCloud = cloudHandler.merge(cloud, targetCloud)
@@ -47,6 +46,8 @@ class CloudCreation(
                     this.duration,
                     tile.id
                 )
+            } else {
+                cloudHandler.addCloud(cloud)
             }
         }
     }
@@ -58,7 +59,6 @@ class CloudCreation(
         val newID = cloudHandler.getMaxCloudID()
         cloudHandler.setMaxCloudID(newID + 1)
         val newCloud = Cloud(newID, tile.location, this.duration, this.amount)
-        cloudHandler.addCloud(newCloud)
         return newCloud
     }
 }

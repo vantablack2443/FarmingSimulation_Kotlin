@@ -1,0 +1,203 @@
+{
+  "tiles": [
+    {
+      "id": 8,
+      "coordinates": { "x": 4, "y": 0 },
+      "category": "ROAD",
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 10,
+      "coordinates": { "x": 6, "y": 0 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 8000,
+      "possiblePlants": ["PUMPKIN", "WHEAT"],
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 12,
+      "coordinates": { "x": 8, "y": 0 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 10000,
+      "possiblePlants": ["OAT", "WHEAT"],
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 14,
+      "coordinates": {"x": 10, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 9,
+      "coordinates": {"x": 5, "y":  1},
+      "category": "VILLAGE"
+    },
+    {
+      "id": 40,
+      "coordinates": {"x": 10, "y":  2},
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 11,
+      "coordinates": { "x": 6, "y": 2 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 10000,
+      "possiblePlants": ["OAT", "WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 13,
+      "coordinates": { "x": 8, "y": 2 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 10000,
+      "possiblePlants": ["OAT", "WHEAT"],
+      "airflow": true,
+      "direction": "180"
+    },
+    {
+      "id": 24,
+      "coordinates": { "x": 10, "y": 4 },
+      "category": "FOREST",
+      "airflow": false
+    },
+    {
+      "id": 22,
+      "coordinates": { "x": 8, "y": 4 },
+      "category": "FOREST",
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 23,
+      "coordinates": { "x": 9, "y": 5 },
+      "category": "FOREST",
+      "airflow": true,
+      "direction": "315"
+    },
+    {
+      "id": 21,
+      "coordinates": { "x": 6, "y": 4 },
+      "category": "FOREST",
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 20,
+      "coordinates": { "x": 4, "y": 4 },
+      "category": "FOREST",
+      "airflow": false
+    },
+    {
+      "id": 18,
+      "coordinates": { "x": 2, "y": 4 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 8000,
+      "farm": 0,
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 17,
+      "coordinates": { "x": 0, "y": 4 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 8000,
+      "farm": 0,
+      "airflow": true,
+      "direction": "270"
+    },
+    {
+      "id": 150,
+      "coordinates": { "x": -2, "y": 4 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 80,
+      "farm": 0,
+      "airflow": true,
+      "direction": "225"
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": -5, "y": 5 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 116,
+      "coordinates": { "x": -1, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 15,
+      "coordinates": { "x": 1, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 19,
+      "coordinates": { "x": 3, "y": 5 },
+      "category": "MEADOW",
+      "airflow": false
+    },
+    {
+      "id": 30,
+      "coordinates": { "x": 11, "y": 5 },
+      "category": "FARMSTEAD",
+      "airflow": false,
+      "farm": 0,
+      "shed": true
+    },
+    {
+      "id": 41,
+      "coordinates": { "x": 4, "y": 6 },
+      "category": "FOREST",
+      "airflow": false
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": 5, "y": 3 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 5,
+      "coordinates": { "x": 7, "y": 3 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 6,
+      "coordinates": { "x": 9, "y": 3 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 7,
+      "coordinates": { "x": 7, "y": 1 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 80,
+      "coordinates": { "x": 9, "y": 1 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 120,
+      "coordinates": { "x": 2, "y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    }
+  ]
+}

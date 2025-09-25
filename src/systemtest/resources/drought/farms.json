@@ -1,0 +1,15 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "foo",
+      "farmsteads": [1],
+      "fields": [3],
+      "plantations": [2],
+      "machines": [
+      ],
+      "sowingPlans": [
+      ]
+    }
+  ]
+}

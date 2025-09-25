@@ -164,7 +164,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get location
         val tileID: Int = obj[LOCATION_STRING]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks for non-negative id
-        checkValid(tileID > 0)
+        checkValid(tileID >= 0)
 
         // Check if tile exists and get tile
         val tile: Tile = simData.getTileById(tileID) ?: throw ValidationException()
@@ -184,7 +184,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get location
         val tileID: Int = obj[LOCATION_STRING]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks for non-negative id
-        checkValid(tileID > 0)
+        checkValid(tileID >= 0)
 
         // Check if tile exists and get tile
         val tile: Tile = simData.getTileById(tileID) ?: throw ValidationException()
@@ -214,7 +214,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get machine ID
         val machineid: Int = obj[MACHINEID_STRING]?.jsonPrimitive?.int ?: throw ValidationException()
         // Checks if not negative
-        checkValid(machineid <= 0)
+        checkValid(machineid >= 0)
         // Check if machine exists and get machine
         val machine = simData.getMachineById(machineid) ?: throw ValidationException()
 
@@ -453,7 +453,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Checks if ID is positive
         checkValid(location >= 0)
         // Checks if this tile exists on the map and returns its coordinate
-        val tile: Tile = simData.getTileById(id) ?: throw ValidationException()
+        val tile: Tile = simData.getTileById(location) ?: throw ValidationException()
         // Checks if the tile already has a cloud on it
         checkValid(validateLocation(tile))
 

@@ -77,7 +77,8 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
      * runs the simulation
      */
     fun run() {
-        while (startNextTick()) {
+        while (canStartNextTick()) {
+            Logger.logTickStart(currentTick, currentYearTick)
             updatePlantationHarvestEstimate()
             updateSunlight(this.currentYearTick)
             reduceMoisture()
@@ -85,25 +86,24 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             actionHandler.farmPhase(currentYearTick, currentTick)
             applyIncidents(this.currentYearTick)
             harvestEstimator.estimateHarvest(currentYearTick)
+            updateTick()
         }
         terminate()
     }
 
     /**
-     * checks if the next tick can be continued and if so, updates the ticks
+     * checks if the next tick can be continued
      */
-    private fun startNextTick(): Boolean {
-        if (currentTick + 1 > maxTicks) {
-            return false
-        }
-        if (currentYearTick + 1 > MAX_YEAR_TICK) {
-            currentYearTick = 1
-        } else {
-            currentYearTick++
-        }
+    private fun canStartNextTick(): Boolean {
+        return currentTick + 1 < MAX_YEAR_TICK
+    }
+
+    /**
+     * updates next tick
+     */
+    private fun updateTick() {
         currentTick++
-        Logger.logTickStart(currentTick, currentYearTick)
-        return true
+        if (currentYearTick + 1 > MAX_YEAR_TICK) currentYearTick = 1 else currentYearTick++
     }
 
     /**
