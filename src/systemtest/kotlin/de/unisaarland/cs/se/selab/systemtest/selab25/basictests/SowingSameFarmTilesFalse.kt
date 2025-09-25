@@ -20,7 +20,7 @@ class SowingSameFarmTilesFalse : ExampleSystemTestExtension() {
 
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: map.json successfully parsed and validated.")
-        assertNextLine("[INFO] Initialization Info: farmsForSameTiles. successfully parsed and validated.")
+        assertNextLine("[INFO] Initialization Info: farmsForSameTiles.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: scenario.json successfully parsed and validated.")
     }
 }

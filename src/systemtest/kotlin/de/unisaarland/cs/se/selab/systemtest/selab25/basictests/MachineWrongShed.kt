@@ -19,6 +19,7 @@ class MachineWrongShed : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        assertNextLine("[IMPORTANT] Initialization Info: mapForFarmNoPlantables.json is invalid.")
+        skipLines(1)
+        assertNextLine("[IMPORTANT] Initialization Info: farmsMachineWrongShed.json is invalid.")
     }
 }

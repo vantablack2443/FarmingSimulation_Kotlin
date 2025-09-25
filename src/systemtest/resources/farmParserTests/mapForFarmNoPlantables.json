@@ -66,7 +66,7 @@
       "category": "PLANTATION",
       "plant": "CHERRY",
       "capacity": 8000,
-      "farm": 0,
+      "farm": 1,
       "airflow": false
     },
     {

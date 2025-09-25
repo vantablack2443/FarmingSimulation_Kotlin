@@ -10,7 +10,7 @@ class FarmNoPlantableTiles : ExampleSystemTestExtension() {
     override val description = "Tests sowing plan parsing"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "farmParserTests/farms.json"
+    override val farms = "farmParserTests/farmsNoPlantables.json"
     override val scenario = "farmParserTests/scenario.json"
     override val map = "farmParserTests/mapForFarmNoPlantables.json"
 
@@ -19,6 +19,7 @@ class FarmNoPlantableTiles : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        assertNextLine("[IMPORTANT] Initialization Info: mapForFarmNoPlantables.json is invalid.")
+        skipLines(1)
+        assertNextLine("[IMPORTANT] Initialization Info: farmsNoPlantables.json is invalid.")
     }
 }
