@@ -287,4 +287,11 @@ class CloudHandler(val simulationMap: SimulationMap) {
         tryRain(cloud)
         cloud.duration--
     }
+
+    /**
+     * returns the  cloud on the given coordinate
+     */
+    fun getCloudByCoordinate(coordinate: Coordinate): Cloud? {
+        return this.coordinateToCloud[coordinate]
+    }
 }
