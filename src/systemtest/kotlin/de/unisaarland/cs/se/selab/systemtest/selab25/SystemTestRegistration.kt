@@ -1,7 +1,10 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25
 
+// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingSameFarmTilesFalse
 
 /**
  * Used for test registration
@@ -16,6 +19,9 @@ object SystemTestRegistration {
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
+        testSuite.registerTest(SowingPlanFieldsDifferentFarms())
+        testSuite.registerTest(SowingSameFarmTilesFalse())
+        testSuite.registerTest(SowingSameFarmTilesFalse())
     }
 
     /**
