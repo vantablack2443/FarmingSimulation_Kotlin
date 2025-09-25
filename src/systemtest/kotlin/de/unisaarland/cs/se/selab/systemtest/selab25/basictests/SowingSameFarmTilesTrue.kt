@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * tests if sowing plan tiles specified by location and radius should belong to the same farm;
  */
 class SowingSameFarmTilesTrue : ExampleSystemTestExtension() {
-    override val name = "Sowing Plan Fields Same Farm tiles"
+    override val name = "Sowing Plan Fields Same Farm tiles true"
     override val description = "Tests sowing plan parsing"
 
     // Paths are relative from the `src/systemtest/resources` directory.

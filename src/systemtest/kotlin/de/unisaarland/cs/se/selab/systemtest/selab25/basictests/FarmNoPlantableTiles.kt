@@ -3,11 +3,11 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
 /**
- * validation for farms to have at least one field or plantaion tile
+ * validation for farms to have at least one field or plantation tile
  */
 class FarmNoPlantableTiles : ExampleSystemTestExtension() {
-    override val name = "Sowing Plan Fields Diff Farms"
-    override val description = "Tests sowing plan parsing"
+    override val name = "Farm With No Plantable Tiles"
+    override val description = "validates parsing with no plantable tiles"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "farmParserTests/farmsNoPlantables.json"

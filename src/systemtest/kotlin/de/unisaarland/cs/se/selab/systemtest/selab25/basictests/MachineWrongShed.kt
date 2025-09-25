@@ -6,8 +6,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * validation for machines to be on the shed belonging to the farm
  */
 class MachineWrongShed : ExampleSystemTestExtension() {
-    override val name = "Sowing Plan Fields Diff Farms"
-    override val description = "Tests sowing plan parsing"
+    override val name = "machine wrong shed"
+    override val description = "validating machine in its farm's shed"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "farmParserTests/farmsMachineWrongShed.json"
