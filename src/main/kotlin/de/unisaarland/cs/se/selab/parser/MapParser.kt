@@ -205,8 +205,8 @@ class MapParser(private val simData: SimulationData) {
                 validatePlantType(TileType.FIELD, element)
             }
             tile.possiblePlants = fieldPlants.map { PlantType.valueOf(it.uppercase()) }
-            parseCapacity(jsonObject, tile)
         }
+        parseCapacity(jsonObject, tile)
     }
 
     /**
