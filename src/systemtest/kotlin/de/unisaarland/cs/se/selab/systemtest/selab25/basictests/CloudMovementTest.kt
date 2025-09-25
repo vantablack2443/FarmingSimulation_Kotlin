@@ -24,13 +24,14 @@ class CloudMovementTest : ExampleSystemTestExtension() {
         val expectedString = "Simulation Info: Simulation started."
         assert(skipUntilLogType(LogLevel.INFO, LogType.SIMULATION_INFO) == expectedString)
         assertNextLine("[INFO] Simulation Info: Tick 0 started at tick 1 within the year.")
+        // skipLines(1)
         assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 1 PLANTATION tiles.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 0 got stuck on tile 3.")
 
-        assertNextLine("[INFO] Cloud Movement: Cloud 2 with amount 4000 L water moved from tile 10 to tile 8.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 2 with 4000 L water moved from tile 10 to tile 8.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 10, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Rain: Cloud 3 on tile 13 rained down 70 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 3 with amount 5430 L water moved from tile 13 to tile 22.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 3 with 5430 L water moved from tile 13 to tile 22.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 13, the amount of sunlight is 95.")
         assertNextLine(
             "[IMPORTANT] Cloud Union: Clouds 7 and 3 united to cloud 11" +
@@ -38,18 +39,18 @@ class CloudMovementTest : ExampleSystemTestExtension() {
         )
         // move cloud 5
         assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 18 rained down 100 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with amount 5400 L water moved from tile 18 to tile 17.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5400 L water moved from tile 18 to tile 17.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 18, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 17 rained down 100 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with amount 5300 L water moved from tile 17 to tile 150.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5300 L water moved from tile 17 to tile 150.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 17, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 150 rained down 80 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with amount 5220 L water moved from tile 150 to tile 3.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 5 got stuck on tile 3.")
 
         // cloud 10 stuck
         assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with amount 5220 L water moved from tile 150 to tile 3.")
+        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
 
         // cloud 11 rains down on forest and dissipates
         assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
