@@ -122,10 +122,7 @@ class FarmParser(private val simulationData: SimulationData) {
         // Each farmstead, field, plantation has to belong to exactly one farm.
         // Checks using the farmID on the tile + adds to a set to find the tiles unaccounted for the map
         val farmsteadTiles = parseFarmsteadTiles(farm, id)
-        // A farm needs to have at least one FARMSTEAD
-        if (farmsteadTiles.isEmpty()) {
-            throw ValidationException("Farm $id does not have at least one farmstead.")
-        }
+
         val fieldTiles = parseFieldTiles(farm, id)
         val plantationTiles = parsePlantationTiles(farm, id)
 
@@ -135,9 +132,16 @@ class FarmParser(private val simulationData: SimulationData) {
         }
 
         val allMachines = parseMachines(farm, id)
-        if (allMachines.isEmpty()) {
-            throw ValidationException("Farm $id does not have at least one machine.")
+
+        // A farm needs to have at least one machine and one farmstead
+        if (allMachines.isEmpty() || farmsteadTiles.isEmpty()) {
+            throw ValidationException("Farm $id does not have at least one machine or one farmstead.")
         }
+
+//                // A farm needs to have at least one FARMSTEAD
+//        if (farmsteadTiles.isEmpty()) {
+//            throw ValidationException("Farm $id does not have at least one farmstead.")
+//        }
 
         val sowingPlanMap = parseSowingPlans(farm, id)
         // Sort plans by ID for every tick - sortBy sorts in place
