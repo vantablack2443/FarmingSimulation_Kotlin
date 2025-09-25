@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingSameFarmTilesFalse
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineActionPlantTrue
 
 /**
  * Used for test registration
@@ -22,6 +23,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         testSuite.registerTest(SowingSameFarmTilesFalse())
         testSuite.registerTest(SowingSameFarmTilesFalse())
+        testSuite.registerTest(ValidateMachineActionPlantTrue())
     }
 
     /**
