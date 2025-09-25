@@ -128,6 +128,7 @@ class Farm(
         var amount = harvestPerPlant.getOrDefault(plant, 0)
         for (machine in machines) {
             val currentHarvest = machine.currentHarvest ?: continue
+            if (currentHarvest.plant != plant) continue
             amount += currentHarvest.harvestAmount
         }
         return amount
