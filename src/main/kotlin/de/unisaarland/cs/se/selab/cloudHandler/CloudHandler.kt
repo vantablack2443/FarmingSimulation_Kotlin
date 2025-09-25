@@ -172,7 +172,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * originally the moveCloudHandler
      */
     private fun moveCloud(c: Cloud, endIterator: MutableListIterator<Cloud>) {
-
         // check if cloud is on VILLAGE in case of CityExtension incident
         if (villageCheck(c)) {
             villageDissipate(c)
@@ -226,7 +225,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
     /**
      * helper function to log cloud movement
      */
-    private fun logLocationChange(cloud: Cloud, currTile: Tile, nextTile: Tile,) {
+    private fun logLocationChange(cloud: Cloud, currTile: Tile, nextTile: Tile) {
         Logger.logCloudMove(cloud.id, cloud.amount, currTile.id, nextTile.id)
         if (currTile.category == TileType.PLANTATION || currTile.category == TileType.FIELD) {
             reduceSunlight(MIN_SUNLIGHT_REDUCTION, currTile)
