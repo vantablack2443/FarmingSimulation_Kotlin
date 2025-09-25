@@ -2,6 +2,11 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestThreeClouds
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestTwoClouds
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestUntilMovePhase
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestUntilOneCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
@@ -28,6 +33,11 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(ValidateMachineActionPlantTrue())
         testSuite.registerTest(ValidateMachineActionPlantFalse())
+        testSuite.registerTest(CloudMovementTestUntilMovePhase())
+        testSuite.registerTest(CloudMovementTestUntilOneCloud())
+        testSuite.registerTest(CloudMovementTestTwoClouds())
+        testSuite.registerTest(CloudMovementTestThreeClouds())
+        testSuite.registerTest(CloudMovementTestStuckCloud())
     }
 
     /**
