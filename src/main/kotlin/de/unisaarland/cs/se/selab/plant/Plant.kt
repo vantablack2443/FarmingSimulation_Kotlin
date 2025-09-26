@@ -68,7 +68,7 @@ abstract class Plant {
     /**
      * check if the plant needs cutting in this tick
      */
-    open fun needsCutting(tick: Int) { return }
+    open fun needsCutting(yearTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
     /**
      * check if the plant needs harvesting in this tick
@@ -85,7 +85,7 @@ abstract class Plant {
     /**
      * check if the plant needs mowing in this tick
      */
-    open fun needsMowing(tick: Int) { return }
+    open fun needsMowing(yearTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
     /**
      * update harvest estimate based on missed cutting penalty
