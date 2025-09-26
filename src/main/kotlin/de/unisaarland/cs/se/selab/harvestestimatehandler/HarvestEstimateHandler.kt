@@ -230,13 +230,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return
         val actionsNeeded = t.actionsNeeded
 
-        if (t.currentCrop == PlantType.GRAPE && yearTick != SIXTEEN) { return }
-        if (t.currentCrop == PlantType.APPLE && yearTick != FOUR) { return }
-        if (t.currentCrop == PlantType.ALMOND && yearTick != FOUR) { return }
-        if (t.currentCrop == PlantType.CHERRY && yearTick != FOUR) { return }
-
+        // Remove from list if its in there
         if (ActionType.CUTTING in actionsNeeded) {
             actionsNeeded.remove(ActionType.CUTTING)
+
+            // Only apply cutting penalty if yearTick is the last cutting tick
+            if (t.currentCrop == PlantType.GRAPE && yearTick != SIXTEEN) { return }
+            if (t.currentCrop == PlantType.APPLE && yearTick != FOUR) { return }
+            if (t.currentCrop == PlantType.ALMOND && yearTick != FOUR) { return }
+            if (t.currentCrop == PlantType.CHERRY && yearTick != FOUR) { return }
+
             plant.applyCuttingPenalty()
         }
 
