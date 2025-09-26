@@ -7,6 +7,14 @@
       "fields": [2],
       "plantations": [1],
       "machines": [
+        {
+          "id": 0,
+          "name": "Tractor",
+          "actions": ["SOWING", "IRRIGATING"],
+          "plants": ["PUMPKIN", "WHEAT"],
+          "duration": 4,
+          "location": 0
+        }
       ],
       "sowingPlans": [
         {
@@ -14,10 +22,10 @@
           "tick": 1,
           "plant": "WHEAT",
           "fields": [2],
-          "location": 2,
-          "radius": 1
+          "location": 2
          }
       ]
    }
+
   ]
 }
