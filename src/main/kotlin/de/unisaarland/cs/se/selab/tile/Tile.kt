@@ -30,6 +30,8 @@ class Tile(
     var farmID: Int? = null
     var plantationDamaged: Boolean? = null
     var fallowDuration: Duration? = null
+    val actionsNeeded: MutableList<ActionType> = mutableListOf()
+    val lateActions: MutableList<ActionType> = mutableListOf()
 
     /**
      * checks if the tile is sowable with the given plant in the given year

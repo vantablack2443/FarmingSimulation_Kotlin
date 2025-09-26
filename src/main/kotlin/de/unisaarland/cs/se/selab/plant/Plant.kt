@@ -20,8 +20,6 @@ abstract class Plant {
     abstract var pollination: Double
     abstract var animalAttack: Boolean
     abstract var animalAttackPenalty: Double
-    abstract val actionsNeeded: MutableList<ActionType>
-    abstract val lateActions: MutableList<ActionType>
     abstract val cuttingTime: MutableList<CustomPair>
     abstract val mowingTime: MutableList<CustomPair>
 
