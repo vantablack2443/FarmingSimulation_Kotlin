@@ -18,7 +18,7 @@ class BeeHappy(
     val tile: Tile,
     val radius: Int
 ) : Incident(id, tick, type) {
-    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
+    override fun execute(simulationMap: SimulationMap, tick: Int) {
         val reach = simulationMap.getTilesByRadius(tile, radius)
         val meadows = simulationMap.filterByType(TileType.MEADOW, reach)
         val affectedTiles = mutableSetOf<Tile>()
@@ -30,7 +30,7 @@ class BeeHappy(
             if (tile.category == TileType.FIELD && tilePlant.isBlooming(tick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
             }
-            if (tile.category == TileType.PLANTATION && tilePlant.isBlooming(yearTick)) {
+            if (tile.category == TileType.PLANTATION && tilePlant.isBlooming(tick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
             }
         }
