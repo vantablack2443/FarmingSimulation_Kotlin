@@ -82,15 +82,19 @@ class Farm(
      * Gets sowing plan by tick
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        return sowingPlans[simTick].orEmpty()
+        return sowingPlans.filterKeys { it <= simTick }.values.flatten()
     }
 
     /**
      * removes the executed sowing plans from the farm's list of sowing plans
      */
-    fun removeSowingPlans(executedPlans: List<SowingPlan>) {
-        // TODO
-        executedPlans.isEmpty()
+    fun removeSowingPlans(executedPlans: List<SowingPlan>, simTick: Int) {
+        val idsToRemove = executedPlans.map { it.getId() }.toSet()
+        for ((tick, planList) in sowingPlans) {
+            if (tick <= simTick) {
+                planList.removeAll { it.getId() in idsToRemove }
+            }
+        }
     }
 
     /**
