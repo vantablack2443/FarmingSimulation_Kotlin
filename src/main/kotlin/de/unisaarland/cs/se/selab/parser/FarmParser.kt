@@ -113,7 +113,7 @@ class FarmParser(private val simulationData: SimulationData) {
             val jsonString = file.readText()
 
             val validator = Validator.forSchema(schema)
-            val validation = validator.validate(json)
+            val validation = validator.validate(JsonParser(jsonString).parse())
             if (validation != null) {
                 throw ValidationException()
             }

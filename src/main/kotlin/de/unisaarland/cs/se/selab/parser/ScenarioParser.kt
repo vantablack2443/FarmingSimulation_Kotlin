@@ -126,7 +126,7 @@ class ScenarioParser(private val simData: SimulationData) {
             val jsonFile = File(jsonPath).readText()
 
             val validator = Validator.forSchema(schema)
-            val validation = validator.validate(jsonFile)
+            val validation = validator.validate(JsonParser(jsonFile).parse())
             if (validation != null) {
                 throw ValidationException()
             }
