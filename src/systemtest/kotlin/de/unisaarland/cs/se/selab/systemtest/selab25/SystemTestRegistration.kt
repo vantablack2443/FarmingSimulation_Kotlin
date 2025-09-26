@@ -7,6 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestTwoClouds
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestUntilMovePhase
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestUntilOneCloud
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestWithMositure
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
@@ -38,6 +39,7 @@ object SystemTestRegistration {
         testSuite.registerTest(CloudMovementTestTwoClouds())
         testSuite.registerTest(CloudMovementTestThreeClouds())
         testSuite.registerTest(CloudMovementTestStuckCloud())
+        testSuite.registerTest(CloudMovementTestWithMositure())
     }
 
     /**

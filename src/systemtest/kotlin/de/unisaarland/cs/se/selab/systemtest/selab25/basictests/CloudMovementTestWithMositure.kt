@@ -5,7 +5,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests cloud phase for one tick with cloud creation incidents
  */
-class CloudMovementTestUntilMovePhase : ExampleSystemTestExtension() {
+class CloudMovementTestWithMositure : ExampleSystemTestExtension() {
     override val name = "CloudMovementTestUntilMovePhase"
     override val description = "Tests configs for cloud movement test."
 
@@ -24,5 +24,7 @@ class CloudMovementTestUntilMovePhase : ExampleSystemTestExtension() {
         assertNextLine("[INFO] Initialization Info: exampleScenario.json successfully parsed and validated.")
         assertNextLine("[INFO] Simulation Info: Simulation started at tick 1 within the year.")
         assertNextLine("[INFO] Simulation Info: Tick 0 started at tick 1 within the year.")
+        // skipLines(1)
+        assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 1 PLANTATION tiles.")
     }
 }
