@@ -9,6 +9,12 @@
       "machines": [
       ],
       "sowingPlans": [
+        {
+          "id": 20,
+          "tick": 1,
+          "plant": "WHEAT",
+          "fields": [2]
+          }
       ]
     }
   ]

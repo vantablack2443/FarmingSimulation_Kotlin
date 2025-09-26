@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.parser
 
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 
 class FarmParserTest {
 
@@ -12,8 +13,8 @@ class FarmParserTest {
         val scenarioJsonPath = "src/systemtest/resources/farmParserTest/validScenario.json"
 
         val parser = Parser()
-//        val result = parser.parse(listOf(mapJsonPath, farmJsonPath, scenarioJsonPath))
-//        assertNotNull(result, "Parsing returned null SimulationData")
+        val result = parser.parse(listOf(mapJsonPath, farmJsonPath, scenarioJsonPath))
+        assertNotNull(result, "Parsing returned null SimulationData")
 
         assertFailsWith<Exception> {
             parser.parse(listOf(mapJsonPath, farmJsonPath, scenarioJsonPath))
