@@ -190,7 +190,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get Incident Type
         val type: String = obj[TYPE_STRING]?.jsonPrimitive?.content ?: throw ValidationException()
         // Convert to enum - Throw error if no matching enum value
-        if (type !in IncidentType.entries.toString()) throw ValidationException()
+        if (type !in IncidentType.entries.map { it.name }) throw ValidationException()
         val incidentType = IncidentType.valueOf(type)
 
         // Will be set depending on IncidentType
