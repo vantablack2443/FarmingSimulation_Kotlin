@@ -38,5 +38,4 @@ abstract class FieldPlant : Plant() {
     override fun animalAttackPenalty() {
         this.harvestEstimate = (animalAttackPenalty * this.harvestEstimate).toInt()
     }
-
 }
