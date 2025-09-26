@@ -287,6 +287,7 @@ object Logger {
      */
     fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Int>) {
         val stringTiles = tileIDs.sorted().joinToString(separator = ",")
+
         val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $stringTiles."
         logs(LogType.IMPORTANT, message)
     }
@@ -297,7 +298,9 @@ object Logger {
      * @param actions The list of missed actions.
      */
     fun logMissedActions(tileID: Int, actions: List<ActionType>) {
-        val message = "Harvest Estimate: Required actions on tile $tileID were not performed: $actions."
+        val actionsString = actions.sortedBy { it.name }.joinToString(separator = ",")
+
+        val message = "Harvest Estimate: Required actions on tile $tileID were not performed: $actionsString."
         logs(LogType.DEBUG, message)
     }
 
