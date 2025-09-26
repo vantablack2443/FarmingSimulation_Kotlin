@@ -74,13 +74,11 @@ abstract class Plant {
     /**
      * check if the plant needs harvesting in this tick
      * Adds HARVESTING to the actions needed list
-     * Adds HARVESTING to the lateActions list if late harvesting period
-     * If HARVESTING in actionsNeeded and HARVESTING in lateActions apply lateHarvestPenalty
+     * Wont add HARVESTING to lateActions list since this is applied at the start of the tick by Simulation
      */
     open fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) { return }
 
     /**
