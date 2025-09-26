@@ -36,7 +36,8 @@ class IrrigationHandler(
         }
 
         // get target tile for first action
-        val targetTile = findTargetTile(machine, operableTiles)
+        val targetTile = findTargetTile(machine, operableTiles) ?: return
+
         // perform action on target tile
         performAction(machine, targetTile)
         // add tile to farm's tileHashMap so that it won't
@@ -61,7 +62,7 @@ class IrrigationHandler(
 
         val returnShed: Tile? = simulationMap.findTargetShed(
             machine,
-            farm.getFarmstead().filter { it.shed == true },
+            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
             machine.currentHarvest != null
         )
 
@@ -106,10 +107,10 @@ class IrrigationHandler(
     /**
      * Finds the target tile with the lowest ID that is reachable by the machine from the list of operable tiles.
      */
-    private fun findTargetTile(m: Machine, operableTiles: List<Tile>): Tile {
-        return operableTiles
-            .filter { tile -> simulationMap.isReachable(m, tile) }
-            .minBy { it.id }
+    private fun findTargetTile(m: Machine, operableTiles: List<Tile>): Tile? {
+        operableTiles.filter { tile -> simulationMap.isReachable(m, tile) }
+        if (operableTiles.isEmpty()) return null
+        return operableTiles.minBy { it.id }
     }
 
     /**

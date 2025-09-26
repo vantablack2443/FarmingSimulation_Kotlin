@@ -82,15 +82,20 @@ class Farm(
      * Gets sowing plan by tick
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        return sowingPlans[simTick].orEmpty()
+        val plans = sowingPlans.filterKeys { it <= simTick }.values.flatten()
+        return plans.sortedWith(compareBy<SowingPlan> { it.getTick() }.thenBy { it.getId() })
     }
 
     /**
      * removes the executed sowing plans from the farm's list of sowing plans
      */
-    fun removeSowingPlans(executedPlans: List<SowingPlan>) {
-        // TODO
-        executedPlans.isEmpty()
+    fun removeSowingPlans(executedPlans: List<SowingPlan>, simTick: Int) {
+        val idsToRemove = executedPlans.map { it.getId() }.toSet()
+        for ((tick, planList) in sowingPlans) {
+            if (tick <= simTick) {
+                planList.removeAll { it.getId() in idsToRemove }
+            }
+        }
     }
 
     /**
@@ -153,16 +158,16 @@ class Farm(
         this.plantation.addAll(newPlantation)
     }
 
-    /**
-     * returns a list of sheds on a farm
-     */
-    fun getShedTiles(): List<Tile> {
-        val sheds: MutableList<Tile> = mutableListOf()
-        for (farmstead in farmsteads) {
-            if (farmstead.shed == true) {
-                sheds.add(farmstead)
-            }
-        }
-        return sheds
-    }
+//    /**
+//     * returns a list of sheds on a farm
+//     */
+//    fun getShedTiles(): List<Tile> {
+//        val sheds: MutableList<Tile> = mutableListOf()
+//        for (farmstead in farmsteads) {
+//            if (farmstead.shed == true) {
+//                sheds.add(farmstead)
+//            }
+//        }
+//        return sheds
+//    }
 }

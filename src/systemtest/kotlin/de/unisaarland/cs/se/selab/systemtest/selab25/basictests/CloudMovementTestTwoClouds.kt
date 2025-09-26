@@ -34,7 +34,7 @@ class CloudMovementTestTwoClouds : ExampleSystemTestExtension() {
         assertNextLine("[DEBUG] Cloud Movement: On tile 10, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 2 dissipates on tile 8.")
 
-        assertNextLine("[INFO] Cloud Rain: Cloud 3 on tile 13 rained down 70 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 3 on tile 13 rained down 70 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 3 with 5430 L water moved from tile 13 to tile 22.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 13, the amount of sunlight is 95.")
         assertNextLine(

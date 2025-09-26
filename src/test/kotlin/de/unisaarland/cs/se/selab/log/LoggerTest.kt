@@ -84,7 +84,7 @@ class LoggerTest {
         Logger.logIncident(69, IncidentType.DROUGHT, listOf(69, 420))
         val output = out()
         assertEquals(
-            "[IMPORTANT] Incident: Incident 69 of type DROUGHT happened and affected tiles [69, 420].",
+            "[IMPORTANT] Incident: Incident 69 of type DROUGHT happened and affected tiles 69,420.",
             output,
             "IMPORTANT logs should be printed at DEBUG level"
         )

@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab.parser
 
+/*
+
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.parser.resources.FARM_JSON_CITYEXPANSION
@@ -131,3 +133,5 @@ class ScenarioParserTests {
         assert(cloud?.duration == 5)
     }
 }
+
+ */

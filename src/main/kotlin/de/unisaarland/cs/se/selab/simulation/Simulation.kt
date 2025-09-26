@@ -15,7 +15,19 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.harvestestimatehandler.HarvestEstimateHandler
 import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.log.Logger
+import de.unisaarland.cs.se.selab.plant.ALMOND_LATE_HARVEST_PENALTY
+import de.unisaarland.cs.se.selab.plant.APPLE_LATE_HARVEST_PENALTY
+import de.unisaarland.cs.se.selab.plant.CHERRY_LATE_HARVEST_PENALTY
+import de.unisaarland.cs.se.selab.plant.GRAPE_LATE_HARVEST_PENALTY
+import de.unisaarland.cs.se.selab.plantdata.ALMOND_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.CHERRY_HARVEST_END
+import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST_START_END
 import de.unisaarland.cs.se.selab.tile.Tile
+import kotlin.math.floor
+import kotlin.math.pow
 
 const val MOISTURE_WITH_PLANT = 100
 const val MOISTURE_WITHOUT_PLANT = 70
@@ -77,6 +89,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
      * runs the simulation
      */
     fun run() {
+        checkLateHarvestStart()
         while (canStartNextTick()) {
             Logger.logTickStart(currentTick, currentYearTick)
             updatePlantationHarvestEstimate()
@@ -214,6 +227,87 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             for (tile in plantations) {
                 val plant = tile.plant ?: continue
                 plant.resetHarvestEstimate()
+            }
+        }
+    }
+
+    /**
+     * helper function to apply late harvest penalties at the start of the simulation
+     */
+    private fun checkLateHarvestStart() {
+        val plantations = map.filterByType(TileType.PLANTATION, map.getPlantableTiles())
+        // APPLE - harvest in 2nd October tick reduces by half, then lost
+        // ALMOND - harvest in 2nd October tick reduces by 10%, then lost
+        // CHERRY - harvest in 1st Aug tick reduces by 70%, then lost
+        // GRAPE - harvesting from 2nd Sep tick reduces by 5% each tick for 3 ticks
+
+        val applePlantations = plantations.filter { it.currentCrop == PlantType.APPLE }
+        val almondPlantations = plantations.filter { it.currentCrop == PlantType.ALMOND }
+        val grapePlantations = plantations.filter { it.currentCrop == PlantType.GRAPE }
+        val cherryPlantations = plantations.filter { it.currentCrop == PlantType.CHERRY }
+        appleAlmondPenalty(applePlantations, almondPlantations)
+        cherryPenalty(cherryPlantations)
+        grapePenalty(grapePlantations)
+    }
+
+    /**
+     * helper function for apple and almond plantations late harvest
+     */
+    private fun appleAlmondPenalty(applePlantations: List<Tile>, almondPlantations: List<Tile>) {
+        if (this.currentYearTick == OCT_TICK + 1) {
+            applePlantations.forEach {
+                it.plant?.harvestEstimate =
+                    floor(APPLE_HARVEST * APPLE_LATE_HARVEST_PENALTY).toInt()
+            }
+            almondPlantations.forEach {
+                it.plant?.harvestEstimate =
+                    floor(ALMOND_HARVEST * ALMOND_LATE_HARVEST_PENALTY).toInt()
+            }
+        } else {
+            applePlantations.forEach { it.plant?.harvestEstimate = 0 }
+            almondPlantations.forEach { it.plant?.harvestEstimate = 0 }
+        }
+    }
+
+    /**
+     * helper function for cherry plantations late harvest
+     */
+    private fun cherryPenalty(cherryPlantations: List<Tile>) {
+        if (this.currentYearTick == CHERRY_HARVEST_END + 1) {
+            cherryPlantations.forEach {
+                it.plant?.harvestEstimate =
+                    floor(CHERRY_HARVEST * CHERRY_LATE_HARVEST_PENALTY).toInt()
+            }
+        } else {
+            cherryPlantations.forEach { it.plant?.harvestEstimate = 0 }
+        }
+    }
+
+    /**
+     * helper function for grape plantations harvest
+     */
+    private fun grapePenalty(grapePlantations: List<Tile>) {
+        when (this.currentYearTick) {
+            GRAPE_HARVEST_START_END + 1 -> {
+                grapePlantations.forEach {
+                    it.plant?.harvestEstimate =
+                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY).toInt()
+                }
+            }
+            GRAPE_HARVEST_START_END + 2 -> {
+                grapePlantations.forEach {
+                    it.plant?.harvestEstimate =
+                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY.pow(2)).toInt()
+                }
+            }
+            GRAPE_HARVEST_START_END + 3 -> {
+                grapePlantations.forEach {
+                    it.plant?.harvestEstimate =
+                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY.pow(3)).toInt()
+                }
+            }
+            else -> {
+                grapePlantations.forEach { it.plant?.harvestEstimate = 0 }
             }
         }
     }

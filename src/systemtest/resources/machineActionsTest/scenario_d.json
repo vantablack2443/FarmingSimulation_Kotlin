@@ -1,0 +1,76 @@
+{
+  "clouds": [
+  ],
+  "incidents": [
+    {
+      "id": 140,
+      "type": "DROUGHT",
+      "tick": 0,
+      "location": 14,
+      "radius": 0
+    },
+    {
+      "id": 10,
+      "type": "BROKEN_MACHINE",
+      "tick": 0,
+      "duration": 2,
+      "machineId": 1
+    },
+    {
+      "id": 11,
+      "type": "BROKEN_MACHINE",
+      "tick": 0,
+      "duration": 3,
+      "machineId": 2
+    },
+    {
+      "id": 12,
+      "type": "BROKEN_MACHINE",
+      "tick": 0,
+      "duration": 3,
+      "machineId": 3
+    },
+    {
+      "id": 13,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 15,
+      "radius": 0
+    },
+    {
+      "id": 14,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 16,
+      "radius": 0
+    },
+    {
+      "id": 15,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 17,
+      "radius": 0
+    },
+    {
+      "id": 17,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 26,
+      "radius": 0
+    },
+    {
+      "id": 18,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 29,
+      "radius": 0
+    },
+    {
+      "id": 19,
+      "type": "ANIMAL_ATTACK",
+      "tick": 4,
+      "location": 14,
+      "radius": 0
+    }
+  ]
+}

@@ -7,6 +7,11 @@ import de.unisaarland.cs.se.selab.enumerations.PlantType
 import java.io.PrintWriter
 
 /**
+ * Constants for logging ","
+ */
+const val COMMA = ","
+
+/**
  * SimulationLogger logs Simulation details
  */
 object Logger {
@@ -196,8 +201,10 @@ object Logger {
      * @param sowingPlanIDs The list of sowing plan IDs.
      */
     fun logFarmSowingPlan(farmID: Int, sowingPlanIDs: List<Int>) {
+        val stringPlans = sowingPlanIDs.sorted().joinToString(separator = COMMA)
+
         val message = "Farm: Farm $farmID has the following active sowing plans it" +
-            " intends to pursue in this tick: $sowingPlanIDs."
+            " intends to pursue in this tick: $stringPlans."
         logs(LogType.DEBUG, message)
     }
 
@@ -284,7 +291,9 @@ object Logger {
      * @param tileIDs The list of affected tiles.
      */
     fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Int>) {
-        val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $tileIDs."
+        val stringTiles = tileIDs.sorted().joinToString(separator = COMMA)
+
+        val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $stringTiles."
         logs(LogType.IMPORTANT, message)
     }
 
@@ -294,7 +303,9 @@ object Logger {
      * @param actions The list of missed actions.
      */
     fun logMissedActions(tileID: Int, actions: List<ActionType>) {
-        val message = "Harvest Estimate: Required actions on tile $tileID were not performed: $actions."
+        val actionsString = actions.sortedBy { it.name }.joinToString(separator = COMMA)
+
+        val message = "Harvest Estimate: Required actions on tile $tileID were not performed: $actionsString."
         logs(LogType.DEBUG, message)
     }
 

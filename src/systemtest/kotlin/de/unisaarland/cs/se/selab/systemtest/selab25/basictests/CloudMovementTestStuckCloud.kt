@@ -34,7 +34,7 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
         assertNextLine("[DEBUG] Cloud Movement: On tile 10, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 2 dissipates on tile 8.")
 
-        assertNextLine("[INFO] Cloud Rain: Cloud 3 on tile 13 rained down 70 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 3 on tile 13 rained down 70 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 3 with 5430 L water moved from tile 13 to tile 22.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 13, the amount of sunlight is 95.")
         assertNextLine(
@@ -42,22 +42,22 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
                 " with 8930 L water and duration 2 on tile 22."
         )
         // move cloud 5
-        assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 18 rained down 100 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 5 on tile 18 rained down 100 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5400 L water moved from tile 18 to tile 17.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 18, the amount of sunlight is 95.")
-        assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 17 rained down 100 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 5 on tile 17 rained down 100 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5300 L water moved from tile 17 to tile 150.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 17, the amount of sunlight is 95.")
-        assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 150 rained down 80 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 5 on tile 150 rained down 80 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
+        assertNextLine("[DEBUG] Cloud Movement: On tile 150, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 5 got stuck on tile 3.")
 
         // cloud 10 stuck
-        assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 10 on tile 11 rained down 70 L water.")
 
         // cloud 11 rains down on forest and dissipates
-        assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
         assertNextLine("[INFO] Cloud  Dissipation: Cloud 11 dissipates on tile 22.")
 
         // end of cloud phase

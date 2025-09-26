@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 /**
@@ -27,5 +28,6 @@ class BrokenMachine(id: Int, tick: Int, type: IncidentType, val machine: Machine
             endTick = if (duration.endTick > endTick) duration.endTick else endTick
             machine.brokenFor = Duration(tick, endTick)
         }
+        Logger.logIncident(id, IncidentType.BROKEN_MACHINE, listOf(machine.currentTile.id))
     }
 }

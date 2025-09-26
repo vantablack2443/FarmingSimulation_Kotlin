@@ -220,11 +220,11 @@ class SimulationMap(
         return tiles.filter { it.category == type }.sortedBy { it.id }
     }
 
-    /**
-     * For move cloud optimization
-     */
-    fun nextTileNullButAirflow(tile: Tile): Boolean {
-        val nextTile = getNeighbor(tile, tile.direction)
-        return nextTile == null
-    }
+//    /**
+//     * For move cloud optimization
+//     */
+//    fun nextTileNullButAirflow(tile: Tile): Boolean {
+//        val nextTile = getNeighbor(tile, tile.direction)
+//        return nextTile == null
+//    }
 }
