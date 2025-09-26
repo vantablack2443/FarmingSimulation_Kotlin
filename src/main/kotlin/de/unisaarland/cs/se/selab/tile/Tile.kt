@@ -35,11 +35,16 @@ class Tile(
     val lateActions: MutableList<ActionType> = mutableListOf()
 
     /**
-     * checks if the tile is sowable with the given plant in the given year
+     * Only checks if the tile is in fallow duration and can sow the specific plant
+     * to check if a plant is sowable in current tick use plantdata.getSowablePlants
      */
     fun isSowable(plant: PlantType, simTick: Int): Boolean {
-        return fallowDuration?.inRange(simTick) == false &&
-            possiblePlants?.contains(plant) == true
+        val pp = possiblePlants ?: return false
+        val fd = fallowDuration
+        if (pp.contains(plant)) {
+            if (fd == null || !fd.inRange(simTick)) return true
+        }
+        return false
     }
 
     /**
