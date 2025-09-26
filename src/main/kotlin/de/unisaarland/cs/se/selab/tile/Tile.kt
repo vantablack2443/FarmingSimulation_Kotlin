@@ -84,6 +84,7 @@ class Tile(
 
     /**
      * checks if the tile needs irrigation and adds action to the list if required
+     * if plantation is damaged, the plant attribute is set to null by the incident
      */
     fun needsIrrigation() {
         val p = plant ?: return
