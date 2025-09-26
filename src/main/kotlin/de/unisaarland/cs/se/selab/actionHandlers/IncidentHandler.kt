@@ -24,9 +24,9 @@ class IncidentHandler(var map: SimulationMap) {
     /**
      * function that executes the active incidents
      */
-    fun executeIncidents(simTick: Int) {
+    fun executeIncidents(yearTick: Int) {
         for (incident in activeIncidents) {
-            incident.execute(this.map, simTick)
+            incident.execute(this.map, yearTick)
         }
     }
 }

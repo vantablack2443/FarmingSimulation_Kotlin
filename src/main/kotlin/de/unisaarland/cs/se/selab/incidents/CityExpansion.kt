@@ -18,7 +18,7 @@ class CityExpansion(
     val farms: List<Farm>
 ) : Incident(id, tick, type) {
 
-    override fun execute(simulationMap: SimulationMap, simTick: Int) {
+    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         this.tile.category = TileType.VILLAGE
 
         this.tile.currentCrop = null
