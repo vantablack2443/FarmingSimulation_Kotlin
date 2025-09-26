@@ -50,18 +50,16 @@ class CloudMovementTest : ExampleSystemTestExtension() {
         assertNextLine("[DEBUG] Cloud Movement: On tile 17, the amount of sunlight is 95.")
         assertNextLine("[IMPORTANT] Cloud Rain: Cloud 5 on tile 150 rained down 80 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
+        assertNextLine("[DEBUG] Cloud Movement: On tile 150, the amount of sunlight is 95.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 5 got stuck on tile 3.")
 
         // cloud 10 stuck
-        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
-
-        // cloud 11 rains down on forest and dissipates
+        assertNextLine("[IMPORTANT] Cloud Rain: Cloud 10 on tile 11 rained down 70 L water.")
         assertNextLine("[IMPORTANT] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
         assertNextLine("[INFO] Cloud  Dissipation: Cloud 11 dissipates on tile 22.")
 
         // end of cloud phase
-        assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 38.")
+        assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 48.")
         skipLines(2) // skip farm start and end
         // cloud creation incident
         assertNextLine(
