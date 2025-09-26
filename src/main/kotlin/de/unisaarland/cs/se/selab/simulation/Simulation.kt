@@ -231,4 +231,11 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         }
         return harvest
     }
+
+    /**
+     * returns the cloud handler
+     */
+    fun getCloudHandler(): CloudHandler {
+        return cloudHandler
+    }
 }

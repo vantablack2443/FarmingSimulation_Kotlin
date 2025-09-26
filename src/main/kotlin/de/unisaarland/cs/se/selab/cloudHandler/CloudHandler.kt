@@ -301,4 +301,3 @@ class CloudHandler(val simulationMap: SimulationMap) {
         this.cloudsList.add(c)
     }
 }
-
