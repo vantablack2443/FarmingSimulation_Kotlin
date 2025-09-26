@@ -15,7 +15,7 @@ class AnimalAttack(
     val tile: Tile,
     val radius: Int
 ) : Incident(id, tick, type) {
-    override fun execute(simulationMap: SimulationMap, simTick: Int) {
+    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val reach = simulationMap.getTilesByRadius(tile, radius)
         val forests = simulationMap.filterByType(TileType.FOREST, reach)
         val affectedTiles = mutableSetOf<Tile>()
@@ -25,7 +25,7 @@ class AnimalAttack(
         for (tile in affectedTiles) {
             val tilePlant = tile.plant ?: continue
             tilePlant.doAnimalAttack()
-            tilePlant.resetMowingTime(simTick)
+            tilePlant.resetMowingTime(yearTick)
         }
     }
 }

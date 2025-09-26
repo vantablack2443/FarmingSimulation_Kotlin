@@ -26,7 +26,7 @@ class CloudCreation(
 ) {
     lateinit var cloudHandler: CloudHandler
 
-    override fun execute(simulationMap: SimulationMap, simTick: Int) {
+    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val affectedTiles = (simulationMap.getTilesByRadius(tile, radius) + tile)
             .filter { it.category != TileType.VILLAGE }
             .sortedBy { it.id }
