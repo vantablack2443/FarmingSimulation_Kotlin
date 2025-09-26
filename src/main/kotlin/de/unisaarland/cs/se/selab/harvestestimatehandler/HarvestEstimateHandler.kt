@@ -5,7 +5,6 @@ import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
-import de.unisaarland.cs.se.selab.plant.PlantationPlant
 import de.unisaarland.cs.se.selab.tile.Tile
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -58,6 +57,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         // 2. Apply incidents then reset pollination and animal attack counters
         // Incidents go here
+        applyAnimalAttack(t)
+        applyBeeHappy(t)
         plantOfTile?.pollination = 1.0
         plantOfTile?.animalAttackPenalty = 1.0
         plantOfTile?.animalAttack = false
@@ -83,6 +84,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         // 2. Apply incidents then reset pollination and animal attack counters
         // Incidents go here
+        applyAnimalAttack(t)
+        applyBeeHappy(t)
         plantOfTile?.pollination = 1.0
         plantOfTile?.animalAttackPenalty = 1.0
         plantOfTile?.animalAttack = false
@@ -99,7 +102,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun applyLateSowing(t: Tile) {
         val plant = t.plant ?: return // null check first
 
-        // SOWING will only be added to late actions on the tick of sowing, after the sowingHandler calls checkLateSowing
+        /*
+        SOWING will only be added to late actions on the tick of sowing,
+        after the sowingHandler calls checkLateSowing
+         */
         if (ActionType.SOWING in t.lateActions) {
             t.lateActions.remove(ActionType.SOWING)
             plant.applyLateSowingPenalty()
@@ -198,7 +204,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
          *  applyLateHarvestPenalty needs it to determine how many times the penalty needs to be applied
          */
         val plant = t.plant ?: return
-        val lateActions = plant.lateActions
+        val lateActions = t.lateActions
 
         if (ActionType.HARVESTING in lateActions) {
             lateActions.remove(ActionType.HARVESTING)
@@ -218,11 +224,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun applyMissedCutting(t: Tile) {
         val plant = t.plant ?: return
-        val lateActions = plant.lateActions
+        val lateActions = t.actionsNeeded
 
         if (ActionType.CUTTING in lateActions) {
             lateActions.remove(ActionType.CUTTING)
-            (plant as? PlantationPlant)?.applyCuttingPenalty()
+            plant.applyCuttingPenalty()
         }
 
         /*val lateActions = t.plant?.lateActions ?: return
@@ -243,6 +249,26 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         while (ActionType.MOWING in t.actionsNeeded) {
             t.actionsNeeded.remove(ActionType.MOWING)
             plant.applyMowingPenalty()
+        }
+    }
+
+    /**
+     * Applies animal attack if animal attack counter > 1.0
+     */
+    fun applyAnimalAttack(t: Tile) {
+        val plant = t.plant ?: return
+        if (plant.animalAttackPenalty > 1.0) {
+            plant.animalAttackPenalty()
+        }
+    }
+
+    /**
+     * Applies bee happy pollination buff if pollination counter > 1.0
+     */
+    fun applyBeeHappy(t: Tile) {
+        val plant = t.plant ?: return
+        if (plant.pollination > 1.0) {
+            plant.applyPollinationBuff()
         }
     }
 
