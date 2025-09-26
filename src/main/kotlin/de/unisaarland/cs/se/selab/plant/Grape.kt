@@ -69,15 +69,13 @@ class Grape : PlantationPlant() {
             this.harvestEstimate = 0
             return
         }
-        var effect = GRAPE_LATE_HARVEST_PENALTY
-        var counter = yearTick
-        while (counter <= GRAPE_HARVEST_START_END + 3) {
-            effect *= GRAPE_LATE_HARVEST_PENALTY
-            counter++
+
+        if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
+            val newEstimate = floor(this.harvestEstimate * GRAPE_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
-        val newEstimate = this.harvestEstimate * effect
-        this.harvestEstimate = newEstimate.toInt()
     }
+
     override fun resetMowingTime(startTick: Int) {
         return
     }

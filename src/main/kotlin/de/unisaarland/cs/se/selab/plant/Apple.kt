@@ -18,6 +18,7 @@ const val APPLE_BLOOM_END = 9
 const val ANIMAL_ATTACK_PENALTY = 0.9
 const val APPLE_HARVEST_START = 17
 const val APPLE_HARVEST_END = 19
+const val APPLE_LATE_HARVEST_PENALTY = 0.5
 
 /**
  * apple class
@@ -102,8 +103,10 @@ class Apple : PlantationPlant() {
         if (yearTick - APPLE_HARVEST_END > 1) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
         }
-        if (yearTick - APPLE_HARVEST_END == 1) { // up to 1 tick late, reduce by half
-            this.harvestEstimate /= 2
+        if (yearTick - APPLE_HARVEST_END == 1) {
+            // up to 2 ticks late, reduce by 10% per tick
+            val newEstimate = floor(this.harvestEstimate * APPLE_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
     }
 
