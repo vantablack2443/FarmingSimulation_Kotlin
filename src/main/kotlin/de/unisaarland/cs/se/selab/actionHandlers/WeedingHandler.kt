@@ -27,6 +27,11 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         farm: Farm,
         machine: Machine
     ) {
+        // checks if machine is in HashMap
+        if (machine.id in farm.machineHashMap) {
+            return
+        }
+
         val plantsThisMachineCanWorkOn: List<PlantType> = machine.plants
 
         val operableTiles = getOperableTiles(farm, ActionType.WEEDING)
@@ -43,6 +48,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
                     performAction(machine, tile)
                     continueAction(machine, tile, farm, operableTiles)
                     farm.machineHashMap.add(machine.id)
+                    machine.resetElapsedTime()
                     break
                 }
             }

@@ -168,9 +168,9 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     /**
      * executes the incidents for the tick
      */
-    private fun applyIncidents(yearTick: Int) {
+    private fun applyIncidents(currentYearTick: Int) {
         incidentHandler.updateIncidentsForTick(this.currentTick)
-        incidentHandler.executeIncidents(yearTick)
+        incidentHandler.executeIncidents(currentYearTick)
     }
 
     private fun finalStatistics() {

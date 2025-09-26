@@ -90,6 +90,36 @@ abstract class ActionHandler(
     }
 
     /**
+     * Retrieves a list of available machines that can perform the CUT action
+     * on the given plant type. The machines are sorted by duration and ID.
+     *
+     * @param farm The farm containing the machines.
+     * @param plantType The type of plant to be cut.
+     * @return A list of machines that can perform the CUT action.
+     */
+    fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType): List<Machine> {
+        return farm.getMachines().filter {
+            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(actionType)
+        }.sortedWith(compareBy({ it.duration }, { it.id }))
+    }
+
+    /**
+     * Returns the next machine that can sow the given tile from the list of machines that can sow the given plant
+     * type. Returns null if no machine is available for the given tile.
+     * Will check for machine availability in the farm's machineHashMap and reachability
+     * Requires that the machines list is sorted by duration then id
+     */
+    fun getNextMachine(machines: List<Machine>, farm: Farm, destination: Tile): Machine? {
+        for (machine in machines) {
+            if (!farm.machineHashMap.contains(machine.id) && this.simulationMap.isReachable(machine, destination)) {
+                farm.machineHashMap.add(machine.id)
+                return machine
+            }
+        }
+        return null
+    }
+
+    /**
      * Gets all tiles (plantation and field) on which the action can be performed,
      * with plantation tiles first, then field tiles, both sorted by id.
      */
@@ -104,4 +134,33 @@ abstract class ActionHandler(
             .sortedBy { it.id }
         return (plantationTiles + fieldTiles).toMutableList()
     }
+
+//    /**
+//     * Performs the CUT action on a tile using the given machine.
+//     * Updates the machine's state and removes the CUT action from the plant's required actions.
+//     *
+//     * @param machine The machine performing the action.
+//     * @param tile The tile on which the action is performed.
+//     */
+//    fun performAction(
+//        machine: Machine,
+//        tile: Tile,
+//        yearTick: Int
+//    ) {
+//        machine.currentTile = tile
+//        machine.updateElapsedTime()
+//
+//        val plant = tile.plant
+//        plant?.actionsNeeded?.remove(ActionType.CUTTING)
+//        if (plant != null) {
+//            for (element in plant.cuttingTime) {
+//                if (element.first.inRange(yearTick)) {
+//                    element.second = true
+//                }
+//            }
+//        }
+//
+//        // Log the action
+//        logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
+//    }
 }

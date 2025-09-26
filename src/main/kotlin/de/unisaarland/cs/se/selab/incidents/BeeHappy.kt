@@ -30,7 +30,7 @@ class BeeHappy(
             if (tile.category == TileType.FIELD && tilePlant.isBlooming(tick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
             }
-            if (tile.category == TileType.PLANTATION && tilePlant.isBlooming(yearTick)) {
+            if (tile.category == TileType.PLANTATION && tilePlant.isBlooming(tick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
             }
         }

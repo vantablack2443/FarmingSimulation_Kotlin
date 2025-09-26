@@ -80,6 +80,13 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
             harvestingHandler.startPhase(farm, yearTick, simTick)
             cuttingHandler.startPhase(farm, yearTick, simTick)
             for (machine in farm.getMachines()) {
+                // hashMap checking still needed inside handlers
+                if (machine.brokenFor?.inRange(simTick) == true) {
+                    continue
+                }
+                if (machine.isStuck || machine.id in farm.machineHashMap) {
+                    continue
+                }
                 irrigationHandler.startPhase(farm, machine, TileType.FIELD)
                 weedingHandler.startPhase(farm, machine)
                 irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)

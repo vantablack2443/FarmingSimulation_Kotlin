@@ -5,9 +5,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests cloud phase for one tick with cloud creation incidents
  */
-class CloudMovementTest : ExampleSystemTestExtension() {
-    override val name = "CloudMovementTest"
-    override val description = "Tests cloud movement phase."
+class CloudMovementTestThreeClouds : ExampleSystemTestExtension() {
+    override val name = "CloudMovementTestThreeClouds"
+    override val description = "Tests cloud movement test for three clouds"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "cloudMoveTest/exampleFarms.json"
@@ -51,32 +51,5 @@ class CloudMovementTest : ExampleSystemTestExtension() {
         assertNextLine("[INFO] Cloud Rain: Cloud 5 on tile 150 rained down 80 L water.")
         assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
         assertNextLine("[INFO] Cloud Dissipation: Cloud 5 got stuck on tile 3.")
-
-        // cloud 10 stuck
-        assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud Movement: Cloud 5 with 5220 L water moved from tile 150 to tile 3.")
-
-        // cloud 11 rains down on forest and dissipates
-        assertNextLine("[INFO] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud  Dissipation: Cloud 11 dissipates on tile 22.")
-
-        // end of cloud phase
-        assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 38.")
-        skipLines(2) // skip farm start and end
-        // cloud creation incident
-        assertNextLine(
-            "[IMPORTANT] Incident: Incident 140 of type CLOUD_CREATION happened " +
-                "and affected tiles 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 21, 22, 40, 80."
-        )
-        // merge
-        assertNextLine(
-            "[IMPORTANT] Cloud Union: Clouds 10 and 16 united to cloud 17" +
-                " with 11930 L water and duration 3 on tile 11."
-        )
-
-        assertNextLine(
-            "[IMPORTANT] Incident: Incident 150 of type CLOUD_CREATION happened " +
-                "and affected tiles 116."
-        )
     }
 }

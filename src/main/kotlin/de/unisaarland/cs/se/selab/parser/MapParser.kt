@@ -129,7 +129,7 @@ class MapParser(private val simData: SimulationData) {
         if (id < 0) throw ValidationException("Tile ID negative")
 
         val type = getTileCategory(tile)
-        if (type !in TileType.entries.toString()) throw ValidationException("invalid tile type")
+        if (type.uppercase() !in TileType.entries.map { it.name }) throw ValidationException("invalid tile type")
         val category = TileType.valueOf(type.uppercase())
 
         val coordinates = getTileCoordinates(tile)
@@ -225,6 +225,7 @@ class MapParser(private val simData: SimulationData) {
             }
             tile.plant = plant
             tile.currentCrop = PlantType.valueOf(plantType.uppercase())
+            tile.plantationDamaged = false
             parseCapacity(jsonObject, tile)
         }
 
