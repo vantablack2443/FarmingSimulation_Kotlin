@@ -196,8 +196,10 @@ object Logger {
      * @param sowingPlanIDs The list of sowing plan IDs.
      */
     fun logFarmSowingPlan(farmID: Int, sowingPlanIDs: List<Int>) {
+        val stringPlans = sowingPlanIDs.sorted().joinToString(separator = ",")
+
         val message = "Farm: Farm $farmID has the following active sowing plans it" +
-            " intends to pursue in this tick: $sowingPlanIDs."
+            " intends to pursue in this tick: $stringPlans."
         logs(LogType.DEBUG, message)
     }
 
@@ -284,7 +286,8 @@ object Logger {
      * @param tileIDs The list of affected tiles.
      */
     fun logIncident(incidentID: Int, incidentType: IncidentType, tileIDs: List<Int>) {
-        val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $tileIDs."
+        val stringTiles = tileIDs.sorted().joinToString(separator = ",")
+        val message = "Incident: Incident $incidentID of type $incidentType happened and affected tiles $stringTiles."
         logs(LogType.IMPORTANT, message)
     }
 
