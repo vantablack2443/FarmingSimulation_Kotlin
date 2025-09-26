@@ -59,7 +59,7 @@ abstract class Plant {
     /**
      * update harvest estimate based on the late harvest penalty
      */
-    open fun applyLateHarvestPenalty(yearTick: Int, lateActions: MutableList<ActionType>) { return }
+    open fun applyLateHarvestPenalty(yearTick: Int) { return }
 
     /**
      * check if the plant needs cutting in this tick
