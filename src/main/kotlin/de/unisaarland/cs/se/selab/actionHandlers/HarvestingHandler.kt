@@ -119,6 +119,7 @@ class HarvestingHandler(
         val currentCrop = tile.currentCrop
         val plant = tile.plant
         if (currentCrop != null && plant != null) {
+            /* do Harvest needs to be fixed since it overwrites the old harves in the machine */
             machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
             plant.harvestEstimate = 0
         }
