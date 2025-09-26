@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST
 import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST_END
+import kotlin.math.floor
 
 const val WHEAT_SUNLIGHT = 90
 const val WHEAT_MOISTURE = 450
@@ -72,7 +73,7 @@ class Wheat : FieldPlant() {
     override fun applyLateSowingPenalty() {
         var counter = sownTick - WHEAT_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
         }
     }
@@ -87,7 +88,7 @@ class Wheat : FieldPlant() {
         } else if (yearTick - WHEAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
         } else { // %20 reduction per tick
-            this.harvestEstimate = (WHEAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(WHEAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
         }
     }
 

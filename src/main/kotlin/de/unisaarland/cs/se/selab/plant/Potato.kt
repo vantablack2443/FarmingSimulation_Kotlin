@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.POTATO_HARVEST
+import kotlin.math.floor
 
 const val POTATO_SUNLIGHT = 130
 const val POTATO_MOISTURE = 500
@@ -62,7 +63,7 @@ class Potato : FieldPlant() {
     override fun applyLateSowingPenalty() {
         var counter = sownTick - POTATO_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
         }
     }

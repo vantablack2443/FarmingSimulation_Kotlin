@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.OAT_HARVEST
+import kotlin.math.floor
 
 const val OAT_SUNLIGHT = 90
 const val OAT_MOISTURE = 300
@@ -68,7 +69,7 @@ class Oat : FieldPlant() {
     override fun applyLateSowingPenalty() {
         var counter = sownTick - OAT_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
         }
     }
@@ -83,7 +84,7 @@ class Oat : FieldPlant() {
         } else if (yearTick - OAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
         } else { // %20 reduction per tick
-            this.harvestEstimate = (OAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(OAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
         }
     }
 

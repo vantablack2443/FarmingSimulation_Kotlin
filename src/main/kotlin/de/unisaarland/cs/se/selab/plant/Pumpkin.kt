@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.PUMPKIN_HARVEST
+import kotlin.math.floor
 
 const val PUMPKIN_SUNLIGHT = 120
 const val PUMPKIN_MOISTURE = 600
@@ -62,7 +63,7 @@ class Pumpkin : FieldPlant() {
     }
 
     override fun applyPollinationBuff() {
-        this.harvestEstimate = (this.harvestEstimate * pollination).toInt()
+        this.harvestEstimate = floor(this.harvestEstimate * pollination).toInt()
     }
 
     override fun checkLateSowing(lateActions: MutableList<ActionType>) {
@@ -78,7 +79,7 @@ class Pumpkin : FieldPlant() {
     override fun applyLateSowingPenalty() {
         var counter = sownTick - PUMPKIN_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
         }
     }
