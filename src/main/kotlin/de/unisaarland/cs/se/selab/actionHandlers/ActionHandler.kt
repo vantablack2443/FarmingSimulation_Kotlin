@@ -89,7 +89,19 @@ abstract class ActionHandler(
         farm.tileHashMap.clear()
     }
 
-
+    /**
+     * Retrieves a list of available machines that can perform the CUT action
+     * on the given plant type. The machines are sorted by duration and ID.
+     *
+     * @param farm The farm containing the machines.
+     * @param plantType The type of plant to be cut.
+     * @return A list of machines that can perform the CUT action.
+     */
+    fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType): List<Machine> {
+        return farm.getMachines().filter {
+            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(actionType)
+        }.sortedWith(compareBy({ it.duration }, { it.id }))
+    }
 
     /**
      * Returns the next machine that can sow the given tile from the list of machines that can sow the given plant
@@ -105,22 +117,6 @@ abstract class ActionHandler(
             }
         }
         return null
-    }
-
-    /**
-     * Gets all available machines that can sow for the given plant type and returns them sorted by duration then id
-     * Returns the machines that are not stuck(in shed), can plant the given plant type and have the sow action
-     */
-    fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType): List<Machine> {
-        val machines = mutableListOf<Machine>()
-        for (machine in farm.getMachines()) {
-            if (!machine.isStuck && machine.plants.contains(plantType) && machine.actions.contains(actionType)) {
-                machines.add(machine)
-            }
-        }
-
-        // REMOVE THE SORTING PART IF THE MACHINE LIST IS MAINTAINED IN ORDER
-        return machines.sortedWith(compareBy({ it.duration }, { it.id }))
     }
 
     /**
