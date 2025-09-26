@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestThreeClouds
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestTwoClouds
@@ -17,8 +18,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAc
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionSecond
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionSecondFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineActionPlantFalse
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineActionPlantTrue
 
 /**
  * Used for test registration
@@ -37,8 +36,6 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(ValidateMachineActionPlantTrue())
-        testSuite.registerTest(ValidateMachineActionPlantFalse())
         testSuite.registerTest(CloudMovementTestUntilMovePhase())
         testSuite.registerTest(CloudMovementTestUntilOneCloud())
         testSuite.registerTest(CloudMovementTestTwoClouds())
@@ -50,6 +47,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineDefaultActionSecond())
         testSuite.registerTest(MachineDefaultActionSecondFarm())
         testSuite.registerTest(MachineDefaultActionIncidents())
+        testSuite.registerTest(CloudMovementTestCloudNotOnVillage())
     }
 
     /**
