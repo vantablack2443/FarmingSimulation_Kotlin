@@ -8,7 +8,7 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
 const val MAX_SUNLIGHT_REDUCTION = 50
-const val MIN_SUNLIGHT_REDUCTION = 30
+const val MIN_SUNLIGHT_REDUCTION = 3
 const val MIN_RAIN_AMOUNT = 5000
 
 /**
@@ -155,6 +155,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
         val newCloud = createMergedCloud(originC, destinationC)
         // addCloud(newCloud)
         coordinateToCloud[destinationC.location] = newCloud
+        coordinateToCloud.remove(originC.location)
         removedClouds.add(originC)
         removedClouds.add(destinationC)
         Logger.logCloudMerge(
@@ -171,7 +172,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
     /**
      * originally the moveCloudHandler
      */
-    private fun moveCloud(c: Cloud, endIterator: MutableListIterator<Cloud>) {
+    private fun moveCloud(c: Cloud) {
         // check if cloud is on VILLAGE in case of CityExtension incident
         if (villageCheck(c)) {
             villageDissipate(c)
@@ -186,7 +187,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
             // check for merges
             if (nextCloud != null) {
                 val newCloud = merge(c, nextCloud)
-                endIterator.add(newCloud)
+                cloudsList.add(newCloud)
                 return
             }
 
@@ -247,24 +248,22 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * move clouds phase
      */
     fun moveClouds() {
-        val cloudIterator = cloudsList.listIterator()
-        while (cloudIterator.hasNext()) {
-            // end iterator to add merged clouds at the end of the list
-            val endIterator = cloudsList.listIterator(cloudsList.size)
-            val cloud = cloudIterator.next()
-            // check if cloud should be removed and for dissipation combined because detekt cant have to many continue
-            if (cloud in removedClouds || tryRain(cloud)) {
-                continue
+        var i = 0
+        while (i < cloudsList.size) {
+            val cloudToMove = cloudsList.getOrElse(i) { null }
+            if (cloudToMove != null) {
+                if (cloudToMove in removedClouds || tryRain(cloudToMove)) {
+                    i++
+                    continue
+                }
+                if (cloudToMove.isStuck) {
+                    handleStuckCloud(cloudToMove)
+                    i++
+                    continue
+                }
+                moveCloud(cloudToMove)
+                i++
             }
-
-            // if a cloud is stuck, reduce sunlight and move on
-            if (cloud.isStuck) {
-                // if a cloud is stuck on plantable tile, it reduces the sunlight by 50h
-                handleStuckCloud(cloud)
-                continue
-            }
-
-            moveCloud(cloud, endIterator)
         }
 
         for (c in removedClouds) {
@@ -294,4 +293,12 @@ class CloudHandler(val simulationMap: SimulationMap) {
     fun getCloudByCoordinate(coordinate: Coordinate): Cloud? {
         return this.coordinateToCloud[coordinate]
     }
+
+    /**
+     * helper function for cloud test; adds cloud to the list
+     */
+    fun addCloudToCloudsList(c: Cloud) {
+        this.cloudsList.add(c)
+    }
 }
+
