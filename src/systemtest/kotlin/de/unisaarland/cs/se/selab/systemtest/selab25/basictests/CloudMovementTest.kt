@@ -66,7 +66,7 @@ class CloudMovementTest : ExampleSystemTestExtension() {
         // cloud creation incident
         assertNextLine(
             "[IMPORTANT] Incident: Incident 140 of type CLOUD_CREATION happened " +
-                "and affected tiles 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 21, 22, 40, 80."
+                "and affected tiles 4,5,6,7,8,10,11,12,13,14,21,22,40,80."
         )
         // merge
         assertNextLine(
