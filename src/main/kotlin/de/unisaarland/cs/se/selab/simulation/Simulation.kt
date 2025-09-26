@@ -233,9 +233,9 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     }
 
     /**
-     * returns the cloud handler
+     * helper function for scenario test
      */
     fun getCloudHandler(): CloudHandler {
-        return cloudHandler
+        return this.cloudHandler
     }
 }

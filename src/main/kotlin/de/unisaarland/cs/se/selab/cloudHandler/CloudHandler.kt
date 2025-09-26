@@ -146,16 +146,13 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * handles all the merging logic (removing and adding new cloud)
      */
     fun merge(originC: Cloud, destinationC: Cloud): Cloud {
-        val originTile = simulationMap.getTileByCoordinate(originC.location)
+        // val originTile = simulationMap.getTileByCoordinate(originC.location)
         val destinationTile = simulationMap.getTileByCoordinate(destinationC.location)
-        if (originTile != null && destinationTile != null) {
-            logLocationChange(originC, originTile, destinationTile)
-        }
 
         val newCloud = createMergedCloud(originC, destinationC)
         // addCloud(newCloud)
-        coordinateToCloud[destinationC.location] = newCloud
         coordinateToCloud.remove(originC.location)
+        coordinateToCloud[destinationC.location] = newCloud
         removedClouds.add(originC)
         removedClouds.add(destinationC)
         Logger.logCloudMerge(
@@ -186,6 +183,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
             val nextCloud = coordinateToCloud[nextTile?.location]
             // check for merges
             if (nextCloud != null) {
+                logLocationChange(c, currTile, nextTile ?: currTile)
                 val newCloud = merge(c, nextCloud)
                 cloudsList.add(newCloud)
                 return

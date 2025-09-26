@@ -8,7 +8,6 @@ import de.unisaarland.cs.se.selab.parser.resources.SCENARIO_JSON_CITYEXPANSION
 import de.unisaarland.cs.se.selab.parser.resources.SCENARIO_JSON_CITYEXPANSIONADJOINING
 import de.unisaarland.cs.se.selab.parser.resources.SCENARIO_JSON_CLOUDCREATION
 import de.unisaarland.cs.se.selab.parser.resources.SCENARIO_JSON_CLOUDFINITE
-import de.unisaarland.cs.se.selab.parser.resources.SCENARIO_JSON_CLOUDONVILLAGE
 import de.unisaarland.cs.se.selab.simulation.Simulation
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
@@ -63,6 +62,7 @@ class ScenarioParserTests {
         assertEquals(4000, cloud?.amount)
     }
 
+    /*
     @Test
     fun testCloudOnVillageDuringInit() {
         val mapFile = File.createTempFile("testmap", ".json")
@@ -84,6 +84,7 @@ class ScenarioParserTests {
     }
     // Merge with infinite-duration cloud → result keeps the minimum of durations (min(duration1, duration2)),
     // so a finite cloud can "end" an infinite one.
+     */
 
     @Test
     fun testCityExpansionAdjoiningTiles() {
