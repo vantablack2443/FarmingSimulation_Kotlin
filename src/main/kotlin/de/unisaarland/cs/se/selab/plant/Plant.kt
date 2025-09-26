@@ -27,6 +27,7 @@ abstract class Plant {
      * Default function to be overridden when necessary by the concrete plant
      * Returns false if the plant does not have a blooming phase
      * Plants that bloom override this function
+     * simTick for Plantations, yearTick for Fields
      */
     open fun isBlooming(tick: Int): Boolean {
         return false
