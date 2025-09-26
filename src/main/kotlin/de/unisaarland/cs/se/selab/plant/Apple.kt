@@ -3,8 +3,6 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST
-import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST_END
-import de.unisaarland.cs.se.selab.plantdata.APPLE_HARVEST_START
 import kotlin.math.floor
 
 const val APPLE_SUNLIGHT = 50
@@ -18,6 +16,9 @@ const val APPLE_MOW_ALTERNATE = 17
 const val APPLE_BLOOM_START = 8
 const val APPLE_BLOOM_END = 9
 const val ANIMAL_ATTACK_PENALTY = 0.9
+const val APPLE_HARVEST_START = 17
+const val APPLE_HARVEST_END = 19
+const val APPLE_LATE_HARVEST_PENALTY = 0.5
 
 /**
  * apple class
@@ -26,8 +27,6 @@ class Apple : PlantationPlant() {
     override var neededSunlight = APPLE_SUNLIGHT
     override var neededMoisture = APPLE_MOISTURE
     override var harvestEstimate = APPLE_HARVEST
-    override val actionsNeeded = mutableListOf<ActionType>()
-    override val lateActions = mutableListOf<ActionType>()
     override var animalAttack = false
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
@@ -83,25 +82,29 @@ class Apple : PlantationPlant() {
     /**
      * checks if the plant needs harvesting in this tick
      */
-    override fun needsHarvesting(tick: Int) {
-        if (tick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
-            this.actionsNeeded.add(ActionType.HARVESTING)
+    override fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>
+    ) {
+        if (yearTick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
+            actionsNeeded.add(ActionType.HARVESTING)
         }
-        if (tick == APPLE_HARVEST_END + 1 || tick == APPLE_HARVEST_END + 2) {
-            this.actionsNeeded.add(ActionType.HARVESTING)
-            this.lateActions.add(ActionType.HARVESTING)
+        if (yearTick == APPLE_HARVEST_END + 1) {
+            actionsNeeded.add(ActionType.HARVESTING)
         }
     }
 
     /**
      * updates harvest estimate based on the late penalty ; tick is year tick
      */
-    override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick - APPLE_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int) {
+        if (yearTick - APPLE_HARVEST_END > 1) { // more than 1 tick late, set to 0
             this.harvestEstimate = 0
         }
-        if (tick - APPLE_HARVEST_END == 1) { // up to 1 tick late, reduce by half
-            this.harvestEstimate /= 2
+        if (yearTick - APPLE_HARVEST_END == 1) {
+            // up to 1 tick late, reduce by 50% per tick
+            val newEstimate = floor(this.harvestEstimate * APPLE_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
     }
 

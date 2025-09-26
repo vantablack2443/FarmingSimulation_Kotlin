@@ -99,13 +99,16 @@ class Farm(
     fun updateNeededActions(yearTick: Int, simTick: Int) {
         for (field in fields) {
             val plant = field.plant ?: continue
-            plant.needsHarvesting(yearTick)
-            plant.needsWeeding(simTick)
+            plant.needsWeeding(simTick, field.actionsNeeded)
+            plant.needsHarvesting(yearTick, field.actionsNeeded)
+            field.needsIrrigation()
         }
-        for (plantn in plantation) {
-            val plant = plantn.plant ?: continue
-            plant.needsMowing(simTick)
-            plant.needsCutting(simTick)
+        for (plantation in plantation) {
+            val plant = plantation.plant ?: continue
+            plant.needsCutting(yearTick, plantation.actionsNeeded)
+            plant.needsMowing(yearTick, plantation.actionsNeeded)
+            plant.needsHarvesting(yearTick, plantation.actionsNeeded)
+            plantation.needsIrrigation()
         }
     }
 
