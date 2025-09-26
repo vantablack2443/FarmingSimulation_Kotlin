@@ -156,8 +156,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
         removedClouds.add(originC)
         removedClouds.add(destinationC)
         Logger.logCloudMerge(
-            originC.id,
             destinationC.id,
+            originC.id,
             newCloud.id,
             newCloud.amount,
             newCloud.duration,
