@@ -6,8 +6,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * tests cloud phase for one tick with cloud creation incidents
  */
 class CloudMovementTestWithMositure : ExampleSystemTestExtension() {
-    override val name = "CloudMovementTestUntilMovePhase"
-    override val description = "Tests configs for cloud movement test."
+    override val name = "CloudMovementTestWithMoisture"
+    override val description = "Tests moisture reduction for cloud movement test."
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "cloudMoveTest/exampleFarms.json"
