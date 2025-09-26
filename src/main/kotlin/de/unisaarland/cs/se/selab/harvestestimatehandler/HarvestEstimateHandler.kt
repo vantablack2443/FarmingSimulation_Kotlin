@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.harvestestimatehandler
 
 import de.unisaarland.cs.se.selab.enumerations.ActionType
+import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
@@ -10,6 +11,8 @@ const val TWENTY_FIVE = 25
 const val HUNDRED = 100
 const val FIFTY = 50
 const val PENALTY_POINT_NINE = 0.9
+const val SIXTEEN = 16
+const val FOUR = 4
 
 /**
  * This class is responsible for estimating the harvest of all plantable tiles on the map.
@@ -79,7 +82,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         applySunlight(t)
         applyMoisture(t)
         // 3. Handle missed cutting period
-        applyMissedCutting(t)
+        applyMissedCutting(t, yearTick)
         applyMissedMowing(t)
         applyLateHarvest(t, yearTick)
 
@@ -223,9 +226,14 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     /**
      * Applies the cutting penalty for a missed cutting action on the plantation tile plant's harvest estimate.
      */
-    fun applyMissedCutting(t: Tile) {
+    fun applyMissedCutting(t: Tile, yearTick: Int) {
         val plant = t.plant ?: return
         val actionsNeeded = t.actionsNeeded
+
+        if (t.currentCrop == PlantType.GRAPE && yearTick != SIXTEEN) { return }
+        if (t.currentCrop == PlantType.APPLE && yearTick != FOUR) { return }
+        if (t.currentCrop == PlantType.ALMOND && yearTick != FOUR) { return }
+        if (t.currentCrop == PlantType.CHERRY && yearTick != FOUR) { return }
 
         if (ActionType.CUTTING in actionsNeeded) {
             actionsNeeded.remove(ActionType.CUTTING)
