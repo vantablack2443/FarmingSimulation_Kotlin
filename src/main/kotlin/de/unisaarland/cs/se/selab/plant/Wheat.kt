@@ -38,7 +38,10 @@ class Wheat : FieldPlant() {
     override fun needsHarvesting(tick: Int) {
         if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVESTING)
+        } else if (tick <= WHEAT_HARVEST_END + 2) {
+            lateActions.add(ActionType.HARVESTING)
         }
+        // Wheat can be harvested up to two ticks after the harvesting period ends
     }
 
     // USES SIM-TICK
@@ -59,6 +62,10 @@ class Wheat : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied once. Can by estimate handler once when late sowing detected
+     * 20% per delayed tick
+     */
     override fun applyLateSowingPenalty() {
         var counter = sownTick - WHEAT_SOW_END
         while (counter > 0) {
@@ -67,6 +74,10 @@ class Wheat : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied per late tick. Can be called each tick by estimator.
+     * Takes year tick
+     */
     override fun applyLateHarvestPenalty(tick: Int) {
         if (tick <= WHEAT_HARVEST_END) { // not late
             return

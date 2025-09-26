@@ -43,7 +43,10 @@ class Oat : FieldPlant() {
         // In the first 3 ticks after sowing
         if (((sownTick + OAT_WEED_START_OFFSET)..(sownTick + OAT_WEED_END_OFFSET)).contains(tick)) {
             actionsNeeded.add(ActionType.WEEDING)
+        } else if (tick <= OAT_HARVEST_END + 2) {
+            lateActions.add(ActionType.HARVESTING)
         }
+        // Oat can be harvested up to two ticks after the harvesting period ends
     }
 
     // OAT does not require pollination. Does not bloom
@@ -54,6 +57,10 @@ class Oat : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied once. Can by estimate handler once when late sowing detected
+     * 20% per delayed tick
+     */
     override fun applyLateSowingPenalty() {
         var counter = sownTick - OAT_SOW_END
         while (counter > 0) {
@@ -62,6 +69,10 @@ class Oat : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied per late tick. Can be called each tick by estimator.
+     * Takes year tick
+     */
     override fun applyLateHarvestPenalty(tick: Int) {
         if (tick <= OAT_HARVEST_END) { // not late
             return

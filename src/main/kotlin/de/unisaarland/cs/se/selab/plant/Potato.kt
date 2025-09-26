@@ -35,6 +35,7 @@ class Potato : FieldPlant() {
         if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
+        // Potato has no late harvesting period
     }
 
     // USES SIM-TICK
@@ -51,6 +52,10 @@ class Potato : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied once. Can by estimate handler once when late sowing detected
+     * 20% per delayed tick
+     */
     override fun applyLateSowingPenalty() {
         var counter = sownTick - POTATO_SOW_END
         while (counter > 0) {
