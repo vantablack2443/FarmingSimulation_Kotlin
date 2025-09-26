@@ -153,16 +153,20 @@ class SimulationMap(
             getTilesByRadius(machine.currentTile, radius)
             // only tiles in given radius considered otherwise
         }
+        val removedTiles = mutableListOf<Tile>()
         for (tile in reach) {
             if (tile.farmID != machine.farmID || tile.category == TileType.FOREST) {
-                reach -= tile
+                removedTiles += tile
+                // reach -= tile
                 // remove tile from reach if it belongs to other farm or is FOREST
             }
             if (carryingHarvest && tile.category == TileType.VILLAGE) {
-                reach -= tile
+                removedTiles += tile
+                // reach -= tile
                 // remove VILLAGE tiles if machine is loaded
             }
         }
+        reach.removeAll(removedTiles)
         return reach
     }
 
