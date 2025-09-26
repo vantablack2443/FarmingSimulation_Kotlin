@@ -82,7 +82,8 @@ class Farm(
      * Gets sowing plan by tick
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        return sowingPlans.filterKeys { it <= simTick }.values.flatten()
+        val plans = sowingPlans.filterKeys { it <= simTick }.values.flatten()
+        return plans.sortedWith(compareBy<SowingPlan> { it.getTick() }.thenBy { it.getId() })
     }
 
     /**
