@@ -1,5 +1,11 @@
 package de.unisaarland.cs.se.selab.parser
 
+import com.github.erosb.jsonsKema.IJsonObject
+import com.github.erosb.jsonsKema.IJsonValue
+import com.github.erosb.jsonsKema.JsonParser
+import com.github.erosb.jsonsKema.Schema
+import com.github.erosb.jsonsKema.SchemaLoader
+import com.github.erosb.jsonsKema.Validator
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -17,12 +23,15 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
+import kotlin.collections.forEach
 
 const val FOURTEEN = 14
 const val ID = "id"
 const val FIELDS = "fields"
 const val LOCATION = "location"
 const val MISSING_TILE_ID = "Specified tile with ID not found"
+
+const val DEFS = "\$defs"
 
 /**
  * parser for farm config file
@@ -36,6 +45,64 @@ class FarmParser(private val simulationData: SimulationData) {
     private val sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
 
     private val tilesInJsonIDs: MutableSet<Int> = mutableSetOf()
+    private val schema: Schema by lazy { loadFarmSchema() }
+
+    private fun loadFarmSchema(): Schema {
+        // Load all farm-related schemas
+        val farmSchema = JsonParser(File("src/main/resources/schema/farm.schema").readText()).parse()
+        val machineSchema = JsonParser(File("src/main/resources/schema/machine.schema").readText()).parse()
+        val sowingPlanSchema = JsonParser(File("src/main/resources/schema/sowing-plan.schema").readText()).parse()
+
+        val farmdefsNode = farmSchema.requireObject()[DEFS]?.requireObject()
+            ?: throw ValidationException()
+        val machinedefsNode = machineSchema.requireObject()[DEFS]?.requireObject()
+            ?: throw ValidationException()
+        val sowigplandefsNode = sowingPlanSchema.requireObject()[DEFS]?.requireObject()
+            ?: throw ValidationException()
+
+        val allDefs = mutableMapOf<String, IJsonValue>()
+        fun merge(defs: IJsonObject<*, *>) {
+            // defs.properties: Map<IJsonString,IJsonValue>
+            defs.properties.forEach { (jsonKey, jsonVal) ->
+                val key: String = jsonKey.toString() // extract the string
+                allDefs[key] = jsonVal
+            }
+        }
+
+        merge(farmdefsNode)
+        merge(machinedefsNode)
+        merge(sowigplandefsNode)
+
+        // 3. Convert allDefs back into a JSON text block
+        // You can build a new IJsonObject or simply serialize:
+        val defsJson = allDefs.entries.joinToString(
+            prefix = "{",
+            postfix = "}"
+        ) { (k, v) -> "\"$k\":$v" }
+
+        val farmsSchemaJson = JsonParser(
+            """
+            {
+              "${'$'}schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "farms": {
+                  "type": "array",
+                  "items": {
+                    "${'$'}ref": "#/${'$'}defs/farm"
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": ["farms"],
+              "${'$'}{'$'}defs":$defsJson
+            }
+            """
+        ).parse()
+
+        return SchemaLoader(farmsSchemaJson).load()
+    }
 
     /**
      * main parse function
@@ -44,6 +111,13 @@ class FarmParser(private val simulationData: SimulationData) {
         try {
             val file = File(json)
             val jsonString = file.readText()
+
+            val validator = Validator.forSchema(schema)
+            val validation = validator.validate(json)
+            if (validation != null) {
+                throw ValidationException()
+            }
+
             val jsonObject = Json.parseToJsonElement(jsonString).jsonObject
 
             // Parse main components
