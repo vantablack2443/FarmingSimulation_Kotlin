@@ -1,0 +1,17 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "The Farm",
+      "farmsteads": [55],
+      "fields": [9,11,24,26],
+      "plantations": [35,37],
+	  "machines": [
+        
+      ],
+      "sowingPlans": [
+        
+      ]
+    }
+  ]
+}
