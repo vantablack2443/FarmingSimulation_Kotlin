@@ -23,7 +23,7 @@ class Tile(
     var direction: Direction? = null
     var shed: Boolean? = null
     var possiblePlants: List<PlantType>? = mutableListOf()
-    var maxMoisture: Int? = null
+    val maxMoisture: Int? = null
     var currentMoisture: Int? = null
     var currentSunlight: Int = 0
     var plant: Plant? = null
@@ -59,13 +59,13 @@ class Tile(
      */
     fun increaseMoistureByAmount(amount: Int) {
         val newMoisture = currentMoisture?.plus(amount)
-        if (newMoisture != null) {
+        if (newMoisture != null && maxMoisture != null) {
             /*
             maxMoisture?.let {
                 if (newMoisture > it) currentMoisture = maxMoisture
                 return
             }*/
-            currentMoisture = newMoisture
+            currentMoisture = minOf(newMoisture, maxMoisture)
         }
     }
 
