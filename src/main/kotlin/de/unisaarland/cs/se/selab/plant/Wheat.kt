@@ -3,7 +3,6 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST
-import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST_END
 import kotlin.math.floor
 
 const val WHEAT_SUNLIGHT = 90
@@ -40,7 +39,7 @@ class Wheat : FieldPlant() {
         actionsNeeded: MutableList<ActionType>,
         lateActions: MutableList<ActionType>
     ) {
-        if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(yearTick)) {
+        if ((WHEAT_HARVEST_START..WHEAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         } else if (yearTick <= WHEAT_HARVEST_END + 2) {
             lateActions.add(ActionType.HARVESTING)
