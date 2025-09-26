@@ -1,18 +1,11 @@
 package de.unisaarland.cs.se.selab.harvestestimatehandler
 
 import de.unisaarland.cs.se.selab.enumerations.ActionType
-import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
-import de.unisaarland.cs.se.selab.plant.FieldPlant
-import de.unisaarland.cs.se.selab.plant.Oat
-import de.unisaarland.cs.se.selab.plant.Plant
 import de.unisaarland.cs.se.selab.plant.PlantationPlant
-import de.unisaarland.cs.se.selab.plant.Potato
-import de.unisaarland.cs.se.selab.plant.Pumpkin
-import de.unisaarland.cs.se.selab.plant.Wheat
 import de.unisaarland.cs.se.selab.tile.Tile
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -44,6 +37,9 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 TileType.PLANTATION -> plantationHarvestEstimate(tile, yearTick)
                 else -> error("Tile is not plantable")
             }
+            // 1. Clear both actionList and ?lateList
+            tile.actionsNeeded.clear()
+            tile.lateActions.clear()
         }
     }
 
@@ -51,14 +47,20 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * Applies all relevant penalties to the harvest estimate of a field tile.
      */
     fun fieldHarvestEstimate(t: Tile, yearTick: Int) {
-        val plantOfTile = getPlantFromType(t.currentCrop)
-        logMissedActions(t.id, plantOfTile.lateActions)
+        val plantOfTile = t.plant
+        logMissedActions(t.id, t.actionsNeeded)
 
         applyLateSowing(t)
         applySunlight(t)
         applyMoisture(t)
         applyMissedWeeding(t)
         applyLateHarvest(t, yearTick)
+
+        // 2. Apply incidents then reset pollination and animal attack counters
+        // Incidents go here
+        plantOfTile?.pollination = 1.0
+        plantOfTile?.animalAttackPenalty = 1.0
+        plantOfTile?.animalAttack = false
 
         val crop = t.currentCrop ?: return
         logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
@@ -69,13 +71,21 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * Applies all relevant penalties to the harvest estimate of a plantation tile.
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
-        logMissedActions(t.id, t.plant?.lateActions.orEmpty())
+        val plantOfTile = t.plant
+        logMissedActions(t.id, t.actionsNeeded)
 
         applySunlight(t)
         applyMoisture(t)
+        // 3. Handle missed cutting period
         applyMissedCutting(t)
         applyMissedMowing(t)
         applyLateHarvest(t, yearTick)
+
+        // 2. Apply incidents then reset pollination and animal attack counters
+        // Incidents go here
+        plantOfTile?.pollination = 1.0
+        plantOfTile?.animalAttackPenalty = 1.0
+        plantOfTile?.animalAttack = false
 
         val crop = t.currentCrop ?: return
         logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
@@ -84,14 +94,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
     /**
      * Applies the late sowing penalty on the tile plant's harvest estimate if there was a late sowing action.
+     * Should only be applied per once per harvest cycle on the tick of sowing, if the plant was sown late
      */
     fun applyLateSowing(t: Tile) {
         val plant = t.plant ?: return // null check first
 
-        val lateActions = plant.lateActions
-        if (ActionType.SOWING in lateActions) {
-            lateActions.remove(ActionType.SOWING)
-            (plant as? FieldPlant)?.applyLateSowingPenalty()
+        // SOWING will only be added to late actions on the tick of sowing, after the sowingHandler calls checkLateSowing
+        if (ActionType.SOWING in t.lateActions) {
+            t.lateActions.remove(ActionType.SOWING)
+            plant.applyLateSowingPenalty()
         }
 
         /*val lateActions = t.plant?.lateActions ?: return
@@ -110,9 +121,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val neededSunlight = t.plant?.neededSunlight ?: error("Need sunlight needed")
 
         t.plant?.let { plant ->
-            while (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
+            var currentSunlight = t.currentSunlight
+            while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
                 plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
-                t.currentSunlight -= TWENTY_FIVE
+                currentSunlight -= TWENTY_FIVE
             }
         }
 
@@ -128,15 +140,20 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun applyMoisture(t: Tile) {
         val plant = t.plant ?: error("Need moisture needed")
-        val currentMoisture = t.currentMoisture ?: error("Need moisture needed")
+        var currentMoisture = t.currentMoisture ?: error("Need moisture needed")
 
         if (currentMoisture == 0) {
             plant.harvestEstimate = 0
             return
         }
 
-        val penaltyCounter = (plant.neededMoisture - currentMoisture) / HUNDRED
-        plant.harvestEstimate -= FIFTY * penaltyCounter
+        while (plant.neededMoisture - currentMoisture >= HUNDRED) {
+            plant.harvestEstimate -= FIFTY
+            currentMoisture += HUNDRED
+        }
+        // Previous version
+        /*val penaltyCounter = (plant.neededMoisture - currentMoisture) / HUNDRED
+        plant.harvestEstimate -= FIFTY * penaltyCounter*/
 
         /*val neededMoisture = t.plant?.neededMoisture ?: error("Need moisture needed")
 
@@ -152,14 +169,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
     /**
      * Applies the weeding penalty for each missed weeding action on the field tile plant's harvest estimate.
+     * Checks if actionsNeeded list contains WEEDING if so calls applyMissedWeedingPenalty
      */
     fun applyMissedWeeding(t: Tile) {
         val plant = t.plant ?: return
-        val lateActions = plant.lateActions
 
-        while (ActionType.WEEDING in lateActions) {
-            lateActions.remove(ActionType.WEEDING)
-            (plant as? FieldPlant)?.applyMissedWeedingPenalty()
+        // Checks if WEEDING is in actionsNeeded to apply penalty
+        while (ActionType.WEEDING in t.actionsNeeded) {
+            t.actionsNeeded.remove(ActionType.WEEDING)
+            plant.applyMissedWeedingPenalty()
         }
 
         // when we sow, we set the plant attribute on the tile right?
@@ -220,19 +238,20 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * Applies the mowing penalty for each missed mowing action on the plantation tile plant's harvest estimate.
      */
     fun applyMissedMowing(t: Tile) {
-        val lateActions = t.plant?.lateActions ?: return
+        val plant = t.plant ?: return
 
-        while (lateActions.contains(ActionType.MOWING)) {
-            lateActions.remove(ActionType.MOWING)
-            (t.plant as? PlantationPlant)?.applyMowingPenalty()
+        while (ActionType.MOWING in t.actionsNeeded) {
+            t.actionsNeeded.remove(ActionType.MOWING)
+            plant.applyMowingPenalty()
         }
     }
 
     /**
      * Helper function for fieldHarvestEstimate returning the corresponding plant accordingly to given plantType,
      * since we cannot directly get the plant from the tile in the case where it is a field.
+     * WHAT IS THE POINT OF THIS FUNCTION
      */
-    private fun getPlantFromType(plantType: PlantType?): Plant {
+    /*private fun getPlantFromType(plantType: PlantType?): Plant {
         return when (plantType) {
             PlantType.POTATO -> Potato()
             PlantType.WHEAT -> Wheat()
@@ -241,5 +260,5 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             null -> throw IllegalArgumentException("Plant type is null")
             else -> throw IllegalArgumentException("Unknown plant type: $plantType")
         }
-    }
+    }*/
 }
