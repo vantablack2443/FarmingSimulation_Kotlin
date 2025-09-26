@@ -13,9 +13,11 @@
           "id": 20,
           "tick": 1,
           "plant": "WHEAT",
-          "fields": [2]
-          }
+          "fields": [2],
+          "location": 2,
+          "radius": 1
+         }
       ]
-    }
+   }
   ]
 }

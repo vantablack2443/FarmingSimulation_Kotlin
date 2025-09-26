@@ -474,9 +474,12 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse the plant type of the sowing plan
      */
     private fun parsePlant(plan: JsonObject): PlantType {
-        val plant = plan["plant"]?.jsonPrimitive?.content
+        val plant = plan["plant"]?.jsonPrimitive?.content?.trim()
             ?: throw ValidationException("Plant missing for sowing plan")
-        if (plant.uppercase() !in setOf(PlantType.entries.toString())) {
+//        if (plant.uppercase() !in setOf(PlantType.entries.toString())) {
+//            throw ValidationException("Invalid plant $plant")
+//        }
+        if (plant.uppercase() !in PlantType.entries.map { it.name }) {
             throw ValidationException("Invalid plant $plant")
         }
         val plantType = PlantType.valueOf(plant.uppercase())
