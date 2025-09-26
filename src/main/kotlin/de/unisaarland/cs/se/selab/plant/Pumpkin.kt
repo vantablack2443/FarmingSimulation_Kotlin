@@ -37,6 +37,7 @@ class Pumpkin : FieldPlant() {
         if ((PUMPKIN_HARVEST_START..PUMPKIN_HARVEST_END).contains(tick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
+        // Has no late harvesting period
     }
 
     // USES SIM-TICK
@@ -67,6 +68,10 @@ class Pumpkin : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied once. Can by estimate handler once when late sowing detected
+     * 20% per delayed tick
+     */
     override fun applyLateSowingPenalty() {
         var counter = sownTick - PUMPKIN_SOW_END
         while (counter > 0) {
@@ -75,6 +80,10 @@ class Pumpkin : FieldPlant() {
         }
     }
 
+    /**
+     * Penalty applied per late tick. Can be called each tick by estimator.
+     * Takes year tick
+     */
     override fun applyLateHarvestPenalty(tick: Int) {
         if (tick > PUMPKIN_HARVEST_END) {
             this.harvestEstimate = 0
