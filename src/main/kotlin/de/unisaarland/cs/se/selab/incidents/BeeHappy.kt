@@ -20,7 +20,7 @@ class BeeHappy(
     val radius: Int
 ) : Incident(id, tick, type) {
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
-        val reach = simulationMap.getTilesByRadius(tile, radius)
+        val reach = simulationMap.getTilesByRadius(tile, radius) + tile
         val meadows = simulationMap.filterByType(TileType.MEADOW, reach)
         val affectedTiles = mutableSetOf<Tile>()
         val affectedIds = mutableListOf<Int>()

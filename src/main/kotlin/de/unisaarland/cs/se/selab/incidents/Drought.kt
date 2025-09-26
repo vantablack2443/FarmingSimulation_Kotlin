@@ -19,7 +19,8 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
      * @param yearTick the tick the incident will be simulated on
      */
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
-        val incidentTiles: List<Tile> = simulationMap.filterForPlantable(simulationMap.getTilesByRadius(tile, radius))
+        val tmp = simulationMap.getTilesByRadius(tile, radius) + tile
+        val incidentTiles: List<Tile> = simulationMap.filterForPlantable(tmp)
         val affectedIds: MutableList<Int> = mutableListOf()
         incidentTiles.sortedBy { it.id }
         for (tile in incidentTiles) {
