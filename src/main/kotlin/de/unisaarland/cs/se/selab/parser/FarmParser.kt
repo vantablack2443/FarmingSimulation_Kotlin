@@ -30,7 +30,7 @@ const val FIELDS = "fields"
 const val LOCATION = "location"
 const val MISSING_TILE_ID = "Specified tile with ID not found"
 
-const val DEFS = "\$defs"
+// const val DEFS = "\$defs"
 
 /**
  * parser for farm config file
@@ -195,6 +195,7 @@ class FarmParser(private val simulationData: SimulationData) {
         // Each farmstead, field, plantation has to belong to exactly one farm.
         // Checks using the farmID on the tile + adds to a set to find the tiles unaccounted for the map
         val farmsteadTiles = parseFarmsteadTiles(farm, id)
+
         val fieldTiles = parseFieldTiles(farm, id)
         val plantationTiles = parsePlantationTiles(farm, id)
 
@@ -204,6 +205,11 @@ class FarmParser(private val simulationData: SimulationData) {
         }
 
         val allMachines = parseMachines(farm, id)
+
+        // A farm needs to have at least one machine and one farmstead
+        if (allMachines.isEmpty() || farmsteadTiles.isEmpty()) {
+            throw ValidationException("farm $id needs at least one farmstead and machine")
+        }
 
         val sowingPlanMap = parseSowingPlans(farm, id)
         // Sort plans by ID for every tick - sortBy sorts in place
@@ -361,11 +367,37 @@ class FarmParser(private val simulationData: SimulationData) {
         val tile = parseMachineLocation(m)
         // Checks that this tile is a farmstead, contains a shed and belongs to the farm owing this machine
         validateMachineLocation(tile.id, farmID)
+        for (action in actions) {
+            validateMachineActionPlant(action, plants)
+        }
 
         // CHECK IF THIS CHECK IS EXPECTED
         /*validateActionsAndPlants(actions, plants)*/
 
         return Machine(id, name, duration, tile, actions, plants, homeShed = tile)
+    }
+
+    /**
+     * cross validates machine and action types
+     */
+    private fun validateMachineActionPlant(action: ActionType, plants: List<PlantType>) {
+        val string = "mismatch of machine action and plant type"
+        when (action) {
+            ActionType.MOWING, ActionType.CUTTING -> {
+                val requiredPlants = setOf(PlantType.APPLE, PlantType.CHERRY, PlantType.ALMOND, PlantType.GRAPE)
+                if (!plants.any { requiredPlants.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+
+            ActionType.WEEDING, ActionType.SOWING -> {
+                val requiredPlants = setOf(PlantType.OAT, PlantType.WHEAT, PlantType.POTATO, PlantType.PUMPKIN)
+                if (!plants.any { requiredPlants.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+            else -> { return }
+        }
     }
 
     /**
@@ -455,7 +487,6 @@ class FarmParser(private val simulationData: SimulationData) {
         if (tick < 0) throw ValidationException("Tick must be non-negative")
 
         val plantType = parsePlant(plan)
-
         val affectedTiles = if (plan[FIELDS] != null) {
             parseSowingPlanTiles(plan, true, farmID)
         } else {
@@ -474,11 +505,8 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function to parse the plant type of the sowing plan
      */
     private fun parsePlant(plan: JsonObject): PlantType {
-        val plant = plan["plant"]?.jsonPrimitive?.content?.trim()
+        val plant = plan["plant"]?.jsonPrimitive?.content
             ?: throw ValidationException("Plant missing for sowing plan")
-//        if (plant.uppercase() !in setOf(PlantType.entries.toString())) {
-//            throw ValidationException("Invalid plant $plant")
-//        }
         if (plant.uppercase() !in PlantType.entries.map { it.name }) {
             throw ValidationException("Invalid plant $plant")
         }
@@ -490,17 +518,13 @@ class FarmParser(private val simulationData: SimulationData) {
      * helper function that parses the affected tiles of the sowing plan
      */
     private fun parseSowingPlanTiles(plan: JsonObject, fields: Boolean, farmID: Int): List<Tile> {
-        if (fields) return parseSowingPlanFields(plan, farmID)
-
-        // need to check that both location AND radius are present
-        // Negation -> OR
-        if (plan[LOCATION] == null || plan["radius"] == null) {
-            throw ValidationException("Both location and radius must be specified")
+        if (fields) {
+            if (checkLocationOrRadiusPresent(plan)) throw ValidationException("either fields or location")
+            return parseSowingPlanFields(plan, farmID)
         }
-
+        // need to check that both location AND radius are present
         val location = plan[LOCATION]?.jsonPrimitive?.int ?: throw ValidationException("Missing location")
         val radius = plan["radius"]?.jsonPrimitive?.int ?: throw ValidationException("Missing radius")
-
         if (location < 0 || radius < 0) throw ValidationException()
 
         val centerTile = simulationData.getTileById(location) ?: throw ValidationException()
@@ -508,6 +532,15 @@ class FarmParser(private val simulationData: SimulationData) {
         val tiles = radiusTiles.plus(centerTile)
         validateSowingPlanLocation(tiles, false, farmID)
         return tiles
+    }
+
+    /**
+     * checks if either location or radius is present
+     */
+    private fun checkLocationOrRadiusPresent(plan: JsonObject): Boolean {
+        val location = plan[LOCATION]?.jsonPrimitive?.int
+        val radius = plan["radius"]?.jsonPrimitive?.int
+        return location != null || radius != null
     }
 
     /**
