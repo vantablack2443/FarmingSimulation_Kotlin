@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.incidents
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
@@ -19,18 +20,23 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
      */
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val incidentTiles: List<Tile> = simulationMap.filterForPlantable(simulationMap.getTilesByRadius(tile, radius))
+        val affectedIds: MutableList<Int> = mutableListOf()
+        incidentTiles.sortedBy { it.id }
         for (tile in incidentTiles) {
             if (tile.category == TileType.FIELD) {
                 tile.plant = null
                 tile.currentCrop = null
                 tile.currentMoisture = 0
                 tile.fallowDuration = Duration(tick + 1, tick + FALLOW_DURATION)
+                affectedIds.add(tile.id)
             } else if (tile.category == TileType.PLANTATION) {
                 tile.currentMoisture = 0
                 tile.plantationDamaged = true
                 tile.plant = null
                 tile.currentCrop = null
+                affectedIds.add(tile.id)
             }
         }
+        Logger.logIncident(id, IncidentType.DROUGHT, affectedIds)
     }
 }

@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.incidents
 
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
 
@@ -22,17 +23,22 @@ class BeeHappy(
         val reach = simulationMap.getTilesByRadius(tile, radius)
         val meadows = simulationMap.filterByType(TileType.MEADOW, reach)
         val affectedTiles = mutableSetOf<Tile>()
+        val affectedIds = mutableListOf<Int>()
         for (meadow in meadows) {
             affectedTiles += simulationMap.filterForPlantable(simulationMap.getTilesByRadius(meadow, 2))
         }
+        affectedTiles.sortedBy { it.id }
         for (tile in affectedTiles) {
             val tilePlant = tile.plant ?: continue
             if (tile.category == TileType.FIELD && tilePlant.isBlooming(tick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
+                affectedIds.add(tile.id)
             }
             if (tile.category == TileType.PLANTATION && tilePlant.isBlooming(yearTick)) {
                 tilePlant.doBeeHappy((HUNDRED + effect).toDouble() / HUNDRED)
+                affectedIds.add(tile.id)
             }
         }
+        Logger.logIncident(id, IncidentType.BEE_HAPPY, affectedIds)
     }
 }
