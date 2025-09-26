@@ -107,6 +107,7 @@ class Farm(
             val plant = plantation.plant ?: continue
             plant.needsCutting(yearTick, plantation.actionsNeeded)
             plant.needsMowing(yearTick, plantation.actionsNeeded)
+            plant.needsHarvesting(yearTick, plantation.actionsNeeded)
             plantation.needsIrrigation()
         }
     }
