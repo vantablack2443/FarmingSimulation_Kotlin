@@ -109,7 +109,7 @@ class SowingHandler(
         }
 
         // Select machine, first by duration then id
-        val machines = getAvailableMachines(farm, plan.getPlant())
+        val machines = getAvailableMachines(farm, plan.getPlant(), ActionType.SOWING)
 
         // Return if there are no available machines
         if (machines.isEmpty()) {
@@ -236,37 +236,38 @@ class SowingHandler(
         return null
     }
 
-    /**
-     * Returns the next machine that can sow the given tile from the list of machines that can sow the given plant
-     * type. Returns null if no machine is available for the given tile.
-     * Will check for machine availability in the farm's machineHashMap and reachability
-     * Requires that the machines list is sorted by duration then id
-     */
-    private fun getNextMachine(machines: List<Machine>, farm: Farm, destination: Tile): Machine? {
-        for (machine in machines) {
-            if (!farm.machineHashMap.contains(machine.id) && this.simulationMap.isReachable(machine, destination)) {
-                farm.machineHashMap.add(machine.id)
-                return machine
-            }
-        }
-        return null
-    }
-
-    /**
-     * Gets all available machines that can sow for the given plant type and returns them sorted by duration then id
-     * Returns the machines that are not stuck(in shed), can plant the given plant type and have the sow action
-     */
-    private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
-        val machines = mutableListOf<Machine>()
-        for (machine in farm.getMachines()) {
-            if (!machine.isStuck && machine.plants.contains(plantType) && machine.actions.contains(ActionType.SOWING)) {
-                machines.add(machine)
-            }
-        }
-
-        // REMOVE THE SORTING PART IF THE MACHINE LIST IS MAINTAINED IN ORDER
-        return machines.sortedWith(compareBy({ it.duration }, { it.id }))
-    }
+//    /**
+//     * Returns the next machine that can sow the given tile from the list of machines that can sow the given plant
+//     * type. Returns null if no machine is available for the given tile.
+//     * Will check for machine availability in the farm's machineHashMap and reachability
+//     * Requires that the machines list is sorted by duration then id
+//     */
+//    private fun getNextMachine(machines: List<Machine>, farm: Farm, destination: Tile): Machine? {
+//        for (machine in machines) {
+//            if (!farm.machineHashMap.contains(machine.id) && this.simulationMap.isReachable(machine, destination)) {
+//                farm.machineHashMap.add(machine.id)
+//                return machine
+//            }
+//        }
+//        return null
+//    }
+//
+//    /**
+//     * Gets all available machines that can sow for the given plant type and returns them sorted by duration then id
+//     * Returns the machines that are not stuck(in shed), can plant the given plant type and have the sow action
+//     */
+//    private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
+//        val machines = mutableListOf<Machine>()
+//        for (machine in farm.getMachines()) {
+//            if (!machine.isStuck && machine.plants.contains(plantType)
+//            && machine.actions.contains(ActionType.SOWING)) {
+//                machines.add(machine)
+//            }
+//        }
+//
+//        // REMOVE THE SORTING PART IF THE MACHINE LIST IS MAINTAINED IN ORDER
+//        return machines.sortedWith(compareBy({ it.duration }, { it.id }))
+//    }
 
     override fun startPhase(farm: Farm, machine: Machine) {
         // TODO
