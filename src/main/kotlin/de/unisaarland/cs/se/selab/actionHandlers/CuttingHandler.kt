@@ -48,7 +48,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             if (machine != null) {
                 performAction(machine, tile, yearTick)
                 farm.tileHashMap.add(tile.id)
-                farm.tileHashMap.add(tile.id)
                 continueAction(machine, tile, farm, operableTiles, yearTick)
                 farm.machineHashMap.add(machine.id)
             }
