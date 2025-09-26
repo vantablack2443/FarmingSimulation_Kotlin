@@ -26,18 +26,21 @@ abstract class Plant {
     /**
      * Default function to be overridden when necessary by the concrete plant
      * Returns false if the plant does not have a blooming phase
+     * Plants that bloom override this function
      */
     open fun isBlooming(tick: Int): Boolean {
         return false
     }
 
     /**
-     * applies animal attack penalty at harvest estimation step
+     * Applies animal attack penalty at harvest estimation step
+     * Overridden in FieldPlants and Grapes
      */
     open fun animalAttackPenalty() { return }
 
     /**
      * updates animal attack penalty
+     * overridden in FieldPlant and Grape
      */
     open fun doAnimalAttack() { return }
 
@@ -58,6 +61,7 @@ abstract class Plant {
 
     /**
      * update harvest estimate based on the late harvest penalty
+     * applied per tick
      */
     open fun applyLateHarvestPenalty(yearTick: Int) { return }
 
@@ -68,6 +72,9 @@ abstract class Plant {
 
     /**
      * check if the plant needs harvesting in this tick
+     * Adds HARVESTING to the actions needed list
+     * Adds HARVESTING to the lateActions list if late harvesting period
+     * If HARVESTING in actionsNeeded and HARVESTING in lateActions apply lateHarvestPenalty
      */
     open fun needsHarvesting(
         yearTick: Int,
@@ -92,21 +99,25 @@ abstract class Plant {
 
     /**
      * update harvest estimate based on missed weeding penalty
+     * HarvestEstimator checks if the WEEDING exists in actionsNeeded if so calls this function
      */
     open fun applyMissedWeedingPenalty() { return }
 
     /**
      * checks if the sown tick of the plant is in late period
+     * Called by sowingHandler at point of sowing. Will add SOWING to lateActions list
      */
     open fun checkLateSowing(lateActions: MutableList<ActionType>) { return }
 
     /**
      * checks if the plant needs weeding in this tick
+     * Adds WEEDING to actionsNeeded list
      */
     open fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
     /**
      * updates harvest estimate based on late sowing penalty
+     * If SOWING not in actionsNeeded but SOWING in lateActions, harvestEstimator calls this function
      */
     open fun applyLateSowingPenalty() { return }
 
