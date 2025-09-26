@@ -67,6 +67,7 @@ abstract class Plant {
 
     /**
      * check if the plant needs cutting in this tick
+     * If CUTTING is in the actionsNeeded list, harvestEstimator will call applyCuttingPenalty()
      */
     open fun needsCutting(yearTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
@@ -84,6 +85,7 @@ abstract class Plant {
 
     /**
      * check if the plant needs mowing in this tick
+     * IF MOWING is in the actionsNeeded list HarvestEstimator will applyMowingPenalty
      */
     open fun needsMowing(yearTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
