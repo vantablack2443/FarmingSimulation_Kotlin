@@ -61,7 +61,7 @@ class IrrigationHandler(
 
         val returnShed: Tile? = simulationMap.findTargetShed(
             machine,
-            farm.getFarmstead().filter { it.shed == true },
+            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
             machine.currentHarvest != null
         )
 

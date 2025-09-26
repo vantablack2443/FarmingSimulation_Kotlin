@@ -188,7 +188,7 @@ class SowingHandler(
 
             val returnShed: Tile? = this.simulationMap.findTargetShed(
                 nextMachine,
-                farm.getFarmstead().filter { it.shed == true },
+                farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
                 nextMachine.currentHarvest != null
             )
 
