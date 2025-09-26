@@ -83,12 +83,15 @@ class Tile(
     }
 
     /**
-     * checks if the tile needs irrigation
+     * checks if the tile needs irrigation and adds action to the list if required
      */
-    fun needsIrrigation(): Boolean {
-        return plant?.let { p ->
-            currentMoisture?.let { m -> m < p.neededMoisture }
-        } ?: false
+    fun needsIrrigation() {
+        val p = plant ?: return
+        val cm = currentMoisture ?: return
+
+        if (cm < p.neededMoisture) {
+            actionsNeeded.add(ActionType.IRRIGATING)
+        }
     }
 
     /**
