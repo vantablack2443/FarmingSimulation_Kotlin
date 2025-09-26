@@ -20,8 +20,7 @@ class Potato : FieldPlant() {
     override var harvestEstimate = POTATO_HARVEST
     override var sowingTime: Duration = Duration(POTATO_SOW_START, POTATO_SOW_END)
     override var harvestingTime: Duration = Duration(POTATO_HARVEST_START, POTATO_HARVEST_END)
-    override val actionsNeeded = mutableListOf<ActionType>()
-    override val lateActions = mutableListOf<ActionType>()
+
     override var bloomingTime: Duration? = null
     override var animalAttack = false
     override var pollination = 1.0
@@ -31,22 +30,26 @@ class Potato : FieldPlant() {
     override val mowingTime = mutableListOf<CustomPair>()
 
     // USES YEAR-TICK
-    override fun needsHarvesting(tick: Int) {
-        if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
+    override fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>,
+        lateActions: MutableList<ActionType>
+    ) {
+        if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         // Potato has no late harvesting period
     }
 
     // USES SIM-TICK
-    override fun needsWeeding(tick: Int) {
-        if ((tick - sownTick) % 2 == 0 && tick != sownTick) {
+    override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
 
     // SownTick: SimTick needs to be converted to yearTick here
-    override fun checkLateSowing() {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>) {
         if (sownTick - POTATO_SOW_END == 1 || sownTick - POTATO_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
@@ -64,8 +67,8 @@ class Potato : FieldPlant() {
         }
     }
 
-    override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick > POTATO_HARVEST_END) {
+    override fun applyLateHarvestPenalty(yearTick: Int) {
+        if (yearTick > POTATO_HARVEST_END) {
             this.harvestEstimate = 0
         }
     }

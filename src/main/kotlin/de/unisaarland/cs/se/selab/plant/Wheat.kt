@@ -15,6 +15,7 @@ const val WHEAT_HARVEST_START = 11
 const val WHEAT_HARVEST_END = 13
 const val WHEAT_WEED_START_OFFSET = 4
 const val WHEAT_WEED_END_OFFSET = 10
+const val WHEAT_LATE_HARVEST_PENALTY = 0.8
 
 /**
  * Wheat class
@@ -29,26 +30,28 @@ class Wheat : FieldPlant() {
     override var animalAttack = false
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
-    override val actionsNeeded = mutableListOf<ActionType>()
-    override val lateActions = mutableListOf<ActionType>()
 
     override val cuttingTime = mutableListOf<CustomPair>()
     override val mowingTime = mutableListOf<CustomPair>()
 
-    override fun needsHarvesting(tick: Int) {
-        if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(tick)) {
+    override fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>,
+        lateActions: MutableList<ActionType>
+    ) {
+        if ((WHEAT_HARVEST_START..de.unisaarland.cs.se.selab.plant.WHEAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
-        } else if (tick <= WHEAT_HARVEST_END + 2) {
+        } else if (yearTick <= WHEAT_HARVEST_END + 2) {
             lateActions.add(ActionType.HARVESTING)
         }
         // Wheat can be harvested up to two ticks after the harvesting period ends
     }
 
     // USES SIM-TICK
-    override fun needsWeeding(tick: Int) {
+    override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
         // Weed 3 ticks and 10 ticks after sowing
         // Refer to specification for more details -> 3 ticks after tick x means on the x + 4th tick
-        if (tick == sownTick + WHEAT_WEED_START_OFFSET || tick == sownTick + WHEAT_WEED_END_OFFSET) {
+        if (simTick == sownTick + WHEAT_WEED_START_OFFSET || simTick == sownTick + WHEAT_WEED_END_OFFSET) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
@@ -56,7 +59,7 @@ class Wheat : FieldPlant() {
     // WHEAT does not require pollination. Does not bloom
 
     // Needs to convert sownTick: simTick to yearTick here!!!!!
-    override fun checkLateSowing() {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>) {
         if (sownTick - WHEAT_SOW_END == 1 || sownTick - WHEAT_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
@@ -78,13 +81,13 @@ class Wheat : FieldPlant() {
      * Penalty applied per late tick. Can be called each tick by estimator.
      * Takes year tick
      */
-    override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick <= WHEAT_HARVEST_END) { // not late
+    override fun applyLateHarvestPenalty(yearTick: Int) {
+        if (yearTick <= WHEAT_HARVEST_END) { // not late
             return
-        } else if (tick - WHEAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
+        } else if (yearTick - WHEAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
             this.harvestEstimate = 0
         } else { // %20 reduction per tick
-            this.harvestEstimate = (LATE_HARVEST_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = (WHEAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
         }
     }
 
