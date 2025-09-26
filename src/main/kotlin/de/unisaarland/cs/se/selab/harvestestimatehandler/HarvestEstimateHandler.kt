@@ -38,7 +38,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             }
             // 1. Clear both actionList and ?lateList
             tile.actionsNeeded.clear()
-            tile.lateActions.clear()
+            // Will retain HARVESTING if it exists to apply late harvesting at the start of the next tick
+            tile.lateActions.retainAll { it == ActionType.HARVESTING }
         }
     }
 
@@ -224,10 +225,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun applyMissedCutting(t: Tile) {
         val plant = t.plant ?: return
-        val lateActions = t.actionsNeeded
+        val actionsNeeded = t.actionsNeeded
 
-        if (ActionType.CUTTING in lateActions) {
-            lateActions.remove(ActionType.CUTTING)
+        if (ActionType.CUTTING in actionsNeeded) {
+            actionsNeeded.remove(ActionType.CUTTING)
             plant.applyCuttingPenalty()
         }
 
