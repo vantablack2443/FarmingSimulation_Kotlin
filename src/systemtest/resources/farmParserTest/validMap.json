@@ -5,7 +5,7 @@
       "coordinates": { "x": 1, "y": 1 },
       "category": "FARMSTEAD",
       "farm": 0,
-      "shed": false,
+      "shed": true,
       "airflow": false
     },
     {
