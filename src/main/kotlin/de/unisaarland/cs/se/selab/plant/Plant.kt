@@ -108,7 +108,7 @@ abstract class Plant {
      * checks if the sown tick of the plant is in late period
      * Called by sowingHandler at point of sowing. Will add SOWING to lateActions list
      */
-    open fun checkLateSowing(lateActions: MutableList<ActionType>) { return }
+    open fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) { return }
 
     /**
      * checks if the plant needs weeding in this tick

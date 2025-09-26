@@ -49,8 +49,8 @@ class Potato : FieldPlant() {
     }
 
     // SownTick: SimTick needs to be converted to yearTick here
-    override fun checkLateSowing(lateActions: MutableList<ActionType>) {
-        if (sownTick - POTATO_SOW_END == 1 || sownTick - POTATO_SOW_END == 2) {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) {
+        if (yearTickSown - POTATO_SOW_END == 1 || yearTickSown - POTATO_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
     }

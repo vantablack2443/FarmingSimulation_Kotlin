@@ -65,8 +65,8 @@ class Pumpkin : FieldPlant() {
         this.harvestEstimate = floor(this.harvestEstimate * pollination).toInt()
     }
 
-    override fun checkLateSowing(lateActions: MutableList<ActionType>) {
-        if (sownTick - PUMPKIN_SOW_END == 1 || sownTick - PUMPKIN_SOW_END == 2) {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) {
+        if (yearTickSown - PUMPKIN_SOW_END == 1 || yearTickSown - PUMPKIN_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
     }

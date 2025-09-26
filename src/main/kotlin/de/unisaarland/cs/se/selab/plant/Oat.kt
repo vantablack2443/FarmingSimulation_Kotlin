@@ -55,8 +55,8 @@ class Oat : FieldPlant() {
 
     // OAT does not require pollination. Does not bloom
 
-    override fun checkLateSowing(lateActions: MutableList<ActionType>) {
-        if (sownTick - OAT_SOW_END == 1 || sownTick - OAT_SOW_END == 2) {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) {
+        if (yearTickSown - OAT_SOW_END == 1 || yearTickSown - OAT_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
     }
