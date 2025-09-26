@@ -60,10 +60,11 @@ class Tile(
     fun increaseMoistureByAmount(amount: Int) {
         val newMoisture = currentMoisture?.plus(amount)
         if (newMoisture != null) {
+            /*
             maxMoisture?.let {
                 if (newMoisture > it) currentMoisture = maxMoisture
                 return
-            }
+            }*/
             currentMoisture = newMoisture
         }
     }
