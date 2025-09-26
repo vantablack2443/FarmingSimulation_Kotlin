@@ -42,7 +42,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             // 1. Clear both actionList and ?lateList
             tile.actionsNeeded.clear()
             // Will retain HARVESTING if it exists to apply late harvesting at the start of the next tick
-            tile.lateActions.retainAll { it == ActionType.HARVESTING }
+            // New change -> HARVESTING is never added to list, simulation calls it at the start of each tick
+            tile.lateActions.clear()
         }
     }
 
