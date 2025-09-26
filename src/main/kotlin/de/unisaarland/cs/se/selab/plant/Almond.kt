@@ -58,8 +58,8 @@ class Almond : PlantationPlant() {
         this.pollination *= effect
     }
 
-    override fun isBlooming(yearTick: Int): Boolean {
-        return yearTick in ALMOND_BLOOM_START..ALMOND_BLOOM_END
+    override fun isBlooming(tick: Int): Boolean {
+        return tick in ALMOND_BLOOM_START..ALMOND_BLOOM_END
     }
 
     override fun needsHarvesting(

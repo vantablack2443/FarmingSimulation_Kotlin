@@ -74,8 +74,8 @@ class Apple : PlantationPlant() {
     /**
      * checks if the plant is blooming
      */
-    override fun isBlooming(yearTick: Int): Boolean {
-        return yearTick in APPLE_BLOOM_START..APPLE_BLOOM_END
+    override fun isBlooming(tick: Int): Boolean {
+        return tick in APPLE_BLOOM_START..APPLE_BLOOM_END
     }
 
     /**
@@ -89,7 +89,7 @@ class Apple : PlantationPlant() {
         if (yearTick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
-        if (yearTick == APPLE_HARVEST_END + 1 || yearTick == APPLE_HARVEST_END + 2) {
+        if (yearTick == APPLE_HARVEST_END + 1) {
             actionsNeeded.add(ActionType.HARVESTING)
             lateActions.add(ActionType.HARVESTING)
         }
