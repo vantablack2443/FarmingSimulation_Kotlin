@@ -7,13 +7,13 @@ const val MISSED_MOWING_PENALTY = 0.9
  * abstract class for plantation plants
  */
 abstract class PlantationPlant : Plant() {
-    override fun needsCutting(tick: Int) {
+    override fun needsCutting(tick: Int, actionsNeeded: MutableList<ActionType>) {
         val cuttingDone = cuttingTime.filter { it.second }
         if (cuttingDone.isEmpty()) {
-            this.actionsNeeded.add(ActionType.CUTTING)
+            actionsNeeded.add(ActionType.CUTTING)
         }
     }
-    override fun needsMowing(tick: Int) {
+    override fun needsMowing(tick: Int, actionsNeeded: MutableList<ActionType>) {
         for (element in mowingTime) {
             val duration = element.first
             val done = element.second
