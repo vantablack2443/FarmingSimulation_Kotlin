@@ -75,11 +75,11 @@ class Cherry : PlantationPlant() {
     }
 
     override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick - CHERRY_HARVEST_END > 1) { // more than 2 ticks late, set to 0
+        if (yearTick - CHERRY_HARVEST_END > 1) { // more than 1 ticks late, set to 0
             this.harvestEstimate = 0
         }
         if (yearTick - CHERRY_HARVEST_END == 1) {
-            // up to 2 ticks late, reduce by 10% per tick
+            // up to 1 ticks late, reduce by 70% per tick
             val newEstimate = floor(this.harvestEstimate * CHERRY_LATE_HARVEST_PENALTY)
             this.harvestEstimate = newEstimate.toInt()
         }

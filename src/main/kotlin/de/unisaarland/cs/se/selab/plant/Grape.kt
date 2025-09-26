@@ -71,6 +71,7 @@ class Grape : PlantationPlant() {
         }
 
         if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
+            // up to 3 ticks late, reduce by 5% per tick
             val newEstimate = floor(this.harvestEstimate * GRAPE_LATE_HARVEST_PENALTY)
             this.harvestEstimate = newEstimate.toInt()
         }
