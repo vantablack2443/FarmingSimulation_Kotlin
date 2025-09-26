@@ -30,6 +30,7 @@ class Tile(
     var farmID: Int? = null
     var plantationDamaged: Boolean? = null
     var fallowDuration: Duration? = null
+
     val actionsNeeded: MutableList<ActionType> = mutableListOf()
     val lateActions: MutableList<ActionType> = mutableListOf()
 
@@ -77,78 +78,12 @@ class Tile(
     }
 
     /**
-     * gets the actions needed list from the plant
-     */
-    fun getActions(): List<ActionType> {
-        return plant?.actionsNeeded ?: return emptyList()
-    }
-
-    /**
-     * gets the late actions  list from the plant
-     */
-    fun getLateActions(): List<ActionType> {
-        return plant?.lateActions ?: return emptyList()
-    }
-
-    /**
-     * returns the plant if the tile has one
-     */
-//    fun getPlant(): Plant {
-//        TODO()
-//    }
-
-    /**
-     * perform harvest
-     */
-//    fun harvest(simTick: Int) {
-//        val p = plant ?: return
-//        if (category == TileType.PLANTATION) {
-//            p.harvestEstimate = 0
-//        }
-//        if (category == TileType.FIELD) {
-//            plant = null
-//            fallowDuration = Duration(simTick + 1, simTick + FOUR)
-//        }
-//    }
-
-    /**
      * checks if the tile needs irrigation
      */
     fun needsIrrigation(): Boolean {
         return plant?.let { p ->
             currentMoisture?.let { m -> m < p.neededMoisture }
         } ?: false
-    }
-
-    /**
-     * checks if mowing needed
-     */
-    fun requiresMowing(): Boolean {
-        return ActionType.MOWING in plant?.actionsNeeded.orEmpty()
-    }
-
-    /**
-     * checks if weeding required
-     */
-    fun requiresWeeding(): Boolean {
-        val actionsNeeded = this.plant?.actionsNeeded
-        return if (actionsNeeded == null) {
-            false
-        } else {
-            ActionType.WEEDING in actionsNeeded
-        }
-    }
-
-    /**
-     * checks if cutting required
-     */
-    fun requiresCutting(): Boolean {
-        val actionsNeeded = this.plant?.actionsNeeded
-        return if (actionsNeeded == null) {
-            false
-        } else {
-            ActionType.MOWING in actionsNeeded
-        }
     }
 
     /**
@@ -163,13 +98,6 @@ class Tile(
             return plantationDamaged != true
         }
         return false
-    }
-
-    /**
-     * check if the tile belongs to the given farm
-     */
-    fun isOwnedBY(farmID: Int): Boolean {
-        return farmID == this.farmID
     }
 
     /**
