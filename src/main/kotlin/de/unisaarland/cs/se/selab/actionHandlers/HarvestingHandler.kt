@@ -31,7 +31,8 @@ class HarvestingHandler(
         // get OperableTiles takes care of the prioritization of the tiles-- changed the signature in the diagram
         // val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
         for (tile in operableTiles) {
-            val availableMachines = getAvailableMachines(farm, tile.currentCrop!!, ActionType.HARVESTING)
+            val currentCrop = tile.currentCrop ?: continue
+            val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING)
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
                 doHarvest(farm, machine, tile, yearTick)
