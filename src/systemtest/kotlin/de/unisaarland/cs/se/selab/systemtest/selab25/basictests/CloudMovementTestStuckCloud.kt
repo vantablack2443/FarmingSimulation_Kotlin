@@ -1,8 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
-import de.unisaarland.cs.se.selab.systemtest.selab25.utils.LogLevel
-import de.unisaarland.cs.se.selab.systemtest.selab25.utils.LogType
 
 /**
  * tests cloud phase for one tick with cloud creation incidents
@@ -13,7 +11,7 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "cloudMoveTest/exampleFarms.json"
-    override val scenario = "cloudMoveTest/exampleScenario.json"
+    override val scenario = "cloudMoveTest/exampleScenarioCloudNotOnVillage.json"
     override val map = "cloudMoveTest/exampleMap.json"
 
     override val logLevel = "DEBUG"
@@ -21,12 +19,16 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        val expectedString = "Simulation Info: Simulation started."
-        assert(skipUntilLogType(LogLevel.INFO, LogType.SIMULATION_INFO) == expectedString)
+        assertNextLine("[INFO] Initialization Info: exampleMap.json successfully parsed and validated.")
+        assertNextLine("[INFO] Initialization Info: exampleFarms.json successfully parsed and validated.")
+        assertNextLine(
+            "[INFO] Initialization Info: " +
+                "exampleScenarioCloudNotOnVillage.json successfully parsed and validated."
+        )
+        assertNextLine("[INFO] Simulation Info: Simulation started at tick 1 within the year.")
         assertNextLine("[INFO] Simulation Info: Tick 0 started at tick 1 within the year.")
         // skipLines(1)
         assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 1 PLANTATION tiles.")
-        assertNextLine("[INFO] Cloud Dissipation: Cloud 0 got stuck on tile 3.")
 
         assertNextLine("[INFO] Cloud Movement: Cloud 2 with 4000 L water moved from tile 10 to tile 8.")
         assertNextLine("[DEBUG] Cloud Movement: On tile 10, the amount of sunlight is 95.")

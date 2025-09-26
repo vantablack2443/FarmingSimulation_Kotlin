@@ -11,7 +11,7 @@ class CloudMovementTestWithMositure : ExampleSystemTestExtension() {
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "cloudMoveTest/exampleFarms.json"
-    override val scenario = "cloudMoveTest/exampleScenario.json"
+    override val scenario = "cloudMoveTest/exampleScenarioCloudNotOnVillage.json"
     override val map = "cloudMoveTest/exampleMap.json"
 
     override val logLevel = "DEBUG"
@@ -21,7 +21,10 @@ class CloudMovementTestWithMositure : ExampleSystemTestExtension() {
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: exampleMap.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: exampleFarms.json successfully parsed and validated.")
-        assertNextLine("[INFO] Initialization Info: exampleScenario.json successfully parsed and validated.")
+        assertNextLine(
+            "[INFO] Initialization Info: " +
+                "exampleScenarioCloudNotOnVillage.json successfully parsed and validated."
+        )
         assertNextLine("[INFO] Simulation Info: Simulation started at tick 1 within the year.")
         assertNextLine("[INFO] Simulation Info: Tick 0 started at tick 1 within the year.")
         // skipLines(1)
