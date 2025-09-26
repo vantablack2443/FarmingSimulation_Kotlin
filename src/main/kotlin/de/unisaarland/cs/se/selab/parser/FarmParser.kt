@@ -365,11 +365,37 @@ class FarmParser(private val simulationData: SimulationData) {
         val tile = parseMachineLocation(m)
         // Checks that this tile is a farmstead, contains a shed and belongs to the farm owing this machine
         validateMachineLocation(tile.id, farmID)
+        for (action in actions) {
+            validateMachineActionPlant(action, plants)
+        }
 
         // CHECK IF THIS CHECK IS EXPECTED
         /*validateActionsAndPlants(actions, plants)*/
 
         return Machine(id, name, duration, tile, actions, plants, homeShed = tile)
+    }
+
+    /**
+     * cross validates machine and action types
+     */
+    private fun validateMachineActionPlant(action: ActionType, plants: List<PlantType>) {
+        val string = "mismatch of machine action and plant type"
+        when (action) {
+            ActionType.MOWING, ActionType.CUTTING -> {
+                val requiredPlants = setOf(PlantType.APPLE, PlantType.CHERRY, PlantType.ALMOND, PlantType.GRAPE)
+                if (!plants.any { requiredPlants.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+
+            ActionType.WEEDING, ActionType.SOWING -> {
+                val requiredPlants = setOf(PlantType.OAT, PlantType.WHEAT, PlantType.POTATO, PlantType.PUMPKIN)
+                if (!plants.any { requiredPlants.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+            else -> { return }
+        }
     }
 
     /**

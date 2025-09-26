@@ -225,6 +225,7 @@ class MapParser(private val simData: SimulationData) {
             }
             tile.plant = plant
             tile.currentCrop = PlantType.valueOf(plantType.uppercase())
+            tile.plantationDamaged = false
             parseCapacity(jsonObject, tile)
         }
 
