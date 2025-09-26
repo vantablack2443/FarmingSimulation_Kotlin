@@ -3,6 +3,29 @@ package de.unisaarland.cs.se.selab.parser
 import de.unisaarland.cs.se.selab.simulation.SimulationData
 
 /**
+ * custom exception
+ */
+class ValidationException : Exception {
+    var filePath: String? = null
+    constructor(cause: Throwable, filePath: String) : super(cause) {
+        this.filePath = filePath
+    }
+
+    // constructor(cause: Throwable) : super(cause)
+    constructor(message: String) : super(message)
+    constructor() : super()
+}
+
+/**
+ * custom parsing exception for when CLI commands are invalid
+ */
+class ParsingException : Exception {
+    // constructor(cause: Throwable) : super(cause)
+    constructor(message: String) : super(message)
+    constructor() : super()
+}
+
+/**
  * parser class; will be called from main to parse the three config files
  */
 class Parser {
