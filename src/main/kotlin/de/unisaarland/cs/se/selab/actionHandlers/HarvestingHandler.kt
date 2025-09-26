@@ -129,6 +129,7 @@ class HarvestingHandler(
         if (tile.category == TileType.FIELD) {
             tile.plant = null
         }
+        plant?.actionsNeeded?.remove(ActionType.HARVESTING)
         farm.tileHashMap.add(tile.id)
         // not a normal setter because it takes the yearTick and base off the duration on that
         tile.fallowDuration = Duration(yearTick, yearTick + FALLOW_DURATION)
