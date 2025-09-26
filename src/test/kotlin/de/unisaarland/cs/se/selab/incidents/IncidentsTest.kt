@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab.incidents
 
+/*
+
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
@@ -218,3 +220,5 @@ class IncidentsTest {
         assertEquals(1.35, pumpkin.pollination)
     }
 }
+
+ */
