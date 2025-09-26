@@ -43,7 +43,7 @@ abstract class PlantationPlant : Plant() {
     }
 
     override fun applyMowingPenalty() {
-        val newEstimate = floor(this.harvestEstimate * MISSED_CUTTING_PENALTY)
+        val newEstimate = floor(this.harvestEstimate * MISSED_MOWING_PENALTY)
         this.harvestEstimate = newEstimate.toInt()
     }
 
