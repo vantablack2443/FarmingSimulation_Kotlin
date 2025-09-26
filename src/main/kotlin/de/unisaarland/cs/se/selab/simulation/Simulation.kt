@@ -84,7 +84,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             reduceMoisture()
             cloudHandler.moveClouds()
             actionHandler.farmPhase(currentYearTick, currentTick)
-            applyIncidents(this.currentYearTick)
+            applyIncidents(currentTick)
             harvestEstimator.estimateHarvest(currentYearTick)
             updateTick()
         }
@@ -95,7 +95,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
      * checks if the next tick can be continued
      */
     private fun canStartNextTick(): Boolean {
-        return currentTick + 1 < this.maxTicks
+        return currentTick + 1 <= this.maxTicks
     }
 
     /**
@@ -168,9 +168,9 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     /**
      * executes the incidents for the tick
      */
-    private fun applyIncidents(yearTick: Int) {
+    private fun applyIncidents(simulationTick: Int) {
         incidentHandler.updateIncidentsForTick(this.currentTick)
-        incidentHandler.executeIncidents(yearTick)
+        incidentHandler.executeIncidents(simulationTick)
     }
 
     private fun finalStatistics() {

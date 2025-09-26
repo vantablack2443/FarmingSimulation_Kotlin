@@ -13,5 +13,5 @@ abstract class Incident(
     /**
      * execute method, will be overridden in concrete classes
      */
-    abstract fun execute(simulationMap: SimulationMap, yearTick: Int)
+    abstract fun execute(simulationMap: SimulationMap, simTick: Int)
 }

@@ -16,9 +16,9 @@ class BrokenMachine(id: Int, tick: Int, type: IncidentType, val machine: Machine
     /**
      * executes the broken machine
      * @param simulationMap the map the incident will be executed on
-     * @param yearTick the tick the incident will be executed on
+     * @param simTick the tick the incident will be executed on
      */
-    override fun execute(simulationMap: SimulationMap, yearTick: Int) {
+    override fun execute(simulationMap: SimulationMap, simTick: Int) {
         val currentBrokenFor = machine.brokenFor
         if (currentBrokenFor == null) {
             machine.brokenFor = duration
