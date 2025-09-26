@@ -19,8 +19,7 @@ class CloudMovement {
     private lateinit var cloudTwo: Cloud
     private lateinit var cloudThree: Cloud
     private lateinit var cloudFour: Cloud
-    private lateinit var cloudsList: MutableList<Cloud>
-    // private lateinit var
+    val cloudsList = mutableListOf<Cloud>()
 
     @BeforeEach
     fun setUp() {
@@ -30,7 +29,6 @@ class CloudMovement {
         cloudTwo = Cloud(2, Coordinate(2, 0), 3, 1000)
         cloudThree = Cloud(3, Coordinate(4, 0), 2, 1000)
         cloudFour = Cloud(4, Coordinate(6, 0), 2, 1500)
-        this.cloudsList = mutableListOf<Cloud>()
         cloudsList.add(cloudOne)
         cloudsList.add(cloudTwo)
         cloudsList.add(cloudThree)
