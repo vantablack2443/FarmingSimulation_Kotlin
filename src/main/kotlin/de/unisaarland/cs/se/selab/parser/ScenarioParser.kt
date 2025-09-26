@@ -404,7 +404,7 @@ class ScenarioParser(private val simData: SimulationData) {
             val newVillagesTiles = tiles.intersect(newVillages).toList()
 
             if (tiles.none { it.category == TileType.VILLAGE } &&
-                newVillagesTiles.isNotEmpty()
+                newVillagesTiles.isEmpty()
             ) {
                 return false
             }
