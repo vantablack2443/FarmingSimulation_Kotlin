@@ -39,7 +39,7 @@ const val APPLE_HARVEST_END = 19
 
 // ALMOND loses 10% harvest in tick 20
 const val ALMOND_HARVEST_START = 16
-const val ALMOND_HARVEST_END = 18
+const val ALMOND_HARVEST_END = 19
 
 // CHERRY loses 30% harvest in tick 15
 const val CHERRY_HARVEST_START = 13

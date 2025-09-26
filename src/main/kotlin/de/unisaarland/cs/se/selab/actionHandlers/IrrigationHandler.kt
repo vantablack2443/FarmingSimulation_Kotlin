@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
@@ -60,7 +61,7 @@ class IrrigationHandler(
 
         val returnShed: Tile? = simulationMap.findTargetShed(
             machine,
-            farm.getFarmstead().filter { it.shed == true },
+            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
             machine.currentHarvest != null
         )
 
@@ -91,6 +92,7 @@ class IrrigationHandler(
         val maxMoisture = tile.maxMoisture ?: error("Max moisture null or invalid")
         val amount = maxMoisture - currentMoisture
         tile.increaseMoistureByAmount(amount)
+        tile.actionsNeeded.remove(ActionType.IRRIGATING)
     }
 
     override fun performAction(
@@ -124,7 +126,7 @@ class IrrigationHandler(
         }
         for (tile in tiles) {
             if (!tile.hasPlantGrowing()) continue
-            if (tile.needsIrrigation() && tile.id !in farm.tileHashMap) {
+            if (tile.actionsNeeded.contains(ActionType.IRRIGATING) && tile.id !in farm.tileHashMap) {
                 operableTiles.add(tile)
             }
         }

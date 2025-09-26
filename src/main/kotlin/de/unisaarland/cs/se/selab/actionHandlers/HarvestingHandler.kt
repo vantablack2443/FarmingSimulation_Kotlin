@@ -35,8 +35,8 @@ class HarvestingHandler(
             val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING)
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
-                doHarvest(farm, machine, tile, yearTick)
-                continueAction(farm, machine, yearTick, tile, operableTiles)
+                doHarvest(farm, machine, tile, simTick)
+                continueAction(farm, machine, simTick, tile, operableTiles)
                 /* missing machine return */
                 farm.machineHashMap.add(machine.id)
                 machine.resetElapsedTime()
@@ -91,7 +91,7 @@ class HarvestingHandler(
     private fun continueAction(
         farm: Farm,
         machine: Machine,
-        yearTick: Int,
+        simTick: Int,
         tileToBaseOn: Tile,
         operableTiles: MutableList<Tile>
     ) {
@@ -108,14 +108,14 @@ class HarvestingHandler(
         }
         for (tile in toContinueOn) {
             if (this.simulationMap.isReachable(machine, tile)) {
-                doHarvest(farm, machine, tile, yearTick)
+                doHarvest(farm, machine, tile, simTick)
                 operableTiles.remove(tile)
-                continueAction(farm, machine, yearTick, tile, operableTiles)
+                continueAction(farm, machine, simTick, tile, operableTiles)
             }
         }
     }
 
-    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, yearTick: Int) {
+    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, simTick: Int) {
         // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
         machine.currentTile = tile
         machine.updateElapsedTime()
@@ -129,10 +129,10 @@ class HarvestingHandler(
         if (tile.category == TileType.FIELD) {
             tile.plant = null
         }
-        plant?.actionsNeeded?.remove(ActionType.HARVESTING)
+        tile.actionsNeeded.remove(ActionType.HARVESTING)
         farm.tileHashMap.add(tile.id)
         // not a normal setter because it takes the yearTick and base off the duration on that
-        tile.fallowDuration = Duration(yearTick, yearTick + FALLOW_DURATION)
+        tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
     }
 
 //    private fun getAvailableMachine(farm: Farm, tile: Tile): Machine? {

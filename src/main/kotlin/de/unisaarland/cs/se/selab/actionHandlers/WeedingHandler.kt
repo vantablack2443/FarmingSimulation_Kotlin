@@ -68,8 +68,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         machine.currentTile = tile
         machine.updateElapsedTime()
-        val plant = tile.plant
-        plant?.actionsNeeded?.remove(ActionType.WEEDING)
+        tile.actionsNeeded.remove(ActionType.WEEDING)
 
         // Log the action
         logFarmAction(machine.farmID, ActionType.WEEDING, tile.id, machine.duration)
@@ -112,7 +111,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      */
     override fun getOperableTiles(farm: Farm): MutableList<Tile> {
         val tiles = farm.getPlantation()
-            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.WEEDING) ?: false }
+            .filter { it.plant != null && it.actionsNeeded.contains(ActionType.WEEDING) }
             .sortedBy { it.id }
             .toMutableList()
         return tiles

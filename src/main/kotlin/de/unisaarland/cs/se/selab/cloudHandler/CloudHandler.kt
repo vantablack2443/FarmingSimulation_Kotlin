@@ -151,7 +151,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
 
         val newCloud = createMergedCloud(originC, destinationC)
         // addCloud(newCloud)
-        coordinateToCloud.remove(originC.location)
+        coordinateToCloud.entries.removeIf { it.value == originC || it.value == destinationC }
         coordinateToCloud[destinationC.location] = newCloud
         removedClouds.add(originC)
         removedClouds.add(destinationC)

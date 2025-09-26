@@ -45,7 +45,7 @@ class SowingHandler(
             }
         }
         // Remove all successfully executed plans from the farm's sowing plans
-        farm.removeSowingPlans(plansExecuted)
+        farm.removeSowingPlans(plansExecuted, simTick)
 
         this.clearSets(farm)
     }
@@ -188,7 +188,7 @@ class SowingHandler(
 
             val returnShed: Tile? = this.simulationMap.findTargetShed(
                 nextMachine,
-                farm.getFarmstead().filter { it.shed == true },
+                farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
                 nextMachine.currentHarvest != null
             )
 

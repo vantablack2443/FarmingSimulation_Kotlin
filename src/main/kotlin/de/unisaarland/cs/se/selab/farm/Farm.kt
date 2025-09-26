@@ -82,15 +82,19 @@ class Farm(
      * Gets sowing plan by tick
      */
     fun getSowingPlansByTick(simTick: Int): List<SowingPlan> {
-        return sowingPlans[simTick].orEmpty()
+        return sowingPlans.filterKeys { it <= simTick }.values.flatten()
     }
 
     /**
      * removes the executed sowing plans from the farm's list of sowing plans
      */
-    fun removeSowingPlans(executedPlans: List<SowingPlan>) {
-        // TODO
-        executedPlans.isEmpty()
+    fun removeSowingPlans(executedPlans: List<SowingPlan>, simTick: Int) {
+        val idsToRemove = executedPlans.map { it.getId() }.toSet()
+        for ((tick, planList) in sowingPlans) {
+            if (tick <= simTick) {
+                planList.removeAll { it.getId() in idsToRemove }
+            }
+        }
     }
 
     /**
@@ -99,13 +103,16 @@ class Farm(
     fun updateNeededActions(yearTick: Int, simTick: Int) {
         for (field in fields) {
             val plant = field.plant ?: continue
-            plant.needsHarvesting(yearTick)
-            plant.needsWeeding(simTick)
+            plant.needsWeeding(simTick, field.actionsNeeded)
+            plant.needsHarvesting(yearTick, field.actionsNeeded)
+            field.needsIrrigation()
         }
-        for (plantn in plantation) {
-            val plant = plantn.plant ?: continue
-            plant.needsMowing(simTick)
-            plant.needsCutting(simTick)
+        for (plantation in plantation) {
+            val plant = plantation.plant ?: continue
+            plant.needsCutting(yearTick, plantation.actionsNeeded)
+            plant.needsMowing(yearTick, plantation.actionsNeeded)
+            plant.needsHarvesting(yearTick, plantation.actionsNeeded)
+            plantation.needsIrrigation()
         }
     }
 
@@ -150,16 +157,16 @@ class Farm(
         this.plantation.addAll(newPlantation)
     }
 
-    /**
-     * returns a list of sheds on a farm
-     */
-    fun getShedTiles(): List<Tile> {
-        val sheds: MutableList<Tile> = mutableListOf()
-        for (farmstead in farmsteads) {
-            if (farmstead.shed == true) {
-                sheds.add(farmstead)
-            }
-        }
-        return sheds
-    }
+//    /**
+//     * returns a list of sheds on a farm
+//     */
+//    fun getShedTiles(): List<Tile> {
+//        val sheds: MutableList<Tile> = mutableListOf()
+//        for (farmstead in farmsteads) {
+//            if (farmstead.shed == true) {
+//                sheds.add(farmstead)
+//            }
+//        }
+//        return sheds
+//    }
 }
