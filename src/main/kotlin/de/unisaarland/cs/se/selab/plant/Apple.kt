@@ -84,15 +84,13 @@ class Apple : PlantationPlant() {
      */
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if (yearTick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         if (yearTick == APPLE_HARVEST_END + 1) {
             actionsNeeded.add(ActionType.HARVESTING)
-            lateActions.add(ActionType.HARVESTING)
         }
     }
 

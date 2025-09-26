@@ -62,15 +62,13 @@ class Cherry : PlantationPlant() {
 
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if (yearTick in CHERRY_HARVEST_START..CHERRY_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         if (yearTick == CHERRY_HARVEST_END + 1) {
             actionsNeeded.add(ActionType.HARVESTING)
-            lateActions.add(ActionType.HARVESTING)
         }
     }
 

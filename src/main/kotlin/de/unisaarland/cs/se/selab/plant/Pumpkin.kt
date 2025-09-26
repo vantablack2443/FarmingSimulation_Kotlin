@@ -35,8 +35,7 @@ class Pumpkin : FieldPlant() {
     // USES YEAR-TICK
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if ((PUMPKIN_HARVEST_START..PUMPKIN_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)

@@ -35,13 +35,12 @@ class Oat : FieldPlant() {
 
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if ((OAT_HARVEST_START..OAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         } else if (yearTick <= OAT_HARVEST_END + 2) {
-            lateActions.add(ActionType.HARVESTING)
+            actionsNeeded.add(ActionType.HARVESTING)
         }
         // Oat can be harvested up to two ticks after the harvesting period ends
     }

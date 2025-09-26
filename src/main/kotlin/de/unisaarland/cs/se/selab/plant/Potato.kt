@@ -33,8 +33,7 @@ class Potato : FieldPlant() {
     // USES YEAR-TICK
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)

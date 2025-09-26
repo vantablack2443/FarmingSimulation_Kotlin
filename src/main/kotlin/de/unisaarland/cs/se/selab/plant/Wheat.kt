@@ -36,13 +36,12 @@ class Wheat : FieldPlant() {
 
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if ((WHEAT_HARVEST_START..WHEAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         } else if (yearTick <= WHEAT_HARVEST_END + 2) {
-            lateActions.add(ActionType.HARVESTING)
+            actionsNeeded.add(ActionType.HARVESTING)
         }
         // Wheat can be harvested up to two ticks after the harvesting period ends
     }

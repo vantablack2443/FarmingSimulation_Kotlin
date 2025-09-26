@@ -64,15 +64,13 @@ class Almond : PlantationPlant() {
 
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if (yearTick in ALMOND_HARVEST_START..ALMOND_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         if (yearTick == ALMOND_HARVEST_END + 1) {
             actionsNeeded.add(ActionType.HARVESTING)
-            lateActions.add(ActionType.HARVESTING)
         }
     }
 

@@ -52,15 +52,13 @@ class Grape : PlantationPlant() {
 
     override fun needsHarvesting(
         yearTick: Int,
-        actionsNeeded: MutableList<ActionType>,
-        lateActions: MutableList<ActionType>
+        actionsNeeded: MutableList<ActionType>
     ) {
         if (yearTick == GRAPE_HARVEST_START_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
             actionsNeeded.add(ActionType.HARVESTING)
-            lateActions.add(ActionType.HARVESTING)
         }
     }
 
