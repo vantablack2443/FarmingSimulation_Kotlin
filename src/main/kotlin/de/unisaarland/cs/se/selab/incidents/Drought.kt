@@ -28,6 +28,8 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
             } else if (tile.category == TileType.PLANTATION) {
                 tile.currentMoisture = 0
                 tile.plantationDamaged = true
+                tile.plant = null
+                tile.currentCrop = null
             }
         }
     }
