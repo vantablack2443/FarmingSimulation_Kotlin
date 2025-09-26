@@ -134,4 +134,33 @@ abstract class ActionHandler(
             .sortedBy { it.id }
         return (plantationTiles + fieldTiles).toMutableList()
     }
+
+//    /**
+//     * Performs the CUT action on a tile using the given machine.
+//     * Updates the machine's state and removes the CUT action from the plant's required actions.
+//     *
+//     * @param machine The machine performing the action.
+//     * @param tile The tile on which the action is performed.
+//     */
+//    fun performAction(
+//        machine: Machine,
+//        tile: Tile,
+//        yearTick: Int
+//    ) {
+//        machine.currentTile = tile
+//        machine.updateElapsedTime()
+//
+//        val plant = tile.plant
+//        plant?.actionsNeeded?.remove(ActionType.CUTTING)
+//        if (plant != null) {
+//            for (element in plant.cuttingTime) {
+//                if (element.first.inRange(yearTick)) {
+//                    element.second = true
+//                }
+//            }
+//        }
+//
+//        // Log the action
+//        logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
+//    }
 }
