@@ -24,6 +24,9 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         machine: Machine,
         yearTick: Int
     ) {
+        if (machine.id in farm.machineHashMap) {
+            return
+        }
         val operableTiles = getOperableTiles(farm, actionType = ActionType.MOWING)
         this.operableTiles = operableTiles
         for (tile in operableTiles) {

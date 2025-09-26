@@ -30,7 +30,7 @@ const val FIELDS = "fields"
 const val LOCATION = "location"
 const val MISSING_TILE_ID = "Specified tile with ID not found"
 
-const val DEFS = "\$defs"
+// const val DEFS = "\$defs"
 
 /**
  * parser for farm config file
@@ -205,6 +205,7 @@ class FarmParser(private val simulationData: SimulationData) {
 
         val allMachines = parseMachines(farm, id)
 
+        // A farm needs to have at least one machine and one farmstead
         if (allMachines.isEmpty() || farmsteadTiles.isEmpty()) {
             throw ValidationException("farm $id needs at least one farmstead and machine")
         }

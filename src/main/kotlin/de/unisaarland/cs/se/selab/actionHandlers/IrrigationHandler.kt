@@ -24,6 +24,11 @@ class IrrigationHandler(
      * checks for the target tile to perform actions and also for action continuation
      */
     fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
+        // checks if machine is in hashmap
+        if (machine.id in farm.machineHashMap) {
+            return
+        }
+
         val operableTiles = getOperableTiles(farm, tileType).toMutableList()
         if (operableTiles.isEmpty()) {
             return
@@ -50,6 +55,7 @@ class IrrigationHandler(
         }
 
         // machine cannot perform anymore
+        farm.machineHashMap.add(machine.id)
         machine.resetElapsedTime()
 
         val returnShed: Tile? = simulationMap.findTargetShed(

@@ -215,7 +215,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
             MAX_SUNLIGHT_REDUCTION,
             simulationMap.getTileByCoordinate(c.location) ?: return
         )
-        c.duration--
+        if (c.duration > 0) c.duration--
 
         if (checkDurationDissipate(c)) {
             dissipate(c)
