@@ -1,12 +1,6 @@
 {
   "clouds": [
     {
-      "id": 0,
-      "location": 3,
-      "duration": -1,
-      "amount": 4000
-    },
-    {
       "id": 2,
       "location": 10,
       "duration": 1,

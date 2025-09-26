@@ -5,8 +5,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests if machine actions should match plant types
  */
-class ValidateMachineActionPlantTrue : ExampleSystemTestExtension() {
-    override val name = "ValidateMachineActionPlantTrue"
+class ValidateMachineActionPlantFalse : ExampleSystemTestExtension() {
+    override val name = "ValidateMachineActionPlantFalse"
     override val description = "Tests matching between action and plant types"
 
     // Paths are relative from the `src/systemtest/resources` directory.
@@ -20,6 +20,6 @@ class ValidateMachineActionPlantTrue : ExampleSystemTestExtension() {
 
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: map.json successfully parsed and validated.")
-        assertNextLine("[IMPORTANT] Initialization Info: farms.json is invalid.")
+        assertNextLine("[INFO] Initialization Info: farms.json successfully parsed and validated.")
     }
 }

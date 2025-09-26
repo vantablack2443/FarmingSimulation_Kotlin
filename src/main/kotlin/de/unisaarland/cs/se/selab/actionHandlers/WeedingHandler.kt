@@ -31,6 +31,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         if (machine.id in farm.machineHashMap) {
             return
         }
+
         val plantsThisMachineCanWorkOn: List<PlantType> = machine.plants
 
         val operableTiles = getOperableTiles(farm, ActionType.WEEDING)

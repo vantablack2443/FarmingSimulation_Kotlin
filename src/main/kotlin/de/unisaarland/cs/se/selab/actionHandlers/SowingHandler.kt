@@ -110,7 +110,6 @@ class SowingHandler(
 
         // Select machine, first by duration then id
         val machines = getAvailableMachines(farm, plan.getPlant(), ActionType.SOWING)
-
         // Return if there are no available machines
         if (machines.isEmpty()) {
             return false
@@ -259,8 +258,7 @@ class SowingHandler(
 //    private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
 //        val machines = mutableListOf<Machine>()
 //        for (machine in farm.getMachines()) {
-//            if (!machine.isStuck && machine.plants.contains(plantType)
-//            && machine.actions.contains(ActionType.SOWING)) {
+//         if (!machine.isStuck && machine.plants.contains(plantType) && machine.actions.contains(ActionType.SOWING)) {
 //                machines.add(machine)
 //            }
 //        }

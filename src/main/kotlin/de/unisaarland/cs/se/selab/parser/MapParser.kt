@@ -1,5 +1,10 @@
 package de.unisaarland.cs.se.selab.parser
 
+// import com.github.erosb.jsonsKema.JsonParser
+// import com.github.erosb.jsonsKema.JsonValue
+// import com.github.erosb.jsonsKema.Schema
+// import com.github.erosb.jsonsKema.SchemaLoader
+// import com.github.erosb.jsonsKema.Validator
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.PlantType
@@ -26,25 +31,43 @@ import java.io.File
 import kotlin.math.abs
 
 /**
- * custom exception
- */
-class ValidationException : Exception {
-    var filePath: String? = null
-    constructor(cause: Throwable, filePath: String) : super(cause) {
-        this.filePath = filePath
-    }
-
-    // constructor(cause: Throwable) : super(cause)
-    constructor(message: String) : super(message)
-    constructor() : super()
-}
-
-/**
  * Map parser class
  */
 class MapParser(private val simData: SimulationData) {
     private val tileIDMap: MutableMap<Int, Tile> = mutableMapOf()
     private val tileCoordinates: MutableMap<Coordinate, Tile> = mutableMapOf()
+//    private val schema: Schema by lazy { loadSchema() }
+//
+//    private fun loadSchema(): Schema {
+//        val tileSchema: JsonValue = JsonParser(File("src/main/resources/schema/tile.schema").readText()).parse()
+//
+//        val defsNode = tileSchema.requireObject()["\$defs"]?.requireObject()
+//            ?: throw ValidationException()
+//
+//        val mapSchemaJson = JsonParser(
+//            """
+//            {
+//              "$schema": "https://json-schema.org/draft/2020-12/schema",
+//              "type": "object",
+//              "additionalProperties": false,
+//              "properties": {
+//                "tiles": {
+//                  "type": "array",
+//                  "items": {
+//                    "${'$'}ref": "#/${'$'}defs/tile"
+//                  },
+//                  "minItems": 1,
+//                  "uniqueItems": true
+//                }
+//              },
+//              "required": ["tiles"],
+//              "${'$'}defs": $defsNode
+//            }
+//            """
+//        ).parse()
+//
+//        return SchemaLoader(mapSchemaJson).load()
+//    }
 
     /**
      * parses the given map config file
@@ -53,6 +76,13 @@ class MapParser(private val simData: SimulationData) {
         try {
             val file = File(json)
             val jsonString = file.readText()
+
+//            val validator = Validator.forSchema(schema)
+//            val validation = validator.validate(JsonParser(jsonString).parse())
+//            if (validation != null) {
+//                throw ValidationException()
+//            }
+
             val tiles = Json.parseToJsonElement(jsonString)
                 .jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
             parseCreateTiles(tiles)
@@ -99,7 +129,7 @@ class MapParser(private val simData: SimulationData) {
         if (id < 0) throw ValidationException("Tile ID negative")
 
         val type = getTileCategory(tile)
-        if (type !in TileType.entries.toString()) throw ValidationException("invalid tile type")
+        if (type.uppercase() !in TileType.entries.map { it.name }) throw ValidationException("invalid tile type")
         val category = TileType.valueOf(type.uppercase())
 
         val coordinates = getTileCoordinates(tile)
@@ -195,6 +225,7 @@ class MapParser(private val simData: SimulationData) {
             }
             tile.plant = plant
             tile.currentCrop = PlantType.valueOf(plantType.uppercase())
+            tile.plantationDamaged = false
             parseCapacity(jsonObject, tile)
         }
 

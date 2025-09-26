@@ -4,8 +4,8 @@
       "id": 0,
       "name": "Farm",
       "farmsteads": [300],
-      "fields": [13, 40],
-      "plantations": [18],
+      "fields": [],
+      "plantations": [],
       "machines": [
         {
           "id": 0,
@@ -21,8 +21,7 @@
           "id": 20,
           "tick": 1,
           "plant": "WHEAT",
-          "location": 15,
-          "radius": 1
+          "fields": [13, 40, 22, 24]
           }
       ]
     },
@@ -30,8 +29,8 @@
       "id": 1,
       "name": "Another Farm",
       "farmsteads": [30],
-      "fields": [22, 24],
-      "plantations": [],
+      "fields": [13, 22, 24, 40],
+      "plantations": [18],
       "machines": [
         {
           "id": 1,

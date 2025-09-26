@@ -1,5 +1,11 @@
 package de.unisaarland.cs.se.selab.parser
 
+// import com.github.erosb.jsonsKema.IJsonObject
+// import com.github.erosb.jsonsKema.IJsonValue
+// import com.github.erosb.jsonsKema.JsonParser
+// import com.github.erosb.jsonsKema.Schema
+// import com.github.erosb.jsonsKema.SchemaLoader
+// import com.github.erosb.jsonsKema.Validator
 import de.unisaarland.cs.se.selab.cloud.Cloud
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
@@ -23,6 +29,8 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
+// import kotlin.collections.component1
+// import kotlin.collections.component2
 
 const val INCIDENT_STRING = "incidents"
 const val CLOUDS_STRING = "clouds"
@@ -49,6 +57,65 @@ class ScenarioParser(private val simData: SimulationData) {
 
     // For double-checking against sowing plan tiles
     private val cityExpansionTiles: MutableList<Tile> = mutableListOf()
+//    private val schema: Schema by lazy { loadFarmSchema() }
+//
+//    private fun loadFarmSchema(): Schema {
+//        // Load all farm-related schemas
+//        val cloudSchema = JsonParser(File("src/main/resources/schema/cloud.schema").readText()).parse()
+//        val incidentSchema = JsonParser(File("src/main/resources/schema/incident.schema").readText()).parse()
+//
+//        val clouddefsNode = cloudSchema.requireObject()["\$defs"]?.requireObject()
+//            ?: throw ValidationException()
+//        val incidentdefsNode = incidentSchema.requireObject()["\$defs"]?.requireObject()
+//            ?: throw ValidationException()
+//
+//        val allDefs = mutableMapOf<String, IJsonValue>()
+//        fun merge(defs: IJsonObject<*, *>) {
+//            // defs.properties: Map<IJsonString,IJsonValue>
+//            defs.properties.forEach { (jsonKey, jsonVal) ->
+//                val key: String = jsonKey.toString() // extract the string
+//                allDefs[key] = jsonVal
+//            }
+//        }
+//
+//        merge(clouddefsNode)
+//        merge(incidentdefsNode)
+//
+//        val defsJson = allDefs.entries.joinToString(
+//            prefix = "{",
+//            postfix = "}"
+//        ) { (k, v) -> "\"$k\":$v" }
+//
+//        val scenarioSchemaJson = JsonParser(
+//            """
+//            {
+//              "${'$'}schema": "https://json-schema.org/draft/2020-12/schema",
+//              "type": "object",
+//              "additionalProperties": false,
+//              "properties": {
+//                "clouds": {
+//                  "type": "array",
+//                  "items": {
+//                    "${'$'}ref": "#/${'$'}defs/cloud"
+//                  },
+//                  "uniqueItems": true
+//                },
+//                "incidents": {
+//                  "type": "array",
+//                  "items": {
+//                    "${'$'}ref": "#/${'$'}defs/incident"
+//                  },
+//                  "uniqueItems": true
+//                }
+//              },
+//              "required": ["clouds", "incidents"],
+//              "${'$'}defs": $defsJson
+//            }
+//            """
+//        ).parse()
+//
+//        return SchemaLoader(scenarioSchemaJson).load()
+//    }
 
     /**
      * Parses the scenario files and runs the checks validity
@@ -57,6 +124,13 @@ class ScenarioParser(private val simData: SimulationData) {
         try {
             // Read file
             val jsonFile = File(jsonPath).readText()
+
+//            val validator = Validator.forSchema(schema)
+//            val validation = validator.validate(JsonParser(jsonFile).parse())
+//            if (validation != null) {
+//                throw ValidationException()
+//            }
+
             // Parse file
             val jsonData = Json.parseToJsonElement(jsonFile).jsonObject
             // Get incidents array
@@ -116,7 +190,7 @@ class ScenarioParser(private val simData: SimulationData) {
         // Get Incident Type
         val type: String = obj[TYPE_STRING]?.jsonPrimitive?.content ?: throw ValidationException()
         // Convert to enum - Throw error if no matching enum value
-        if (type !in IncidentType.entries.toString()) throw ValidationException()
+        if (type !in IncidentType.entries.map { it.name }) throw ValidationException()
         val incidentType = IncidentType.valueOf(type)
 
         // Will be set depending on IncidentType

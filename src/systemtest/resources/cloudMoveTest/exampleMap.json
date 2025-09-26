@@ -128,7 +128,7 @@
     },
     {
       "id": 3,
-      "coordinates": { "x": -5, "y": 5 },
+      "coordinates": { "x": -3, "y": 5 },
       "category": "VILLAGE"
     },
     {
@@ -156,12 +156,6 @@
       "airflow": false,
       "farm": 0,
       "shed": true
-    },
-    {
-      "id": 41,
-      "coordinates": { "x": 4, "y": 6 },
-      "category": "FOREST",
-      "airflow": false
     },
     {
       "id": 4,
