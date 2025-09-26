@@ -3,20 +3,19 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
-import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST_START_END
 import kotlin.math.floor
 
 const val GRAPE_SUNLIGHT = 150
 const val GRAPE_MOISTURE = 250
-const val GRAPE_CUT_START = 15
+const val GRAPE_CUT_START = 14
 const val GRAPE_CUT_END = 16
-const val GRAPE_CUT_ALT = 14
 const val GRAPE_MOW_START_END = 7
 const val GRAPE_MOW_ALTERNATE = 13
 const val GRAPE_BLOOM_START = 12
 const val GRAPE_BLOOM_END = 13
 const val GRAPE_LATE_HARVEST_PENALTY = 0.95
 const val GRAPE_ANIMAL_ATTACK_PENALTY = 0.5
+const val GRAPE_HARVEST_START_END = 17
 
 /**
  * apple class
@@ -25,14 +24,11 @@ class Grape : PlantationPlant() {
     override var neededSunlight = GRAPE_SUNLIGHT
     override var neededMoisture = GRAPE_MOISTURE
     override var harvestEstimate = GRAPE_HARVEST
-    override val actionsNeeded = mutableListOf<ActionType>()
-    override val lateActions = mutableListOf<ActionType>()
     override var animalAttack = false
     override var pollination = 1.0
     override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(GRAPE_CUT_START, GRAPE_CUT_END), false),
-        CustomPair(Duration(GRAPE_CUT_ALT, GRAPE_CUT_ALT), false)
     )
     override val mowingTime = mutableListOf(
         CustomPair(Duration(GRAPE_MOW_START_END, GRAPE_MOW_START_END), false),
@@ -54,30 +50,31 @@ class Grape : PlantationPlant() {
         this.animalAttackPenalty *= GRAPE_ANIMAL_ATTACK_PENALTY
     }
 
-    override fun needsHarvesting(tick: Int) {
-        if (tick == GRAPE_HARVEST_START_END) {
-            this.actionsNeeded.add(ActionType.HARVESTING)
+    override fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>
+    ) {
+        if (yearTick == GRAPE_HARVEST_START_END) {
+            actionsNeeded.add(ActionType.HARVESTING)
         }
-        if (tick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
-            this.actionsNeeded.add(ActionType.HARVESTING)
-            this.lateActions.add(ActionType.HARVESTING)
+        if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
+            actionsNeeded.add(ActionType.HARVESTING)
         }
     }
 
-    override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick - GRAPE_HARVEST_START_END > 3) { // more than 3 ticks late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int) {
+        if (yearTick - GRAPE_HARVEST_START_END > 3) { // more than 3 ticks late, set to 0
             this.harvestEstimate = 0
             return
         }
-        var effect = GRAPE_LATE_HARVEST_PENALTY
-        var counter = tick
-        while (counter <= GRAPE_HARVEST_START_END + 3) {
-            effect *= GRAPE_LATE_HARVEST_PENALTY
-            counter++
+
+        if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
+            // up to 3 ticks late, reduce by 5% per tick
+            val newEstimate = floor(this.harvestEstimate * GRAPE_LATE_HARVEST_PENALTY)
+            this.harvestEstimate = newEstimate.toInt()
         }
-        val newEstimate = this.harvestEstimate * effect
-        this.harvestEstimate = newEstimate.toInt()
     }
+
     override fun resetMowingTime(startTick: Int) {
         return
     }

@@ -58,7 +58,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         machine.updateElapsedTime()
         val plant = tile.plant
         if (plant != null) {
-            plant.actionsNeeded.remove(ActionType.MOWING)
+            tile.actionsNeeded.remove(ActionType.MOWING)
             for (element in plant.mowingTime) {
                 if (element.first.inRange(yearTick)) {
                     element.second = true
@@ -96,9 +96,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         for (tile in farm.getPlantation()) {
             if (tile.id in farm.tileHashMap) continue
             if (tile.plantationDamaged != null && tile.plantationDamaged == true) continue
-            if (tile.requiresMowing()) {
-                operableTiles.add(tile)
-            }
+            operableTiles.add(tile)
         }
         return operableTiles.sortedBy { it.id }
     }

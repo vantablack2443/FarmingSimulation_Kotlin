@@ -1,11 +1,11 @@
 package de.unisaarland.cs.se.selab.plant
 
 import de.unisaarland.cs.se.selab.duration.Duration
+import kotlin.math.floor
 
 const val ANIMAL_ATTACK_PENALTY_FIELDS = 0.5
 const val MISSED_WEEDING_PENALTY = 0.9
 const val LATE_SOW_PENALTY_FIELDS = 0.8
-const val LATE_HARVEST_PENALTY_FIELDS = 0.8
 
 /**
  * abstract class for field plants
@@ -20,7 +20,8 @@ abstract class FieldPlant : Plant() {
      *  and can be accessed directly from within the concrete plant
      */
     override fun applyMissedWeedingPenalty() {
-        this.harvestEstimate = (MISSED_WEEDING_PENALTY * this.harvestEstimate).toInt()
+        val newEstimate = floor(this.harvestEstimate * MISSED_WEEDING_PENALTY)
+        this.harvestEstimate = newEstimate.toInt()
     }
 
     /**
@@ -37,6 +38,7 @@ abstract class FieldPlant : Plant() {
      * Reduces the harvest estimate by 50%
      */
     override fun animalAttackPenalty() {
-        this.harvestEstimate = (animalAttackPenalty * this.harvestEstimate).toInt()
+        val newEstimate = this.harvestEstimate * animalAttackPenalty
+        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 }

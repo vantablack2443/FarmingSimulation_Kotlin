@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.POTATO_HARVEST
+import kotlin.math.floor
 
 const val POTATO_SUNLIGHT = 130
 const val POTATO_MOISTURE = 500
@@ -20,8 +21,7 @@ class Potato : FieldPlant() {
     override var harvestEstimate = POTATO_HARVEST
     override var sowingTime: Duration = Duration(POTATO_SOW_START, POTATO_SOW_END)
     override var harvestingTime: Duration = Duration(POTATO_HARVEST_START, POTATO_HARVEST_END)
-    override val actionsNeeded = mutableListOf<ActionType>()
-    override val lateActions = mutableListOf<ActionType>()
+
     override var bloomingTime: Duration? = null
     override var animalAttack = false
     override var pollination = 1.0
@@ -31,36 +31,48 @@ class Potato : FieldPlant() {
     override val mowingTime = mutableListOf<CustomPair>()
 
     // USES YEAR-TICK
-    override fun needsHarvesting(tick: Int) {
-        if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(tick)) {
+    override fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>
+    ) {
+        if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
+        // Potato has no late harvesting period
     }
 
     // USES SIM-TICK
-    override fun needsWeeding(tick: Int) {
-        if ((tick - sownTick) % 2 == 0 && tick != sownTick) {
+    override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
 
     // SownTick: SimTick needs to be converted to yearTick here
-    override fun checkLateSowing() {
-        if (sownTick - POTATO_SOW_END == 1 || sownTick - POTATO_SOW_END == 2) {
+    override fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) {
+        if (yearTickSown - POTATO_SOW_END == 1 || yearTickSown - POTATO_SOW_END == 2) {
             lateActions.add(ActionType.SOWING)
         }
     }
 
+    /**
+     * Penalty applied once. Can by estimate handler once when late sowing detected
+     * 20% per delayed tick
+     */
     override fun applyLateSowingPenalty() {
         var counter = sownTick - POTATO_SOW_END
         while (counter > 0) {
-            this.harvestEstimate = (LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
+            this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--
         }
     }
 
-    override fun applyLateHarvestPenalty(tick: Int) {
-        if (tick > POTATO_HARVEST_END) {
+    /**
+     * Penalty applied per late tick. Can be called each tick by estimator.
+     * Takes year tick
+     */
+    override fun applyLateHarvestPenalty(yearTick: Int) {
+        if (yearTick > POTATO_HARVEST_END) {
             this.harvestEstimate = 0
         }
     }
