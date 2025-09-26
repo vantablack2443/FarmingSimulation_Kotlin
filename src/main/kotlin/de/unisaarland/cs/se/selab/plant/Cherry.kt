@@ -56,8 +56,8 @@ class Cherry : PlantationPlant() {
         this.pollination *= effect
     }
 
-    override fun isBlooming(yearTick: Int): Boolean {
-        return yearTick in CHERRY_BLOOM_START..CHERRY_BLOOM_END
+    override fun isBlooming(tick: Int): Boolean {
+        return tick in CHERRY_BLOOM_START..CHERRY_BLOOM_END
     }
 
     override fun needsHarvesting(

@@ -74,8 +74,8 @@ class Apple : PlantationPlant() {
     /**
      * checks if the plant is blooming
      */
-    override fun isBlooming(yearTick: Int): Boolean {
-        return yearTick in APPLE_BLOOM_START..APPLE_BLOOM_END
+    override fun isBlooming(tick: Int): Boolean {
+        return tick in APPLE_BLOOM_START..APPLE_BLOOM_END
     }
 
     /**
