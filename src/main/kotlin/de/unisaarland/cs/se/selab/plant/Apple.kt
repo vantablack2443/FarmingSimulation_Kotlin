@@ -89,7 +89,7 @@ class Apple : PlantationPlant() {
         if (yearTick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
-        if (yearTick == APPLE_HARVEST_END + 1 || yearTick == APPLE_HARVEST_END + 2) {
+        if (yearTick == APPLE_HARVEST_END + 1) {
             actionsNeeded.add(ActionType.HARVESTING)
             lateActions.add(ActionType.HARVESTING)
         }
