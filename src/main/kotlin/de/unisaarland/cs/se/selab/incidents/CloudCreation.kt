@@ -38,7 +38,7 @@ class CloudCreation(
             val existingCloud = cloudHandler.coordinateToCloud[tile.location]
             // check for merges
             if (existingCloud != null) {
-                val newCloud = cloudHandler.merge(cloud, existingCloud)
+                val newCloud = cloudHandler.merge(existingCloud, cloud)
                 cloudHandler.cloudsList.add(newCloud)
                 cloudHandler.cloudsList.remove(existingCloud)
             } else {
