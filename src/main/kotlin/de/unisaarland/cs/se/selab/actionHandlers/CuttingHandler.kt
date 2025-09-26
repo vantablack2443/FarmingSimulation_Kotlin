@@ -70,7 +70,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         machine.updateElapsedTime()
 
         val plant = tile.plant
-        plant?.actionsNeeded?.remove(ActionType.CUTTING)
+        tile.actionsNeeded.remove(ActionType.CUTTING)
         if (plant != null) {
             for (element in plant.cuttingTime) {
                 if (element.first.inRange(yearTick)) {
