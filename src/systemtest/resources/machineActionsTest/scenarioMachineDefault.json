@@ -14,21 +14,21 @@
       "type": "BROKEN_MACHINE",
       "tick": 0,
       "duration": 2,
-      "machineid": 1
+      "machineId": 1
     },
     {
       "id": 11,
       "type": "BROKEN_MACHINE",
       "tick": 0,
       "duration": 3,
-      "machineid": 2
+      "machineId": 2
     },
     {
       "id": 12,
       "type": "BROKEN_MACHINE",
       "tick": 0,
       "duration": 3,
-      "machineid": 3
+      "machineId": 3
     },
     {
       "id": 13,
