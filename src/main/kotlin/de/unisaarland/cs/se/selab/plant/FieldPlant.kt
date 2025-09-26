@@ -5,7 +5,6 @@ import de.unisaarland.cs.se.selab.duration.Duration
 const val ANIMAL_ATTACK_PENALTY_FIELDS = 0.5
 const val MISSED_WEEDING_PENALTY = 0.9
 const val LATE_SOW_PENALTY_FIELDS = 0.8
-const val LATE_HARVEST_PENALTY_FIELDS = 0.8
 
 /**
  * abstract class for field plants
@@ -39,4 +38,5 @@ abstract class FieldPlant : Plant() {
     override fun animalAttackPenalty() {
         this.harvestEstimate = (animalAttackPenalty * this.harvestEstimate).toInt()
     }
+
 }

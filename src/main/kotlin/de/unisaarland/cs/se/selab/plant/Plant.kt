@@ -59,7 +59,7 @@ abstract class Plant {
     /**
      * update harvest estimate based on the late harvest penalty
      */
-    open fun applyLateHarvestPenalty(tick: Int) { return }
+    open fun applyLateHarvestPenalty(yearTick: Int, lateActions: MutableList<ActionType>) { return }
 
     /**
      * check if the plant needs cutting in this tick
@@ -69,7 +69,11 @@ abstract class Plant {
     /**
      * check if the plant needs harvesting in this tick
      */
-    open fun needsHarvesting(tick: Int) { return }
+    open fun needsHarvesting(
+        yearTick: Int,
+        actionsNeeded: MutableList<ActionType>,
+        lateActions: MutableList<ActionType>
+    ) { return }
 
     /**
      * check if the plant needs mowing in this tick
@@ -94,12 +98,12 @@ abstract class Plant {
     /**
      * checks if the sown tick of the plant is in late period
      */
-    open fun checkLateSowing() { return }
+    open fun checkLateSowing(lateActions: MutableList<ActionType>) { return }
 
     /**
      * checks if the plant needs weeding in this tick
      */
-    open fun needsWeeding(tick: Int) { return }
+    open fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) { return }
 
     /**
      * updates harvest estimate based on late sowing penalty
