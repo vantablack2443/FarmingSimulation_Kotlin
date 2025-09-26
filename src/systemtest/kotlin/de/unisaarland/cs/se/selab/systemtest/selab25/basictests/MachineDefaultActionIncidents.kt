@@ -33,14 +33,14 @@ class MachineDefaultActionIncidents : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Machine: Machine 4 is finished and returns to the shed at 7.")
         skipLines(1) // unloads at shed
         assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
-        assertNextLine("[IMPORTANT] Incident: Incident 10 of type BROKEN_MACHINE happened and affected tiles: 1.")
-        assertNextLine("[IMPORTANT] Incident: Incident 11 of type BROKEN_MACHINE happened and affected tiles: 1.")
-        assertNextLine("[IMPORTANT] Incident: Incident 12 of type BROKEN_MACHINE happened and affected tiles: 7.")
-        assertNextLine("[IMPORTANT] Incident: Incident 13 of type CITY_EXPANSION happened and affected tiles: 15.")
-        assertNextLine("[IMPORTANT] Incident: Incident 14 of type CITY_EXPANSION happened and affected tiles: 16.")
-        assertNextLine("[IMPORTANT] Incident: Incident 15 of type CITY_EXPANSION happened and affected tiles: 17.")
-        assertNextLine("[IMPORTANT] Incident: Incident 17 of type CITY_EXPANSION happened and affected tiles: 26.")
-        assertNextLine("[IMPORTANT] Incident: Incident 18 of type CITY_EXPANSION happened and affected tiles: 29.")
-        assertNextLine("[IMPORTANT] Incident: Incident 140 of type DROUGHT happened and affected tiles: 14.")
+        assertNextLine("[IMPORTANT] Incident: Incident 10 of type BROKEN_MACHINE happened and affected tiles 1.")
+        assertNextLine("[IMPORTANT] Incident: Incident 11 of type BROKEN_MACHINE happened and affected tiles 1.")
+        assertNextLine("[IMPORTANT] Incident: Incident 12 of type BROKEN_MACHINE happened and affected tiles 7.")
+        assertNextLine("[IMPORTANT] Incident: Incident 13 of type CITY_EXPANSION happened and affected tiles 15.")
+        assertNextLine("[IMPORTANT] Incident: Incident 14 of type CITY_EXPANSION happened and affected tiles 16.")
+        assertNextLine("[IMPORTANT] Incident: Incident 15 of type CITY_EXPANSION happened and affected tiles 17.")
+        assertNextLine("[IMPORTANT] Incident: Incident 17 of type CITY_EXPANSION happened and affected tiles 26.")
+        assertNextLine("[IMPORTANT] Incident: Incident 18 of type CITY_EXPANSION happened and affected tiles 29.")
+        assertNextLine("[IMPORTANT] Incident: Incident 140 of type DROUGHT happened and affected tiles 14.")
     }
 }
