@@ -195,6 +195,7 @@ class FarmParser(private val simulationData: SimulationData) {
         // Each farmstead, field, plantation has to belong to exactly one farm.
         // Checks using the farmID on the tile + adds to a set to find the tiles unaccounted for the map
         val farmsteadTiles = parseFarmsteadTiles(farm, id)
+
         val fieldTiles = parseFieldTiles(farm, id)
         val plantationTiles = parsePlantationTiles(farm, id)
 
