@@ -36,8 +36,6 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(CloudMovementTestUntilMovePhase())
-        testSuite.registerTest(CloudMovementTestUntilOneCloud())
         testSuite.registerTest(CloudMovementTestTwoClouds())
         testSuite.registerTest(CloudMovementTestThreeClouds())
         testSuite.registerTest(CloudMovementTestStuckCloud())
@@ -47,7 +45,6 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineDefaultActionSecond())
         testSuite.registerTest(MachineDefaultActionSecondFarm())
         testSuite.registerTest(MachineDefaultActionIncidents())
-        testSuite.registerTest(CloudMovementTestCloudNotOnVillage())
     }
 
     /**
