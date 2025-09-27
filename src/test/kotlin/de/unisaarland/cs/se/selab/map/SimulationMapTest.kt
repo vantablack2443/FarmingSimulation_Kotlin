@@ -14,6 +14,7 @@ package de.unisaarland.cs.se.selab.map
  import org.mockito.kotlin.mock
  import org.mockito.kotlin.whenever
  import kotlin.test.assertEquals
+ import kotlin.test.assertFalse
  import kotlin.test.assertNull
  import kotlin.test.assertTrue
 
@@ -29,9 +30,11 @@ package de.unisaarland.cs.se.selab.map
                 12,
                 Coordinate(-1, -1),
                 TileType.FARMSTEAD,
-                TileShape.OCTAGONAL
+                TileShape.SQUARE
             )
+
         )
+        tiles[0].farmID=1
         tiles.add(
             Tile(
                 13,
@@ -58,7 +61,9 @@ package de.unisaarland.cs.se.selab.map
                 TileShape.OCTAGONAL
 
             )
+
         )
+        tiles[3].farmID=1
         tiles.add(
             Tile(
                 103,
@@ -93,7 +98,9 @@ package de.unisaarland.cs.se.selab.map
                 TileType.FIELD,
                 TileShape.OCTAGONAL
             )
+
         )
+        tiles[7].farmID=1
         tiles.add(
             Tile(
                 1000,
@@ -158,7 +165,7 @@ package de.unisaarland.cs.se.selab.map
         val machine2 = mock<Machine>()
         val tile1 = Tile(1, Coordinate(4, 2), TileType.FIELD, TileShape.OCTAGONAL)
         val tile2 = Tile(2, Coordinate(6, 2), TileType.VILLAGE, TileShape.OCTAGONAL)
-        val tile6 = Tile(6, Coordinate(8, 2), TileType.VILLAGE, TileShape.OCTAGONAL)
+        val tile6 = Tile(6, Coordinate(8, 2), TileType.FIELD, TileShape.OCTAGONAL)
         whenever(machine1.currentHarvest).thenReturn(PlantAndHarvest(PlantType.PUMPKIN, 190999))
         whenever(machine2.currentHarvest).thenReturn(null)
         whenever(machine1.currentTile).thenReturn(tile1)
@@ -170,7 +177,7 @@ package de.unisaarland.cs.se.selab.map
         }
         val map1 = SimulationMap(tilesMap)
 
-        assertNull(map1.isReachable(machine1, tile6))
+        assertFalse(map1.isReachable(machine1, tile6))
         assertTrue(map1.isReachable(machine2, tile6))
     }
 
