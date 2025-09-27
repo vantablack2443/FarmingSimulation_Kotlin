@@ -160,10 +160,15 @@ class SimulationMap(
         }
         val removedTiles = mutableListOf<Tile>()
         for (tile in reach) {
-            if (tile.farmID != machine.farmID || tile.category == TileType.FOREST) {
+            if (tile.category == TileType.FOREST) {
                 removedTiles += tile
                 // reach -= tile
                 // remove tile from reach if it belongs to other farm or is FOREST
+            }
+            if ((tile.category == TileType.FIELD || tile.category == TileType.PLANTATION) &&
+                tile.farmID != machine.farmID
+            ) {
+                removedTiles += tile
             }
             if (carryingHarvest && tile.category == TileType.VILLAGE) {
                 removedTiles += tile
