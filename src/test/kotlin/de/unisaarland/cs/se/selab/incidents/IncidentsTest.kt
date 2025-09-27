@@ -1,8 +1,7 @@
 package de.unisaarland.cs.se.selab.incidents
 
-/*
-
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
@@ -167,7 +166,6 @@ class IncidentsTest {
         assertTrue { mockMachine.isStuck }
     }
 
-    /*
     @Test
     fun brokenMachineTest() {
         val brokenMachine = BrokenMachine(
@@ -179,9 +177,9 @@ class IncidentsTest {
         )
         brokenMachine.execute(mockMap, 17)
         assertTrue(mockMachine.brokenFor != null)
-        assertEquals(Duration(17, 20), mockMachine.brokenFor)
+        assertEquals(17, mockMachine.brokenFor!!.startTick)
+        assertEquals(20, mockMachine.brokenFor!!.endTick)
     }
-     */
 
     @Test
     fun beeHappyTest() {
@@ -220,5 +218,3 @@ class IncidentsTest {
         assertEquals(1.35, pumpkin.pollination)
     }
 }
-
- */
