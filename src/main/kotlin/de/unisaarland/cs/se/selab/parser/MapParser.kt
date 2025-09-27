@@ -171,6 +171,10 @@ class MapParser(private val simData: SimulationData) {
                 ?: throw ValidationException("Missing tile direction while airflow is true")
             val direction = Direction.getDirectionByAngle(angle)
             return Pair(true, direction)
+        } else {
+            if (tile["direction"] != null) {
+                throw ValidationException("Tile direction present while airflow is false")
+            }
         }
         return Pair(false, null)
     }

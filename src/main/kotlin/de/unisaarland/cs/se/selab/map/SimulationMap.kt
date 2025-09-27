@@ -36,6 +36,9 @@ class SimulationMap(
      * gets all tiles in the specified radius of given tile
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
+        if (radius == 0) {
+            return listOf(tile)
+        }
         val cord = tile.location
 
         val tiles: MutableList<Tile> = mutableListOf()
@@ -51,7 +54,7 @@ class SimulationMap(
                 }
             }
         }
-
+//
 //        val neighbors = cord.getNeighborsInRadius(radius)
 //        val tiles = mutableListOf<Tile>()
 //        for (n in neighbors) {

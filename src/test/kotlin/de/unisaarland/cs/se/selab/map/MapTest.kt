@@ -1,10 +1,8 @@
 package de.unisaarland.cs.se.selab.map
 
-/*
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
-import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -12,8 +10,6 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
 
 class MapTest {
     private lateinit var map: SimulationMap
@@ -81,128 +77,127 @@ class MapTest {
         assertFalse(tilesRadius2.contains(edgeTile), "Edge tile should not be included in its own radius")
     }
 
-    @Test
-    fun testIsReachable() {
-        // Create tiles
-        val tileA = Tile(
-            100,
-            Coordinate(10, 4),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileB = Tile(
-            101,
-            Coordinate(10, 2),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileC = Tile(
-            102,
-            Coordinate(10, 6),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileD = Tile(
-            103,
-            Coordinate(8, 4),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileShed = Tile(
-            104,
-            Coordinate(9, 5),
-            TileType.FARMSTEAD,
-            TileShape.SQUARE
-        )
-        val tiles = mutableMapOf(
-            tileA.location to tileA,
-            tileB.location to tileB,
-            tileC.location to tileC,
-            tileD.location to tileD,
-            tileShed.location to tileShed
-        )
-        val testMap = SimulationMap(tiles)
-
-        // Use Mockito to mock the real Machine class
-        val machine = mock<Machine> {
-            on { currentTile } doReturn tileShed
-            on { farmID } doReturn 1
-            on { currentHarvest } doReturn null
-            on { homeShed } doReturn tileShed
-        }
-
-        // Positive cases
-        assertTrue(testMap.isReachable(machine, tileA), "Tile A should be reachable from A")
-        assertTrue(testMap.isReachable(machine, tileB), "Tile B should be reachable from A")
-        assertTrue(testMap.isReachable(machine, tileC), "Tile C should be reachable from A")
-        assertTrue(testMap.isReachable(machine, tileD), "Tile D should be reachable from A")
-
-        // Negative case: unreachable tile
-        val tileFar = Tile(
-            200,
-            Coordinate(20, 20),
-            TileType.FIELD,
-            TileShape.OCTAGONAL
-        )
-        assertFalse(testMap.isReachable(machine, tileFar), "TileFar should not be reachable")
-    }
-
-    @Test
-    fun testGetReachableTiles() {
-        // Create tiles
-        val tileA = Tile(
-            100,
-            Coordinate(10, 4),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileB = Tile(
-            101,
-            Coordinate(10, 2),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileC = Tile(
-            102,
-            Coordinate(10, 6),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileD = Tile(
-            103,
-            Coordinate(8, 4),
-            TileType.ROAD,
-            TileShape.OCTAGONAL
-        )
-        val tileShed = Tile(
-            104,
-            Coordinate(9, 5),
-            TileType.FARMSTEAD,
-            TileShape.SQUARE
-        )
-        val tiles = mutableMapOf(
-            tileA.location to tileA,
-            tileB.location to tileB,
-            tileC.location to tileC,
-            tileD.location to tileD,
-            tileShed.location to tileShed
-        )
-        val testMap = SimulationMap(tiles)
-
-        // Use Mockito to mock the real Machine class
-        val machine = mock<Machine> {
-            on { currentTile } doReturn tileShed
-            on { farmID } doReturn 1
-            on { currentHarvest } doReturn null
-            on { homeShed } doReturn tileShed
-        }
-
-        val reachableTilesWithoutHarvest = testMap.getReachableTiles(machine, -1, false)
-        assertTrue(reachableTilesWithoutHarvest.contains(tileA))
-        assertTrue(reachableTilesWithoutHarvest.contains(tileB))
-        assertTrue(reachableTilesWithoutHarvest.contains(tileC))
-        assertTrue(reachableTilesWithoutHarvest.contains(tileD))
-        assertTrue(reachableTilesWithoutHarvest.contains(tileShed))
-    }
+//    @Test
+//    fun testIsReachable() {
+//        // Create tiles
+//        val tileA = Tile(
+//            100,
+//            Coordinate(10, 4),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileB = Tile(
+//            101,
+//            Coordinate(10, 2),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileC = Tile(
+//            102,
+//            Coordinate(10, 6),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileD = Tile(
+//            103,
+//            Coordinate(8, 4),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileShed = Tile(
+//            104,
+//            Coordinate(9, 5),
+//            TileType.FARMSTEAD,
+//            TileShape.SQUARE
+//        )
+//        val tiles = mutableMapOf(
+//            tileA.location to tileA,
+//            tileB.location to tileB,
+//            tileC.location to tileC,
+//            tileD.location to tileD,
+//            tileShed.location to tileShed
+//        )
+//        val testMap = SimulationMap(tiles)
+//
+//        // Use Mockito to mock the real Machine class
+//        val machine = mock<Machine> {
+//            on { currentTile } doReturn tileShed
+//            on { farmID } doReturn 1
+//            on { currentHarvest } doReturn null
+//            on { homeShed } doReturn tileShed
+//        }
+//
+//        // Positive cases
+//        assertTrue(testMap.isReachable(machine, tileA), "Tile A should be reachable from A")
+//        assertTrue(testMap.isReachable(machine, tileB), "Tile B should be reachable from A")
+//        assertTrue(testMap.isReachable(machine, tileC), "Tile C should be reachable from A")
+//        assertTrue(testMap.isReachable(machine, tileD), "Tile D should be reachable from A")
+//
+//        // Negative case: unreachable tile
+//        val tileFar = Tile(
+//            200,
+//            Coordinate(20, 20),
+//            TileType.FIELD,
+//            TileShape.OCTAGONAL
+//        )
+//        assertFalse(testMap.isReachable(machine, tileFar), "TileFar should not be reachable")
+//    }
+//
+//    @Test
+//    fun testGetReachableTiles() {
+//        // Create tiles
+//        val tileA = Tile(
+//            100,
+//            Coordinate(10, 4),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileB = Tile(
+//            101,
+//            Coordinate(10, 2),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileC = Tile(
+//            102,
+//            Coordinate(10, 6),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileD = Tile(
+//            103,
+//            Coordinate(8, 4),
+//            TileType.ROAD,
+//            TileShape.OCTAGONAL
+//        )
+//        val tileShed = Tile(
+//            104,
+//            Coordinate(9, 5),
+//            TileType.FARMSTEAD,
+//            TileShape.SQUARE
+//        )
+//        val tiles = mutableMapOf(
+//            tileA.location to tileA,
+//            tileB.location to tileB,
+//            tileC.location to tileC,
+//            tileD.location to tileD,
+//            tileShed.location to tileShed
+//        )
+//        val testMap = SimulationMap(tiles)
+//
+//        // Use Mockito to mock the real Machine class
+//        val machine = mock<Machine> {
+//            on { currentTile } doReturn tileShed
+//            on { farmID } doReturn 1
+//            on { currentHarvest } doReturn null
+//            on { homeShed } doReturn tileShed
+//        }
+//
+//        val reachableTilesWithoutHarvest = testMap.getReachableTiles(machine, -1, false)
+//        assertTrue(reachableTilesWithoutHarvest.contains(tileA))
+//        assertTrue(reachableTilesWithoutHarvest.contains(tileB))
+//        assertTrue(reachableTilesWithoutHarvest.contains(tileC))
+//        assertTrue(reachableTilesWithoutHarvest.contains(tileD))
+//        assertTrue(reachableTilesWithoutHarvest.contains(tileShed))
+//    }
 }
-*/
