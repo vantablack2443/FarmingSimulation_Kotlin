@@ -45,7 +45,8 @@ class MachineDefaultAction : ExampleSystemTestExtension() {
         // next tick
         skipLines(2) // farm 1 can't do anything
         assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
-        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 28 for 8 days.") // can't go back
+        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 28 for 8 days.")
+        skipLines(1) // collected harvest but can't go back
         assertNextLine("[IMPORTANT] Farm Machine: Machine 4 is finished but failed to return.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
     }
