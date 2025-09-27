@@ -58,7 +58,7 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
 
         // cloud 11 rains down on forest and dissipates
         assertNextLine("[IMPORTANT] Cloud Rain: Cloud 11 on tile 22 rained down 8930 L water.")
-        assertNextLine("[INFO] Cloud  Dissipation: Cloud 11 dissipates on tile 22.")
+        assertNextLine("[INFO] Cloud Dissipation: Cloud 11 dissipates on tile 22.")
 
         // end of cloud phase
         assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 38.")

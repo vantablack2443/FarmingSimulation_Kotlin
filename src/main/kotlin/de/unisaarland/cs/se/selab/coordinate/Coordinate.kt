@@ -91,6 +91,7 @@ data class Coordinate(
             }
             neighbors.addAll(newNeighbors)
         }
+        neighbors.removeIf { it.x == this.x && it.y == this.y }
         return neighbors
     }
 }

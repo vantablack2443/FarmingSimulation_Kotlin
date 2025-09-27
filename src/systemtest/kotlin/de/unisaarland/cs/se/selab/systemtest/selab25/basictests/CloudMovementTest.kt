@@ -60,7 +60,7 @@ class CloudMovementTest : ExampleSystemTestExtension() {
 
         // end of cloud phase
         assertNextLine("[DEBUG] Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 48.")
-//        skipLines(3) // skip farm start and end
+        skipLines(2) // skip farm start and end
         // cloud creation incident
         assertNextLine(
             "[IMPORTANT] Incident: Incident 140 of type CLOUD_CREATION happened " +
