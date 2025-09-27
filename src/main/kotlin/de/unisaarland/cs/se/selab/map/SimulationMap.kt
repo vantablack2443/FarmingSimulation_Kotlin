@@ -109,7 +109,7 @@ class SimulationMap(
     fun isReachable(machine: Machine, destination: Tile): Boolean {
         val carryingHarvest: Boolean = machine.currentHarvest != null
         val reachable = getReachableTiles(machine, -1, carryingHarvest)
-        return destination in reachable
+        return reachable.any { it.id == destination.id }
     }
 
     /**
