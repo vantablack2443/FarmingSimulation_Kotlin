@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
+import kotlin.math.abs
 
 /**
  * Map Class
@@ -35,8 +36,11 @@ class SimulationMap(
      * gets all tiles in the specified radius of given tile
      */
     fun getTilesByRadius(tile: Tile, radius: Int): List<Tile> {
+//        if (radius == 0) {
+//            return listOf(tile)
+//        }
         val cord = tile.location
-        /*
+
         val tiles: MutableList<Tile> = mutableListOf()
         for (i in (cord.x - (radius * 2))..(cord.x + (radius * 2))) {
             for (j in (cord.y - (radius * 2))..(cord.y + (radius * 2))) {
@@ -49,15 +53,16 @@ class SimulationMap(
                     tiles.add(newTile)
                 }
             }
-        }*/
-        val neighbors = cord.getNeighborsInRadius(radius)
-        val tiles = mutableListOf<Tile>()
-        for (n in neighbors) {
-            val newTile = getTileByCoordinate(n)
-            if (newTile != null) {
-                tiles.add(newTile)
-            }
         }
+//
+//        val neighbors = cord.getNeighborsInRadius(radius)
+//        val tiles = mutableListOf<Tile>()
+//        for (n in neighbors) {
+//            val newTile = getTileByCoordinate(n)
+//            if (newTile != null) {
+//                tiles.add(newTile)
+//            }
+//        }
         return tiles
     }
 

@@ -92,6 +92,9 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
                 irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
                 mowingHandler.startPhase(farm, machine, yearTick)
             }
+            // Clear both hashmaps at the end of the phase for the farm
+            farm.machineHashMap.clear()
+            farm.tileHashMap.clear()
             // Log end farm actions
             Logger.logFarmEnd(farm.getId())
         }

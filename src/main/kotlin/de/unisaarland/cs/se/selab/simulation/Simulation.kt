@@ -264,8 +264,8 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
                     floor(ALMOND_HARVEST * ALMOND_LATE_HARVEST_PENALTY).toInt()
             }
         } else {
-            applePlantations.forEach { it.plant?.harvestEstimate = 0 }
-            almondPlantations.forEach { it.plant?.harvestEstimate = 0 }
+            applePlantations.forEach { it.plant?.harvestEstimate = APPLE_HARVEST }
+            almondPlantations.forEach { it.plant?.harvestEstimate = ALMOND_HARVEST }
         }
     }
 
@@ -279,7 +279,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
                     floor(CHERRY_HARVEST * CHERRY_LATE_HARVEST_PENALTY).toInt()
             }
         } else {
-            cherryPlantations.forEach { it.plant?.harvestEstimate = 0 }
+            cherryPlantations.forEach { it.plant?.harvestEstimate = CHERRY_HARVEST }
         }
     }
 
@@ -307,7 +307,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
                 }
             }
             else -> {
-                grapePlantations.forEach { it.plant?.harvestEstimate = 0 }
+                grapePlantations.forEach { it.plant?.harvestEstimate = GRAPE_HARVEST }
             }
         }
     }
