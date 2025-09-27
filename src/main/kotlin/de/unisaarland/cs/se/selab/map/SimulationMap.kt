@@ -164,11 +164,13 @@ class SimulationMap(
                 removedTiles += tile
                 // reach -= tile
                 // remove tile from reach if it belongs to other farm or is FOREST
-            } else if ((tile.category == TileType.FIELD || tile.category == TileType.PLANTATION) &&
+            }
+            if ((tile.category == TileType.FIELD || tile.category == TileType.PLANTATION) &&
                 tile.farmID != machine.farmID
             ) {
                 removedTiles += tile
-            } else if (carryingHarvest && tile.category == TileType.VILLAGE) {
+            }
+            if (carryingHarvest && tile.category == TileType.VILLAGE) {
                 removedTiles += tile
                 // reach -= tile
                 // remove VILLAGE tiles if machine is loaded
