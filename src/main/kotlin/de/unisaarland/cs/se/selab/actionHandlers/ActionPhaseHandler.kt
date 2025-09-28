@@ -107,17 +107,17 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
         }
 
         // WEED FIELDS
-        if (machine.actions.contains(ActionType.WEEDING) && machine.id in farm.machineHashMap) {
+        if (machine.actions.contains(ActionType.WEEDING) && machine.id !in farm.machineHashMap) {
             weedingHandler.startPhase(farm, machine)
         }
 
         // IRRIGATE PLANTATIONS
-        if (machine.actions.contains(ActionType.IRRIGATING) && machine.id in farm.machineHashMap) {
+        if (machine.actions.contains(ActionType.IRRIGATING) && machine.id !in farm.machineHashMap) {
             irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
         }
 
         // MOW PLANTATIONS
-        if (machine.actions.contains(ActionType.MOWING) && machine.id in farm.machineHashMap) {
+        if (machine.actions.contains(ActionType.MOWING) && machine.id !in farm.machineHashMap) {
             mowingHandler.startPhase(farm, machine, yearTick)
         }
     }
