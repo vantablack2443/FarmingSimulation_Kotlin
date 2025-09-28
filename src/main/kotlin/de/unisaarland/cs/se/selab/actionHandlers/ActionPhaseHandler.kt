@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger
+import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 
 /**
@@ -89,29 +90,35 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
                     continue
                 }
 
-                // IRRIGATE FIELDS
-                if (machine.actions.contains(
-                        ActionType.IRRIGATING
-                    )
-                ) { irrigationHandler.startPhase(farm, machine, TileType.FIELD) }
-
-                // WEED FIELDS
-                if (machine.actions.contains(ActionType.WEEDING)) { weedingHandler.startPhase(farm, machine) }
-
-                // IRRIGATE PLANTATIONS
-                if (machine.actions.contains(
-                        ActionType.IRRIGATING
-                    )
-                ) { irrigationHandler.startPhase(farm, machine, TileType.PLANTATION) }
-
-                // MOW PLANTATIONS
-                if (machine.actions.contains(ActionType.MOWING)) { mowingHandler.startPhase(farm, machine, yearTick) }
+                assignMachine(machine, farm, yearTick)
             }
             // Clear both hashmaps at the end of the phase for the farm
             farm.machineHashMap.clear()
             farm.tileHashMap.clear()
             // Log end farm actions
             Logger.logFarmEnd(farm.getId())
+        }
+    }
+
+    private fun assignMachine(machine: Machine, farm: Farm, yearTick: Int) {
+        // IRRIGATE FIELDS
+        if (machine.actions.contains(ActionType.IRRIGATING)) {
+            irrigationHandler.startPhase(farm, machine, TileType.FIELD)
+        }
+
+        // WEED FIELDS
+        if (machine.actions.contains(ActionType.WEEDING) && machine.id in farm.machineHashMap) {
+            weedingHandler.startPhase(farm, machine)
+        }
+
+        // IRRIGATE PLANTATIONS
+        if (machine.actions.contains(ActionType.IRRIGATING) && machine.id in farm.machineHashMap) {
+            irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
+        }
+
+        // MOW PLANTATIONS
+        if (machine.actions.contains(ActionType.MOWING) && machine.id in farm.machineHashMap) {
+            mowingHandler.startPhase(farm, machine, yearTick)
         }
     }
 }
