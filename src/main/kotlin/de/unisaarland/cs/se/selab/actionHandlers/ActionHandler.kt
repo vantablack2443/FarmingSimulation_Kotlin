@@ -125,17 +125,13 @@ abstract class ActionHandler(
      */
     fun getOperableTiles(farm: Farm, actionType: ActionType): MutableList<Tile> {
         val plantationTiles = farm.getPlantation()
-        if (plantationTiles.isNotEmpty()) {
-            plantationTiles.filter { it.id !in farm.tileHashMap }
-                .filter { it.plant != null && it.actionsNeeded.contains(actionType) }
-                .sortedBy { it.id }
-        }
+            .filter { it.id !in farm.tileHashMap }
+            .filter { it.plant != null && it.actionsNeeded.contains(actionType) }
+            .sortedBy { it.id }
         val fieldTiles = farm.getFields()
-        if (fieldTiles.isNotEmpty()) {
-            fieldTiles.filter { it.id !in farm.tileHashMap }
-                .filter { it.plant != null && it.actionsNeeded.contains(actionType) }
-                .sortedBy { it.id }
-        }
+            .filter { it.id !in farm.tileHashMap }
+            .filter { it.plant != null && it.actionsNeeded.contains(actionType) }
+            .sortedBy { it.id }
         return (plantationTiles + fieldTiles).toMutableList()
     }
 
