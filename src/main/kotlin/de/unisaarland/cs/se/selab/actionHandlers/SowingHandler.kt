@@ -48,21 +48,6 @@ class SowingHandler(
         farm.removeSowingPlans(plansExecuted, simTick)
     }
 
-    override fun getOperableTiles(
-        farm: Farm,
-        plant: PlantType,
-        tick: Int
-    ): List<Tile> {
-        val operableTiles = mutableListOf<Tile>()
-        for (tile in farm.getFields()) {
-            // ???? WHY DOES IsSowable REQUIRE THE PLANT PARAMETER
-            if (tile.currentCrop == null && tile.isSowable(plant, tick)) {
-                operableTiles.add(tile)
-            }
-        }
-        return operableTiles
-    }
-
     private fun getSowingPlans(farm: Farm, sowablePlantTypes: List<PlantType>, simTick: Int): List<SowingPlan> {
         val sowingPlans = mutableListOf<SowingPlan>()
         val sowingPlansAvailable = farm.getSowingPlansByTick(simTick)
@@ -82,6 +67,21 @@ class SowingHandler(
 
         // The sowing plans should be executed in order of tick then id, for the given plantTypes
         return sowingPlans
+    }
+
+    override fun getOperableTiles(
+        farm: Farm,
+        plant: PlantType,
+        tick: Int
+    ): List<Tile> {
+        val operableTiles = mutableListOf<Tile>()
+        for (tile in farm.getFields()) {
+            // ???? WHY DOES IsSowable REQUIRE THE PLANT PARAMETER
+            if (tile.currentCrop == null && tile.isSowable(plant, tick)) {
+                operableTiles.add(tile)
+            }
+        }
+        return operableTiles
     }
 
     private fun getTilesToSow(farm: Farm, plan: SowingPlan, simTick: Int): List<Tile> {
@@ -126,7 +126,7 @@ class SowingHandler(
                 performAction(machine, tile, yearTick, plan)
                 farm.tileHashMap.add(tile.id)
                 continueAction(machine, tilesToSow, plan, farm, yearTick)
-                farm.machineHashMap.add(machine.id)
+                // farm.machineHashMap.add(machine.id) added by getMachine
                 returnToShed(machine, farm)
             }
         }
@@ -141,6 +141,9 @@ class SowingHandler(
         // Update machine's location
         machine.updateElapsedTime()
         machine.currentTile = tile
+
+        // Remove ACTION SOW from the actionsNeeded list
+        tile.actionsNeeded.remove(ActionType.SOWING)
 
         // Creates plant, sets tile's plant to the created plant, sets tile's current crop to the plant type
         val plant = Plant.createPlant(plan.getPlant())
