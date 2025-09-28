@@ -63,7 +63,7 @@ class SimulationMap(
                 tiles.add(newTile)
             }
         }
-        return tiles
+        return tiles.sortedBy { it.id }
     }
 
     /**
@@ -142,7 +142,7 @@ class SimulationMap(
                 }
             }
         }
-        return visited.toList()
+        return visited.sortedBy { it.id }
     }
 
     /**
@@ -154,6 +154,7 @@ class SimulationMap(
             tiles.values.toMutableList()
             // whole map is considered when radius is -1
         } else {
+            // Assumes getTilesByRadius returns a sorted List
             getTilesByRadius(machine.currentTile, radius).toMutableList()
             // only tiles in given radius considered otherwise
         }
@@ -187,7 +188,7 @@ class SimulationMap(
         val carryingHarvest: Boolean = machine.currentHarvest != null
         val reachable = getReachableTiles(machine, 2, carryingHarvest)
         val possibleTiles = planTiles.intersect(reachable.toSet()).sortedBy { it.id }
-        if (possibleTiles.isNotEmpty()) return possibleTiles.first()
+        if (possibleTiles.isNotEmpty()) return possibleTiles.minByOrNull { it.id }
         return null
     }
 
@@ -201,7 +202,7 @@ class SimulationMap(
         val reachableSheds = farmSheds.intersect(reach.toSet())
         if (machine.homeShed in reachableSheds) return machine.homeShed
         // assumes farm sheds are ordered by id
-        if (!reachableSheds.isEmpty()) return reachableSheds.first()
+        if (!reachableSheds.isEmpty()) return reachableSheds.minByOrNull { it.id }
         return null
     }
 
