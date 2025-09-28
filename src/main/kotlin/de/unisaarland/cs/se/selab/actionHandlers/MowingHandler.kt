@@ -85,6 +85,28 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
                 }
             }
         }
+//
+//        if (!machine.canPerform()) {
+//            machine.currentTile = machine.homeShed
+//            machine.resetElapsedTime()
+//        }
+//
+//        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
+//        val neighborTiles = tilesInRadius
+//            .filter { it in operableTiles }
+//            .filter { simulationMap.isReachable(machine, it) }
+//            .filter { it.id !in farm.tileHashMap }
+//            .sortedBy { it.id } // Sort by ID
+//
+//        val nextTile = neighborTiles.firstOrNull()
+//        if (nextTile != null) {
+//            farm.tileHashMap.add(nextTile.id)
+//            performAction(machine, nextTile)
+//            continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
+//        } else {
+//            machine.currentTile = machine.homeShed
+//            machine.resetElapsedTime()
+//        }
     }
 
     /**
