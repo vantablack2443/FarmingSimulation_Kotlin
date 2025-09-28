@@ -43,18 +43,19 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             if (tile.id in farm.tileHashMap || plantType == null) {
                 continue // Skip if tile is already handled
             }
-            if (plantsThisMachineCanWorkOn.contains(plantType)) {
+            // Only allow machines that can perform WEEDING
+            if (plantsThisMachineCanWorkOn.contains(plantType) && machine.actions.contains(ActionType.WEEDING)) {
                 if (simulationMap.isReachable(machine, tile)) {
                     performAction(machine, tile)
                     continueAction(machine, tile, farm, operableTiles)
                     farm.machineHashMap.add(machine.id)
+                    logMachineFinish(machine.farmID, machine.id)
                     machine.resetElapsedTime()
                     break
                 }
             }
             // Perform action with the given machine
         }
-        logMachineFinish(machine.farmID, machine.id)
     }
 
     /**
