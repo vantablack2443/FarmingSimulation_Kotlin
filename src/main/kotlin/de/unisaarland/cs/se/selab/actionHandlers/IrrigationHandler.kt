@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
@@ -25,11 +26,6 @@ class IrrigationHandler(
      * checks for the target tile to perform actions and also for action continuation
      */
     fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
-        // checks if machine is in hashmap
-        if (machine.id in farm.machineHashMap) {
-            return
-        }
-
         val operableTiles = getOperableTiles(farm, tileType).toMutableList()
         if (operableTiles.isEmpty()) {
             return
@@ -74,19 +70,12 @@ class IrrigationHandler(
         }
     }
 
-    override fun startPhase(
-        farm: Farm,
-        machine: Machine,
-        yearTick: Int
-    ) {
-        return
-    }
-
     /**
      * Performs the irrigation action on the specified tile using the given machine.
      */
     override fun performAction(machine: Machine, tile: Tile) {
         // call log farming action here
+        Logger.logFarmAction(machine.id, ActionType.IRRIGATING, tile.id, machine.duration)
         machine.currentTile = tile
         machine.updateElapsedTime()
         val currentMoisture = tile.currentMoisture ?: error("Current moisture null or invalid")
@@ -96,21 +85,13 @@ class IrrigationHandler(
         tile.actionsNeeded.remove(ActionType.IRRIGATING)
     }
 
-    override fun performAction(
-        machine: Machine,
-        tile: Tile,
-        yearTick: Int
-    ) {
-        return
-    }
-
     /**
      * Finds the target tile with the lowest ID that is reachable by the machine from the list of operable tiles.
      */
     private fun findTargetTile(m: Machine, operableTiles: List<Tile>): Tile? {
-        operableTiles.filter { tile -> simulationMap.isReachable(m, tile) }
-        if (operableTiles.isEmpty()) return null
-        return operableTiles.minBy { it.id }
+        val reachableTiles = operableTiles.filter { tile -> simulationMap.isReachable(m, tile) }
+        if (reachableTiles.isEmpty()) return null
+        return reachableTiles.minBy { it.id }
     }
 
     /**
@@ -126,7 +107,6 @@ class IrrigationHandler(
             tiles = farm.getPlantation()
         }
         for (tile in tiles) {
-            if (!tile.hasPlantGrowing()) continue
             if (tile.actionsNeeded.contains(ActionType.IRRIGATING) && tile.id !in farm.tileHashMap) {
                 operableTiles.add(tile)
             }
@@ -154,6 +134,19 @@ class IrrigationHandler(
      * These functions aren't implemented inside IrrigationHandler, probably declare them as open in
      * ActionHandler and then override them in the classes that need them.
      */
+
+    override fun performAction(
+        machine: Machine,
+        tile: Tile,
+        yearTick: Int
+    ) {
+        return
+    }
+
+    override fun startPhase(farm: Farm, machine: Machine, yearTick: Int) {
+        return
+    }
+
     override fun getOperableTiles(farm: Farm, plant: PlantType, tick: Int): List<Tile> {
         return emptyList()
     }
@@ -169,10 +162,4 @@ class IrrigationHandler(
     override fun getOperableTiles(farm: Farm): List<Tile> {
         return emptyList()
     }
-
-    /** why was this deleted in actionhandler?
-     * override fun getOperableTiles(farm: Farm, plant: PlantType): List<Tile> {
-     *         error("performAction() is not implemented in IrrigationHandler")
-     *     }
-     */
 }
