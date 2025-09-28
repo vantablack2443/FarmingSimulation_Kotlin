@@ -56,7 +56,7 @@ class SowingHandler(
         val operableTiles = mutableListOf<Tile>()
         for (tile in farm.getFields()) {
             // ???? WHY DOES IsSowable REQUIRE THE PLANT PARAMETER
-            if (tile.currentCrop == plant && tile.isSowable(plant, tick)) {
+            if (tile.currentCrop == null && tile.isSowable(plant, tick)) {
                 operableTiles.add(tile)
             }
         }
@@ -225,7 +225,7 @@ class SowingHandler(
      */
     private fun getNextTile(tilesToSow: List<Tile>, farm: Farm): Tile? {
         for (tile in tilesToSow) {
-            if (!farm.tileHashMap.contains(tile.id)) {
+            if (tile.id !in farm.tileHashMap) {
                 farm.tileHashMap.add(tile.id)
                 return tile
             }
