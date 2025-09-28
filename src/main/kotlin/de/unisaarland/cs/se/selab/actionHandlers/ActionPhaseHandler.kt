@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger
@@ -87,10 +88,24 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
                 if (machine.isStuck || machine.id in farm.machineHashMap) {
                     continue
                 }
-                irrigationHandler.startPhase(farm, machine, TileType.FIELD)
-                weedingHandler.startPhase(farm, machine)
-                irrigationHandler.startPhase(farm, machine, TileType.PLANTATION)
-                mowingHandler.startPhase(farm, machine, yearTick)
+
+                // IRRIGATE FIELDS
+                if (machine.actions.contains(
+                        ActionType.IRRIGATING
+                    )
+                ) { irrigationHandler.startPhase(farm, machine, TileType.FIELD) }
+
+                // WEED FIELDS
+                if (machine.actions.contains(ActionType.WEEDING)) { weedingHandler.startPhase(farm, machine) }
+
+                // IRRIGATE PLANTATIONS
+                if (machine.actions.contains(
+                        ActionType.IRRIGATING
+                    )
+                ) { irrigationHandler.startPhase(farm, machine, TileType.PLANTATION) }
+
+                // MOW PLANTATIONS
+                if (machine.actions.contains(ActionType.MOWING)) { mowingHandler.startPhase(farm, machine, yearTick) }
             }
             // Clear both hashmaps at the end of the phase for the farm
             farm.machineHashMap.clear()
