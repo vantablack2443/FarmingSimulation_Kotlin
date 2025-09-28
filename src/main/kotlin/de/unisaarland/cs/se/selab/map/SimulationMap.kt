@@ -150,12 +150,11 @@ class SimulationMap(
      * (Helper Function)
      */
     private fun getAccessibleTiles(machine: Machine, radius: Int, carryingHarvest: Boolean): List<Tile> {
-        val reach: MutableList<Tile> = mutableListOf()
-        reach += if (radius == -1) {
-            tiles.values.toList()
+        val reach = if (radius == -1) {
+            tiles.values.toMutableList()
             // whole map is considered when radius is -1
         } else {
-            getTilesByRadius(machine.currentTile, radius)
+            getTilesByRadius(machine.currentTile, radius).toMutableList()
             // only tiles in given radius considered otherwise
         }
         val removedTiles = mutableListOf<Tile>()
