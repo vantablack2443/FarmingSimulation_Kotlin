@@ -14,7 +14,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 const val FALLOW_DURATION = 4
 
 /**
- * handler for performing HARVESTING
+ * handler for performing HARVEwSTING
  */
 class HarvestingHandler(
     simulationMap: SimulationMap,
@@ -128,11 +128,11 @@ class HarvestingHandler(
         }
         if (tile.category == TileType.FIELD) {
             tile.plant = null
+            tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
         }
         tile.actionsNeeded.remove(ActionType.HARVESTING)
         farm.tileHashMap.add(tile.id)
-        // not a normal setter because it takes the yearTick and base off the duration on that
-        tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
+
     }
 
 //    private fun getAvailableMachine(farm: Farm, tile: Tile): Machine? {

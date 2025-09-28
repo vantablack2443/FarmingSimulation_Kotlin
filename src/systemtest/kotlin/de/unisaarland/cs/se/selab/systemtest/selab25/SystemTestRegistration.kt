@@ -17,6 +17,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAc
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHarvestandNoCloudsOrIncidents
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
+
 /**
  * Used for test registration
  */
@@ -43,6 +46,8 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineDefaultActionIncidents())
         testSuite.registerTest(CloudMovementTestCloudNotOnVillage())
         testSuite.registerTest(SimpleTestWithHarvestandNoCloudsOrIncidents())
+        testSuite.registerTest(NoFarmandCloudCreationInvalid())
+        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
     }
 
     /**

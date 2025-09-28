@@ -156,6 +156,7 @@ package de.unisaarland.cs.se.selab.map
             plants = listOf(PlantType.PUMPKIN),
             map.getTileByCoordinate(Coordinate(-1, -1))!!
         )
+        machine.farmID=1
         assertTrue(map.isReachable(machine, destTile))
     } // need to look at it again
 
@@ -170,7 +171,12 @@ package de.unisaarland.cs.se.selab.map
         whenever(machine2.currentHarvest).thenReturn(null)
         whenever(machine1.currentTile).thenReturn(tile1)
         whenever(machine2.currentTile).thenReturn(tile1)
+        whenever(machine1.farmID).thenReturn(1)
+        whenever(machine2.farmID).thenReturn(1)
         val tiles1 = listOf(tile1, tile2, tile6)
+        tiles1[0].farmID=1
+        tiles1[1].farmID=1
+        tiles1[2].farmID=1
         val tilesMap: MutableMap<Coordinate, Tile> = mutableMapOf()
         tiles1.forEach { tile ->
             tilesMap[tile.location] = tile
