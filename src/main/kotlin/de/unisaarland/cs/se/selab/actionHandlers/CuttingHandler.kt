@@ -104,6 +104,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
+            machine.resetElapsedTime()
             return
         }
 
@@ -112,6 +113,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         val neighborTiles = tilesInRadius
             .filter { it in operableTiles }
             .filter { simulationMap.isReachable(machine, it) }
+            .filter { it.id !in farm.tileHashMap }
             .sortedBy { it.id } // Sort by ID
 
         val nextTile = neighborTiles.firstOrNull()
