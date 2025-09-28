@@ -46,6 +46,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             // Only allow machines that can perform WEEDING
             if (plantsThisMachineCanWorkOn.contains(plantType) && machine.actions.contains(ActionType.WEEDING)) {
                 if (simulationMap.isReachable(machine, tile)) {
+                    farm.tileHashMap.add(tile.id)
                     performAction(machine, tile)
                     continueAction(machine, tile, farm, operableTiles)
                     farm.machineHashMap.add(machine.id)

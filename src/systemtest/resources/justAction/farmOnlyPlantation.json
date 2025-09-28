@@ -10,9 +10,9 @@
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["MOWING"],
+          "actions": ["CUTTING", "MOWING"],
           "plants": ["APPLE"],
-          "duration": 4,
+          "duration": 8,
           "location": 0
         }
       ],
