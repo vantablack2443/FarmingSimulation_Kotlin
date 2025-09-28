@@ -59,25 +59,23 @@ class HarvestingHandler(
                 // If no shed is reachable, the machine is stuck
                 if (returnShed == null) {
                     machine.isStuck = true
+                    Logger.logMachineReturnFail(machine.id)
                 } else {
                     machine.currentTile = returnShed
                     machine.homeShed = returnShed
-                }
-
-                if (returnShed == null) {
-                    Logger.logMachineReturnFail(machine.id)
-                } else {
                     val amount = machine.currentHarvest?.harvestAmount ?: 0
                     val plantType = machine.currentHarvest?.plant ?: throw IllegalArgumentException("Plant is null")
                     Logger.logMachineFinish(machine.id, returnShed.id)
                     Logger.logUnload(machine.id, amount, plantType)
                 }
 
-                farm.addHarvestPerPlant(
-                    machine.currentHarvest?.plant ?: error("Plant invalid"),
-                    machine.currentHarvest?.harvestAmount ?: 0
-                )
-                machine.currentHarvest = null
+                if (!machine.isStuck) {
+                    farm.addHarvestPerPlant(
+                        machine.currentHarvest?.plant ?: error("Plant invalid"),
+                        machine.currentHarvest?.harvestAmount ?: 0
+                    )
+                    machine.currentHarvest = null
+                }
             }
         }
     }
