@@ -22,6 +22,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMerge
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
 /**
  * Used for test registration
  */
@@ -53,6 +55,8 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
+        testSuite.registerTest(NoFarmAnimalAttackValidSimple())
+        testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
     }
 
     /**

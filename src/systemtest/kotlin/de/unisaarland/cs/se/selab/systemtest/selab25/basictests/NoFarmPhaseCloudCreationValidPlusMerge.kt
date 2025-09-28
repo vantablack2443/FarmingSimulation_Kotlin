@@ -14,10 +14,13 @@ class NoFarmPhaseCloudCreationValidPlusMerge : ExampleSystemTestExtension() {
 
 
     override suspend fun run() {
-        val lineIterator = result().lines().iterator()
-        while (lineIterator.hasNext()) {
-            val currentLine = lineIterator.next()
-            assertNextLine(currentLine)
+        val lines = result().lines()
+        var afterMarker = false
+        for (line in lines) {
+            assertNextLine(line)
+            if (line == "[IMPORTANT] Farm: Farm 1 finished its actions.") {
+                afterMarker = true
+            }
         }
     }
     private fun result() : String {
