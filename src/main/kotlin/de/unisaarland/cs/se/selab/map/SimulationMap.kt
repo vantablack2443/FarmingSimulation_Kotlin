@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.map
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.tile.Tile
 // import kotlin.math.abs
@@ -183,12 +184,15 @@ class SimulationMap(
     /**
      * Gets next possible tile for continuing action
      * just the lowest id reachable tile for radius 2
+     * @param actionTilesFarm - The tiles that the farm can work on filtered out by the respective handler based on the
+     * action required in the actionsNeeded lists
      */
-    fun tileForContinueAction(machine: Machine, planTiles: List<Tile>): Tile? {
-        val carryingHarvest: Boolean = machine.currentHarvest != null
-        val reachable = getReachableTiles(machine, 2, carryingHarvest)
-        val possibleTiles = planTiles.intersect(reachable.toSet()).sortedBy { it.id }
-        if (possibleTiles.isNotEmpty()) return possibleTiles.minByOrNull { it.id }
+    fun tileForContinueAction(machine: Machine, actionTilesFarm: List<Tile>, farm: Farm): Tile? {
+        val carryingHarvestBool: Boolean = machine.currentHarvest != null
+        val allReachableInRadius = getReachableTiles(machine, 2, carryingHarvestBool)
+        val possibleTiles = actionTilesFarm.intersect(allReachableInRadius.toSet()).sortedBy { it.id }
+        val possibleTilesNotHashed = possibleTiles.filter { it.id !in farm.tileHashMap }
+        if (possibleTilesNotHashed.isNotEmpty()) return possibleTilesNotHashed.minByOrNull { it.id }
         return null
     }
 

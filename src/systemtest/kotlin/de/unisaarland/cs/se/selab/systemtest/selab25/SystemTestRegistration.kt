@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestIncidents
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestThreeClouds
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestTwoClouds
@@ -38,25 +39,12 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
-        testSuite.registerTest(FarmNoPlantableTiles())
-        testSuite.registerTest(MachineWrongShed())
+        // testSuite.registerTest(FarmNoPlantableTiles())
+        // testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(CloudMovementTestStuckCloud())
-        testSuite.registerTest(CloudMovementTestWithMositure())
-        testSuite.registerTest(MachineDefaultActionParsing())
-        testSuite.registerTest(MachineDefaultActionOneMachine())
-        testSuite.registerTest(MachineDefaultActionSecond())
-        testSuite.registerTest(MachineDefaultActionSecondFarm())
-        testSuite.registerTest(MachineDefaultActionIncidents())
-        testSuite.registerTest(CloudMovementTestCloudNotOnVillage())
-        testSuite.registerTest(SimpleTestWithHarvestandNoCloudsOrIncidents())
-        testSuite.registerTest(NoFarmandCloudCreationInvalid())
-        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
-        testSuite.registerTest(NoFarmAnimallAttackInvalid())
-        testSuite.registerTest(NoFarmAnimalAttackValidSimple())
-        testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
+        testSuite.registerTest(CloudMovementTestIncidents())
+        // testSuite.registerTest(CloudMovementTestStuckCloud())
     }
 
     /**

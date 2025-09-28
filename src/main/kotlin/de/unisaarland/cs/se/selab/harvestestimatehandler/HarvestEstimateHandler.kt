@@ -52,7 +52,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun fieldHarvestEstimate(t: Tile, yearTick: Int) {
         val plantOfTile = t.plant
-        logMissedActions(t.id, t.actionsNeeded)
+
+        // Log missed actions if there are any -- need to verify this
+        if (t.actionsNeeded.isNotEmpty()) {
+            logMissedActions(t.id, t.actionsNeeded)
+        }
 
         applyLateSowing(t)
         applySunlight(t)
@@ -78,7 +82,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
         val plantOfTile = t.plant
-        logMissedActions(t.id, t.actionsNeeded)
+
+        // Log missed actions if there are any -- need to verify this
+        if (t.actionsNeeded.isNotEmpty()) {
+            logMissedActions(t.id, t.actionsNeeded)
+        }
 
         applySunlight(t)
         applyMoisture(t)
