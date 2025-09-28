@@ -74,39 +74,32 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      * @param operableTiles the tiles that should be performed on
      */
     private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>, yearTick: Int) {
-        while (machine.canPerform()) {
-            val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
-            for (tile in operableTiles) {
-                val opTile = tile.id in farm.tileHashMap
-                if (tile in accessibleTiles && !opTile) {
-                    performAction(machine, tile, yearTick)
-                    farm.tileHashMap.add(tile.id)
-                    break
-                }
-            }
+//        while (machine.canPerform()) {
+//            val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
+//            for (tile in operableTiles) {
+//                val opTile = tile.id in farm.tileHashMap
+//                if (tile in accessibleTiles && !opTile) {
+//                    performAction(machine, tile, yearTick)
+//                    farm.tileHashMap.add(tile.id)
+//                    break
+//                }
+//            }
+//        }
+//
+        if (!machine.canPerform()) {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
         }
-//
-//        if (!machine.canPerform()) {
-//            machine.currentTile = machine.homeShed
-//            machine.resetElapsedTime()
-//        }
-//
-//        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
-//        val neighborTiles = tilesInRadius
-//            .filter { it in operableTiles }
-//            .filter { simulationMap.isReachable(machine, it) }
-//            .filter { it.id !in farm.tileHashMap }
-//            .sortedBy { it.id } // Sort by ID
-//
-//        val nextTile = neighborTiles.firstOrNull()
-//        if (nextTile != null) {
-//            farm.tileHashMap.add(nextTile.id)
-//            performAction(machine, nextTile)
-//            continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
-//        } else {
-//            machine.currentTile = machine.homeShed
-//            machine.resetElapsedTime()
-//        }
+
+        val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
+        if (nextTile != null) {
+            farm.tileHashMap.add(nextTile.id)
+            performAction(machine, nextTile)
+            continueAction(machine, farm, operableTiles, yearTick) // Recursively continue action
+        } else {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
+        }
     }
 
     /**
