@@ -19,7 +19,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHa
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
-
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMerge
 /**
  * Used for test registration
  */
@@ -48,6 +48,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SimpleTestWithHarvestandNoCloudsOrIncidents())
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
     }
 
     /**
