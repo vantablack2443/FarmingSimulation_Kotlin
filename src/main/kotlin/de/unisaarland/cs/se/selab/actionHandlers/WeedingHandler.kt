@@ -27,6 +27,10 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         farm: Farm,
         machine: Machine
     ) {
+        if (!machine.actions.contains(ActionType.WEEDING)) {
+            return
+        }
+
         // checks if machine is in HashMap
         if (machine.id in farm.machineHashMap) {
             return
@@ -44,7 +48,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
                 continue // Skip if tile is already handled
             }
             // Only allow machines that can perform WEEDING
-            if (plantsThisMachineCanWorkOn.contains(plantType) && machine.actions.contains(ActionType.WEEDING)) {
+            if (plantsThisMachineCanWorkOn.contains(plantType)) {
                 if (simulationMap.isReachable(machine, tile)) {
                     farm.tileHashMap.add(tile.id)
                     performAction(machine, tile)
