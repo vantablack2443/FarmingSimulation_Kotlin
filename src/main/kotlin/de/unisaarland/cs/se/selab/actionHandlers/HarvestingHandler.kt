@@ -90,26 +90,38 @@ class HarvestingHandler(
         if (!machine.canPerform()) {
             return
         }
-        val toContinueOn = this.simulationMap.getReachableTiles(
+        // we pass a filtered list of operable tiles only containing the tiles of the current crop
+        val continueTile = this.simulationMap.tileForContinueAction(
+            machine,
+            operableTiles.filter { it.currentCrop == tileToBaseOn.currentCrop },
+            farm
+        )
+
+        /*val toContinueOn = this.simulationMap.getReachableTiles(
             machine,
             2,
             true
         ).filter {
             it.currentCrop == tileToBaseOn.currentCrop && !farm.tileHashMap.contains(it.id)
-        }
+        }*/
 
-        if (toContinueOn.isEmpty()) {
+        if (continueTile == null) {
             return
         }
 
-        for (tile in toContinueOn) {
+        doHarvest(farm, machine, continueTile, simTick)
+        operableTiles.remove(continueTile)
+
+        continueAction(farm, machine, simTick, continueTile, operableTiles)
+
+        /*for (tile in toContinueOn) {
             if (this.simulationMap.isReachable(machine, tile)) {
                 doHarvest(farm, machine, tile, simTick)
                 operableTiles.remove(tile)
 
                 continueAction(farm, machine, simTick, tile, operableTiles)
             }
-        }
+        }*/
     }
 
     private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, simTick: Int) {
