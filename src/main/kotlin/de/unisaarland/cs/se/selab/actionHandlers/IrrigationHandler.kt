@@ -38,7 +38,7 @@ class IrrigationHandler(
         performAction(machine, targetTile)
         // add tile to farm's tileHashMap so that it won't
         // be performed on again in this tick
-        farm.tileHashMap.add(targetTile.id)
+
         // remove tile from operableTiles
         operableTiles.remove(targetTile)
 
@@ -46,7 +46,7 @@ class IrrigationHandler(
         var continueTile: Tile? = continueAction(machine, operableTiles)
 
         while (continueTile != null && machine.canPerform()) {
-            performAction(machine, continueTile)
+            performAction(farm, machine, continueTile)
             farm.tileHashMap.add(continueTile.id)
             operableTiles.remove(continueTile)
             continueTile = continueAction(machine, operableTiles)
@@ -64,25 +64,30 @@ class IrrigationHandler(
 
         if (returnShed == null) {
             machine.isStuck = true
+            Logger.logMachineReturnFail(machine.id)
         } else {
             machine.currentTile = returnShed
             machine.homeShed = returnShed
+            Logger.logMachineFinish(machine.id, returnShed.id)
         }
     }
 
     /**
      * Performs the irrigation action on the specified tile using the given machine.
      */
-    override fun performAction(machine: Machine, tile: Tile) {
-        // call log farming action here
+    private fun performAction(farm: Farm, machine: Machine, tile: Tile) {
         Logger.logFarmAction(machine.id, ActionType.IRRIGATING, tile.id, machine.duration)
+
         machine.currentTile = tile
         machine.updateElapsedTime()
+
         val currentMoisture = tile.currentMoisture ?: error("Current moisture null or invalid")
         val maxMoisture = tile.maxMoisture ?: error("Max moisture null or invalid")
         val amount = maxMoisture - currentMoisture
         tile.increaseMoistureByAmount(amount)
+
         tile.actionsNeeded.remove(ActionType.IRRIGATING)
+        farm.tileHashMap.add(tile.id)
     }
 
     /**
@@ -97,21 +102,21 @@ class IrrigationHandler(
     /**
      * Returns a list of operable tiles that need irrigation and are not already handled in the current tick.
      */
-    fun getOperableTiles(farm: Farm, tileType: TileType): List<Tile> {
-        val operableTiles = mutableListOf<Tile>()
+    private fun getOperableTiles(farm: Farm, tileType: TileType): List<Tile> {
         var tiles = emptyList<Tile>()
+
         if (tileType == TileType.FIELD) {
             tiles = farm.getFields()
         }
         if (tileType == TileType.PLANTATION) {
             tiles = farm.getPlantation()
         }
-        for (tile in tiles) {
-            if (tile.actionsNeeded.contains(ActionType.IRRIGATING) && tile.id !in farm.tileHashMap) {
-                operableTiles.add(tile)
-            }
-        }
-        return operableTiles.sortedBy { it.id }
+
+        val operableTiles = tiles
+            .filter { it.id !in farm.tileHashMap }
+            .filter { it.actionsNeeded.contains(ActionType.IRRIGATING) }
+            .sortedBy { it.id }
+        return operableTiles
     }
 
     /**
@@ -144,6 +149,10 @@ class IrrigationHandler(
     }
 
     override fun startPhase(farm: Farm, machine: Machine, yearTick: Int) {
+        return
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
         return
     }
 
