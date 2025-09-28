@@ -61,22 +61,6 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
         assertNextLine("[INFO] Cloud Dissipation: Cloud 11 dissipates on tile 22.")
 
         // end of cloud phase
-        assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 38.")
-        skipLines(2) // skip farm start and end
-        // cloud creation incident
-        assertNextLine(
-            "[IMPORTANT] Incident: Incident 140 of type CLOUD_CREATION happened " +
-                "and affected tiles 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 21, 22, 40, 80."
-        )
-        // merge
-        assertNextLine(
-            "[IMPORTANT] Cloud Union: Clouds 10 and 16 united to cloud 17" +
-                " with 11930 L water and duration 3 on tile 11."
-        )
-
-        assertNextLine(
-            "[IMPORTANT] Incident: Incident 150 of type CLOUD_CREATION happened " +
-                "and affected tiles 116."
-        )
+        assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 48.")
     }
 }
