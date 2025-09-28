@@ -1,0 +1,30 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Farm",
+      "farmsteads": [0],
+      "fields": [],
+      "plantations": [1],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Tractor",
+          "actions": ["MOWING"],
+          "plants": ["APPLE"],
+          "duration": 4,
+          "location": 0
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 20,
+          "tick": 1,
+          "plant": "WHEAT",
+          "fields": []
+          }
+      ]
+    }
+  ]
+}
+
