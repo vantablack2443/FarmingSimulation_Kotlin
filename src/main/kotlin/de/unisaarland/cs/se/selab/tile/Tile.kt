@@ -87,16 +87,12 @@ class Tile(
      * checks if the tile needs irrigation and adds action to the list if required.
      * If plantation is damaged, the plant attribute is set to null by the incident
      */
-    fun needsIrrigation(simTick: Int) {
+    fun needsIrrigation() {
         val p = plant ?: return
         val cm = currentMoisture ?: return
 
         if (plantationDamaged == true) {
             return
-        }
-
-        if (fallowDuration?.inRange(simTick) == true && category == TileType.FIELD) {
-            actionsNeeded.add(ActionType.IRRIGATING)
         }
 
         if (cm < p.neededMoisture || p.harvestEstimate == 0) {

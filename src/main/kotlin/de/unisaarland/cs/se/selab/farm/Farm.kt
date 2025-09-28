@@ -106,14 +106,14 @@ class Farm(
             val plant = field.plant ?: continue
             plant.needsWeeding(simTick, field.actionsNeeded)
             plant.needsHarvesting(yearTick, field.actionsNeeded)
-            field.needsIrrigation(simTick)
+            field.needsIrrigation()
         }
         for (plantation in plantation) {
             val plant = plantation.plant ?: continue
             plant.needsCutting(yearTick, plantation.actionsNeeded)
             plant.needsMowing(yearTick, plantation.actionsNeeded)
             plant.needsHarvesting(yearTick, plantation.actionsNeeded)
-            plantation.needsIrrigation(simTick)
+            plantation.needsIrrigation()
         }
     }
 
