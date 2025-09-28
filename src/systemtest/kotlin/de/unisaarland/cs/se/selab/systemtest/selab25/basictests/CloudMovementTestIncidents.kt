@@ -5,7 +5,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests cloud phase for one tick with cloud creation incidents
  */
-class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
+class CloudMovementTestIncidents : ExampleSystemTestExtension() {
     override val name = "CloudMovementTestStuckCloud"
     override val description = "Tests cloud movement test for four clouds."
 
@@ -62,5 +62,11 @@ class CloudMovementTestStuckCloud : ExampleSystemTestExtension() {
 
         // end of cloud phase
         assertNextLine("[DEBUG]: Cloud Position: Cloud 10 is on tile 11, where the amount of sunlight is 48.")
+        skipLines(2) // skip farm start and end
+        // cloud creation incident
+        assertNextLine(
+            "[IMPORTANT] Incident: Incident 140 of type CLOUD_CREATION happened " +
+                "and affected tiles 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 21, 22, 40, 80."
+        )
     }
 }

@@ -16,7 +16,7 @@ class Farm(
     private val plantation: MutableList<Tile>,
     private val machines: List<Machine>,
     private val sowingPlans: MutableMap<Int, MutableList<SowingPlan>>,
-    private val harvestPerPlant: MutableMap<PlantType, Int>
+    private val harvestPerPlant: MutableMap<PlantType, Int> = mutableMapOf<PlantType, Int>()
 ) {
 
     val machineHashMap: HashSet<Int> = hashSetOf()
@@ -74,8 +74,8 @@ class Farm(
     /**
      * Returns the harvest per plant mapping of the farm
      */
-    fun getHarvestPerPlant(): Map<PlantType, Int> {
-        return harvestPerPlant
+    fun addHarvestPerPlant(plantType: PlantType, amount: Int) {
+        harvestPerPlant[plantType] = harvestPerPlant.getOrDefault(plantType, 0) + amount
     }
 
     /**

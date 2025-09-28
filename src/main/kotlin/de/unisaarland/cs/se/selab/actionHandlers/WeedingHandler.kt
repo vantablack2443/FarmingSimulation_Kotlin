@@ -27,6 +27,10 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         farm: Farm,
         machine: Machine
     ) {
+        if (!machine.actions.contains(ActionType.WEEDING)) {
+            return
+        }
+
         // checks if machine is in HashMap
         if (machine.id in farm.machineHashMap) {
             return
@@ -43,18 +47,20 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             if (tile.id in farm.tileHashMap || plantType == null) {
                 continue // Skip if tile is already handled
             }
+            // Only allow machines that can perform WEEDING
             if (plantsThisMachineCanWorkOn.contains(plantType)) {
                 if (simulationMap.isReachable(machine, tile)) {
+                    farm.tileHashMap.add(tile.id)
                     performAction(machine, tile)
-                    continueAction(machine, tile, farm, operableTiles)
+                    continueAction(machine, farm, operableTiles)
                     farm.machineHashMap.add(machine.id)
+                    logMachineFinish(machine.farmID, machine.id)
                     machine.resetElapsedTime()
                     break
                 }
             }
             // Perform action with the given machine
         }
-        logMachineFinish(machine.farmID, machine.id)
     }
 
     /**
@@ -80,27 +86,34 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      * If no more tiles are available, the machine returns to its home shed.
      *
      */
-    private fun continueAction(machine: Machine, tile: Tile, farm: Farm, operableTiles: MutableList<Tile>) {
-        if (machine.canPerform()) {
-            // Get neighboring tiles within radius 2
-            val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
-            val neighborTiles = tilesInRadius
-                .filter { it in operableTiles }
-                .filter { simulationMap.isReachable(machine, it) }
-                .sortedBy { it.id } // Sort by ID
-
-            val nextTile = neighborTiles.firstOrNull()
-            if (nextTile != null) {
-                performAction(machine, nextTile)
-                continueAction(machine, nextTile, farm, operableTiles) // Recursively continue action
-            } else {
-                machine.currentTile = machine.homeShed
-                machine.resetElapsedTime()
-            }
-            return
+    private fun continueAction(machine: Machine, farm: Farm, operableTiles: MutableList<Tile>) {
+        if (!machine.canPerform()) {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
         }
-        machine.currentTile = machine.homeShed // Return to shed if time is up
-        machine.resetElapsedTime()
+//
+//        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
+//        val neighborTiles = tilesInRadius
+//            .filter { it in operableTiles }
+//            .filter { simulationMap.isReachable(machine, it) }
+//            .filter { it.id !in farm.tileHashMap }
+//            .sortedBy { it.id } // Sort by ID
+//
+//        val nextTile = neighborTiles.firstOrNull()
+
+        val nextTile = this.simulationMap.tileForContinueAction(
+            machine,
+            operableTiles,
+            farm
+        )
+        if (nextTile != null) {
+            farm.tileHashMap.add(nextTile.id)
+            performAction(machine, nextTile)
+            continueAction(machine, farm, operableTiles) // Recursively continue action
+        } else {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
+        }
     }
 
     /**

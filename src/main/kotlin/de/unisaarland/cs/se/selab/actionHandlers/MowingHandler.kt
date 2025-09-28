@@ -31,7 +31,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         this.operableTiles = operableTiles
         for (tile in operableTiles) {
             if (tile.currentCrop in machine.plants && simulationMap.isReachable(machine, tile)) {
-                performAction(machine, tile)
+                performAction(machine, tile, yearTick)
                 farm.tileHashMap.add(tile.id)
                 continueAction(machine, farm, operableTiles, yearTick)
                 machine.currentTile = machine.homeShed
@@ -74,16 +74,31 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
      * @param operableTiles the tiles that should be performed on
      */
     private fun continueAction(machine: Machine, farm: Farm, operableTiles: List<Tile>, yearTick: Int) {
-        while (machine.canPerform()) {
-            val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
-            for (tile in operableTiles) {
-                val opTile = tile.id in farm.tileHashMap
-                if (tile in accessibleTiles && !opTile) {
-                    performAction(machine, tile, yearTick)
-                    farm.tileHashMap.add(tile.id)
-                    break
-                }
-            }
+//        while (machine.canPerform()) {
+//            val accessibleTiles = simulationMap.getReachableTiles(machine, 2, false)
+//            for (tile in operableTiles) {
+//                val opTile = tile.id in farm.tileHashMap
+//                if (tile in accessibleTiles && !opTile) {
+//                    performAction(machine, tile, yearTick)
+//                    farm.tileHashMap.add(tile.id)
+//                    break
+//                }
+//            }
+//        }
+//
+        if (!machine.canPerform()) {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
+        }
+
+        val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
+        if (nextTile != null) {
+            farm.tileHashMap.add(nextTile.id)
+            performAction(machine, nextTile)
+            continueAction(machine, farm, operableTiles, yearTick) // Recursively continue action
+        } else {
+            machine.currentTile = machine.homeShed
+            machine.resetElapsedTime()
         }
     }
 

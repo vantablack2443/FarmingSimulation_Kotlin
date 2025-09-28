@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestIncidents
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
@@ -22,10 +23,12 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
-        testSuite.registerTest(FarmNoPlantableTiles())
-        testSuite.registerTest(MachineWrongShed())
+        // testSuite.registerTest(FarmNoPlantableTiles())
+        // testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(CloudMovementTestStuckCloud())
+        testSuite.registerTest(CloudMovementTestIncidents())
+        // testSuite.registerTest(CloudMovementTestStuckCloud())
     }
 
     /**

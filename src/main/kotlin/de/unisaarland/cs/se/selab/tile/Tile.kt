@@ -84,19 +84,23 @@ class Tile(
     }
 
     /**
-     * checks if the tile needs irrigation and adds action to the list if required
-     * if plantation is damaged, the plant attribute is set to null by the incident
+     * checks if the tile needs irrigation and adds action to the list if required.
+     * If plantation is damaged, the plant attribute is set to null by the incident
      */
     fun needsIrrigation() {
         val p = plant ?: return
         val cm = currentMoisture ?: return
 
-        if (cm < p.neededMoisture) {
+        if (plantationDamaged == true) {
+            return
+        }
+
+        if (cm < p.neededMoisture || p.harvestEstimate == 0) {
             actionsNeeded.add(ActionType.IRRIGATING)
         }
     }
 
-    /**
+/**
      * checks if there is a plant on the tile
      */
     fun hasPlantGrowing(): Boolean {
@@ -110,7 +114,7 @@ class Tile(
         return false
     }
 
-    /**
+/**
      * setter for the current sunlight amount
      */
     fun setSunlight(sunlight: Int) {

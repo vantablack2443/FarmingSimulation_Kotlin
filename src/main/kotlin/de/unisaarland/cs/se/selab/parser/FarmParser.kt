@@ -498,7 +498,7 @@ class FarmParser(private val simulationData: SimulationData) {
             parseSowingPlanTiles(plan, false, farmID)
         }
         // Adding sowingPlans to the list of all sowingPlans (from all farms)
-        val sowingPlan = SowingPlan(id, plantType, tick, affectedTiles)
+        val sowingPlan = SowingPlan(id, plantType, tick, affectedTiles.sortedBy { it.id })
         this.sowingPlanIDs.add(sowingPlan.getId())
         val list = this.sowingPlanTicks.getOrPut(sowingPlan.getTick()) { mutableListOf() }
         list.add(sowingPlan)
