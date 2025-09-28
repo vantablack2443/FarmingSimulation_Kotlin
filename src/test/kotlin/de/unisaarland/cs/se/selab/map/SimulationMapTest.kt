@@ -1,32 +1,128 @@
 package de.unisaarland.cs.se.selab.map
 
-/*
-import de.unisaarland.cs.se.selab.coordinate.Coordinate
-import de.unisaarland.cs.se.selab.enumerations.Direction
-import de.unisaarland.cs.se.selab.enumerations.TileShape
-import de.unisaarland.cs.se.selab.enumerations.TileType
-import de.unisaarland.cs.se.selab.tile.Tile
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
+ import de.unisaarland.cs.se.selab.coordinate.Coordinate
+ import de.unisaarland.cs.se.selab.enumerations.ActionType
+ import de.unisaarland.cs.se.selab.enumerations.Direction
+ import de.unisaarland.cs.se.selab.enumerations.PlantType
+ import de.unisaarland.cs.se.selab.enumerations.TileShape
+ import de.unisaarland.cs.se.selab.enumerations.TileType
+ import de.unisaarland.cs.se.selab.machine.Machine
+ import de.unisaarland.cs.se.selab.machine.PlantAndHarvest
+ import de.unisaarland.cs.se.selab.tile.Tile
+ import org.junit.jupiter.api.BeforeEach
+ import org.junit.jupiter.api.Test
+ import org.mockito.kotlin.mock
+ import org.mockito.kotlin.whenever
+ import kotlin.test.assertEquals
+ import kotlin.test.assertFalse
+ import kotlin.test.assertNull
+ import kotlin.test.assertTrue
 
-class SimulationMapTest {
-    private lateinit var map: SimulationMap
-    private lateinit var tiles: MutableList<Tile>
+ class SimulationMapTest {
+    lateinit var map: SimulationMap
+    lateinit var tiles: MutableList<Tile>
 
     @BeforeEach
     fun setUp() {
-        // i sent the old setup function definition to mahmoud
-        tiles = mutableListOf(
-            Tile(0, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE),
-            Tile(1, Coordinate(0, 0), TileType.FIELD, TileShape.OCTAGONAL),
-            Tile(2, Coordinate(1, 0), TileType.PLANTATION, TileShape.OCTAGONAL),
-            Tile(3, Coordinate(0, 1), TileType.FARMSTEAD, TileShape.SQUARE),
-            Tile(54, Coordinate(10, 10), TileType.VILLAGE, TileShape.OCTAGONAL)
+        tiles = mutableListOf()
+        tiles.add(
+            Tile(
+                12,
+                Coordinate(-1, -1),
+                TileType.FARMSTEAD,
+                TileShape.SQUARE
+            )
+
         )
-        val tileMap = tiles.associateBy { it.location }.toMutableMap()
-        map = SimulationMap(tileMap)
+        tiles[0].farmID=1
+        tiles.add(
+            Tile(
+                13,
+                Coordinate(0, 0),
+                TileType.ROAD,
+                TileShape.OCTAGONAL
+
+            )
+        )
+        tiles.add(
+            Tile(
+                14,
+                Coordinate(1, -1),
+                TileType.MEADOW,
+                TileShape.SQUARE
+
+            )
+        )
+        tiles.add(
+            Tile(
+                54,
+                Coordinate(2, 0),
+                TileType.FIELD,
+                TileShape.OCTAGONAL
+
+            )
+
+        )
+        tiles[3].farmID=1
+        tiles.add(
+            Tile(
+                103,
+                Coordinate(3, -1),
+                TileType.MEADOW,
+                TileShape.SQUARE
+
+            )
+        )
+        tiles.add(
+            Tile(
+                203,
+                Coordinate(4, 0),
+                TileType.ROAD,
+                TileShape.OCTAGONAL
+
+            )
+        )
+        tiles.add(
+            Tile(
+                303,
+                Coordinate(5, -1),
+                TileType.MEADOW,
+                TileShape.SQUARE
+
+            )
+        )
+        tiles.add(
+            Tile(
+                52,
+                Coordinate(6, 0),
+                TileType.FIELD,
+                TileShape.OCTAGONAL
+            )
+
+        )
+        tiles[7].farmID=1
+        tiles.add(
+            Tile(
+                1000,
+                Coordinate(7, -1),
+                TileType.MEADOW,
+                TileShape.SQUARE
+            )
+        )
+        tiles.add(
+            Tile(
+                1001,
+                Coordinate(8, 0),
+                TileType.ROAD,
+                TileShape.OCTAGONAL
+            )
+        )
+
+        val tilesMap: MutableMap<Coordinate, Tile> = mutableMapOf()
+        tiles.forEach { tile ->
+            tilesMap[tile.location] = tile
+        }
+        map = SimulationMap(tilesMap)
     }
 
     @Test
@@ -48,109 +144,57 @@ class SimulationMapTest {
     }
 
     @Test
+    fun testMachineIsReachable() {
+        val startTile = map.getTileByCoordinate(Coordinate(-1, -1))!!
+        val destTile = map.getTileByCoordinate(Coordinate(6, 0))!!
+        val machine = Machine(
+            id = 1,
+            name = "someMachine",
+            10,
+            currentTile = startTile,
+            actions = listOf(ActionType.HARVESTING),
+            plants = listOf(PlantType.PUMPKIN),
+            map.getTileByCoordinate(Coordinate(-1, -1))!!
+        )
+        machine.farmID=1
+        assertTrue(map.isReachable(machine, destTile))
+    } // need to look at it again
+
+    @Test
+    fun testLoadedMachineIsReachable() {
+        val machine1 = mock<Machine>()
+        val machine2 = mock<Machine>()
+        val tile1 = Tile(1, Coordinate(4, 2), TileType.FIELD, TileShape.OCTAGONAL)
+        val tile2 = Tile(2, Coordinate(6, 2), TileType.VILLAGE, TileShape.OCTAGONAL)
+        val tile6 = Tile(6, Coordinate(8, 2), TileType.FIELD, TileShape.OCTAGONAL)
+        whenever(machine1.currentHarvest).thenReturn(PlantAndHarvest(PlantType.PUMPKIN, 190999))
+        whenever(machine2.currentHarvest).thenReturn(null)
+        whenever(machine1.currentTile).thenReturn(tile1)
+        whenever(machine2.currentTile).thenReturn(tile1)
+        whenever(machine1.farmID).thenReturn(1)
+        whenever(machine2.farmID).thenReturn(1)
+        val tiles1 = listOf(tile1, tile2, tile6)
+        tiles1[0].farmID=1
+        tiles1[1].farmID=1
+        tiles1[2].farmID=1
+        val tilesMap: MutableMap<Coordinate, Tile> = mutableMapOf()
+        tiles1.forEach { tile ->
+            tilesMap[tile.location] = tile
+        }
+        val map1 = SimulationMap(tilesMap)
+
+        assertFalse(map1.isReachable(machine1, tile6))
+        assertTrue(map1.isReachable(machine2, tile6))
+    }
+
+    @Test
     fun testGetNeighbor() {
         assertNull(map.getNeighbor(tiles[0], Direction.NORTH_WEST))
     }
 
     @Test
-    fun testIsReachable() {
-        // TODO
-    }
-
-    @Test
-    fun testGetAccessibleTiles() {
-        // TODO
-    }
-
-    @Test
-    fun testFindTargetShed() {
-        // TODO
-    }
-
-    @Test
-    fun testGetPlantableTiles() {
-        // TODO
-    }
-
-    @Test
-    fun testFilterForPlantable() {
-        // TODO
-    }
-
-    @Test
-    fun testFilterByType() {
-        // TODO
-    }
-
-    @Test
-    fun testGetTiles() {
-        // TODO
-    }
-
-    @Test
-    fun testSetTiles() {
-        // TODO
-    }
-
-    @Test
-    fun getTileByCoordinate() {
-        // TODO
-    }
-
-    @Test
-    fun getTileByID() {
-        // TODO
-    }
-
-    @Test
-    fun getTilesByRadius() {
-        // TODO
-    }
-
-    @Test
-    fun getNeighbor() {
-        // TODO
-    }
-
-    @Test
-    fun isReachable() {
-        // TODO
-    }
-
-    @Test
-    fun getAccessibleTiles() {
-        // TODO
-    }
-
-    @Test
-    fun findTargetShed() {
-        // TODO
-    }
-
-    @Test
     fun getPlantableTiles() {
-        // val expected = Tiles.filter { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
-        // assertEquals(expected.toSet(), map.getPlantableTiles().toSet())
+        val expected = tiles.filter { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
+        assertEquals(expected.toSet(), map.getPlantableTiles().toSet())
     }
-
-    @Test
-    fun filterForPlantable() {
-        // TODO
-    }
-
-    @Test
-    fun filterByType() {
-        // TODO
-    }
-
-    @Test
-    fun getTiles() {
-        // TODO
-    }
-
-    @Test
-    fun setTiles() {
-        // TODO
-    }
-}
-*/
+ }

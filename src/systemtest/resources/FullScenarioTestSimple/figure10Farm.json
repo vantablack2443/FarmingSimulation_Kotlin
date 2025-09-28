@@ -1,0 +1,29 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "The Farm",
+      "farmsteads": [6],
+      "fields": [7,8,9],
+      "plantations": [],
+	  "machines": [
+       {
+         "id": 1,
+         "name": "Tractor",
+         "actions": ["SOWING", "IRRIGATING"],
+         "plants": ["PUMPKIN", "WHEAT"],
+         "duration": 4,
+         "location": 6
+       } 
+      ],
+      "sowingPlans": [
+		  {
+"id" : 1
+"tick" : 0
+"plant" : "WHEAT"
+"affectedTiles" : [7,8,9]
+		  } 
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 const val FALLOW_DURATION = 4
 
 /**
- * handler for performing HARVESTING
+ * handler for performing HARVEwSTING
  */
 class HarvestingHandler(
     simulationMap: SimulationMap,
