@@ -20,28 +20,39 @@ class IrrigationHandler(
     simulationMap,
     plantdata
 ) {
+    /*
+    CHECK IF YOU CAN IRRIGATE PLANTATIONS RIGHT AFTER FIRST FIELD IRRIGATION
+     */
 
     /**\
      * Handles the main logic of the irrigation phase, starting by getting operable tiles and then
      * checks for the target tile to perform actions and also for action continuation
      */
     fun startPhase(farm: Farm, machine: Machine, tileType: TileType) {
+        if (!machine.actions.contains(ActionType.IRRIGATING)) {
+            return
+        }
+
         val operableTiles = getOperableTiles(farm, tileType).toMutableList()
         if (operableTiles.isEmpty()) {
             return
         }
 
-        // get target tile for first action
-        val targetTile = findTargetTile(machine, operableTiles)
-        if (targetTile != null) {
-            // perform action on target tile
-            performAction(farm, machine, targetTile)
+        for (tile in operableTiles) {
+            val plantType = tile.currentCrop ?: continue
+            if (machine.plants.contains(plantType)) {
+                if (simulationMap.isReachable(machine, tile)) {
+                    // perform action on target tile
+                    performAction(farm, machine, tile)
 
-            // remove tile from operableTiles
-            operableTiles.remove(targetTile)
+                    // remove tile from operableTiles
+                    operableTiles.remove(tile)
 
-            // continue action
-            continueAction(machine, operableTiles, farm)
+                    // continue action
+                    continueAction(machine, operableTiles, farm)
+                    break
+                }
+            }
         }
 
         // machine cannot perform anymore
@@ -59,7 +70,6 @@ class IrrigationHandler(
 
         if (returnShed == null) {
             machine.isStuck = true
-            Logger.logMachineReturnFail(machine.id)
         } else {
             machine.currentTile = returnShed
             machine.homeShed = returnShed
@@ -85,6 +95,7 @@ class IrrigationHandler(
         farm.tileHashMap.add(tile.id)
     }
 
+    /*
     /**
      * Finds the target tile with the lowest ID that is reachable by the machine from the list of operable tiles.
      */
@@ -93,6 +104,7 @@ class IrrigationHandler(
         if (reachableTiles.isEmpty()) return null
         return reachableTiles.minBy { it.id }
     }
+     */
 
     /**
      * Returns a list of operable tiles that need irrigation and are not already handled in the current tick.
@@ -109,7 +121,7 @@ class IrrigationHandler(
 
         val operableTiles = tiles
             .filter { it.id !in farm.tileHashMap }
-            .filter { it.actionsNeeded.contains(ActionType.IRRIGATING) }
+            .filter { it.plant != null && it.actionsNeeded.contains(ActionType.IRRIGATING) }
             .sortedBy { it.id }
         return operableTiles
     }
