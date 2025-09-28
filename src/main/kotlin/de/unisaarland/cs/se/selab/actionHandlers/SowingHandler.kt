@@ -138,6 +138,7 @@ class SowingHandler(
             // This tile has already been added to the hashmap in getNextTile
 
             // Update machine's location
+            nextMachine.updateElapsedTime()
             nextMachine.currentTile = nextTile
 
             // Creates plant, sets tile's plant to the created plant, sets tile's current crop to the plant type
@@ -206,6 +207,19 @@ class SowingHandler(
         return hasSown
     }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
+        // TODO
+        return
+    }
+
     private fun logAction(machine: Machine, tile: Tile, plan: SowingPlan) {
         // Logs action and sowing
         Logger.logFarmAction(machine.id, ActionType.SOWING, tile.id, machine.duration)
@@ -266,19 +280,6 @@ class SowingHandler(
 //    }
 
     override fun startPhase(farm: Farm, machine: Machine) {
-        // TODO
-        return
-    }
-
-    override fun startPhase(
-        farm: Farm,
-        machine: Machine,
-        yearTick: Int
-    ) {
-        return
-    }
-
-    override fun performAction(machine: Machine, tile: Tile) {
         // TODO
         return
     }
