@@ -35,7 +35,7 @@ class IrrigationHandler(
         val targetTile = findTargetTile(machine, operableTiles)
         if (targetTile != null) {
             // perform action on target tile
-            performAction(machine, targetTile)
+            performAction(farm, machine, targetTile)
 
             // remove tile from operableTiles
             operableTiles.remove(targetTile)
