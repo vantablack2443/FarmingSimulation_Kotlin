@@ -102,6 +102,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
+            logMachineFinish(machine.farmID, machine.id)
             machine.resetElapsedTime()
             return
         }
