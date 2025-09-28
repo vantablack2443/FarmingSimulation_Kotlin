@@ -31,7 +31,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         this.operableTiles = operableTiles
         for (tile in operableTiles) {
             if (tile.currentCrop in machine.plants && simulationMap.isReachable(machine, tile)) {
-                performAction(machine, tile)
+                performAction(machine, tile, yearTick)
                 farm.tileHashMap.add(tile.id)
                 continueAction(machine, farm, operableTiles, yearTick)
                 machine.currentTile = machine.homeShed
