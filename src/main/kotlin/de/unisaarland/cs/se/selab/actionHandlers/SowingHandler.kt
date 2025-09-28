@@ -38,7 +38,7 @@ class SowingHandler(
         // Loop through all sowing plans and try to execute each
         val plansExecuted: MutableList<SowingPlan> = mutableListOf()
         for (plan in sowingPlans) {
-            val planSuccess: Boolean = tryPlan(farm, plan, simTick)
+            val planSuccess: Boolean = tryPlan(farm, plan, simTick, yearTick)
             // Add plan to executed list if successful
             if (planSuccess) {
                 plansExecuted.add(plan)
@@ -97,7 +97,7 @@ class SowingHandler(
         return tilesToSow.sortedBy { it.id }
     }
 
-    private fun tryPlan(farm: Farm, plan: SowingPlan, simTick: Int): Boolean {
+    private fun tryPlan(farm: Farm, plan: SowingPlan, simTick: Int, yearTick: Int): Boolean {
         // Get all tiles belonging to the farm that can be sown for the given plan
         val tilesToSow = getTilesToSow(farm, plan, simTick)
 
@@ -116,7 +116,24 @@ class SowingHandler(
         // hasSown flag to check if at least one tile has been sown
         var hasSown = false
 
-        // Try to sow with each machine until the plan is completed or no machines are left
+        for (tile in tilesToSow) {
+            if (tile.id in farm.tileHashMap) {
+                continue // Skip if tile is already handled
+            }
+            val machine = getNextMachine(machines, farm, tile)
+            if (machine != null) {
+                hasSown = true
+                performAction(machine, tile, yearTick, plan)
+                farm.tileHashMap.add(tile.id)
+                continueAction(machine, tilesToSow, plan, farm, yearTick)
+                farm.machineHashMap.add(machine.id)
+                returnToShed(machine, farm)
+            }
+        }
+
+        return hasSown
+
+        /*// Try to sow with each machine until the plan is completed or no machines are left
         // Tile comes first then machine
         var nextTile: Tile? = getNextTile(tilesToSow, farm)
         while (nextTile != null) {
@@ -202,22 +219,73 @@ class SowingHandler(
             logReturn(nextMachine, returnShed)
 
             nextTile = getNextTile(tilesToSow, farm)
+        }*/
+    }
+
+    /**
+     * Performs the SOWING action
+     */
+    private fun performAction(machine: Machine, tile: Tile, yearTick: Int, plan: SowingPlan) {
+        // Update machine's location
+        machine.updateElapsedTime()
+        machine.currentTile = tile
+
+        // Creates plant, sets tile's plant to the created plant, sets tile's current crop to the plant type
+        val plant = Plant.createPlant(plan.getPlant())
+        // Adds to SOWING to lateAction list if the tick of sowing is late
+        plant.checkLateSowing(tile.lateActions, yearTick)
+        tile.plant = plant
+        tile.currentCrop = plan.getPlant()
+
+        logAction(machine, tile, plan)
+    }
+
+    /**
+     * Continues SOWING action
+     */
+    private fun continueAction(machine: Machine, tilesToSow: List<Tile>, plan: SowingPlan, farm: Farm, yearTick: Int) {
+        if (!machine.canPerform()) {
+            // Return to shed if time is up
+            return
         }
 
-        return hasSown
+        // Get neighboring tiles within radius 2 that could be sown
+        // Checks reachability and if the tile hashmap
+        val nextTile = this.simulationMap.tileForContinueAction(
+            machine,
+            tilesToSow,
+            farm
+        )
+        if (nextTile != null) {
+            farm.tileHashMap.add(nextTile.id)
+            performAction(machine, nextTile, yearTick, plan)
+            continueAction(machine, tilesToSow, plan, farm, yearTick) // Recursively continue action
+        }
     }
 
-    override fun startPhase(
-        farm: Farm,
-        machine: Machine,
-        yearTick: Int
-    ) {
-        return
-    }
+    /**
+     * Returns to shed
+     */
+    private fun returnToShed(machine: Machine, farm: Farm) {
+        // Try to return machine to shed
+        // Reset elapsed  time on machine
+        machine.resetElapsedTime()
 
-    override fun performAction(machine: Machine, tile: Tile) {
-        // TODO
-        return
+        val returnShed: Tile? = this.simulationMap.findTargetShed(
+            machine,
+            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
+            machine.currentHarvest != null
+        )
+
+        // If no shed is reachable, the machine is stuck
+        if (returnShed == null) {
+            machine.isStuck = true
+        } else {
+            machine.currentTile = returnShed
+            machine.homeShed = returnShed
+        }
+
+        logReturn(machine, returnShed)
     }
 
     private fun logAction(machine: Machine, tile: Tile, plan: SowingPlan) {
@@ -237,7 +305,7 @@ class SowingHandler(
     /**
      * Will return the next tile that can be sown from the list of tiles to sow
      */
-    private fun getNextTile(tilesToSow: List<Tile>, farm: Farm): Tile? {
+    /*private fun getNextTile(tilesToSow: List<Tile>, farm: Farm): Tile? {
         for (tile in tilesToSow) {
             if (tile.id !in farm.tileHashMap) {
                 farm.tileHashMap.add(tile.id)
@@ -245,7 +313,7 @@ class SowingHandler(
             }
         }
         return null
-    }
+    }*/
 
 //    /**
 //     * Returns the next machine that can sow the given tile from the list of machines that can sow the given plant
@@ -279,6 +347,14 @@ class SowingHandler(
 //        return machines.sortedWith(compareBy({ it.duration }, { it.id }))
 //    }
 
+    override fun startPhase(
+        farm: Farm,
+        machine: Machine,
+        yearTick: Int
+    ) {
+        return
+    }
+
     override fun startPhase(farm: Farm, machine: Machine) {
         // TODO
         return
@@ -289,6 +365,11 @@ class SowingHandler(
         tile: Tile,
         yearTick: Int
     ) {
+        return
+    }
+
+    override fun performAction(machine: Machine, tile: Tile) {
+        // TODO
         return
     }
 
