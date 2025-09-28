@@ -32,28 +32,23 @@ class IrrigationHandler(
         }
 
         // get target tile for first action
-        val targetTile = findTargetTile(machine, operableTiles) ?: return
+        val targetTile = findTargetTile(machine, operableTiles)
+        if (targetTile != null) {
+            // perform action on target tile
+            performAction(machine, targetTile)
 
-        // perform action on target tile
-        performAction(machine, targetTile)
-        // add tile to farm's tileHashMap so that it won't
-        // be performed on again in this tick
+            // remove tile from operableTiles
+            operableTiles.remove(targetTile)
 
-        // remove tile from operableTiles
-        operableTiles.remove(targetTile)
-
-        // try to continue action
-        var continueTile: Tile? = continueAction(machine, operableTiles)
-
-        while (continueTile != null && machine.canPerform()) {
-            performAction(farm, machine, continueTile)
-            farm.tileHashMap.add(continueTile.id)
-            operableTiles.remove(continueTile)
-            continueTile = continueAction(machine, operableTiles)
+            // continue action
+            continueAction(machine, operableTiles, farm)
         }
 
         // machine cannot perform anymore
-        farm.machineHashMap.add(machine.id)
+        if (machine.currentTile != machine.homeShed) {
+            farm.machineHashMap.add(machine.id)
+        }
+
         machine.resetElapsedTime()
 
         val returnShed: Tile? = simulationMap.findTargetShed(
@@ -122,16 +117,17 @@ class IrrigationHandler(
     /**
      * Finds the next tile to continue the irrigation action within a radius of 2 from the machine's current tile.
      */
-    private fun continueAction(m: Machine, operableTiles: List<Tile>): Tile? {
-        val remainingTiles = simulationMap.getTilesByRadius(m.currentTile, 2)
-            .filter { tile -> operableTiles.contains(tile) }
-            .filter { tile -> simulationMap.isReachable(m, tile) }
-            .sortedBy { it.id }
+    private fun continueAction(machine: Machine, operableTiles: MutableList<Tile>, farm: Farm) {
+        if (!machine.canPerform()) {
+            return
+        }
 
-        return if (remainingTiles.isEmpty()) {
-            null
-        } else {
-            remainingTiles.first()
+        val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
+
+        if (nextTile != null) {
+            performAction(farm, machine, nextTile)
+            operableTiles.remove(nextTile)
+            continueAction(machine, operableTiles, farm) // Recursively continue action
         }
     }
 
