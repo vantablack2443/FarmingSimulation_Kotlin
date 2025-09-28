@@ -26,3 +26,4 @@ class JustMow : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Action: Farm 1's Machine 1 mows at (1, 0).")
         assertNextLine("[IMPORTANT] Action: Farm 1's Machine 1 mows at (0, 0).")
     }
+}
