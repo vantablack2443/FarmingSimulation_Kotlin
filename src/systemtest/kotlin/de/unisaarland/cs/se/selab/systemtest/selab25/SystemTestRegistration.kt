@@ -6,7 +6,13 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTillSowing
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 
 /**
@@ -25,9 +31,16 @@ object SystemTestRegistration {
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
-        testSuite.registerTest(MachineDefaultAction())
+        // testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(CloudMovementTestStuckCloud())
         testSuite.registerTest(CloudMovementTestIncidents())
+        testSuite.registerTest(MachineIrrigationTillSowing())
+        testSuite.registerTest(MachineIrrigationUntilSowing())
+        testSuite.registerTest(MachineIrrigationSecondTick())
+        testSuite.registerTest(MachineIrrigationWaterNext())
+        testSuite.registerTest(MachineIrrigationTwoMachines())
+        testSuite.registerTest(MachineIrrigationMowingNext())
+        testSuite.registerTest(MachineIrrigationTest())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
     }
 
