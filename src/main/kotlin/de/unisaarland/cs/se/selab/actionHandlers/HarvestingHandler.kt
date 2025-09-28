@@ -72,6 +72,12 @@ class HarvestingHandler(
                     Logger.logMachineFinish(machine.id, returnShed.id)
                     Logger.logUnload(machine.id, amount, plantType)
                 }
+
+                farm.addHarvestPerPlant(
+                    machine.currentHarvest?.plant ?: error("Plant invalid"),
+                    machine.currentHarvest?.harvestAmount ?: 0
+                )
+                machine.currentHarvest = null
             }
         }
     }
