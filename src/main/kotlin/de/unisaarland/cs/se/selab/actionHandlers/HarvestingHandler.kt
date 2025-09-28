@@ -5,6 +5,7 @@ import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
 import de.unisaarland.cs.se.selab.machine.PlantAndHarvest
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -30,21 +31,141 @@ class HarvestingHandler(
         val operableTiles = getOperableTiles(farm, ActionType.HARVESTING)
         // get OperableTiles takes care of the prioritization of the tiles-- changed the signature in the diagram
         // val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
-        for (tile in operableTiles) {
+        for (tile in operableTiles.toList()) {
             val currentCrop = tile.currentCrop ?: continue
+
             val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING)
+            if (availableMachines.isEmpty()) {
+                continue
+            }
+
             val machine = getNextMachine(availableMachines, farm, tile)
+
             if (machine != null) {
                 doHarvest(farm, machine, tile, simTick)
+                operableTiles.remove(tile)
+
                 continueAction(farm, machine, simTick, tile, operableTiles)
                 /* missing machine return */
-                farm.machineHashMap.add(machine.id)
+                /* farm.machineHashMap.add(machine.id) not needed since getnextmachine alr adds it */
                 machine.resetElapsedTime()
+
+                val returnShed: Tile? = this.simulationMap.findTargetShed(
+                    machine,
+                    farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
+                    machine.currentHarvest != null
+                )
+
+                // If no shed is reachable, the machine is stuck
+                if (returnShed == null) {
+                    machine.isStuck = true
+                } else {
+                    machine.currentTile = returnShed
+                    machine.homeShed = returnShed
+                }
+
+                if (returnShed == null) {
+                    Logger.logMachineReturnFail(machine.id)
+                } else {
+                    val amount = machine.currentHarvest?.harvestAmount ?: 0
+                    val plantType = machine.currentHarvest?.plant ?: throw IllegalArgumentException("Plant is null")
+                    Logger.logMachineFinish(machine.id, returnShed.id)
+                    Logger.logUnload(machine.id, amount, plantType)
+                }
             }
-//            this.simulationMap.findTargetShed(availableMachine, farm.getShedTiles(), true)
-//            farm.machineHashMap.remove(availableMachine.id)
         }
     }
+
+    private fun continueAction(
+        farm: Farm,
+        machine: Machine,
+        simTick: Int,
+        tileToBaseOn: Tile,
+        operableTiles: MutableList<Tile>
+    ) {
+        if (!machine.canPerform()) {
+            return
+        }
+        val toContinueOn = this.simulationMap.getReachableTiles(
+            machine,
+            2,
+            true
+        ).filter {
+            it.currentCrop == tileToBaseOn.currentCrop && !farm.tileHashMap.contains(it.id)
+        }
+
+        if (toContinueOn.isEmpty()) {
+            return
+        }
+
+        for (tile in toContinueOn) {
+            if (this.simulationMap.isReachable(machine, tile)) {
+                doHarvest(farm, machine, tile, simTick)
+                operableTiles.remove(tile)
+
+                continueAction(farm, machine, simTick, tile, operableTiles)
+            }
+        }
+    }
+
+    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, simTick: Int) {
+        // log farm action
+        Logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id, machine.duration)
+
+        machine.currentTile = tile
+        machine.updateElapsedTime()
+
+        val currentCrop = tile.currentCrop
+        val plant = tile.plant
+        if (currentCrop != null && plant != null) {
+            if (machine.currentHarvest != null) {
+                if (machine.currentHarvest?.plant == currentCrop) {
+                    machine.currentHarvest?.harvestAmount += plant.harvestEstimate
+                } else {
+                    error("Machine is aleady carrying a different plant")
+                }
+            } else {
+                machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
+            }
+            plant.harvestEstimate = 0
+
+            // log specific harvest logging
+            val harvestAmount = machine.currentHarvest?.harvestAmount
+            if (harvestAmount != null) {
+                Logger.logHarvest(machine.id, harvestAmount, currentCrop)
+            }
+        }
+        if (tile.category == TileType.FIELD) {
+            tile.plant = null
+            tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
+        }
+
+        tile.actionsNeeded.remove(ActionType.HARVESTING)
+        farm.tileHashMap.add(tile.id)
+        // not a normal setter because it takes the yearTick and base off the duration on that
+    }
+
+//    private fun getAvailableMachine(farm: Farm, tile: Tile): Machine? {
+//        val machines = mutableListOf<Machine>()
+//        for (machine in farm.getMachines()) {
+//            if (!machine.isStuck &&
+//                machine.plants.contains(tile.currentCrop) && machine.actions.contains(ActionType.HARVESTING)
+//            ) {
+//                if (this.simulationMap.isReachable(machine, tile)) {
+//                    machines.add(machine)
+//                }
+//            }
+//        }
+//
+//        val sortedMachines = machines.sortedWith(compareBy({ it.duration }, { it.id }))
+//        return sortedMachines.firstOrNull()
+//    }
+//
+//    private fun getOperableTiles(farm: Farm, harvestablePlantTiles: List<PlantType>): MutableList<Tile> {
+//        val plantationTiles = farm.getPlantation().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
+//        val fieldTiles = farm.getFields().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
+//        return (plantationTiles.sortedBy { it.id } + fieldTiles.sortedBy { it.id }).toMutableList()
+//    }
 
     override fun startPhase(
         farm: Farm,
@@ -87,73 +208,4 @@ class HarvestingHandler(
     ): List<Tile> {
         return emptyList()
     }
-
-    private fun continueAction(
-        farm: Farm,
-        machine: Machine,
-        simTick: Int,
-        tileToBaseOn: Tile,
-        operableTiles: MutableList<Tile>
-    ) {
-        if (!machine.canPerform()) {
-            return
-        }
-        val toContinueOn = this.simulationMap.getReachableTiles(
-            machine,
-            2,
-            true
-        ).filter { it.currentCrop == tileToBaseOn.currentCrop }
-        if (toContinueOn.isEmpty()) {
-            return
-        }
-        for (tile in toContinueOn) {
-            if (this.simulationMap.isReachable(machine, tile)) {
-                doHarvest(farm, machine, tile, simTick)
-                operableTiles.remove(tile)
-                continueAction(farm, machine, simTick, tile, operableTiles)
-            }
-        }
-    }
-
-    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, simTick: Int) {
-        // logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id)
-        machine.currentTile = tile
-        machine.updateElapsedTime()
-        val currentCrop = tile.currentCrop
-        val plant = tile.plant
-        if (currentCrop != null && plant != null) {
-            /* do Harvest needs to be fixed since it overwrites the old harves in the machine */
-            machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
-            plant.harvestEstimate = 0
-        }
-        if (tile.category == TileType.FIELD) {
-            tile.plant = null
-        }
-        tile.actionsNeeded.remove(ActionType.HARVESTING)
-        farm.tileHashMap.add(tile.id)
-        // not a normal setter because it takes the yearTick and base off the duration on that
-        tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
-    }
-
-//    private fun getAvailableMachine(farm: Farm, tile: Tile): Machine? {
-//        val machines = mutableListOf<Machine>()
-//        for (machine in farm.getMachines()) {
-//            if (!machine.isStuck &&
-//                machine.plants.contains(tile.currentCrop) && machine.actions.contains(ActionType.HARVESTING)
-//            ) {
-//                if (this.simulationMap.isReachable(machine, tile)) {
-//                    machines.add(machine)
-//                }
-//            }
-//        }
-//
-//        val sortedMachines = machines.sortedWith(compareBy({ it.duration }, { it.id }))
-//        return sortedMachines.firstOrNull()
-//    }
-//
-//    private fun getOperableTiles(farm: Farm, harvestablePlantTiles: List<PlantType>): MutableList<Tile> {
-//        val plantationTiles = farm.getPlantation().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
-//        val fieldTiles = farm.getFields().filter { tile -> harvestablePlantTiles.contains(tile.currentCrop) }
-//        return (plantationTiles.sortedBy { it.id } + fieldTiles.sortedBy { it.id }).toMutableList()
-//    }
 }
