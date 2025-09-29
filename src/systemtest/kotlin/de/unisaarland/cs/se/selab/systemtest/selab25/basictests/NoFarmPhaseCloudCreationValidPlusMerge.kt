@@ -1,17 +1,19 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
- import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
+import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
- class NoFarmPhaseCloudCreationValidPlusMerge : ExampleSystemTestExtension() {
+/**
+ * No farm phase and cloud creation is valid plus merge
+ */
+class NoFarmPhaseCloudCreationValidPlusMerge : ExampleSystemTestExtension() {
     override val name = "NoFarmPhaseCloudCreationValidPlusMerge"
     override val description = "No farm phase and cloud creation is valid plus merge"
     override val farms = "NoFarmPhaseCloudCreationValidPlusMerge/farm.json"
 
     override val scenario = "NoFarmPhaseCloudCreationValidPlusMerge/scenario.json"
     override val map = "NoFarmPhaseCloudCreationValidPlusMerge/map.json"
-    override val logLevel= "DEBUG"
+    override val logLevel = "DEBUG"
     override val maxTicks = 1
     override val startYearTick = 1
-
 
     override suspend fun run() {
         val lines = result().lines()
@@ -23,7 +25,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
             }
         }
     }
-    private fun result() : String {
+    private fun result(): String {
         return """
  [INFO] Initialization Info: map.json successfully parsed and validated.
  [INFO] Initialization Info: farm.json successfully parsed and validated.
@@ -48,6 +50,6 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
  [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
  [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
  [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
-    """.trimIndent()
+        """.trimIndent()
     }
- }
+}
