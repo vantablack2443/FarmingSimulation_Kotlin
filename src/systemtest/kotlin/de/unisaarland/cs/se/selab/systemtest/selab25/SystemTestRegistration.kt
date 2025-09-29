@@ -4,6 +4,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
@@ -41,6 +42,7 @@ object SystemTestRegistration {
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
     }
 
     /**
@@ -53,6 +55,9 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
     }
 
     /**
