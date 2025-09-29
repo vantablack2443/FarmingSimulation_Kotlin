@@ -43,6 +43,7 @@ const val DURATION_STRING = "duration"
 const val EFFECT_STRING = "effect"
 const val MACHINEID_STRING = "machineId"
 const val AMOUNT_STRING = "amount"
+const val MAX_TICK_UPPER_LIMIT = 1000
 
 /**
  * Handles Parsing the Scenario File
@@ -294,7 +295,7 @@ class ScenarioParser(private val simData: SimulationData) {
 
         lateinit var durationObject: Duration
         if (duration == -1) {
-            durationObject = Duration(-1, -1)
+            durationObject = Duration(tick + 1, MAX_TICK_UPPER_LIMIT)
         } else {
             durationObject = Duration(tick + 1, tick + duration)
         }
