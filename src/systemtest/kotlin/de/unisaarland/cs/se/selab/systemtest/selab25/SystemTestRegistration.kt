@@ -120,5 +120,6 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
+        testSuite.registerTest(SowingPlanSimplePlan())
     }
 }
