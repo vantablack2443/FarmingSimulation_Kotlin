@@ -35,5 +35,13 @@ class SowingMovementBasicTest : ExampleSystemTestExtension() {
             "[DEBUG] Farm: Farm 0 has the following active sowing plans it intends to pursue in this tick: 0."
         )
         assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 2 for 4 days.")
+        assertNextLine("[IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 0.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 8 for 4 days.")
+        assertNextLine("[IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 0.")
+        assertNextLine(
+            "[IMPORTANT] Farm Machine: Machine 0 is finished and returns to" +
+                " the shed at 0."
+        )
+        assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
     }
 }
