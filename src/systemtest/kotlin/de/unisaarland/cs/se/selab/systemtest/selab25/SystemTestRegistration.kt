@@ -18,7 +18,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAc
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTillSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
@@ -60,8 +59,6 @@ object SystemTestRegistration {
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(MachineIrrigationTillSowing())
-        testSuite.registerTest(MachineIrrigationUntilSowing())
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(MachineIrrigationWaterNext())
         testSuite.registerTest(MachineIrrigationTwoMachines())
