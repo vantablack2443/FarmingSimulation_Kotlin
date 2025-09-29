@@ -19,11 +19,14 @@ class SowingPlanSimplePlan : ExampleSystemTestExtension() {
     override val startYearTick = 19
 
     override suspend fun run() {
-//        skipUntilString("[DEBUG] Farm 0 has the following active sowing plans it intends pursue in this tick: [0]")
-        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 0 for 4 days")
-        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 1 for 4 days")
-        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 3 for 4 days")
-        assertNextLine("[IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 0")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to thee shed at 2")
+//        skipUntilString(
+//            "[DEBUG] Farm: Farm 0 has the following active sowing plans" +
+//                " it intends to pursue in this tick: 0."
+//        )
+        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 0 for 4 days.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 1 for 4 days.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 3 for 4 days.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 2.")
+        assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
     }
 }

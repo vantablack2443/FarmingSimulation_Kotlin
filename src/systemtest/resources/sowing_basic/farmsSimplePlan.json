@@ -13,7 +13,7 @@
           "actions": ["SOWING", "HARVESTING"],
           "plants": ["WHEAT", "APPLE"],
           "duration": 4,
-          "location": 0
+          "location": 2
         }
       ],
       "sowingPlans": [
