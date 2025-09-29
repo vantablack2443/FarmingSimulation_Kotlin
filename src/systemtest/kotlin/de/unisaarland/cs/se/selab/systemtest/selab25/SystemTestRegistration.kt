@@ -38,6 +38,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCr
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
@@ -90,6 +91,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationPlantsDefaultTickOneWithLog())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultLogHarvestMiss())
+        testSuite.registerTest(PlantationPlantsDefaultTickOne())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())

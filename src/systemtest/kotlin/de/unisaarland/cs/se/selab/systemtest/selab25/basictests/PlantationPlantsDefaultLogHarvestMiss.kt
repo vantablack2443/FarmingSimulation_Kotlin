@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * tests default behavior of machines
  */
 class PlantationPlantsDefaultLogHarvestMiss : ExampleSystemTestExtension() {
-    override val name = "PlantationPlantsDefaultTickOne"
+    override val name = "PlantationPlantsDefaultLogHarvestMiss"
     override val description = "Tests plantation plant actions in 1st tick"
 
     // Paths are relative from the `src/systemtest/resources` directory.

@@ -7,7 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  */
 class PlantationPlantsDefaultTickOne : ExampleSystemTestExtension() {
     override val name = "PlantationPlantsDefaultTickOne"
-    override val description = "Tests plantation plant actions in 1st tick"
+    override val description = "Tests plantation plant actions WITHOUT missed harvest log"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "plantationPlantTests/farms.json"
