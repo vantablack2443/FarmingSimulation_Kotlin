@@ -1,7 +1,10 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
- import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
+import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
- class NoFarmPhaseCloudCreationValidPlusMergeTestingOrder : ExampleSystemTestExtension() {
+/**
+ * No farm phase and cloud creation is valid plus merge that tests the order of merges and creation of clouds
+ */
+class NoFarmPhaseCloudCreationValidPlusMergeTestingOrder : ExampleSystemTestExtension() {
     override val name = "NoFarmPhaseCloudCreationValidPlusMergeTestingOrder"
     override val description = "No farm phase and cloud creation is valid plus merge that " +
         "tests the order of merges and creation of clouds"
@@ -48,4 +51,4 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
  [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
         """.trimIndent()
     }
- }
+}

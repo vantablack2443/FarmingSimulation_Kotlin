@@ -1,7 +1,10 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
- import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
+import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
- class ScnearioWIthCloudsAndIncident : ExampleSystemTestExtension(){
+/**
+ * validation for machines to be on the shed belonging to the farm
+ */
+class ScnearioWIthCloudsAndIncident : ExampleSystemTestExtension() {
     override val name = "ScenarioWithCloudsAndIncident"
     override val description = "Scenario with clouds and incident simple"
     override val farms = "FullScenarioTestSimple/figure10Farm.json"
@@ -12,16 +15,15 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
     override val logLevel = "DEBUG"
     override val maxTicks = 1
     override val startYearTick = 1
-        override suspend fun run() {
-            val lineIterator = result().lines().iterator()
-            while (lineIterator.hasNext()) {
-                val currentLine = lineIterator.next()
-                assertNextLine(currentLine)
-            }
+    override suspend fun run() {
+        val lineIterator = result().lines().iterator()
+        while (lineIterator.hasNext()) {
+            val currentLine = lineIterator.next()
+            assertNextLine(currentLine)
         }
+    }
 
-
-    private fun result() : String {
+    private fun result(): String {
         return """
             [INFO] Initialization Info: figure10Map.json successfully parsed and validated.
             [INFO] Initialization Info: figure10Farm.json successfully parsed and validated.
@@ -43,7 +45,6 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
             [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
             [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
             [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
-    """.trimIndent()
+        """.trimIndent()
     }
-
- }
+}

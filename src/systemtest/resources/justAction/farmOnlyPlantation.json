@@ -17,6 +17,12 @@
         }
       ],
       "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "WHEAT",
+          "fields": [1]
+        }
       ]
     }
   ]

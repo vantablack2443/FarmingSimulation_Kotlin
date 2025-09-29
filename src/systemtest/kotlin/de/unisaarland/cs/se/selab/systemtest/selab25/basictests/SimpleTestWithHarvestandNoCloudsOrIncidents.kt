@@ -1,6 +1,10 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
- import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
- class SimpleTestWithHarvestandNoCloudsOrIncidents : ExampleSystemTestExtension (){
+import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
+
+/**
+* Scenario with only sowing in farm phase
+*/
+class SimpleTestWithHarvestandNoCloudsOrIncidents : ExampleSystemTestExtension() {
     override val name = "SimpleTestWithHarvestandNoCloudsOrIncidents"
     override val description = "Scenario with only sowing in farm phase"
     override val farms = "SimpleHarvestNoCloudsNorIncidents/farm.json"
@@ -18,9 +22,9 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
             assertNextLine(currentLine)
         }
     }
-    private fun result() : String {
+    private fun result(): String {
         return """
 
-    """.trimIndent()
+        """.trimIndent()
     }
- }
+}
