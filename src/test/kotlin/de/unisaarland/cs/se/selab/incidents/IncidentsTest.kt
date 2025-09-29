@@ -38,7 +38,7 @@ class IncidentsTest {
         apple = Plant.createPlant(PlantType.APPLE)
         grape = Plant.createPlant(PlantType.GRAPE)
         potato = Plant.createPlant(PlantType.POTATO) as FieldPlant
-        potato.sownTick = 10
+        potato.sownSimTick = 10
         oat = Plant.createPlant(PlantType.OAT)
         potatoTile.plant = potato
         oatTile.plant = oat
@@ -212,7 +212,7 @@ class IncidentsTest {
             4
         )
         val pumpkin = Plant.createPlant(PlantType.PUMPKIN) as FieldPlant
-        pumpkin.sownTick = 10
+        pumpkin.sownSimTick = 10
         val pumpkinTile = mockMap.getTileByCoordinate(Coordinate(6, 2))!!
         pumpkinTile.plant = pumpkin
         beeHappy.execute(mockMap, 14) // potato and pumpkin blooming
