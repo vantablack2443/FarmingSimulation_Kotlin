@@ -40,6 +40,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarves
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneNoLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 /**
  * Used for test registration
@@ -97,6 +98,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
 
         testSuite.registerTest(EmptyTest())
+        testSuite.registerTest(SowingPlanPrioritization())
     }
 
     /**

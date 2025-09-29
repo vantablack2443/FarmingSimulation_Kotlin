@@ -1,0 +1,41 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Lumayan Farm",
+      "farmsteads": [2],
+      "fields": [0, 1, 5],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Tractor",
+          "actions": ["SOWING", "MOWING"],
+          "plants": ["PUMPKIN", "POTATO", "APPLE"],
+          "duration": 4,
+          "location": 2
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 2,
+          "tick": 1,
+          "plant": "POTATO",
+          "fields": [1, 5]
+        },
+        {
+          "id": 1,
+          "tick": 0,
+          "plant": "PUMPKIN",
+          "fields": [0]
+        },
+        {
+          "id": 0,
+          "tick": 1,
+          "plant": "PUMPKIN",
+          "fields": [5]
+        }
+      ]
+    }
+  ]
+}

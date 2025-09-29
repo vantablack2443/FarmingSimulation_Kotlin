@@ -10,8 +10,8 @@ const val TRY_SOWING_PLAN = "[DEBUG] Farm: Farm 0 has the following active sowin
  * test simple action of sowing on a small map
  */
 class SowingPlanSimplePlan : ExampleSystemTestExtension() {
-    override val name = "Sowing Plan Fields With One Simple Plan"
-    override val description = "Tests sowing plan parsing"
+    override val name = "SowingPlanFieldsWithTwoSimplePlans"
+    override val description = "Tests sowing for the next year"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "sowing_basic/farmsSimplePlan.json"
