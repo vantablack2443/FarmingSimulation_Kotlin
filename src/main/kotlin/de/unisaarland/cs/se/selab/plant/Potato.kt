@@ -44,7 +44,7 @@ class Potato : FieldPlant() {
 
     // USES SIM-TICK
     override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
-        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
+        if ((simTick - sownSimTick) % 2 == 0 && simTick != sownSimTick) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
@@ -61,7 +61,7 @@ class Potato : FieldPlant() {
      * 20% per delayed tick
      */
     override fun applyLateSowingPenalty() {
-        var counter = sownTick - POTATO_SOW_END
+        var counter = sownYearTick - POTATO_SOW_END
         while (counter > 0) {
             this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--

@@ -49,7 +49,7 @@ class Oat : FieldPlant() {
     // USES SIM-TICK
     override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
         // In the first 3 ticks after sowing
-        if (((sownTick + OAT_WEED_START_OFFSET)..(sownTick + OAT_WEED_END_OFFSET)).contains(simTick)) {
+        if (((sownSimTick + OAT_WEED_START_OFFSET)..(sownSimTick + OAT_WEED_END_OFFSET)).contains(simTick)) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
@@ -67,7 +67,7 @@ class Oat : FieldPlant() {
      * 20% per delayed tick
      */
     override fun applyLateSowingPenalty() {
-        var counter = sownTick - OAT_SOW_END
+        var counter = sownYearTick - OAT_SOW_END
         while (counter > 0) {
             this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--

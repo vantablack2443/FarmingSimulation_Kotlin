@@ -46,7 +46,7 @@ class Pumpkin : FieldPlant() {
 
     // USES SIM-TICK
     override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
-        if ((simTick - sownTick) % 2 == 0 && simTick != sownTick) {
+        if ((simTick - sownSimTick) % 2 == 0 && simTick != sownSimTick) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
@@ -55,7 +55,7 @@ class Pumpkin : FieldPlant() {
     override fun isBlooming(tick: Int): Boolean {
         // Two ticks after sowing
         // For two ticks
-        return ((sownTick + PUMPKIN_BLOOM_START_OFFSET)..(sownTick + PUMPKIN_BLOOM_END_OFFSET)).contains(tick)
+        return ((sownSimTick + PUMPKIN_BLOOM_START_OFFSET)..(sownSimTick + PUMPKIN_BLOOM_END_OFFSET)).contains(tick)
     }
 
     override fun doBeeHappy(effect: Double) {
@@ -77,7 +77,7 @@ class Pumpkin : FieldPlant() {
      * 20% per delayed tick
      */
     override fun applyLateSowingPenalty() {
-        var counter = sownTick - PUMPKIN_SOW_END
+        var counter = sownYearTick - PUMPKIN_SOW_END
         while (counter > 0) {
             this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--

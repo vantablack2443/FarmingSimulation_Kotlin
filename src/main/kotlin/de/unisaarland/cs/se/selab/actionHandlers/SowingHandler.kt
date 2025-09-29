@@ -124,9 +124,9 @@ class SowingHandler(
             val machine = getNextMachine(machines, farm, tile)
             if (machine != null) {
                 hasSown = true
-                performAction(machine, tile, yearTick, plan)
+                performAction(machine, tile, yearTick, simTick, plan)
                 farm.tileHashMap.add(tile.id)
-                continueAction(machine, tilesToSow, plan, farm, yearTick)
+                continueAction(machine, tilesToSow, plan, farm, yearTick, simTick)
                 // farm.machineHashMap.add(machine.id) added by getMachine
                 returnToShed(machine, farm)
             }
@@ -138,7 +138,7 @@ class SowingHandler(
     /**
      * Performs the SOWING action
      */
-    private fun performAction(machine: Machine, tile: Tile, yearTick: Int, plan: SowingPlan) {
+    private fun performAction(machine: Machine, tile: Tile, yearTick: Int, simTick: Int, plan: SowingPlan) {
         // Update machine's location
         machine.updateElapsedTime()
         machine.currentTile = tile
@@ -148,6 +148,8 @@ class SowingHandler(
 
         // Creates plant, sets tile's plant to the created plant, sets tile's current crop to the plant type
         val plant = Plant.createPlant(plan.getPlant())
+        // Add sowing times
+        plant.setSowingTime(simTick, yearTick)
         // Adds to SOWING to lateAction list if the tick of sowing is late
         plant.checkLateSowing(tile.lateActions, yearTick)
         tile.plant = plant
@@ -159,7 +161,14 @@ class SowingHandler(
     /**
      * Continues SOWING action
      */
-    private fun continueAction(machine: Machine, tilesToSow: List<Tile>, plan: SowingPlan, farm: Farm, yearTick: Int) {
+    private fun continueAction(
+        machine: Machine,
+        tilesToSow: List<Tile>,
+        plan: SowingPlan,
+        farm: Farm,
+        yearTick: Int,
+        simTick: Int
+    ) {
         if (!machine.canPerform()) {
             // Return to shed if time is up
             return
@@ -174,8 +183,8 @@ class SowingHandler(
         )
         if (nextTile != null) {
             farm.tileHashMap.add(nextTile.id)
-            performAction(machine, nextTile, yearTick, plan)
-            continueAction(machine, tilesToSow, plan, farm, yearTick) // Recursively continue action
+            performAction(machine, nextTile, yearTick, simTick, plan)
+            continueAction(machine, tilesToSow, plan, farm, yearTick, simTick) // Recursively continue action
         }
     }
 

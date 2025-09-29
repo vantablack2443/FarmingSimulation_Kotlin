@@ -51,7 +51,7 @@ class Wheat : FieldPlant() {
     override fun needsWeeding(simTick: Int, actionsNeeded: MutableList<ActionType>) {
         // Weed 3 ticks and 10 ticks after sowing
         // Refer to specification for more details -> 3 ticks after tick x means on the x + 4th tick
-        if (simTick == sownTick + WHEAT_WEED_START_OFFSET || simTick == sownTick + WHEAT_WEED_END_OFFSET) {
+        if (simTick == sownSimTick + WHEAT_WEED_START_OFFSET || simTick == sownSimTick + WHEAT_WEED_END_OFFSET) {
             actionsNeeded.add(ActionType.WEEDING)
         }
     }
@@ -70,7 +70,7 @@ class Wheat : FieldPlant() {
      * 20% per delayed tick
      */
     override fun applyLateSowingPenalty() {
-        var counter = sownTick - WHEAT_SOW_END
+        var counter = sownYearTick - WHEAT_SOW_END
         while (counter > 0) {
             this.harvestEstimate = floor(LATE_SOW_PENALTY_FIELDS * this.harvestEstimate).toInt()
             counter--

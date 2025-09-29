@@ -128,6 +128,11 @@ abstract class Plant {
     open fun resetMowingTime(startTick: Int) { return }
 
     /**
+     * Sets sowing sim tick and year tick in field plants
+     */
+    open fun setSowingTime(sownSimTick: Int, sownYearTick: Int) { return }
+
+    /**
      * Factory method to create plants based on PlantType
      * Used by sowing handler to create a plant based on plantType
      */
