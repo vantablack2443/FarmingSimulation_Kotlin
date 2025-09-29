@@ -98,6 +98,18 @@ class PlantData {
         PUMPKIN_SOWING_START..PUMPKIN_SOWING_END_PLUS_LATE to PlantType.PUMPKIN
     )
 
+    val harvestingTimes: Map<PlantType, IntRange> = mapOf(
+        PlantType.POTATO to POTATO_HARVEST_START..POTATO_HARVEST_END,
+        PlantType.WHEAT to WHEAT_HARVEST_START..WHEAT_HARVEST_END_PLUS_LATE,
+        PlantType.OAT to OAT_HARVEST_START..OAT_HARVEST_END_PLUS_LATE,
+        PlantType.PUMPKIN to POTATO_HARVEST_START..PUMPKIN_HARVEST_END,
+        PlantType.APPLE to APPLE_HARVEST_START..APPLE_HARVEST_END_PLUS_LATE,
+        PlantType.ALMOND to ALMOND_HARVEST_START..ALMOND_HARVEST_END_PLUS_LATE,
+        PlantType.CHERRY to CHERRY_HARVEST_START..CHERRY_HARVEST_END_PLUS_LATE,
+        PlantType.GRAPE to GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END_PLUS_LATE
+    )
+
+    /*
     val harvestingTimes: Map<IntRange, PlantType> = mapOf(
         POTATO_HARVEST_START..POTATO_HARVEST_END to PlantType.POTATO,
         WHEAT_HARVEST_START..WHEAT_HARVEST_END_PLUS_LATE to PlantType.WHEAT,
@@ -108,6 +120,8 @@ class PlantData {
         CHERRY_HARVEST_START..CHERRY_HARVEST_END_PLUS_LATE to PlantType.CHERRY,
         GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END_PLUS_LATE to PlantType.GRAPE
     )
+
+     */
 
     /**
      * returns all sowable plant types in the given yeartick
@@ -121,7 +135,13 @@ class PlantData {
      * returns all harvestabble plant types in the given yeartick
      * @param yeartick the yeartick of the simulation
      */
+    fun getHarvestablePlantTypes(yearTick: Int): List<PlantType> {
+        return harvestingTimes.filter { (_, range) -> yearTick in range }.map { (plant, _) -> plant }
+    }
+    /*
     fun getHarvestablePlantTypes(yeartick: Int): List<PlantType> {
         return harvestingTimes.filter { (range, _) -> yeartick in range }.map { (_, value) -> value }
     }
+
+     */
 }

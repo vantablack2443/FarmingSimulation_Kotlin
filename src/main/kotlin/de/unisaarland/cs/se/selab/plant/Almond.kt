@@ -67,6 +67,7 @@ class Almond : PlantationPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
+        if (harvestEstimate == 0) return
         if (yearTick in ALMOND_HARVEST_START..ALMOND_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
