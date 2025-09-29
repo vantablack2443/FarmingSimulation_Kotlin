@@ -94,7 +94,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
         if (nextTile != null) {
             farm.tileHashMap.add(nextTile.id)
-            performAction(machine, nextTile)
+            performAction(machine, nextTile, yearTick)
             continueAction(machine, farm, operableTiles, yearTick) // Recursively continue action
         } else {
             machine.currentTile = machine.homeShed

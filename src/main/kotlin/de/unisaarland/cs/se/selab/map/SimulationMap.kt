@@ -206,7 +206,7 @@ class SimulationMap(
      * returns null if no shed on the farm is reachable
      */
     fun findTargetShed(machine: Machine, farmSheds: List<Tile>, carryingHarvest: Boolean): Tile? {
-        val reach = getAccessibleTiles(machine, -1, carryingHarvest)
+        val reach = getReachableTiles(machine, -1, carryingHarvest)
         val reachableSheds = farmSheds.intersect(reach.toSet())
         if (machine.homeShed in reachableSheds) return machine.homeShed
         // assumes farm sheds are ordered by id

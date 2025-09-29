@@ -65,6 +65,7 @@ class Cherry : PlantationPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
+        if (this.harvestEstimate == 0) { return }
         if (yearTick in CHERRY_HARVEST_START..CHERRY_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }

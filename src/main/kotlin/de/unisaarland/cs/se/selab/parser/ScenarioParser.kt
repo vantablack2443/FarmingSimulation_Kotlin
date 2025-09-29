@@ -371,17 +371,17 @@ class ScenarioParser(private val simData: SimulationData) {
     }
 
     private fun validateAnimalAttack(locationTile: Tile, radius: Int): Boolean {
-        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(locationTile, radius)
+        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(locationTile, radius) + locationTile
         return affectedTiles.any { it.category == TileType.FOREST }
     }
 
     private fun validateBeeHappy(tile: Tile, radius: Int): Boolean {
-        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(tile, radius)
+        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(tile, radius) + tile
         return affectedTiles.any { it.category == TileType.MEADOW }
     }
 
     private fun validateDrought(tile: Tile, radius: Int): Boolean {
-        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(tile, radius)
+        val affectedTiles: List<Tile> = simData.map.getTilesByRadius(tile, radius) + tile
         return affectedTiles.any { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
     }
 
