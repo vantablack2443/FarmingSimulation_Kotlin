@@ -13,7 +13,7 @@
       "coordinates": { "x": 0, "y": 0 },
       "category": "FIELD",
       "farm": 0,
-      "capacity": 8,
+      "capacity": 800,
       "plant": "WHEAT",
       "airflow": false,
       "possiblePlants": ["WHEAT"]
@@ -23,7 +23,7 @@
       "coordinates": { "x": 2, "y": 0 },
       "category": "PLANTATION",
       "farm": 0,
-      "capacity": 8,
+      "capacity": 800,
       "plant": "APPLE",
       "airflow": false
     },
@@ -32,7 +32,7 @@
       "coordinates": { "x": 4, "y": 0 },
       "category": "PLANTATION",
       "farm": 0,
-      "capacity": 8,
+      "capacity": 800,
       "plant": "APPLE",
       "airflow": false
     },
@@ -41,7 +41,7 @@
       "coordinates": { "x": 6, "y": 0 },
       "category": "FIELD",
       "farm": 0,
-      "capacity": 8,
+      "capacity": 800,
       "plant": "WHEAT",
       "airflow": false,
       "possiblePlants": ["WHEAT"]
