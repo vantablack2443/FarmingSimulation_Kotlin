@@ -1,0 +1,31 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Farm0",
+      "farmsteads": [1],
+      "fields": [0, 2, 3],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Machine0",
+          "actions": ["SOWING"],
+          "plants": ["WHEAT"],
+          "duration": 4,
+          "location": 4
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "WHEAT",
+          "location": 6,
+          "radius": 1
+        }
+      ]
+    }
+  ]
+}
+
