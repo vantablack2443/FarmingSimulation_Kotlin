@@ -78,6 +78,14 @@ class Potato : FieldPlant() {
         }
     }
 
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in POTATO_HARVEST_START..<POTATO_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
+        }
+    }
+
     /**
      * reset harvest estimate
      */

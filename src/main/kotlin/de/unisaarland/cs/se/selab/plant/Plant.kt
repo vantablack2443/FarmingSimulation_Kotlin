@@ -133,6 +133,12 @@ abstract class Plant {
     open fun setSowingTime(sownSimTick: Int, sownYearTick: Int) { return }
 
     /**
+     * Filters out HARVESTING from actions needed list if we are within all but the last tick of the
+     * harvesting period
+     */
+    open fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) { return }
+
+    /**
      * Factory method to create plants based on PlantType
      * Used by sowing handler to create a plant based on plantType
      */

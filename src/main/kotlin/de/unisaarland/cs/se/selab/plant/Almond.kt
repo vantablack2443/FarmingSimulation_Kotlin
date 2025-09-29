@@ -87,6 +87,14 @@ class Almond : PlantationPlant() {
         }
     }
 
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in ALMOND_HARVEST_START..<ALMOND_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
+        }
+    }
+
     /**
      * reset harvest estimate
      */

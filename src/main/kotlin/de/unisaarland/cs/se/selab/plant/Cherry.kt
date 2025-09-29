@@ -85,6 +85,14 @@ class Cherry : PlantationPlant() {
         }
     }
 
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in CHERRY_HARVEST_START..<CHERRY_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
+        }
+    }
+
     /**
      * reset harvest estimate
      */
