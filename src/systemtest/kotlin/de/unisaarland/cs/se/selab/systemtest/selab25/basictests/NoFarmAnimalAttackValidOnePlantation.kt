@@ -15,13 +15,13 @@ class NoFarmAnimalAttackValidOnePlantation : ExampleSystemTestExtension() {
     override val maxTicks = 1
     override val startYearTick = 1
 
-     override suspend fun run() {
-         val lineIterator = result().lines().iterator()
-         while (lineIterator.hasNext()) {
-             val currentLine = lineIterator.next()
-             assertNextLine(currentLine)
-         }
-     }
+    override suspend fun run() {
+        val lineIterator = result().lines().iterator()
+        while (lineIterator.hasNext()) {
+            val currentLine = lineIterator.next()
+            assertNextLine(currentLine)
+        }
+    }
 
     private fun result(): String {
         return """
