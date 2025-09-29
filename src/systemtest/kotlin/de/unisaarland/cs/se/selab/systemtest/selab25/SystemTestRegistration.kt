@@ -37,7 +37,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCr
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneNoLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 /**
@@ -85,8 +87,9 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationHarvestMoistureHundred())
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
-        testSuite.registerTest(PlantationPlantsDefault())
-        testSuite.registerTest(PlantationPlantsDefaultTickOne())
+        // testSuite.registerTest(PlantationPlantsDefault())
+        testSuite.registerTest(PlantationPlantsDefaultTickOneNoLog())
+        testSuite.registerTest(PlantationPlantsDefaultLogHarvestMiss())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
