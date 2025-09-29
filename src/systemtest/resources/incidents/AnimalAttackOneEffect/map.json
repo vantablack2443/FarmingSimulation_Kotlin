@@ -1,0 +1,116 @@
+{
+  "tiles": [
+    {
+      "id": 10,
+      "coordinates": { "x": 6, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 12,
+      "coordinates": { "x": 8, "y": 0 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 8000,
+      "farm": 1,
+      "airflow": false
+    },
+    {
+      "id": 14,
+      "coordinates": {"x": 10, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 40,
+      "coordinates": {"x": 10, "y":  2},
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 8000,
+      "possiblePlants": ["PUMPKIN", "WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 11,
+      "coordinates": { "x": 6, "y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 13,
+      "coordinates": { "x": 8, "y": 2 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 8000,
+      "farm": 1,
+      "airflow": false
+    },
+    {
+      "id": 24,
+      "coordinates": { "x": 10, "y": 4 },
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 8000,
+      "possiblePlants": ["POTATO", "WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 22,
+      "coordinates": { "x": 8, "y": 4 },
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 8000,
+      "possiblePlants": ["OAT"],
+      "airflow": false
+    },
+    {
+      "id": 18,
+      "coordinates": { "x": 6, "y": 4 },
+      "category": "PLANTATION",
+      "plant": "CHERRY",
+      "capacity": 8000,
+      "farm": 1,
+      "airflow": false
+    },
+    {
+      "id": 116,
+      "coordinates": { "x": 7, "y": 3 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 118,
+      "coordinates": { "x": 7, "y": 1 },
+      "category": "FOREST",
+      "airflow": false
+    },
+    {
+      "id": 117,
+      "coordinates": { "x": 9, "y": 1 },
+      "category": "FOREST",
+      "airflow": false
+    },
+    {
+      "id": 15,
+      "coordinates": { "x": 9, "y": 3 },
+      "category": "FOREST",
+      "airflow": false
+
+    },
+    {
+      "id": 30,
+      "coordinates": { "x": 9, "y": 5 },
+      "category": "FARMSTEAD",
+      "airflow": false,
+      "farm": 1,
+      "shed": true
+    },
+    {
+      "id": 300,
+      "coordinates": {"x": 11, "y": 1},
+      "category": "FARMSTEAD",
+      "airflow": false,
+      "farm": 1,
+      "shed": true
+    }
+  ]
+}

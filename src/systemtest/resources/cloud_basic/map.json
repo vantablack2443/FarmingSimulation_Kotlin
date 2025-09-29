@@ -1,0 +1,37 @@
+{
+  "tiles": [
+    {
+      "id": 0,
+      "coordinates": { "x": 0, "y": 0 },
+      "category": "ROAD",
+      "farm": 0,
+      "shed": true,
+      "airflow": true,
+      "direction": 180
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 0, "y": 2 },
+      "category": "ROAD",
+      "airflow": false,
+      "direction": 90
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 2, "y": 2 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 10000,
+      "possiblePlants": ["PUMPKIN", "WHEAT"],
+      "airflow": true,
+      "direction": 0
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": 2, "y": 0 },
+      "category": "ROAD",
+      "airflow": true,
+      "direction": 90
+    }
+  ]
+}
