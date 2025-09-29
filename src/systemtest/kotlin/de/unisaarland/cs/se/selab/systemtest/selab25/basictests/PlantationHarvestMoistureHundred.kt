@@ -51,10 +51,6 @@ class PlantationHarvestMoistureHundred : ExampleSystemTestExtension() {
         assertNextLine(
             "[DEBUG] Farm: Farm 0 has the following active sowing plans it intends to pursue in this tick: ."
         )
-        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs HARVESTING on tile 1 for 4 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 0 has collected 0 g of ALMOND harvest.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 0.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 0 unloads 0 g of ALMOND harvest in the shed.")
         assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
         assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 1 were not performed: IRRIGATING.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 0 g of ALMOND.")
