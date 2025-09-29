@@ -41,7 +41,7 @@ class MachineIrrigationWaterNext : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 1 starts its actions.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 2 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 5 for 2 days.")
-        assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 2 for 2 days.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 8 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 2 is finished and returns to the shed at 1.")
 
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs IRRIGATING on tile 6 for 3 days.")
