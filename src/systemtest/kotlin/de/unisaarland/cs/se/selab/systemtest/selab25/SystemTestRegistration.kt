@@ -81,6 +81,9 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
     }
 
     /**
