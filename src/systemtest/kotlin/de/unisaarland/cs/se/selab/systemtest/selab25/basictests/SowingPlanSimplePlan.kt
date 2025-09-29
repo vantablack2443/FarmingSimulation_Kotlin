@@ -1,9 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
-import de.unisaarland.cs.se.selab.systemtest.api.SystemTestAssertionError
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
-
-const val SOWING_PLAN_EXECUTED = "[IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 0."
 
 /**
  * test simple action of sowing on a small map
