@@ -109,6 +109,14 @@ class Apple : PlantationPlant() {
         }
     }
 
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in APPLE_HARVEST_START..<APPLE_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
+        }
+    }
+
     /**
      * reset harvest estimate
      */

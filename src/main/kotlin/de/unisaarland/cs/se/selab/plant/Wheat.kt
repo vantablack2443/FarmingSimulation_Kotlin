@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab.plant
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST
+import de.unisaarland.cs.se.selab.plantdata.WHEAT_HARVEST_END
 import kotlin.math.floor
 
 const val WHEAT_SUNLIGHT = 90
@@ -88,6 +89,14 @@ class Wheat : FieldPlant() {
             this.harvestEstimate = 0
         } else { // %20 reduction per tick
             this.harvestEstimate = floor(WHEAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
+        }
+    }
+
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in WHEAT_HARVEST_START..<WHEAT_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
         }
     }
 

@@ -33,7 +33,16 @@ class IrrigationHandler(
             return
         }
 
-        val operableTiles = getOperableTiles(farm, tileType).toMutableList()
+        val operableFieldTiles = getOperableTiles(farm, TileType.FIELD).toMutableList()
+        val operablePlantationTiles = getOperableTiles(farm, TileType.PLANTATION).toMutableList()
+
+        // here, operableTile will point to the same reference as operableFieldTiles or operablePlantationTiles
+        val operableTiles = if (tileType == TileType.FIELD) {
+            operableFieldTiles
+        } else {
+            operablePlantationTiles
+        }
+
         if (operableTiles.isEmpty()) {
             return
         }
@@ -49,7 +58,7 @@ class IrrigationHandler(
                     operableTiles.remove(tile)
 
                     // continue action
-                    continueAction(machine, operableTiles, farm)
+                    continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
                     break
                 }
             }
@@ -65,7 +74,7 @@ class IrrigationHandler(
         val returnShed: Tile? = simulationMap.findTargetShed(
             machine,
             farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
-            machine.currentHarvest != null
+            false
         )
 
         if (returnShed == null) {
@@ -129,17 +138,33 @@ class IrrigationHandler(
     /**
      * Finds the next tile to continue the irrigation action within a radius of 2 from the machine's current tile.
      */
-    private fun continueAction(machine: Machine, operableTiles: MutableList<Tile>, farm: Farm) {
+    private fun continueAction(
+        machine: Machine,
+        operableFieldTiles: MutableList<Tile>,
+        operablePlantationTiles: MutableList<Tile>,
+        farm: Farm
+    ) {
         if (!machine.canPerform()) {
             return
         }
 
-        val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
+        // carrying harvest will always be false as same machine cant harvest and irrigate in same tick
+        val reach = this.simulationMap.getReachableTiles(machine, 2, false)
+//        val merged = operableFieldTiles.sortedBy { it.id } + operablePlantationTiles.sortedBy { it.id }
+//        val operable = merged.filter { it in reach }.toMutableList()
+//        if (operable.isEmpty()) return
+        val fieldTiles = operableFieldTiles.intersect(reach.toSet()).sortedBy { it.id }.toMutableList()
+        if (fieldTiles.isNotEmpty()) {
+            performAction(farm, machine, fieldTiles.first())
+            operableFieldTiles.remove(fieldTiles.first())
+            continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
+        }
 
-        if (nextTile != null) {
-            performAction(farm, machine, nextTile)
-            operableTiles.remove(nextTile)
-            continueAction(machine, operableTiles, farm) // Recursively continue action
+        val plantationTiles = operablePlantationTiles.intersect(reach.toSet()).sortedBy { it.id }.toMutableList()
+        if (plantationTiles.isNotEmpty()) {
+            performAction(farm, machine, plantationTiles.first())
+            operablePlantationTiles.remove(plantationTiles.first())
+            continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
         }
     }
 

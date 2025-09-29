@@ -37,7 +37,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 continue
             }
             when (tile.category) {
-                TileType.FIELD -> fieldHarvestEstimate(tile, simTick)
+                TileType.FIELD -> fieldHarvestEstimate(tile, simTick, yearTick)
                 TileType.PLANTATION -> plantationHarvestEstimate(tile, yearTick)
                 else -> error("Tile is not plantable")
             }
@@ -52,8 +52,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     /**
      * Applies all relevant penalties to the harvest estimate of a field tile.
      */
-    fun fieldHarvestEstimate(t: Tile, simTick: Int) {
+    fun fieldHarvestEstimate(t: Tile, simTick: Int, yearTick: Int) {
         val plantOfTile = t.plant
+
+        plantOfTile?.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
         // Log missed actions if there are any -- need to verify this
         if (t.actionsNeeded.isNotEmpty()) {
@@ -127,6 +129,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
         val plantOfTile = t.plant
+
+        plantOfTile?.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
         // Log missed actions if there are any -- need to verify this
         if (t.actionsNeeded.isNotEmpty()) {

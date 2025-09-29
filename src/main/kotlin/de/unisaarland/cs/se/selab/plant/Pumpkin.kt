@@ -94,6 +94,14 @@ class Pumpkin : FieldPlant() {
         }
     }
 
+    override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
+        if (actionsNeeded.contains(ActionType.HARVESTING)) {
+            if (yearTick in PUMPKIN_HARVEST_START..<PUMPKIN_HARVEST_END) {
+                actionsNeeded.remove(ActionType.HARVESTING)
+            }
+        }
+    }
+
     /**
      * reset harvest estimate
      */
