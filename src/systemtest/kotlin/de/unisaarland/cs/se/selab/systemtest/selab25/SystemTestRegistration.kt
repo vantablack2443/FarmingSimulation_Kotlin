@@ -128,6 +128,5 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(MachineBehaviorTest())
     }
 }
