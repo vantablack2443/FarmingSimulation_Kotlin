@@ -5,14 +5,14 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests default behavior of machines
  */
-class JustMow : ExampleSystemTestExtension() {
-    override val name = "Just Mow"
+class IrrigationLogic : ExampleSystemTestExtension() {
+    override val name = "Irrigation Logic"
     override val description = "Tests mowing action of the machine in first tick"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "justAction/farmOnlyPlantation.json"
     override val scenario = "example/scenario.json"
-    override val map = "justAction/mapOnlyPlantationFarm.json"
+    override val map = "justAction/mapIrrigationLogic.json"
 
     override val logLevel = "IMPORTANT"
     override val maxTicks = 2

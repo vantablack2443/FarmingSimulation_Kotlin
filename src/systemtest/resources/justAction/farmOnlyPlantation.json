@@ -4,15 +4,15 @@
       "id": 0,
       "name": "Farm",
       "farmsteads": [0],
-      "fields": [],
-      "plantations": [1,2],
+      "fields": [1,4],
+      "plantations": [2,3],
       "machines": [
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["CUTTING", "MOWING"],
+          "actions": ["IRRIGATING"],
           "plants": ["APPLE"],
-          "duration": 8,
+          "duration": 2,
           "location": 0
         }
       ],
