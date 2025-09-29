@@ -5,9 +5,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests default behavior of machines
  */
-class PlantationPlantsDefaultTickOneWithLog : ExampleSystemTestExtension() {
-    override val name = "PlantationPlantsDefaultTickOneWithLog"
-    override val description = "Tests if missed actions should be logged after harvesting"
+class PlantationPlantsDefaultTickOneWithoutLog : ExampleSystemTestExtension() {
+    override val name = "PlantationPlantsDefaultTickOneWithoutLog"
+    override val description = "Tests if missed actions and harvest should be logged after harvesting"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "plantationPlantTests/farms.json"
@@ -29,7 +29,7 @@ class PlantationPlantsDefaultTickOneWithLog : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs MOWING on tile 3 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
         assertNextLine(FARM_FINISH)
-        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 2 were not performed: MOWING.")
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 2 changed to 0 g of APPLE.")
+        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 3 were not performed: IRRIGATING.")
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 799950 g of ALMOND.")
     }
 }
