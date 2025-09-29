@@ -27,8 +27,8 @@ package de.unisaarland.cs.se.selab.actionHandlers
 //            org.mockito.kotlin.spy(mutableListOf(de.unisaarland.cs.se.selab.enumerations.ActionType.MOWING))
 //        whenever(plant.actionsNeeded).thenReturn(actionsNeededSpy)
 //        whenever(tile1.plantationDamaged).thenReturn(false) //tile1 is undamaged
-//        whenever(tile2.plantationDamaged).thenReturn(true) //tile2 is damaged
-//        whenever(tile1.requiresMowing()).thenReturn(true)
+//        whenever(tile2.plantationDamaged).thenReturn(true) //tile2 is damage
+//        whenever(tile1.).thenReturn(true)
 //        whenever(tile2.requiresMowing()).thenReturn(true)
 //        whenever(tile1.plant).thenReturn(plant)
 //        whenever(farm.getPlantation()).thenReturn(listOf(tile1, tile2))
