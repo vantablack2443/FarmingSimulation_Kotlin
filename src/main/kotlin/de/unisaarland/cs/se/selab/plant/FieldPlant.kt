@@ -12,7 +12,8 @@ const val LATE_SOW_PENALTY_FIELDS = 0.8
  */
 abstract class FieldPlant : Plant() {
     open var sowingTime: Duration = Duration(-1, -1)
-    open var sownTick: Int = -1
+    open var sownYearTick: Int = -1
+    open var sownSimTick: Int = -1
 
     /**
      * I removed the yearTick parameter from checkLateSowing and
@@ -40,5 +41,13 @@ abstract class FieldPlant : Plant() {
     override fun animalAttackPenalty() {
         val newEstimate = this.harvestEstimate * animalAttackPenalty
         this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+    }
+
+    /**
+     * Sets sowing sim tick and year tick in field plants
+     */
+    override fun setSowingTime(sownSimTick: Int, sownYearTick: Int) {
+        this.sownSimTick = sownSimTick
+        this.sownYearTick = sownYearTick
     }
 }

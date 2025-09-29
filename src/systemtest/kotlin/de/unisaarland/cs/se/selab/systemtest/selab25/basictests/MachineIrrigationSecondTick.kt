@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
+const val SOWING = "[IMPORTANT] Farm Sowing: Machine 1 has sowed OAT according to sowing plan 1."
 
 /**
  * tests order of irrigation, mowing and weeding
