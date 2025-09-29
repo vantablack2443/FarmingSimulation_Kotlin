@@ -2,7 +2,6 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
-
 /**
  * tests default behavior of machines
  */
