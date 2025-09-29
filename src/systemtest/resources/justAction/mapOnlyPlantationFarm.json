@@ -13,7 +13,7 @@
       "coordinates": { "x": 0, "y": 0 },
       "category": "PLANTATION",
       "farm": 0,
-      "capacity": 8000,
+      "capacity": 1,
       "plant": "APPLE",
       "airflow": false
     },
@@ -22,7 +22,7 @@
       "coordinates": { "x": 2, "y": 0 },
       "category": "PLANTATION",
       "farm": 0,
-      "capacity": 8000,
+      "capacity": 1,
       "plant": "APPLE",
       "airflow": false
     }

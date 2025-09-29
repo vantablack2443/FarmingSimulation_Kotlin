@@ -10,7 +10,7 @@
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["MOWING"],
+          "actions": ["IRRIGATING"],
           "plants": ["APPLE"],
           "duration": 2,
           "location": 0
