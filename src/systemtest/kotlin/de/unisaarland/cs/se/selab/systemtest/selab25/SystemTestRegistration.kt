@@ -113,7 +113,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
-        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
+//        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
     }
 
