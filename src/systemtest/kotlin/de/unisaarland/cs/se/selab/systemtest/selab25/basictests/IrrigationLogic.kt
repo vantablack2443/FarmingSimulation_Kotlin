@@ -7,7 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  */
 class IrrigationLogic : ExampleSystemTestExtension() {
     override val name = "Irrigation Logic"
-    override val description = "Tests mowing action of the machine in first tick"
+    override val description = "Tests irrigation action of the machine in tile order 1,2,4,3 "
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "justAction/farmForIrrigation.json"
@@ -27,6 +27,8 @@ class IrrigationLogic : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 1 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 1 has sowed WHEAT according to sowing plan 0.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 0.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs IRRIGATING on tile 4 for 2 days.")
+
         assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs IRRIGATING on tile 2 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs IRRIGATING on tile 3 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 0.")
