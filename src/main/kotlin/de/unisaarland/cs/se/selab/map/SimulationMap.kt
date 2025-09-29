@@ -166,11 +166,13 @@ class SimulationMap(
                 // reach -= tile
                 // remove tile from reach if it belongs to other farm or is FOREST
             }
-            val farmTiles = tile.category == TileType.FIELD || tile.category == TileType.PLANTATION ||
+            if (tile.category == TileType.FIELD ||
+                tile.category == TileType.PLANTATION ||
                 tile.category == TileType.FARMSTEAD
-
-            if (farmTiles && tile.farmID != machine.farmID) {
-                removedTiles += tile
+            ) {
+                if (tile.farmID != machine.farmID) {
+                    removedTiles += tile
+                }
             }
 
             if (carryingHarvest && tile.category == TileType.VILLAGE) {

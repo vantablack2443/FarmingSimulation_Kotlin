@@ -15,8 +15,6 @@ class FarmParserTest {
         val parser = Parser()
         val result = parser.parse(listOf(mapJsonPath, farmJsonPath, scenarioJsonPath))
         assertNotNull(result, "Parsing returned null SimulationData")
-
-
     }
 
     @Test
