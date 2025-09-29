@@ -38,6 +38,7 @@ class Wheat : FieldPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
+        if (harvestEstimate == 0) return
         if ((WHEAT_HARVEST_START..WHEAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         } else if (yearTick <= WHEAT_HARVEST_END + 2) {

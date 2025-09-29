@@ -35,6 +35,7 @@ class Potato : FieldPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
+        if (harvestEstimate == 0) return
         if ((POTATO_HARVEST_START..POTATO_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         }

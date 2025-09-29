@@ -37,6 +37,7 @@ class Oat : FieldPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
+        if (harvestEstimate == 0) return
         if ((OAT_HARVEST_START..OAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
         } else if (yearTick <= OAT_HARVEST_END + 2) {
