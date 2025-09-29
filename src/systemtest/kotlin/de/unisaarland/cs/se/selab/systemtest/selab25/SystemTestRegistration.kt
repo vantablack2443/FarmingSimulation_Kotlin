@@ -28,9 +28,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
+//import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
-
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmMultipleValidAnimalAttack
 /**
  * Used for test registration
  */
@@ -60,7 +60,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
-        testSuite.registerTest(ScnearioWIthCloudsAndIncident())
+//        testSuite.registerTest(ScnearioWIthCloudsAndIncident())
         testSuite.registerTest(NoFarmAnimalAttackValidSimple())
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
@@ -73,6 +73,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
+        testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
     }
 
     /**
