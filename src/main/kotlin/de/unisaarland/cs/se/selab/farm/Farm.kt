@@ -100,19 +100,25 @@ class Farm(
 
     /**
      * updates the actions needed list of the tiles in the farm for the current year tick
+     * Except for IRRIGATING and SOWING, all actions require growing plants on their tile,
+     * which means that the harvest estimate must be greater than 0 g.
      */
     fun updateNeededActions(yearTick: Int, simTick: Int) {
         for (field in fields) {
             val plant = field.plant ?: continue
-            plant.needsWeeding(simTick, field.actionsNeeded)
-            plant.needsHarvesting(yearTick, field.actionsNeeded)
+            if (plant.harvestEstimate > 0) {
+                plant.needsWeeding(simTick, field.actionsNeeded)
+                plant.needsHarvesting(yearTick, field.actionsNeeded)
+            }
             field.needsIrrigation()
         }
         for (plantation in plantation) {
             val plant = plantation.plant ?: continue
-            plant.needsCutting(yearTick, plantation.actionsNeeded)
-            plant.needsMowing(yearTick, plantation.actionsNeeded)
-            plant.needsHarvesting(yearTick, plantation.actionsNeeded)
+            if (plant.harvestEstimate > 0) {
+                plant.needsCutting(yearTick, plantation.actionsNeeded)
+                plant.needsMowing(yearTick, plantation.actionsNeeded)
+                plant.needsHarvesting(yearTick, plantation.actionsNeeded)
+            }
             plantation.needsIrrigation()
         }
     }
