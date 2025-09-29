@@ -19,7 +19,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigatio
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
@@ -113,7 +112,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
-//        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
+        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
     }
