@@ -3,11 +3,11 @@
   ],
   "incidents": [
     {
-      "id": "0",
+      "id": 1,
       "type": "DROUGHT",
       "tick": 1,
-      "location": 1,
-      "radius": 2
+      "location": 4,
+      "radius": 0
     }
   ]
 }
