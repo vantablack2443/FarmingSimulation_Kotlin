@@ -54,7 +54,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
                     performAction(machine, tile)
                     continueAction(machine, farm, operableTiles)
                     farm.machineHashMap.add(machine.id)
-                    logMachineFinish(machine.farmID, machine.id)
+                    logMachineFinish(machine.id, machine.homeShed.id)
                     machine.resetElapsedTime()
                     break
                 }
@@ -77,7 +77,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         tile.actionsNeeded.remove(ActionType.WEEDING)
 
         // Log the action
-        logFarmAction(machine.farmID, ActionType.WEEDING, tile.id, machine.duration)
+        logFarmAction(machine.id, ActionType.WEEDING, tile.id, machine.duration)
     }
 
     /**
