@@ -32,8 +32,6 @@ class SowingHandler(
         // Get all sowing plans for the current tick in a year, ordered by tick then id
         // Assumes the ordering is handled by the function
         val sowingPlans: List<SowingPlan> = getSowingPlans(farm, sowablePlantTypes, simTick)
-        // Log active sowing Plans
-        Logger.logFarmSowingPlan(farm.getId(), sowingPlans.map { it.getId() })
 
         // Loop through all sowing plans and try to execute each
         val plansExecuted: MutableList<SowingPlan> = mutableListOf()
@@ -55,6 +53,9 @@ class SowingHandler(
         if (sowingPlansAvailable.isEmpty()) {
             return sowingPlans
         }
+
+        // Log active sowing Plans - This logs all sowing Plans for the tick now
+        Logger.logFarmSowingPlan(farm.getId(), sowingPlansAvailable.map { it.getId() })
 
         // Assumes that the farm maintains sowing plans in order of tick then id
         // Assumes that farm also maintains ordering when removing sowing plans from its list
