@@ -158,6 +158,9 @@ class HarvestingHandler(
         }*/
 
         tile.actionsNeeded.remove(ActionType.HARVESTING)
+        // Clears actionsNeedded and lateActions lists. Missed actions shouldn't be logged after harvesting
+        tile.actionsNeeded.clear()
+        tile.lateActions.clear()
         farm.tileHashMap.add(tile.id)
         // not a normal setter because it takes the yearTick and base off the duration on that
     }
