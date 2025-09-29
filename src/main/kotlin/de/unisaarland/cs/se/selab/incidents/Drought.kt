@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.incidents
 
-import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger
@@ -25,16 +24,19 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
         incidentTiles.sortedBy { it.id }
         for (tile in incidentTiles) {
             if (tile.category == TileType.FIELD) {
-                tile.plant = null
-                tile.currentCrop = null
+                // Fallowing and killing the plants will be handled by the estimator using the droughtHit bool
+                // tile.plant = null
+                // tile.currentCrop = null
+                tile.droughtHit = true
                 tile.currentMoisture = 0
-                tile.fallowDuration = Duration(tick + 1, tick + FALLOW_DURATION)
+                // tile.fallowDuration = Duration(tick + 1, tick + FALLOW_DURATION)
                 affectedIds.add(tile.id)
             } else if (tile.category == TileType.PLANTATION) {
+                tile.droughtHit = true
                 tile.currentMoisture = 0
                 tile.plantationDamaged = true
-                tile.plant = null
-                tile.currentCrop = null
+                // tile.plant = null
+                // tile.currentCrop = null
                 affectedIds.add(tile.id)
             }
         }

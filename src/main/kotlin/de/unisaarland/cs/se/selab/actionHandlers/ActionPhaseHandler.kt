@@ -81,7 +81,7 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
             sowingHandler.startPhase(farm, yearTick, simTick)
             harvestingHandler.startPhase(farm, yearTick, simTick)
             cuttingHandler.startPhase(farm, yearTick, simTick)
-            for (machine in farm.getMachines()) {
+            for (machine in farm.getMachines().sortedWith(compareBy({ it.duration }, { it.id }))) {
                 // hashMap checking still needed inside handlers
                 if (machine.brokenFor?.inRange(simTick) == true) {
                     continue

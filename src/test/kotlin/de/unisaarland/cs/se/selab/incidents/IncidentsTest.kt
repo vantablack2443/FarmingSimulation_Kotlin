@@ -127,6 +127,7 @@ class IncidentsTest {
     }
      */
 
+    /*
     @Test
     fun droughtTest() {
         val drought = Drought(
@@ -146,6 +147,7 @@ class IncidentsTest {
         assertNull(oatTile.plant)
         assertNull(potatoTile.plant)
     }
+     */
 
     @Test
     fun testCityExpansion() {

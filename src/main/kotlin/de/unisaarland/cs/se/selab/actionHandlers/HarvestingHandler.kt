@@ -1,9 +1,7 @@
 package de.unisaarland.cs.se.selab.actionHandlers
 
-import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
-import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
@@ -12,7 +10,7 @@ import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.plantdata.PlantData
 import de.unisaarland.cs.se.selab.tile.Tile
 
-const val FALLOW_DURATION = 4
+// const val FALLOW_DURATION = 4
 
 /**
  * handler for performing HARVESTING
@@ -42,7 +40,7 @@ class HarvestingHandler(
             val machine = getNextMachine(availableMachines, farm, tile)
 
             if (machine != null) {
-                doHarvest(farm, machine, tile, simTick)
+                doHarvest(farm, machine, tile)
                 operableTiles.remove(tile)
 
                 continueAction(farm, machine, simTick, tile, operableTiles)
@@ -109,7 +107,7 @@ class HarvestingHandler(
             return
         }
 
-        doHarvest(farm, machine, continueTile, simTick)
+        doHarvest(farm, machine, continueTile)
         operableTiles.remove(continueTile)
 
         continueAction(farm, machine, simTick, continueTile, operableTiles)
@@ -124,7 +122,7 @@ class HarvestingHandler(
         }*/
     }
 
-    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile, simTick: Int) {
+    private fun doHarvest(farm: Farm, machine: Machine, tile: Tile) {
         // log farm action
         Logger.logFarmAction(machine.id, ActionType.HARVESTING, tile.id, machine.duration)
 
@@ -144,6 +142,8 @@ class HarvestingHandler(
                 machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
             }
             plant.harvestEstimate = 0
+            // Estimator handles killing the plants if fields and fallowing using this bool
+            tile.harvestedThisTick = true
 
             // log specific harvest logging
             val harvestAmount = machine.currentHarvest?.harvestAmount
@@ -151,10 +151,11 @@ class HarvestingHandler(
                 Logger.logHarvest(machine.id, harvestAmount, currentCrop)
             }
         }
-        if (tile.category == TileType.FIELD) {
-            tile.plant = null
-            tile.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
-        }
+        /*if (tile.category == TileType.FIELD) {
+            // Handled by estimator - // Estimator handles killing the plants if fields and fallowing
+            // tile.plant = null
+            // tile.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+        }*/
 
         tile.actionsNeeded.remove(ActionType.HARVESTING)
         farm.tileHashMap.add(tile.id)
