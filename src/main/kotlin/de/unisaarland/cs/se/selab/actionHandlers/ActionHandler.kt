@@ -127,6 +127,7 @@ abstract class ActionHandler(
         val plantationTiles = farm.getPlantation()
             .filter { it.id !in farm.tileHashMap }
             .filter { it.plant != null && it.actionsNeeded.contains(actionType) }
+            .filter { it.plantationDamaged == false }
             .sortedBy { it.id }
         val fieldTiles = farm.getFields()
             .filter { it.id !in farm.tileHashMap }
