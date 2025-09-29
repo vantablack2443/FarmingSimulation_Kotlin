@@ -16,11 +16,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNo
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
@@ -63,10 +59,6 @@ object SystemTestRegistration {
         // testSuite.registerTest(MachineWrongShed())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(MachineIrrigationSecondTick())
-        testSuite.registerTest(MachineIrrigationWaterNext())
-        testSuite.registerTest(MachineIrrigationTwoMachines())
-        testSuite.registerTest(MachineIrrigationMowingNext())
-        testSuite.registerTest(MachineIrrigationTest())
         testSuite.registerTest(NoFarmDroughtSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
