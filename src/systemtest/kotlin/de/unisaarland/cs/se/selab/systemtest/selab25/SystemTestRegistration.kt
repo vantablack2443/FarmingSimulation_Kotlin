@@ -14,6 +14,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
@@ -94,6 +95,7 @@ object SystemTestRegistration {
         testSuite.registerTest(EmptyTest())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
+        testSuite.registerTest(MachineBehaviorTest())
     }
 
     /**
