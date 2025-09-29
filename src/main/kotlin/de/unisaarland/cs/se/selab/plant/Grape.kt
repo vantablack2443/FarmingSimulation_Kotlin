@@ -55,7 +55,7 @@ class Grape : PlantationPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
-        if (harvestEstimate == 0) return
+        if (this.harvestEstimate == 0) { return }
         if (yearTick == GRAPE_HARVEST_START_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }

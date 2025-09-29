@@ -86,7 +86,7 @@ class Apple : PlantationPlant() {
         yearTick: Int,
         actionsNeeded: MutableList<ActionType>
     ) {
-        if (harvestEstimate == 0) return
+        if (this.harvestEstimate == 0) { return }
         if (yearTick in APPLE_HARVEST_START..APPLE_HARVEST_END) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
