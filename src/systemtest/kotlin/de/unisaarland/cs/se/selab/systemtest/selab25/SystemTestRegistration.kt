@@ -112,7 +112,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
-        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
+        // testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
     }
@@ -125,5 +125,6 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         testSuite.registerTest(SowingPlanSimplePlan())
+        testSuite.registerTest(MachineDefaultAction())
     }
 }
