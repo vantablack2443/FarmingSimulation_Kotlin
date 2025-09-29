@@ -34,6 +34,24 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmDroughtSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmMultipleValidAnimalAttack
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMerge
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
@@ -82,7 +100,8 @@ object SystemTestRegistration {
         // testSuite.registerTest(PlantationPlantsDefault())
         testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
-        testSuite.registerTest(PlantationPlantsDefaultLogHarvestMiss())
+        testSuite.registerTest(PlantationPlantsDefaultTickOne())
+        testSuite.registerTest(PlantationPlantsDefault())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
@@ -93,7 +112,6 @@ object SystemTestRegistration {
         testSuite.registerTest(EmptyTest())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
-
         testSuite.registerTest(MachineBehaviorTest())
     }
 
@@ -111,7 +129,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
-        // testSuite.registerTest(ScenarioParserTestCloudOnVillage())
+        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
     }
@@ -126,6 +144,5 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(MachineBehaviorTest())
     }
 }

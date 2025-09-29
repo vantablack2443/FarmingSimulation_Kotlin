@@ -19,6 +19,7 @@ class PlantationPlantsDefaultLogHarvestMiss : ExampleSystemTestExtension() {
     override val startYearTick = 17
 
     override suspend fun run() {
+        // WRONG, FAILS ON REF
         skipLines(5)
         assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.")
         skipLines(2)

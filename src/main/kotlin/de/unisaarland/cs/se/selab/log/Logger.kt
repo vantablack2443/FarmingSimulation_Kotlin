@@ -303,7 +303,15 @@ object Logger {
      * @param actions The list of missed actions.
      */
     fun logMissedActions(tileID: Int, actions: List<ActionType>) {
-        val actionsString = actions.sortedBy { it.name }.joinToString(separator = COMMA)
+        val priorities = listOf(
+            ActionType.WEEDING,
+            ActionType.CUTTING,
+            ActionType.MOWING,
+            ActionType.IRRIGATING,
+            ActionType.HARVESTING
+        )
+        val actionsString = actions.sortedWith(compareBy { priorities.indexOf(it) })
+            .joinToString(separator = COMMA)
 
         val message = "Harvest Estimate: Required actions on tile $tileID were not performed: $actionsString."
         logs(LogType.DEBUG, message)
