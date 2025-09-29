@@ -14,10 +14,10 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMi
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTillSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
@@ -40,6 +40,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarves
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneNoLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 /**
  * Used for test registration
@@ -58,9 +59,7 @@ object SystemTestRegistration {
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
-        // testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(MachineIrrigationTillSowing())
-        testSuite.registerTest(MachineIrrigationUntilSowing())
+        testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(MachineIrrigationWaterNext())
         testSuite.registerTest(MachineIrrigationTwoMachines())
@@ -97,6 +96,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
 
         testSuite.registerTest(EmptyTest())
+        testSuite.registerTest(SowingPlanPrioritization())
     }
 
     /**
@@ -115,6 +115,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
 //        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
+        testSuite.registerTest(MachineDefaultAction())
     }
 
     /**
