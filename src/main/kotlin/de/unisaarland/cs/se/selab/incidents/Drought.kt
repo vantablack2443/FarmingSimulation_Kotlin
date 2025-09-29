@@ -21,7 +21,7 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val tmp = simulationMap.getTilesByRadius(tile, radius) + tile
         val incidentTiles: List<Tile> = simulationMap.filterForPlantable(tmp)
-        val affectedIds: MutableList<Int> = mutableListOf()
+        val affectedIds: MutableSet<Int> = mutableSetOf()
         incidentTiles.sortedBy { it.id }
         for (tile in incidentTiles) {
             if (tile.category == TileType.FIELD) {
@@ -38,6 +38,6 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
                 affectedIds.add(tile.id)
             }
         }
-        Logger.logIncident(id, IncidentType.DROUGHT, affectedIds)
+        Logger.logIncident(id, IncidentType.DROUGHT, affectedIds.toList())
     }
 }
