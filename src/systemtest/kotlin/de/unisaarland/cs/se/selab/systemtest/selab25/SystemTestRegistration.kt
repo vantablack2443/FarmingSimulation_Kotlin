@@ -127,5 +127,6 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         testSuite.registerTest(SowingPlanSimplePlan())
+        testSuite.registerTest(CasualCheckBehaviorTest())
     }
 }
