@@ -41,7 +41,7 @@ class Wheat : FieldPlant() {
         if (harvestEstimate == 0) return
         if ((WHEAT_HARVEST_START..WHEAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
-        } else if (yearTick <= WHEAT_HARVEST_END + 2) {
+        } else if (yearTick in WHEAT_HARVEST_END..WHEAT_HARVEST_END + 2) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         // Wheat can be harvested up to two ticks after the harvesting period ends

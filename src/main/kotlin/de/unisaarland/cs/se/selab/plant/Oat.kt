@@ -40,7 +40,7 @@ class Oat : FieldPlant() {
         if (harvestEstimate == 0) return
         if ((OAT_HARVEST_START..OAT_HARVEST_END).contains(yearTick)) {
             actionsNeeded.add(ActionType.HARVESTING)
-        } else if (yearTick <= OAT_HARVEST_END + 2) {
+        } else if (yearTick in OAT_HARVEST_END..OAT_HARVEST_END + 2) {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         // Oat can be harvested up to two ticks after the harvesting period ends
