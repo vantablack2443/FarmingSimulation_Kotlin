@@ -2,19 +2,15 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestIncidents
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestStuckCloud
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestThreeClouds
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestTwoClouds
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestWithMositure
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionIncidents
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionOneMachine
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionParsing
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionSecond
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultActionSecondFarm
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTillSowing
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTwoMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHarvestandNoCloudsOrIncidents
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
@@ -41,9 +37,14 @@ object SystemTestRegistration {
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
-        testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(CloudMovementTestStuckCloud())
-        testSuite.registerTest(CloudMovementTestIncidents())
+        // testSuite.registerTest(MachineDefaultAction())
+        testSuite.registerTest(MachineIrrigationTillSowing())
+        testSuite.registerTest(MachineIrrigationUntilSowing())
+        testSuite.registerTest(MachineIrrigationSecondTick())
+        testSuite.registerTest(MachineIrrigationWaterNext())
+        testSuite.registerTest(MachineIrrigationTwoMachines())
+        testSuite.registerTest(MachineIrrigationMowingNext())
+        testSuite.registerTest(MachineIrrigationTest())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
     }
 

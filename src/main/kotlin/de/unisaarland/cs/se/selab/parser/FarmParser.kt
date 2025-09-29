@@ -372,8 +372,13 @@ class FarmParser(private val simulationData: SimulationData) {
         val tile = parseMachineLocation(m)
         // Checks that this tile is a farmstead, contains a shed and belongs to the farm owing this machine
         validateMachineLocation(tile.id, farmID)
+        /*
         for (action in actions) {
             validateMachineActionPlant(action, plants)
+        }
+         */
+        for (plant in plants) {
+            validateMachineActionPlant(plant, actions)
         }
 
         // CHECK IF THIS CHECK IS EXPECTED
@@ -385,6 +390,34 @@ class FarmParser(private val simulationData: SimulationData) {
     /**
      * cross validates machine and action types
      */
+    private fun validateMachineActionPlant(plant: PlantType, actions: List<ActionType>) {
+        val string = "mismatch of machine action and plant type"
+        when (plant) {
+            PlantType.OAT, PlantType.WHEAT, PlantType.POTATO, PlantType.PUMPKIN -> {
+                val requiredActions = setOf(
+                    ActionType.SOWING,
+                    ActionType.WEEDING,
+                    ActionType.HARVESTING,
+                    ActionType.IRRIGATING
+                )
+                if (!actions.any { requiredActions.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+            PlantType.GRAPE, PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> {
+                val requiredActions = setOf(
+                    ActionType.CUTTING,
+                    ActionType.MOWING,
+                    ActionType.HARVESTING,
+                    ActionType.IRRIGATING
+                )
+                if (!actions.any { requiredActions.contains(it) }) {
+                    throw ValidationException(string)
+                }
+            }
+        }
+    }
+    /*
     private fun validateMachineActionPlant(action: ActionType, plants: List<PlantType>) {
         val string = "mismatch of machine action and plant type"
         when (action) {
@@ -404,6 +437,8 @@ class FarmParser(private val simulationData: SimulationData) {
             else -> { return }
         }
     }
+
+     */
 
     /**
      * parses machine duration
