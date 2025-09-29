@@ -20,7 +20,7 @@
           "name": "second machine",
           "actions": ["WEEDING"],
           "plants": ["OAT"],
-          "duration": 4,
+          "duration": 2,
           "location": 1
         },
         {
