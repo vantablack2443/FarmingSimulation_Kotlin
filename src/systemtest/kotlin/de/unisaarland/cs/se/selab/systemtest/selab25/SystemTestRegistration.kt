@@ -5,10 +5,12 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
 
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
@@ -67,6 +69,8 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
         testSuite.registerTest(SowingPlanSimplePlan())
+        testSuite.registerTest(MachineCantReturnDueHarvest())
+        testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
         testSuite.registerTest(MaxTickEndLogEquals())
