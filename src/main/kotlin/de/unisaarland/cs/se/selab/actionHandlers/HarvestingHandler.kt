@@ -153,7 +153,7 @@ class HarvestingHandler(
         }
         if (tile.category == TileType.FIELD) {
             tile.plant = null
-            tile.fallowDuration = Duration(simTick, simTick + FALLOW_DURATION)
+            tile.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
         }
 
         tile.actionsNeeded.remove(ActionType.HARVESTING)

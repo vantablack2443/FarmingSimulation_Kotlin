@@ -10,7 +10,7 @@ class JustMow : ExampleSystemTestExtension() {
     override val description = "Tests mowing action of the machine in first tick"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "justAction/farmForIrrigation.json"
+    override val farms = "justAction/farmWithOnlyPlantation.json"
     override val scenario = "example/scenario.json"
     override val map = "justAction/mapOnlyPlantationFarm.json"
 
