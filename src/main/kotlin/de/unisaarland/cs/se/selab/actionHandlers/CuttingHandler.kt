@@ -80,7 +80,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         }
 
         // Log the action
-        logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
+        logFarmAction(machine.id, ActionType.CUTTING, tile.id, machine.duration)
     }
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
@@ -102,7 +102,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
     ) {
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed // Return to shed if time is up
-            logMachineFinish(machine.farmID, machine.id)
+            logMachineFinish(machine.id, machine.homeShed.id)
             machine.resetElapsedTime()
             return
         }
@@ -126,7 +126,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         } else {
             machine.currentTile = machine.homeShed
             machine.resetElapsedTime()
-            logMachineFinish(machine.farmID, machine.id)
+            logMachineFinish(machine.id, machine.homeShed.id)
         }
     }
 
