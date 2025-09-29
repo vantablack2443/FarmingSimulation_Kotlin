@@ -34,6 +34,9 @@ class Tile(
     val actionsNeeded: MutableList<ActionType> = mutableListOf()
     val lateActions: MutableList<ActionType> = mutableListOf()
 
+    var droughtHit: Boolean = false
+    var harvestedThisTick: Boolean = false
+
     /**
      * Only checks if the tile is in fallow duration and can sow the specific plant
      * to check if a plant is sowable in current tick use plantdata.getSowablePlants

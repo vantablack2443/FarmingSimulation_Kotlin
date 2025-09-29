@@ -1,8 +1,10 @@
 package de.unisaarland.cs.se.selab.harvestestimatehandler
 
+import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
+import de.unisaarland.cs.se.selab.incidents.FALLOW_DURATION
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
@@ -27,7 +29,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * checks for each tile if there is a plant growing on it. Then it calls the respective harvest
      * estimate function based on the tile type (field or plantation).
      */
-    fun estimateHarvest(yearTick: Int) {
+    fun estimateHarvest(yearTick: Int, simTick: Int) {
         val plantableTiles = simulationMap.getPlantableTiles()
 
         for (tile in plantableTiles) {
@@ -35,7 +37,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 continue
             }
             when (tile.category) {
-                TileType.FIELD -> fieldHarvestEstimate(tile, yearTick)
+                TileType.FIELD -> fieldHarvestEstimate(tile, simTick)
                 TileType.PLANTATION -> plantationHarvestEstimate(tile, yearTick)
                 else -> error("Tile is not plantable")
             }
@@ -50,7 +52,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     /**
      * Applies all relevant penalties to the harvest estimate of a field tile.
      */
-    fun fieldHarvestEstimate(t: Tile, yearTick: Int) {
+    fun fieldHarvestEstimate(t: Tile, simTick: Int) {
         val plantOfTile = t.plant
 
         // Log missed actions if there are any -- need to verify this
@@ -58,22 +60,61 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             logMissedActions(t.id, t.actionsNeeded)
         }
 
-        applyLateSowing(t)
+        val anyActionApplied: Boolean = listOf(
+            applyLateSowing(t),
+            applySunlight(t),
+            applyMoisture(t),
+            applyMissedWeeding(t),
+            // applyLateHarvest(t, yearTick),
+
+            // 2. Apply incidents then reset pollination and animal attack counters
+            // Incidents go here
+            applyAnimalAttack(t),
+            applyBeeHappy(t),
+            applyDrought(t)
+        ).any { it }
+
+        // For fields
+        // If harvested, kill the plants so that the other components get what they expect
+        // If drought, kill the plants .
+        // If estimate 0 for any other reason, kill the plants .
+        // If plants killed ,set fallow
+
+        /*applyLateSowing(t)
         applySunlight(t)
         applyMoisture(t)
         applyMissedWeeding(t)
         applyLateHarvest(t, yearTick)
-
-        // 2. Apply incidents then reset pollination and animal attack counters
-        // Incidents go here
         applyAnimalAttack(t)
-        applyBeeHappy(t)
-        plantOfTile?.pollination = 1.0
-        plantOfTile?.animalAttackPenalty = 1.0
-        plantOfTile?.animalAttack = false
+        applyBeeHappy(t)*/
 
-        val crop = t.currentCrop ?: return
-        logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+        /*plantOfTile?.pollination = 1.0
+        plantOfTile?.animalAttackPenalty = 1.0
+        plantOfTile?.animalAttack = false*/
+
+        // If any change happened including drought OR was harvested
+        // Kill plants if estimate is 0 and set fallow
+        if (anyActionApplied || t.harvestedThisTick) {
+            val crop = t.currentCrop ?: return
+            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+
+            plantOfTile?.pollination = 1.0
+            plantOfTile?.animalAttackPenalty = 1.0
+            plantOfTile?.animalAttack = false
+
+            // Set these to zero
+            t.harvestedThisTick = false
+            // IMPORTANT or else will always set estimate to 0
+            t.droughtHit = false
+
+            if (plantOfTile?.harvestEstimate == 0) {
+                // Kill plants and set fallow
+                t.plant = null
+                t.currentCrop = null
+                t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+                // Set fallow
+            }
+        }
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
 
@@ -88,23 +129,55 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             logMissedActions(t.id, t.actionsNeeded)
         }
 
-        applySunlight(t)
+        val anyActionApplied: Boolean = listOf(
+            applySunlight(t),
+            applyMoisture(t),
+            // 3. Handle missed cutting period
+            applyMissedCutting(t, yearTick),
+            applyMissedMowing(t),
+            // applyLateHarvest(t, yearTick),
+
+            // 2. Apply incidents then reset pollination and animal attack counters
+            // Incidents go here
+            applyAnimalAttack(t),
+            applyBeeHappy(t),
+            applyDrought(t)
+        ).any { it }
+
+        // For plantations
+        // If harvested, don't kill the plants
+        // If drought, kill the plants .
+        // If estimate 0 for any other reason, don't kill plants .
+        // No fallowing for plantations
+
+        /*applySunlight(t)
         applyMoisture(t)
-        // 3. Handle missed cutting period
         applyMissedCutting(t, yearTick)
         applyMissedMowing(t)
         applyLateHarvest(t, yearTick)
-
-        // 2. Apply incidents then reset pollination and animal attack counters
-        // Incidents go here
         applyAnimalAttack(t)
-        applyBeeHappy(t)
-        plantOfTile?.pollination = 1.0
-        plantOfTile?.animalAttackPenalty = 1.0
-        plantOfTile?.animalAttack = false
+        applyBeeHappy(t)*/
 
-        val crop = t.currentCrop ?: return
-        logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+        // If any change occurred including drought or was harvested, applyDrought will set estimate to 0 for logging
+        if (anyActionApplied || t.harvestedThisTick) {
+            val crop = t.currentCrop ?: return
+            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+
+            plantOfTile?.pollination = 1.0
+            plantOfTile?.animalAttackPenalty = 1.0
+            plantOfTile?.animalAttack = false
+
+            t.harvestedThisTick = false
+
+            // With drought the plants are killed
+            if (t.droughtHit) {
+                t.plant = null
+                t.currentCrop = null
+                // IMPORTANT or else will always set estimate to 0
+                t.droughtHit = false
+            }
+        }
+
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
 
@@ -112,14 +185,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * Applies the late sowing penalty on the tile plant's harvest estimate if there was a late sowing action.
      * Should only be applied per once per harvest cycle on the tick of sowing, if the plant was sown late
      */
-    fun applyLateSowing(t: Tile) {
-        val plant = t.plant ?: return // null check first
+    fun applyLateSowing(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false // null check first
 
         /*
         SOWING will only be added to late actions on the tick of sowing,
         after the sowingHandler calls checkLateSowing
          */
         if (ActionType.SOWING in t.lateActions) {
+            acted = true
             t.lateActions.remove(ActionType.SOWING)
             plant.applyLateSowingPenalty()
         }
@@ -130,16 +205,21 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             lateActions.remove(ActionType.SOWING)
             (t.plant as FieldPlant).applyLateSowingPenalty()
         }*/
+        return acted
     }
 
     /**
      * Applies the sunlight penalty on the tile plant's harvest estimate if the current sunlight
      * is more than the needed sunlight.
      */
-    fun applySunlight(t: Tile) {
+    fun applySunlight(t: Tile): Boolean {
+        var acted = false
         val neededSunlight = t.plant?.neededSunlight ?: error("Need sunlight needed")
 
         t.plant?.let { plant ->
+            if (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
+                acted = true
+            }
             var currentSunlight = t.currentSunlight
             while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
                 plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
@@ -151,21 +231,26 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.plant!!.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * t.plant!!.harvestEstimate).toInt()
             t.currentSunlight -= TWENTY_FIVE
         }*/
+        return acted
     }
 
     /**
      * Applies the moisture penalty on the tile plant's harvest estimate if the current moisture
      * is less than the needed moisture.
      */
-    fun applyMoisture(t: Tile) {
+    fun applyMoisture(t: Tile): Boolean {
+        var acted = false
         val plant = t.plant ?: error("Need moisture needed")
         var currentMoisture = t.currentMoisture ?: error("Need moisture needed")
 
-        if (currentMoisture == 0) {
+        if (currentMoisture == 0 && plant.harvestEstimate > 0) {
             plant.harvestEstimate = 0
-            return
+            return true
         }
 
+        if (plant.neededMoisture - currentMoisture >= HUNDRED) {
+            acted = true
+        }
         while (plant.neededMoisture - currentMoisture >= HUNDRED) {
             plant.harvestEstimate = maxOf(plant.harvestEstimate - FIFTY, 0)
             currentMoisture += HUNDRED
@@ -184,17 +269,20 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val currentMoisture = t.currentMoisture ?: error("Need moisture needed")
         val penaltyCounter = (neededMoisture - currentMoisture) / HUNDRED
         t.plant!!.harvestEstimate -= FIFTY * penaltyCounter*/
+        return acted
     }
 
     /**
      * Applies the weeding penalty for each missed weeding action on the field tile plant's harvest estimate.
      * Checks if actionsNeeded list contains WEEDING if so calls applyMissedWeedingPenalty
      */
-    fun applyMissedWeeding(t: Tile) {
-        val plant = t.plant ?: return
+    fun applyMissedWeeding(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false
 
         // Checks if WEEDING is in actionsNeeded to apply penalty
         while (ActionType.WEEDING in t.actionsNeeded) {
+            acted = true
             t.actionsNeeded.remove(ActionType.WEEDING)
             plant.applyMissedWeedingPenalty()
         }
@@ -206,20 +294,23 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             lateActions.remove(ActionType.WEEDING)
             (t.plant as FieldPlant).applyMissedWeedingPenalty()
         }*/
+        return acted
     }
 
     /**
      * Applies the late harvest penalty for the late harvest action on the tile plant's harvest estimate.
      */
-    fun applyLateHarvest(t: Tile, yearTick: Int) {
+    fun applyLateHarvest(t: Tile, yearTick: Int): Boolean {
         /**
          *  estimateHarvest() would most likely need to include the yearTick parameter as well since
          *  applyLateHarvestPenalty needs it to determine how many times the penalty needs to be applied
          */
-        val plant = t.plant ?: return
+        var acted = false
+        val plant = t.plant ?: return false
         val lateActions = t.lateActions
 
         if (ActionType.HARVESTING in lateActions) {
+            acted = true
             lateActions.remove(ActionType.HARVESTING)
             plant.applyLateHarvestPenalty(yearTick)
         }
@@ -230,13 +321,38 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             lateActions.remove(ActionType.HARVESTING)
             t.plant?.applyLateHarvestPenalty(yearTick)
         }*/
+        return acted
     }
 
     /**
      * Applies the cutting penalty for a missed cutting action on the plantation tile plant's harvest estimate.
      */
-    fun applyMissedCutting(t: Tile, yearTick: Int) {
-        val plant = t.plant ?: return
+    fun applyMissedCutting(t: Tile, yearTick: Int): Boolean {
+        val plant = t.plant ?: return false
+        val actionsNeeded = t.actionsNeeded
+
+        if (ActionType.CUTTING !in actionsNeeded) {
+            return false
+        }
+
+        actionsNeeded.remove(ActionType.CUTTING)
+
+        val crop = t.currentCrop ?: return false
+        val shouldApplyPenalty = when (crop) {
+            PlantType.GRAPE -> yearTick == SIXTEEN
+            PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> yearTick == FOUR
+            else -> false
+        }
+
+        if (!shouldApplyPenalty) {
+            return false
+        }
+
+        plant.applyCuttingPenalty()
+        return true
+
+        /*var acted = false
+        val plant = t.plant ?: return false
         val actionsNeeded = t.actionsNeeded
 
         // Remove from list if its in there
@@ -252,45 +368,68 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             plant.applyCuttingPenalty()
         }
 
-        /*val lateActions = t.plant?.lateActions ?: return
+        *//*val lateActions = t.plant?.lateActions ?: return
 
         // no while loop since cutting can be done only once per harvest cycle
         if (lateActions.contains(ActionType.CUTTING)) {
             lateActions.remove(ActionType.CUTTING)
             (t.plant as PlantationPlant).applyCuttingPenalty()
-        }*/
+        }*//*
+        return acted*/
     }
 
     /**
      * Applies the mowing penalty for each missed mowing action on the plantation tile plant's harvest estimate.
      */
-    fun applyMissedMowing(t: Tile) {
-        val plant = t.plant ?: return
+    fun applyMissedMowing(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false
 
         while (ActionType.MOWING in t.actionsNeeded) {
+            acted = true
             t.actionsNeeded.remove(ActionType.MOWING)
             plant.applyMowingPenalty()
         }
+        return acted
     }
 
     /**
      * Applies animal attack if animal attack counter > 1.0
      */
-    fun applyAnimalAttack(t: Tile) {
-        val plant = t.plant ?: return
+    fun applyAnimalAttack(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false
         if (plant.animalAttack) {
+            acted = true
             plant.animalAttackPenalty()
         }
+        return acted
     }
 
     /**
      * Applies bee happy pollination buff if pollination counter > 1.0
      */
-    fun applyBeeHappy(t: Tile) {
-        val plant = t.plant ?: return
+    fun applyBeeHappy(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false
         if (plant.pollination > 1.0) {
+            acted = true
             plant.applyPollinationBuff()
         }
+        return acted
+    }
+
+    /**
+     * Sets harvest estimate to 0 after drought
+     */
+    fun applyDrought(t: Tile): Boolean {
+        var acted = false
+        val plant = t.plant ?: return false
+        if (t.droughtHit) {
+            plant.harvestEstimate = 0
+            acted = true
+        }
+        return acted
     }
 
     /**
