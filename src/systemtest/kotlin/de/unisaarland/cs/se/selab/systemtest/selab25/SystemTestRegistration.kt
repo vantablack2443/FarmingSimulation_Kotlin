@@ -38,7 +38,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCr
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultLogHarvestMiss
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneNoLog
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithLog
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
@@ -86,7 +87,8 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
         // testSuite.registerTest(PlantationPlantsDefault())
-        testSuite.registerTest(PlantationPlantsDefaultTickOneNoLog())
+        testSuite.registerTest(PlantationPlantsDefaultTickOneWithLog())
+        testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultLogHarvestMiss())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
@@ -128,5 +130,6 @@ object SystemTestRegistration {
         testSuite.registerTest(CloudMovementTest())
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
+        testSuite.registerTest(MachineDefaultAction())
     }
 }
