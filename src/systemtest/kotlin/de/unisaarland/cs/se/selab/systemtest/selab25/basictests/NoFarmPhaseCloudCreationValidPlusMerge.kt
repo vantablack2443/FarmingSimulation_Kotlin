@@ -47,6 +47,6 @@ class NoFarmPhaseCloudCreationValidPlusMerge : ExampleSystemTestExtension() {
 [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
-""".trimIndent()
+        """.trimIndent()
     }
 }
