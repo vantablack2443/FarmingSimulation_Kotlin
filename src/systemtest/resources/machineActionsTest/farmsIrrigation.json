@@ -11,15 +11,15 @@
           "id": 1,
           "name": "Tractor",
           "actions": ["SOWING", "MOWING"],
-          "plants": ["OAT", "CHERRY"],
+          "plants": ["OAT", "GRAPE"],
           "duration": 4,
           "location": 1
         },
         {
           "id": 2,
           "name": "second machine",
-          "actions": ["IRRIGATING", "WEEDING"],
-          "plants": ["OAT", "GRAPE", "APPLE"],
+          "actions": ["WEEDING"],
+          "plants": ["OAT"],
           "duration": 4,
           "location": 1
         },
@@ -27,7 +27,7 @@
           "id": 3,
           "name": "third machine",
           "actions": ["IRRIGATING", "MOWING"],
-          "plants": ["POTATO", "CHERRY", "APPLE", "GRAPE"],
+          "plants": ["OAT", "APPLE", "GRAPE"],
           "duration": 3,
           "location": 1
         }
