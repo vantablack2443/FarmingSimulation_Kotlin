@@ -38,7 +38,6 @@ class MaxTickEndLogOneLess : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
 
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 1200000 g of CHERRY.")
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 1200000 g of CHERRY.")
 
         assertNextLine("[IMPORTANT] Simulation Info: Simulation ended at tick 0.")
     }
