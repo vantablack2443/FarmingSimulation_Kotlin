@@ -10,7 +10,7 @@ class JustMow : ExampleSystemTestExtension() {
     override val description = "Tests mowing action of the machine in first tick"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "justAction/farmOnlyPlantation.json"
+    override val farms = "justAction/farmForIrrigation.json"
     override val scenario = "example/scenario.json"
     override val map = "justAction/mapOnlyPlantationFarm.json"
 
@@ -20,7 +20,7 @@ class JustMow : ExampleSystemTestExtension() {
 
     override suspend fun run() {
 //        assertNextLine("[INFO] Initialization Info: mapOnlyPlantationFarm.json successfully parsed and validated.")
-//        assertNextLine("[INFO] Initialization Info: farmOnlyPlantation.json successfully parsed and validated.")
+//        assertNextLine("[INFO] Initialization Info: farmForIrrigation.json successfully parsed and validated.")
 //        assertNextLine("[INFO] Initialization Info: scenario.json successfully parsed and validated.")
 //        skipUntilLogType(LogLevel.DEBUG, LogType.SIMULATION_INFO)
         assertNextLine("[IMPORTANT] Farm: Farm 0 starts its actions.")
