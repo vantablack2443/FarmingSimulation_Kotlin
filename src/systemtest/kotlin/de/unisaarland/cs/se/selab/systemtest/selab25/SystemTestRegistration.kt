@@ -36,6 +36,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 /**
  * Used for test registration
@@ -82,6 +84,8 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationHarvestMoistureHundred())
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
+        testSuite.registerTest(PlantationPlantsDefault())
+        testSuite.registerTest(PlantationPlantsDefaultTickOne())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
