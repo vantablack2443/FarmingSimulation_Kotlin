@@ -22,7 +22,23 @@ class PlantationPlantsDefault : ExampleSystemTestExtension() {
     override val startYearTick = 17
 
     override suspend fun run() {
-        PlantationPlantsDefaultTickOne().run()
+        skipLines(5)
+        assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.")
+        skipLines(2)
+        assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs HARVESTING on tile 2 for 8 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 2 has collected 1700000 g of APPLE harvest.")
+        assertNextLine(MACHINE_TWO_END)
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 1700000 g of APPLE harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs MOWING on tile 3 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
+        assertNextLine(FARM_FINISH)
+        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 3 were not performed: IRRIGATING.")
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 799950 g of ALMOND.")
+        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 4 were not performed: IRRIGATING.")
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 1199950 g of CHERRY.")
+        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 5 were not performed: IRRIGATING.")
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 1139952 g of GRAPE.")
+        skipLines(1)
         // year tick 18
         assertNextLine("[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.")
         skipLines(2)
@@ -31,7 +47,6 @@ class PlantationPlantsDefault : ExampleSystemTestExtension() {
         assertNextLine(MACHINE_TWO_END)
         assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 799950 g of ALMOND harvest in the shed.")
         assertNextLine(FARM_FINISH)
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 0 g of ALMOND.")
         assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 4 were not performed: IRRIGATING.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 0 g of CHERRY.")
         assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 5 were not performed: IRRIGATING.")
@@ -42,7 +57,6 @@ class PlantationPlantsDefault : ExampleSystemTestExtension() {
         assertNextLine(MACHINE_TWO_END)
         assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 1082906 g of GRAPE harvest in the shed.")
         assertNextLine(FARM_FINISH)
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 0 g of GRAPE.")
         skipLines(1) // simulation end
         assertNextLine("[IMPORTANT] Simulation Info: Simulation Statistics are calculated.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 3582856 g of harvest.")
