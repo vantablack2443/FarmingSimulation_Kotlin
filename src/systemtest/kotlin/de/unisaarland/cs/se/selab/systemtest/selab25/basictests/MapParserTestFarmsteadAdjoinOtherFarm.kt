@@ -7,7 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  */
 class MapParserTestFarmsteadAdjoinOtherFarm : ExampleSystemTestExtension() {
     override val name = "MapParserTestFarmsteadAdjoinOtherFarm"
-    override val description = "Tests Farm Validation."
+    override val description = "Tests Map Validation."
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "MutantParserTest/Farm1.json"
