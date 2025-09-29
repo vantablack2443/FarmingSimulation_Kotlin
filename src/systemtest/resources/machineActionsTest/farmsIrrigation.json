@@ -19,7 +19,7 @@
           "id": 2,
           "name": "second machine",
           "actions": ["IRRIGATING", "WEEDING"],
-          "plants": ["OAT"],
+          "plants": ["OAT", "GRAPE", "APPLE"],
           "duration": 4,
           "location": 1
         },
@@ -27,7 +27,7 @@
           "id": 3,
           "name": "third machine",
           "actions": ["IRRIGATING", "MOWING"],
-          "plants": ["POTATO", "CHERRY"],
+          "plants": ["POTATO", "CHERRY", "APPLE", "GRAPE"],
           "duration": 3,
           "location": 1
         }
@@ -35,7 +35,7 @@
       "sowingPlans": [
         {
           "id": 1,
-          "tick": 6,
+          "tick": 0,
           "plant": "OAT",
           "fields": [2, 5, 8]
           }

@@ -124,20 +124,20 @@ class CloudHandler(val simulationMap: SimulationMap) {
     /**
      * creates a new instance of the merged cloud
      */
-    private fun createMergedCloud(cloud: Cloud, targetCloud: Cloud): Cloud {
-        val newDuration: Int = if (targetCloud.duration != -1 && cloud.duration != -1) {
-            minOf(targetCloud.duration, cloud.duration)
+    private fun createMergedCloud(existingCloud: Cloud, targetCloud: Cloud): Cloud {
+        val newDuration: Int = if (targetCloud.duration != -1 && existingCloud.duration != -1) {
+            minOf(targetCloud.duration, existingCloud.duration)
         } else {
-            maxOf(targetCloud.duration, cloud.duration)
+            maxOf(targetCloud.duration, existingCloud.duration)
         }
         setMaxCloudID(maxCloudID + 1)
         val newCloud = Cloud(
             id = maxCloudID,
-            location = targetCloud.location,
+            location = existingCloud.location,
             duration = newDuration,
-            amount = targetCloud.amount + cloud.amount
+            amount = targetCloud.amount + existingCloud.amount
         )
-        newCloud.maxTraversibleTiles = maxOf(cloud.maxTraversibleTiles, targetCloud.maxTraversibleTiles)
+        newCloud.maxTraversibleTiles = maxOf(existingCloud.maxTraversibleTiles, targetCloud.maxTraversibleTiles)
         // maxCloudID += 1
         return newCloud
     }
@@ -147,17 +147,17 @@ class CloudHandler(val simulationMap: SimulationMap) {
      */
     fun merge(originC: Cloud, destinationC: Cloud): Cloud {
         // val originTile = simulationMap.getTileByCoordinate(originC.location)
-        val destinationTile = simulationMap.getTileByCoordinate(destinationC.location)
+        val destinationTile = simulationMap.getTileByCoordinate(originC.location)
 
         val newCloud = createMergedCloud(originC, destinationC)
         // addCloud(newCloud)
         coordinateToCloud.entries.removeIf { it.value == originC || it.value == destinationC }
-        coordinateToCloud[destinationC.location] = newCloud
+        coordinateToCloud[originC.location] = newCloud
         removedClouds.add(originC)
         removedClouds.add(destinationC)
         Logger.logCloudMerge(
-            destinationC.id,
             originC.id,
+            destinationC.id,
             newCloud.id,
             newCloud.amount,
             newCloud.duration,
@@ -184,7 +184,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
             // check for merges
             if (nextCloud != null) {
                 logLocationChange(c, currTile, nextTile ?: currTile)
-                val newCloud = merge(c, nextCloud)
+                val newCloud = merge(nextCloud, c)
                 cloudsList.add(newCloud)
                 return
             }

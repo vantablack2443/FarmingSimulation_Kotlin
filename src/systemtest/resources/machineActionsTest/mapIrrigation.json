@@ -45,7 +45,7 @@
       },
       "category": "PLANTATION",
       "farm": 1,
-      "capacity": 200,
+      "capacity": 150,
       "plant": "APPLE",
       "airflow": false
     },

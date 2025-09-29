@@ -29,6 +29,7 @@ class CloudCreation(
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         val affectedTiles = (simulationMap.getTilesByRadius(tile, radius) + tile)
             .filter { it.category != TileType.VILLAGE }
+            .distinct()
             .sortedBy { it.id }
         val tileIDs = affectedTiles.map { it.id }
         Logger.logIncident(this.id, IncidentType.CLOUD_CREATION, tileIDs)
