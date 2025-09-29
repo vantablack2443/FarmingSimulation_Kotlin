@@ -18,10 +18,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigatio
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
-<<<<<<< src/systemtest/kotlin/de/unisaarland/cs/se/selab/systemtest/selab25/SystemTestRegistration.kt
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
-=======
->>>>>>> src/systemtest/kotlin/de/unisaarland/cs/se/selab/systemtest/selab25/SystemTestRegistration.kt
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
@@ -89,7 +86,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
-
+    }
 
     /**
      * The same as above, but the log message only (possibly) become incorrect
