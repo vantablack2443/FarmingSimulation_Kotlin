@@ -52,6 +52,7 @@ class Almond : PlantationPlant() {
 
     override fun doAnimalAttack() {
         this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
+        this.animalAttack = true
     }
 
     override fun doBeeHappy(effect: Double) {

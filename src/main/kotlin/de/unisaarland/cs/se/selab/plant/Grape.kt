@@ -48,6 +48,7 @@ class Grape : PlantationPlant() {
 
     override fun doAnimalAttack() {
         this.animalAttackPenalty *= GRAPE_ANIMAL_ATTACK_PENALTY
+        this.animalAttack = true
     }
 
     override fun needsHarvesting(

@@ -3,44 +3,43 @@
     {
       "id": 1,
       "name": "Farm",
-      "farmsteads": [1],
-      "fields": [2, 5, 8],
-      "plantations": [4, 6, 7],
+      "farmsteads": [30, 300],
+      "fields": [40, 13, 22, 24],
+      "plantations": [18],
       "machines": [
         {
           "id": 1,
-          "name": "Tractor",
+          "name": "1",
           "actions": ["SOWING", "MOWING"],
-          "plants": ["OAT", "GRAPE"],
+          "plants": ["OAT", "CHERRY"],
           "duration": 4,
-          "location": 1
+          "location": 300
         },
         {
           "id": 2,
-          "name": "second machine",
-          "actions": ["WEEDING"],
+          "name": "2",
+          "actions": ["IRRIGATING", "WEEDING"],
           "plants": ["OAT"],
           "duration": 4,
-          "location": 1
+          "location": 300
         },
         {
           "id": 3,
-          "name": "third machine",
+          "name": "3",
           "actions": ["IRRIGATING", "MOWING"],
-          "plants": ["OAT", "APPLE", "GRAPE"],
+          "plants": ["POTATO", "CHERRY"],
           "duration": 3,
-          "location": 1
+          "location": 30
         }
       ],
       "sowingPlans": [
         {
-          "id": 1,
+          "id": 0,
           "tick": 0,
           "plant": "OAT",
-          "fields": [2, 5, 8]
+          "fields": [13, 22]
         }
       ]
     }
   ]
 }
-

@@ -61,7 +61,7 @@ class Apple : PlantationPlant() {
      * updates the animal attack penalty
      */
     override fun doAnimalAttack() {
-        // this.animalAttack = true
+        this.animalAttack = true
         this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
     }
 

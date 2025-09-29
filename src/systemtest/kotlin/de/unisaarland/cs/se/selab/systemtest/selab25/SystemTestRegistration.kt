@@ -1,11 +1,13 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25
 
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
+// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHarvestandNoCloudsOrIncidents
+// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
+
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationTest
@@ -14,7 +16,16 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigatio
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmDroughtSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMerge
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 
 /**
  * Used for test registration
@@ -40,6 +51,17 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationTwoMachines())
         testSuite.registerTest(MachineIrrigationMowingNext())
         testSuite.registerTest(MachineIrrigationTest())
+        testSuite.registerTest(NoFarmDroughtSimple())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(NoFarmAnimallAttackInvalid())
+        testSuite.registerTest(ScnearioWIthCloudsAndIncident())
+        testSuite.registerTest(NoFarmAnimalAttackValidSimple())
+        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
+        testSuite.registerTest(NoFarmandCloudCreationInvalid())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
+        testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
+        testSuite.registerTest(SowingPlanSimplePlan())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
@@ -57,9 +79,6 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
-
-        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
-        testSuite.registerTest(FarmParserTestMissingTilesInField())
     }
 
     /**
