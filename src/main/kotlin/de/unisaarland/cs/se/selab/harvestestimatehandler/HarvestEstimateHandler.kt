@@ -167,7 +167,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         }
 
         while (plant.neededMoisture - currentMoisture >= HUNDRED) {
-            plant.harvestEstimate -= FIFTY
+            plant.harvestEstimate = maxOf(plant.harvestEstimate - FIFTY, 0)
             currentMoisture += HUNDRED
         }
         // Previous version
