@@ -5,6 +5,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
@@ -62,6 +63,10 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
         testSuite.registerTest(SowingPlanSimplePlan())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
+        testSuite.registerTest(EmptyTest())
     }
 
     /**
