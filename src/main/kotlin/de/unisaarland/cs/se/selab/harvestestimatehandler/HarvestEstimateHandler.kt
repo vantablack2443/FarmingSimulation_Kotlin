@@ -278,7 +278,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun applyAnimalAttack(t: Tile) {
         val plant = t.plant ?: return
-        if (plant.animalAttackPenalty > 1.0) {
+        if (plant.animalAttack) {
             plant.animalAttackPenalty()
         }
     }
