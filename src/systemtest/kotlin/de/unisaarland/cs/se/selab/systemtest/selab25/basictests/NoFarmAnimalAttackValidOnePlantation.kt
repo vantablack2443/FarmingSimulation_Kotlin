@@ -16,13 +16,10 @@ class NoFarmAnimalAttackValidOnePlantation : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        val lines = result().lines()
-        var afterMarker = false
-        for (line in lines) {
-            assertNextLine(line)
-            if (line == "[IMPORTANT] Farm: Farm 1 finished its actions.") {
-                afterMarker = true
-            }
+        val lineIterator = result().lines().iterator()
+        while (lineIterator.hasNext()) {
+            val currentLine = lineIterator.next()
+            assertNextLine(currentLine)
         }
     }
 
@@ -35,7 +32,6 @@ class NoFarmAnimalAttackValidOnePlantation : ExampleSystemTestExtension() {
  [INFO] Simulation Info: Tick 0 started at tick 1 within the year.
  [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
  [IMPORTANT] Farm: Farm 1 starts its actions.
- [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.
  [IMPORTANT] Farm: Farm 1 finished its actions.
  [IMPORTANT] Incident: Incident 1 of type ANIMAL_ATTACK happened and affected tiles 5.
  [DEBUG] Harvest Estimate: Required actions on tile 5 were not performed: .

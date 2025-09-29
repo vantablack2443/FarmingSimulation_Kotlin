@@ -10,7 +10,7 @@
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["SOWING", "HARVESTING"],
+          "actions": ["SOWING", "MOWING"],
           "plants": ["WHEAT", "APPLE"],
           "duration": 4,
           "location": 2
@@ -22,6 +22,12 @@
           "tick": 0,
           "plant": "WHEAT",
           "fields": [0, 1, 3]
+        },
+        {
+          "id": 1,
+          "tick": 24,
+          "plant": "WHEAT",
+          "fields": [0, 1]
         }
       ]
     }

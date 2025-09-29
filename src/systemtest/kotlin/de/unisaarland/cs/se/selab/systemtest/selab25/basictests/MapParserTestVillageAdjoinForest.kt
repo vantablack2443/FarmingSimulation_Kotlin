@@ -11,7 +11,7 @@ class MapParserTestVillageAdjoinForest : ExampleSystemTestExtension() {
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "MutantParserTest/Farm3.json"
-    override val scenario = "MutantParserTest/Scenario3.json"
+    override val scenario = "MutantParserTest/Scenario1.json"
     override val map = "MutantParserTest/Map3.json"
 
     override val logLevel = "DEBUG"
@@ -19,6 +19,6 @@ class MapParserTestVillageAdjoinForest : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        assertNextLine("[IMPORTANT] Initialization Info: Map1.json is invalid.")
+        assertNextLine("[IMPORTANT] Initialization Info: Map3.json is invalid.")
     }
 }

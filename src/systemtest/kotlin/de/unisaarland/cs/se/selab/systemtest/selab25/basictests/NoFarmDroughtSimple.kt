@@ -31,6 +31,7 @@ class NoFarmDroughtSimple : ExampleSystemTestExtension() {
 [INFO] Simulation Info: Tick 0 started at tick 1 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 1 starts its actions.
+[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: .
 [IMPORTANT] Farm: Farm 1 finished its actions.
 [IMPORTANT] Incident: Incident 1 of type DROUGHT happened and affected tiles 5,7.
 [IMPORTANT] Simulation Info: Simulation ended at tick 1.
