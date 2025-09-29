@@ -12,6 +12,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigatio
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 
 /**
  * Used for test registration
@@ -38,6 +39,8 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationMowingNext())
         testSuite.registerTest(MachineIrrigationTest())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
     }
 
     /**
