@@ -7,8 +7,10 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationMowingNext
@@ -19,6 +21,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigatio
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationUntilSowing
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationWaterNext
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
@@ -78,6 +82,11 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationHarvestMoistureHundred())
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
+        testSuite.registerTest(MapParserTestVillageAdjoinForest())
+        testSuite.registerTest(EmptyTest())
     }
 
     /**
@@ -90,6 +99,10 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(FarmNoPlantableTiles())
         testSuite.registerTest(MachineWrongShed())
+
+        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+        testSuite.registerTest(FarmParserTestMissingTilesInField())
+        testSuite.registerTest(MapParserTestVillageAdjoinForest())
     }
 
     /**
@@ -98,5 +111,6 @@ object SystemTestRegistration {
      */
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
+        testSuite.registerTest(CloudMovementTest())
     }
 }
