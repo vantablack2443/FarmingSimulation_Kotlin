@@ -25,9 +25,6 @@ class SowingHandler(
     override fun startPhase(farm: Farm, yearTick: Int, simTick: Int) {
         // Get all sowable plant types for the current tick in year, return from function if none
         val sowablePlantTypes: List<PlantType> = this.plantdata.getSowablePlantTypes(yearTick)
-//        if (sowablePlantTypes.isEmpty()) {
-//            return
-//        }
 
         // Get all sowing plans for the current tick in a year, ordered by tick then id
         // Assumes the ordering is handled by the function
@@ -39,6 +36,10 @@ class SowingHandler(
             Logger.logFarmSowingPlan(farm.getId(), emptyList())
         } else {
             Logger.logFarmSowingPlan(farm.getId(), sowingPlansAvailable.map { it.getId() })
+        }
+
+        if (sowablePlantTypes.isEmpty()) {
+            return
         }
 
         // Loop through all sowing plans and try to execute each
