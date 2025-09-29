@@ -36,7 +36,7 @@ class SowingHandler(
         // Log active sowing Plans - This logs all sowing Plans for the tick now
         val sowingPlansAvailable = farm.getSowingPlansByTick(simTick)
         if (sowingPlansAvailable.isEmpty()) {
-            Logger.logFarmSowingPlan(farm.getId(), listOf())
+            Logger.logFarmSowingPlan(farm.getId(), emptyList())
         } else {
             Logger.logFarmSowingPlan(farm.getId(), sowingPlansAvailable.map { it.getId() })
         }
