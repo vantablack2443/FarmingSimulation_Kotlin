@@ -14,14 +14,21 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
     override val startYearTick = 15
 
     override suspend fun run() {
-        val lineIterator = result().lines().iterator()
+        val expectedLines = buildList {
+            addAll(initializationInfo().lines())
+            addAll(simulationTicks().lines())
+            addAll(harvestEstimates().lines())
+            addAll(remainingTicks().lines())
+            addAll(simulationStatistics().lines())
+        }
+        val lineIterator = expectedLines.iterator()
         while (lineIterator.hasNext()) {
             val currentLine = lineIterator.next()
             assertNextLine(currentLine)
         }
     }
-    private fun result(): String {
-        return """
+
+    private fun initializationInfo(): String = """
 [INFO] Initialization Info: map.json successfully parsed and validated.
 [INFO] Initialization Info: farm.json successfully parsed and validated.
 [INFO] Initialization Info: scenario.json successfully parsed and validated.
@@ -33,6 +40,9 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1.
 [IMPORTANT] Farm: Farm 1 finished its actions.
 [IMPORTANT] Incident: Incident 1 of type DROUGHT happened and affected tiles 4,5,6,7.
+""".trim()
+
+    private fun simulationTicks(): String = """
 [INFO] Simulation Info: Tick 1 started at tick 16 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [DEBUG] Cloud Position: Cloud 1 is on tile 4, where the amount of sunlight is 104.
@@ -60,6 +70,9 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
 [IMPORTANT] Farm Sowing: Machine 1 has sowed WHEAT according to sowing plan 1.
 [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 8.
 [IMPORTANT] Farm: Farm 1 finished its actions.
+""".trim()
+
+    private fun harvestEstimates(): String = """
 [INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 0 g of WHEAT.
 [INFO] Simulation Info: Tick 5 started at tick 20 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
@@ -67,6 +80,9 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
 [IMPORTANT] Farm: Farm 1 starts its actions.
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: .
 [IMPORTANT] Farm: Farm 1 finished its actions.
+""".trim()
+
+    private fun remainingTicks(): String = """
 [INFO] Simulation Info: Tick 6 started at tick 21 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [DEBUG] Cloud Position: Cloud 1 is on tile 4, where the amount of sunlight is 48.
@@ -97,6 +113,9 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
 [IMPORTANT] Farm: Farm 1 starts its actions.
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: .
 [IMPORTANT] Farm: Farm 1 finished its actions.
+""".trim()
+
+    private fun simulationStatistics(): String = """
 [IMPORTANT] Simulation Info: Simulation ended at tick 11.
 [IMPORTANT] Simulation Info: Simulation statistics are calculated.
 [IMPORTANT] Simulation Statistics: Farm 1 collected 0 g of harvest.
@@ -109,6 +128,5 @@ class TestSowingFollowedByDroughtButNoActCont : ExampleSystemTestExtension() {
 [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
-        """.trimIndent()
-    }
+""".trim()
 }
