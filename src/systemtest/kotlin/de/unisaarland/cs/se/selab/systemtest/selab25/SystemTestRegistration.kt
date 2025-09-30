@@ -17,6 +17,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
@@ -108,6 +109,7 @@ object SystemTestRegistration {
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineBehaviorTest())
         testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
+        testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
     }
 
     /**
@@ -128,6 +130,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
+        testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
     }
 
     /**
