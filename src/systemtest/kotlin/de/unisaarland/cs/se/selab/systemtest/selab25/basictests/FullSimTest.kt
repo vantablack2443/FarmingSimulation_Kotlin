@@ -34,8 +34,6 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Incident: Incident 2 of type ANIMAL_ATTACK happened and affected tiles 2.")
         assertNextLine("[IMPORTANT] Incident: Incident 3 of type BEE_HAPPY happened and affected tiles 10.")
         assertNextLine("[IMPORTANT] Incident: Incident 4 of type DROUGHT happened and affected tiles 5.")
-
-
         // tick 1, yearTick 5, only clouds and incident
         skipLines(8)
         assertNextLine("[IMPORTANT] Incident: Incident 1 of type BEE_HAPPY happened and affected tiles 10.")
