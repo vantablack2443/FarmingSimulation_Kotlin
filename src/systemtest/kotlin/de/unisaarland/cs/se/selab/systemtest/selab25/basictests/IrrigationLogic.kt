@@ -54,6 +54,7 @@ class IrrigationLogic : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Action: Machine 0 performs IRRIGATING on tile 3 for 2 days.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 0.")
         assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
+        assertEnd()
 
 //        skipUntilString(
 //            "[IMPORTANT] Simulation Statistics: Total harvest estimate " +
