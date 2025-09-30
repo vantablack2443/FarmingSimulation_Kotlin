@@ -167,7 +167,6 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
-//        testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(SowingPlanPrioritization())
@@ -179,11 +178,9 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-//        testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(TwentyEightDays())
-
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
     }
