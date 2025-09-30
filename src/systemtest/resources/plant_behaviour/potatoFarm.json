@@ -1,0 +1,79 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Perfect Potato",
+      "farmsteads": [1],
+      "fields": [0],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Tr",
+          "actions": ["SOWING", "WEEDING", "HARVESTING"],
+          "plants": ["POTATO"],
+          "duration": 4,
+          "location": 1
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "POTATO",
+          "fields": [0]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Not So Perfect Potato",
+      "farmsteads": [3],
+      "fields": [2],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Act",
+          "actions": ["SOWING", "WEEDING", "HARVESTING"],
+          "plants": ["POTATO"],
+          "duration": 4,
+          "location": 3
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 1,
+          "tick": 2,
+          "plant": "POTATO",
+          "fields": [2]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Bad Potato",
+      "farmsteads": [5],
+      "fields": [4],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 2,
+          "name": "Or",
+          "actions": ["SOWING", "HARVESTING"],
+          "plants": ["POTATO"],
+          "duration": 4,
+          "location": 5
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 2,
+          "tick": 0,
+          "plant": "POTATO",
+          "fields": [4]
+        }
+      ]
+    }
+  ]
+}
