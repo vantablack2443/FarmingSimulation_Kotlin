@@ -36,6 +36,7 @@ class SowingPlanSimplePlan : ExampleSystemTestExtension() {
         assertNextLine(SOWING_EXECUTED_PLAN_ZERO)
         assertNextLine("[IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 2.")
         assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
+        skipUntilString("[INFO] Harvest Estimate: Harvest estimate on tile 0 changed to 1500000 g of WHEAT.")
 
         skipUntilString(
             TRY_SOWING_PLAN +

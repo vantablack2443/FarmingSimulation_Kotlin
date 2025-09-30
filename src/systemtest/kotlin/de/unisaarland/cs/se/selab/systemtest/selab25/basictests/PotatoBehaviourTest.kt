@@ -16,13 +16,13 @@ const val EMPTY_SOW_PLAN = "it intends to pursue in this tick: ."
  * case 3 : schlecht (only sown and harvested)
  */
 class PotatoBehaviourTest : ExampleSystemTestExtension() {
-    override val name = "SowingPlanFieldsWithTwoSimplePlans"
-    override val description = "Tests sowing for the next year"
+    override val name = "PotatoBehaviourTest"
+    override val description = "Tests the behaviour of potatoes"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "sowing_basic/farmsSimplePlan.json"
-    override val scenario = "sowing_basic/scenarioSimplePlan.json"
-    override val map = "sowing_basic/mapSimplePlan.json"
+    override val farms = "plant_behaviour/potatoFarm.json"
+    override val scenario = "plant_behaviour/potatoScenario.json"
+    override val map = "plant_behaviour/potatoMap.json"
 
     override val logLevel = "DEBUG"
     override val maxTicks = 12
@@ -107,7 +107,10 @@ class PotatoBehaviourTest : ExampleSystemTestExtension() {
 
     private suspend fun skipUntilString(startString: String): String {
         val line: String = getNextLine()
-            ?: throw SystemTestAssertionError("End of log reached when there should be more.")
+            ?: throw SystemTestAssertionError(
+                "End of log reached when there should be more,\n" +
+                    "expected: " + startString
+            )
         return if (line.startsWith(startString)) {
             line
         } else {
