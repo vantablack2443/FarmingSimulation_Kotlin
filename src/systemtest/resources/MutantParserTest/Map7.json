@@ -1,0 +1,38 @@
+{
+  "tiles": [
+    {
+      "id": 0,
+      "coordinates": { "x": 0, "y": 0 },
+      "category": "FIELD",
+      "farm": 0,
+      "capacity": 8000,
+      "possiblePlants": ["WHEAT"],
+      "airflow": false
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 1, "y": 1 },
+      "category": "FARMSTEAD",
+      "airflow": false,
+      "farm": 0,
+      "shed": true
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": 2, "y": 2 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 5,
+      "coordinates": { "x": 4, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 6,
+      "coordinates": { "x": 4, "y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    }
+  ]
+}

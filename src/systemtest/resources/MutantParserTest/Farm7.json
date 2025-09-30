@@ -4,7 +4,7 @@
       "id": 0,
       "name": "Farm0",
       "farmsteads": [1],
-      "fields": [0, 2, 3],
+      "fields": [0],
       "plantations": [],
       "machines": [
         {
@@ -17,13 +17,6 @@
         }
       ],
       "sowingPlans": [
-        {
-          "id": 1,
-          "tick": 1,
-          "plant": "WHEAT",
-          "location": 6,
-          "radius": 1
-        }
       ]
     }
   ]

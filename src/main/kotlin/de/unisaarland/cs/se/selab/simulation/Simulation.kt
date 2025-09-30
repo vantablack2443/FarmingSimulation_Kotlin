@@ -93,7 +93,7 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         while (canStartNextTick()) {
             Logger.logTickStart(currentTick, currentYearTick)
             updatePlantationHarvestEstimate()
-            updateLateHarvestPenalty()
+            // updateLateHarvestPenalty()
             updateSunlight(this.currentYearTick)
             reduceMoisture()
             cloudHandler.moveClouds()
@@ -108,12 +108,12 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     /**
      * adds late harvest penalties at the beginning of each tick
      */
-    private fun updateLateHarvestPenalty() {
+    /*private fun updateLateHarvestPenalty() {
         val tiles = map.getPlantableTiles().filter { it.plant != null }
         for (tile in tiles) {
             harvestEstimator.applyLateHarvest(tile, this.currentYearTick)
         }
-    }
+    }*/
 
     /**
      * checks if the next tick can be continued

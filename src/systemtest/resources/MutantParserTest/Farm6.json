@@ -25,6 +25,25 @@
           "radius": 1
         }
       ]
+    },
+    {
+      "id": 1,
+      "name": "Farm1",
+      "farmsteads": [8],
+      "fields": [7, 6],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Machine1",
+          "actions": ["SOWING"],
+          "plants": ["WHEAT"],
+          "duration": 4,
+          "location": 8
+        }
+      ],
+      "sowingPlans": [
+      ]
     }
   ]
 }
