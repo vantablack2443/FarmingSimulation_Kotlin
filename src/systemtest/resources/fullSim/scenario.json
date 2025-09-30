@@ -45,7 +45,7 @@
       "id": 3,
       "type": "BEE_HAPPY",
       "tick": 0,
-      "effect": 10,
+      "effect": 50,
       "location": 9,
       "radius": 3
     },
