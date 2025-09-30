@@ -20,9 +20,9 @@ class PotatoBehaviourTest : ExampleSystemTestExtension() {
     override val description = "Tests the behaviour of potatoes"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "sowing_basic/farmsSimplePlan.json"
-    override val scenario = "sowing_basic/scenarioSimplePlan.json"
-    override val map = "sowing_basic/mapSimplePlan.json"
+    override val farms = "sowing_basic/potatoMap.json"
+    override val scenario = "sowing_basic/potatoScenario.json"
+    override val map = "sowing_basic/potatoMap.json"
 
     override val logLevel = "DEBUG"
     override val maxTicks = 12
