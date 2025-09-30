@@ -16,8 +16,8 @@ const val EMPTY_SOW_PLAN = "it intends to pursue in this tick: ."
  * case 3 : schlecht (only sown and harvested)
  */
 class PotatoBehaviourTest : ExampleSystemTestExtension() {
-    override val name = "SowingPlanFieldsWithTwoSimplePlans"
-    override val description = "Tests sowing for the next year"
+    override val name = "PotatoBehaviourTest"
+    override val description = "Tests the behaviour of potatoes"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "sowing_basic/farmsSimplePlan.json"
