@@ -62,6 +62,27 @@
       "tick": 6,
       "location": 3,
       "radius": 1
+    },
+    {
+      "id": 7,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 3
+    },
+    {
+      "id": 8,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 5
+    },
+    {
+      "id": 9,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 6
     }
   ]
 }
