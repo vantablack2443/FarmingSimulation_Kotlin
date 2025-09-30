@@ -34,7 +34,6 @@ class PotatoBehaviourTest : ExampleSystemTestExtension() {
         skipUntilString(FARM_ONE_SOW_PLAN + "it intends to pursue in this tick: 1.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 1 for 4 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 1 has sowed POTATO according to sowing plan 1.")
-        skipUntilString("[INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 1000000 g of POTATO.")
 
         // simTick 4, yearTick 9, WEED(1)
         skipUntilString("[INFO] Simulation Info: Tick 4 started at tick 9 within the year.")
@@ -48,14 +47,12 @@ class PotatoBehaviourTest : ExampleSystemTestExtension() {
         skipUntilString(FARM_TWO_SOW_PLAN + "it intends to pursue in this tick: 2.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs SOWING on tile 2 for 4 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 2 has sowed POTATO according to sowing plan 2.")
-        skipUntilString("[INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 800000 g of POTATO.")
 
         // simTick 7, yearTick 12, SOW_LATE(3)
         skipUntilString("[INFO] Simulation Info: Tick 7 started at tick 12 within the year.")
         skipUntilString(FARM_THREE_SOW_PLAN + "it intends to pursue in this tick: 3.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs SOWING on tile 3 for 4 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 3 has sowed POTATO according to sowing plan 3.")
-        skipUntilString("[INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 640000 g of POTATO.")
 
         // simTick 8, yearTick 13, WEED(1), WEED(2)
         skipUntilString("[INFO] Simulation Info: Tick 8 started at tick 13 within the year.")

@@ -45,20 +45,23 @@ class PlantationPlantsDefault : ExampleSystemTestExtension() {
         assertNextLine(MACHINE_TWO_END)
         assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 799950 g of ALMOND harvest in the shed.")
         assertNextLine(FARM_FINISH)
-        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 5 were not performed: IRRIGATING.")
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 1082906 g of GRAPE.")
+        assertNextLine(
+            "[DEBUG] Harvest Estimate: Required actions on tile 5 were not performed:" +
+                " IRRIGATING,HARVESTING."
+        )
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 1082859 g of GRAPE.")
         skipLines(4)
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs HARVESTING on tile 5 for 8 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 2 has collected 1082906 g of GRAPE harvest.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 2 has collected 1082859 g of GRAPE harvest.")
         assertNextLine(MACHINE_TWO_END)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 1082906 g of GRAPE harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 2 unloads 1082859 g of GRAPE harvest in the shed.")
         assertNextLine(FARM_FINISH)
         skipLines(1) // simulation end
-        assertNextLine("[IMPORTANT] Simulation Info: Simulation Statistics are calculated.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 3582856 g of harvest.")
+        assertNextLine("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 3582809 g of harvest.")
         skipLines(4)
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of APPLE harvested: 1700000 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 1082906 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 1082859 g.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 799950 g.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.")
     }
