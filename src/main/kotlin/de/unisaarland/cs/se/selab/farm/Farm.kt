@@ -102,6 +102,10 @@ class Farm(
      * updates the actions needed list of the tiles in the farm for the current year tick
      * Except for IRRIGATING and SOWING, all actions require growing plants on their tile,
      * which means that the harvest estimate must be greater than 0 g.
+     *
+     * All actions except SOWING and IRRIGATING require a plant growing on the tile -> Harvest Estimate > 0
+     * Since the implementation removes plants after estimate drops to 0 for FIELDS and only removes plants from
+     * Plantations when hit by drought, we don't irrigate in these cases
      */
     fun updateNeededActions(yearTick: Int, simTick: Int) {
         for (field in fields) {
@@ -110,6 +114,7 @@ class Farm(
                 plant.needsWeeding(simTick, field.actionsNeeded)
                 plant.needsHarvesting(yearTick, field.actionsNeeded)
             }
+            // Requires no if a plant isn't growing on it for fields -> Plant is not null by this line
             field.needsIrrigation()
         }
         for (plantation in plantation) {
@@ -119,7 +124,10 @@ class Farm(
                 plant.needsMowing(yearTick, plantation.actionsNeeded)
                 plant.needsHarvesting(yearTick, plantation.actionsNeeded)
             }
-            plantation.needsIrrigation()
+            // Requires irrigation only if plantation is not hit with drought
+            if (plantation.plantationDamaged != true) {
+                plantation.needsIrrigation()
+            }
         }
     }
 
