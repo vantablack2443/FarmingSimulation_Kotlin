@@ -136,6 +136,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plantOfTile = t.plant ?: return
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
+        filterMissedCutting(t, yearTick)
 
         // Log missed actions if there are any -- need to verify this
         if (t.actionsNeeded.isNotEmpty()) {
@@ -318,6 +319,31 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
          */
         val plant = t.plant ?: return false
         return plant.applyLateHarvestPenalty(yearTick)
+    }
+
+    /**
+     * Filters out missed MOWING if not in the final tick of the cutting periods for the harvest cycle
+     */
+    fun filterMissedCutting(t: Tile, yearTick: Int) {
+        // val plant = t.plant ?: return
+        val actionsNeeded = t.actionsNeeded
+
+        if (ActionType.CUTTING !in actionsNeeded) {
+            return
+        }
+
+        // CUTTING is in missing actions list
+        val crop = t.currentCrop ?: return
+        // Remove cutting only if it's not the last tick of all the cutting periods
+        val shouldRemoveMowing = when (crop) {
+            PlantType.GRAPE -> yearTick != SIXTEEN // End August
+            PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> yearTick != FOUR // End February
+            else -> false
+        }
+
+        if (shouldRemoveMowing) {
+            actionsNeeded.remove(ActionType.CUTTING)
+        }
     }
 
     /**
