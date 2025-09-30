@@ -8,6 +8,9 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction2
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
@@ -59,6 +62,9 @@ object SystemTestRegistration {
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
+        testSuite.registerTest(CutAppleMissedAction())
+        testSuite.registerTest(CutAppleMissedAction2())
+        testSuite.registerTest(CutAppleMissedAction3())
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
