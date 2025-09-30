@@ -3,16 +3,16 @@
   ],
   "incidents": [
     {
-      "id": 0,
-      "type": "CITY_EXPANSION",
-      "tick": 0,
-      "location": 5
-    },
-    {
       "id": 1,
       "type": "CITY_EXPANSION",
       "tick": 0,
       "location": 6
+    },
+    {
+      "id": 2,
+      "type": "CITY_EXPANSION",
+      "tick": 0,
+      "location": 5
     }
   ]
 }
