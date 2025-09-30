@@ -30,7 +30,8 @@ class CutAppleMissedAction2 : ExampleSystemTestExtension() {
             "[DEBUG] Farm: Farm 0 has the following active sowing" +
                 " plans it intends to pursue in this tick: ."
         )
-        skipLines(2)
+        assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
+        skipLines(4)
         assertNextLine("[INFO] Simulation Info: Tick 1 started at tick 22 within the year.")
     }
 

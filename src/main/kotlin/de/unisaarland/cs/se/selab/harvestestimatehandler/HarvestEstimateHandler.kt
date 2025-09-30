@@ -55,11 +55,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun fieldHarvestEstimate(t: Tile, simTick: Int, yearTick: Int) {
         val plantOfTile = t.plant ?: return
 
-        // If there is 0 harvest on the tile, then no logging is required.
-        // This check is not required for fields, since they will be set to 0 in the same tick the harvest drops to 0
-        // Plantations won't
-        if (plantOfTile.harvestEstimate == 0) { return }
-
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
         // Log missed actions if there are any -- need to verify this
@@ -134,6 +129,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
         val plantOfTile = t.plant ?: return
+
+        // If there is 0 harvest on the tile, then no logging is required.
+        // This check is not required for fields, since they will be set to 0 in the same tick the harvest drops to 0
+        // Plantations won't
+        if (plantOfTile.harvestEstimate == 0) { return }
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
         filterMissedCutting(t, yearTick)
