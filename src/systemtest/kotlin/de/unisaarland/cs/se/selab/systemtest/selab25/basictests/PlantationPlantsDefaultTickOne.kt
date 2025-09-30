@@ -31,6 +31,7 @@ class PlantationPlantsDefaultTickOne : ExampleSystemTestExtension() {
         assertNextLine(FARM_FINISH)
         assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 3 were not performed: IRRIGATING.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 799950 g of ALMOND.")
+        assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 4 were not performed: IRRIGATING.")
         assertNextLine("[DEBUG] Harvest Estimate: Required actions on tile 5 were not performed: IRRIGATING.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 1139952 g of GRAPE.")
         skipLines(1)
