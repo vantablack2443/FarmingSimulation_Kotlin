@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * Does what it says
  */
 class MachineCantReturnDueHarvest : ExampleSystemTestExtension() {
-    override val name = "FarmParserTestMissingTilesInField"
+    override val name = "MachineCantReturnDueHarvest"
     override val description = "Tests Farm Validation."
 
     // Paths are relative from the `src/systemtest/resources` directory.
