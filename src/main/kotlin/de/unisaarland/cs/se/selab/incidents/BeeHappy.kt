@@ -39,6 +39,6 @@ class BeeHappy(
                 affectedIds.add(tile.id)
             }
         }
-        Logger.logIncident(id, IncidentType.BEE_HAPPY, affectedIds)
+        Logger.logIncident(id, IncidentType.BEE_HAPPY, affectedIds.sortedBy { it })
     }
 }

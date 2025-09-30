@@ -11,6 +11,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSam
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
@@ -79,6 +80,7 @@ object SystemTestRegistration {
 //        testSuite.registerTest(CutAppleMissedAction2())
         testSuite.registerTest(CutAppleMissedAction3())
         testSuite.registerTest(MachinePriority())
+        testSuite.registerTest(DroughtToExpansion())
 
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
