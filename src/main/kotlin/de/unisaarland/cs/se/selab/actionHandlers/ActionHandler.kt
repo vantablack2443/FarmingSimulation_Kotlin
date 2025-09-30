@@ -97,9 +97,10 @@ abstract class ActionHandler(
      * @param plantType The type of plant to be cut.
      * @return A list of machines that can perform the CUT action.
      */
-    fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType): List<Machine> {
+    fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType, simTick: Int): List<Machine> {
         return farm.getMachines().filter {
-            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(actionType) && it.brokenFor == null
+            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(actionType) &&
+                it.brokenFor?.inRange(simTick) == false
         }.sortedWith(compareBy({ it.duration }, { it.id }))
     }
 

@@ -32,7 +32,7 @@ class HarvestingHandler(
         for (tile in operableTiles.toList()) {
             val currentCrop = tile.currentCrop ?: continue
 
-            val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING)
+            val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING, simTick)
             if (availableMachines.isEmpty()) {
                 continue
             }

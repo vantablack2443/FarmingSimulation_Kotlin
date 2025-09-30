@@ -43,7 +43,7 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
                 continue // Skip if tile is already handled
             }
             val plantType = tile.currentCrop ?: continue // Skip if no crop
-            val availableMachines = getAvailableMachines(farm, plantType, ActionType.CUTTING)
+            val availableMachines = getAvailableMachines(farm, plantType, ActionType.CUTTING, simTick)
             val machine = getNextMachine(availableMachines, farm, tile)
             if (machine != null) {
                 performAction(machine, tile, yearTick)

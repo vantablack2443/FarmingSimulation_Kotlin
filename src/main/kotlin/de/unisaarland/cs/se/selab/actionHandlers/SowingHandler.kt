@@ -117,7 +117,7 @@ class SowingHandler(
         }
 
         // Select machine, first by duration then id
-        val machines = getAvailableMachines(farm, plan.getPlant(), ActionType.SOWING)
+        val machines = getAvailableMachines(farm, plan.getPlant(), ActionType.SOWING, simTick)
         // Return if there are no available machines
         if (machines.isEmpty()) {
             return false
