@@ -148,6 +148,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(IrrigationLogic())
 
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
