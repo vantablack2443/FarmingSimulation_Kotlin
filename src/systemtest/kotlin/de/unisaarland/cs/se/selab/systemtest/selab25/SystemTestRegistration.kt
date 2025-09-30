@@ -125,6 +125,7 @@ object SystemTestRegistration {
         testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
+        testSuite.registerTest(NoFarmAnimallAttackInvalid())
     }
 
     /**
@@ -137,5 +138,16 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
+        testSuite.registerTest(SowingPlanPrioritization())
+        testSuite.registerTest(PlantationPlantsTickOneMachines())
+        testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
+        testSuite.registerTest(DieAndComeBack())
+        testSuite.registerTest(JustMow())
+        testSuite.registerTest(MachineIrrigationSecondTick())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+
+        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
     }
 }
