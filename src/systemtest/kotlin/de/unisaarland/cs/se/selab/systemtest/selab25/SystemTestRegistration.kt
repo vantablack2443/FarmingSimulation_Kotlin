@@ -171,7 +171,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
-        testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
+        testSuite.registerTest(PlantationPlantsDefault())
         testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
