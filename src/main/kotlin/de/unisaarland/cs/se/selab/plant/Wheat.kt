@@ -13,7 +13,8 @@ const val WHEAT_SOW_END = 20
 const val WHEAT_BLOOM_START = 9
 const val WHEAT_BLOOM_END = 9
 const val WHEAT_HARVEST_START = 11
-const val WHEAT_HARVEST_END = 13
+
+// const val WHEAT_HARVEST_END = 13
 const val WHEAT_WEED_START_OFFSET = 4
 const val WHEAT_WEED_END_OFFSET = 10
 const val WHEAT_LATE_HARVEST_PENALTY = 0.8
@@ -82,14 +83,21 @@ class Wheat : FieldPlant() {
      * Penalty applied per late tick. Can be called each tick by estimator.
      * Takes year tick
      */
-    override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick <= WHEAT_HARVEST_END) { // not late
-            return
-        } else if (yearTick - WHEAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
+        var acted = false
+        if (yearTick <= WHEAT_HARVEST_END - 1) { // The tick before the last tick of the harvesting period
+            return false
+        } else if (yearTick == WHEAT_HARVEST_END + 2) {
+            // Set harvestEstimate to 0 at the end of the 2nd Tick of late harvest
+            acted = true
             this.harvestEstimate = 0
-        } else { // %20 reduction per tick
+        } else if (yearTick == WHEAT_HARVEST_END || yearTick == WHEAT_HARVEST_END + 1) {
+            // %20 reduction per tick at the end of the last
+            // tick of the harvest period and end of the 1st of the late period
+            acted = true
             this.harvestEstimate = floor(WHEAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
         }
+        return acted
     }
 
     override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {

@@ -64,7 +64,7 @@ abstract class Plant {
      * update harvest estimate based on the late harvest penalty
      * applied per tick
      */
-    open fun applyLateHarvestPenalty(yearTick: Int) { return }
+    open fun applyLateHarvestPenalty(yearTick: Int): Boolean { return false }
 
     /**
      * check if the plant needs cutting in this tick
