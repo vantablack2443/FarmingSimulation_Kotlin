@@ -19,6 +19,7 @@ class DroughtToExpansion : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        assertNextLine("[IMPORTANT] Farm: Farm 0 starts its actions.")
+        skipLines(2)
+        assertNextLine("[IMPORTANT] Initialization Info: droughtCityScenario.json is invalid.")
     }
 }
