@@ -98,7 +98,7 @@ class Apple : PlantationPlant() {
     /**
      * updates harvest estimate based on the late penalty ; tick is year tick
      */
-    override fun applyLateHarvestPenalty(yearTick: Int) : Boolean {
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
         var acted = false
         if (yearTick - APPLE_HARVEST_END >= 1) { // more than 1 tick late, set to 0
             this.harvestEstimate = 0

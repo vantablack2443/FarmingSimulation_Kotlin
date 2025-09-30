@@ -76,7 +76,7 @@ class Almond : PlantationPlant() {
         }
     }
 
-    override fun applyLateHarvestPenalty(yearTick: Int) : Boolean {
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
         var acted = false
         if (yearTick - ALMOND_HARVEST_END >= 1) { // more than 1 tick late, set to 0
             this.harvestEstimate = 0
