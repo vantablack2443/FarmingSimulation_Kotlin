@@ -82,9 +82,17 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         val endHarvestEstimate = plantOfTile.harvestEstimate
 
+        val orderforlog = listOf(
+            ActionType.WEEDING,
+            ActionType.CUTTING,
+            ActionType.MOWING,
+            ActionType.IRRIGATING,
+            ActionType.HARVESTING
+        )
+
         // Log missed actions only if there is a change in harvest estimate
         if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
-            logMissedActions(t.id, missedActionList)
+            logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
         // For fields
