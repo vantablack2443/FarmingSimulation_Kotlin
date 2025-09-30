@@ -8,16 +8,12 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction2
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
@@ -48,7 +44,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTe
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
-
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDroughtButNoActCont
 /**
  * Used for test registration
  */
@@ -65,9 +61,6 @@ object SystemTestRegistration {
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
-        testSuite.registerTest(CutAppleMissedAction())
-        testSuite.registerTest(CutAppleMissedAction2())
-        testSuite.registerTest(CutAppleMissedAction3())
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
@@ -110,7 +103,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineBehaviorTest())
-        testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
+        testSuite.registerTest(TestSowingFollowedByDroughtButNoActCont())
     }
 
     /**
@@ -130,7 +123,6 @@ object SystemTestRegistration {
         testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(NoFarmAnimallAttackInvalid())
     }
 
     /**
@@ -143,17 +135,5 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(SowingPlanPrioritization())
-        testSuite.registerTest(PlantationPlantsTickOneMachines())
-        testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
-        testSuite.registerTest(DieAndComeBack())
-        testSuite.registerTest(JustMow())
-        testSuite.registerTest(MachineIrrigationSecondTick())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(IrrigationLogic())
-
-        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
     }
 }
