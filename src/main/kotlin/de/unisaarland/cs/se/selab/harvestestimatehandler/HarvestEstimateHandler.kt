@@ -335,13 +335,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // CUTTING is in missing actions list
         val crop = t.currentCrop ?: return
         // Remove cutting only if it's not the last tick of all the cutting periods
-        val shouldRemoveMowing = when (crop) {
+        val shouldRemoveCutting = when (crop) {
             PlantType.GRAPE -> yearTick != SIXTEEN // End August
             PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> yearTick != FOUR // End February
             else -> false
         }
 
-        if (shouldRemoveMowing) {
+        if (shouldRemoveCutting) {
             actionsNeeded.remove(ActionType.CUTTING)
         }
     }
