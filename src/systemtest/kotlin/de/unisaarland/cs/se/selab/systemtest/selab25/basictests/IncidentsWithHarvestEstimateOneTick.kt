@@ -25,7 +25,7 @@ class IncidentsWithHarvestEstimateOneTick : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Incident: Incident 1 of type BEE_HAPPY happened and affected tiles 3,10.")
         assertNextLine("[IMPORTANT] Incident: Incident 2 of type ANIMAL_ATTACK happened and affected tiles 4,10.")
         assertNextLine("[IMPORTANT] Incident: Incident 3 of type BEE_HAPPY happened and affected tiles 3,10.")
-        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 1389960 g of CHERRY.")
+        assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 1544400 g of CHERRY.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 600000 g of GRAPE.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 10 changed to 1435481 g of APPLE.")
         skipLines(1) // simulation end

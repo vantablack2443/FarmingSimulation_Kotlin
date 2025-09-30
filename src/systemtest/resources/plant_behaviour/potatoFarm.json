@@ -44,7 +44,7 @@
       "sowingPlans": [
         {
           "id": 2,
-          "tick": 2,
+          "tick": 6,
           "plant": "POTATO",
           "fields": [2]
         }
@@ -58,7 +58,7 @@
       "plantations": [],
       "machines": [
         {
-          "id": 2,
+          "id": 3,
           "name": "Or",
           "actions": ["SOWING", "HARVESTING"],
           "plants": ["POTATO"],
@@ -69,7 +69,7 @@
       "sowingPlans": [
         {
           "id": 3,
-          "tick": 0,
+          "tick": 7,
           "plant": "POTATO",
           "fields": [3]
         }
