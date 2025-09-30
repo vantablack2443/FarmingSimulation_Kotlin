@@ -8,12 +8,14 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
@@ -55,6 +57,8 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         testSuite.registerTest(IrrigationLogic())
+        testSuite.registerTest(DieAndComeBack())
+        testSuite.registerTest(JustMow())
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())

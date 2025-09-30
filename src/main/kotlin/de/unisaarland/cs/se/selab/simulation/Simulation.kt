@@ -278,9 +278,9 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
                 it.plant?.harvestEstimate =
                     floor(CHERRY_HARVEST * CHERRY_LATE_HARVEST_PENALTY).toInt()
             }
-        } else {
-            cherryPlantations.forEach { it.plant?.harvestEstimate = CHERRY_HARVEST }
-        }
+        } else if (this.currentYearTick > CHERRY_HARVEST_END + 1 && this.currentYearTick < NOV_TICK) {
+            cherryPlantations.forEach { it.plant?.harvestEstimate = 0 }
+        } // Just Cherry has harvest estimate 0 between Aug tick and Nov tick
     }
 
     /**
