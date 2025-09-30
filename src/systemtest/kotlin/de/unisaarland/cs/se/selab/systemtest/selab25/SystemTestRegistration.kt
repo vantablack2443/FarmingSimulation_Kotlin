@@ -155,6 +155,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
+        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**

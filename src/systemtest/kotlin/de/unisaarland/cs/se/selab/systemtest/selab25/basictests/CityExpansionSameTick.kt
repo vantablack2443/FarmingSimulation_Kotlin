@@ -21,8 +21,6 @@ class CityExpansionSameTick : ExampleSystemTestExtension() {
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: map.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: farms.json successfully parsed and validated.")
-        assertNextLine(
-            "[IMPORTANT] Initialization Info: src/systemtest/resources/CityExpansionSameTick/scenario.json is invalid."
-        )
+        assertNextLine("[IMPORTANT] Initialization Info: scenario.json is invalid.")
     }
 }
