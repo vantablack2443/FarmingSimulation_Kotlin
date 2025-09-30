@@ -100,7 +100,7 @@ abstract class ActionHandler(
     fun getAvailableMachines(farm: Farm, plantType: PlantType, actionType: ActionType, simTick: Int): List<Machine> {
         return farm.getMachines().filter {
             !it.isStuck && it.plants.contains(plantType) && it.actions.contains(actionType) &&
-                it.brokenFor?.inRange(simTick) == false
+                (it.brokenFor == null || it.brokenFor?.inRange(simTick) == false)
         }.sortedWith(compareBy({ it.duration }, { it.id }))
     }
 
