@@ -32,6 +32,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFar
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MultipleBeeHappies
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
@@ -53,6 +54,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTe
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+
 /**
  * Used for test registration
  */
@@ -124,6 +127,8 @@ object SystemTestRegistration {
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(CityExpansionSameTick())
         testSuite.registerTest(FullSimTest())
+        testSuite.registerTest(TwentyEightDays())
+        testSuite.registerTest(MultipleBeeHappies())
     }
 
     /**
@@ -170,6 +175,7 @@ object SystemTestRegistration {
 //        testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
+        testSuite.registerTest(TwentyEightDays())
 
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
