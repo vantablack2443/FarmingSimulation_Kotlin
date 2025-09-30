@@ -54,13 +54,17 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun fieldHarvestEstimate(t: Tile, simTick: Int, yearTick: Int) {
         val plantOfTile = t.plant ?: return
+        val initialHarvestEstimate = plantOfTile.harvestEstimate
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
+        // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
+        val missedActionList = t.actionsNeeded.toList()
+
         // Log missed actions if there are any -- need to verify this
-        if (t.actionsNeeded.isNotEmpty()) {
+        /*if (t.actionsNeeded.isNotEmpty()) {
             logMissedActions(t.id, t.actionsNeeded)
-        }
+        }*/
 
         val anyActionApplied: Boolean = listOf(
             applyLateSowing(t),
@@ -75,6 +79,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             applyBeeHappy(t),
             applyDrought(t)
         ).any { it }
+
+        val endHarvestEstimate = plantOfTile.harvestEstimate
+
+        // Log missed actions only if there is a change in harvest estimate
+        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+            logMissedActions(t.id, missedActionList)
+        }
 
         // For fields
         // If harvested, kill the plants so that the other components get what they expect
@@ -133,15 +144,20 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If there is 0 harvest on the tile, then no logging is required.
         // This check is not required for fields, since they will be set to 0 in the same tick the harvest drops to 0
         // Plantations won't
-        if (plantOfTile.harvestEstimate == 0) { return }
+        // if (plantOfTile.harvestEstimate == 0 && !t.droughtHit) { return }
+        // The needed functions need to account for the new changes -> plantations can exist with 0, page 25 line 28
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
         filterMissedCutting(t, yearTick)
 
+        val initialHarvestEstimate = plantOfTile.harvestEstimate
+        // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
+        val missedActionList = t.actionsNeeded.toList()
+
         // Log missed actions if there are any -- need to verify this
-        if (t.actionsNeeded.isNotEmpty()) {
+        /*if (t.actionsNeeded.isNotEmpty()) {
             logMissedActions(t.id, t.actionsNeeded)
-        }
+        }*/
 
         val anyActionApplied: Boolean = listOf(
             applySunlight(t),
@@ -157,6 +173,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             applyBeeHappy(t),
             applyDrought(t)
         ).any { it }
+
+        val endHarvestEstimate = plantOfTile.harvestEstimate
+
+        // Log missed actions only if there is a change in harvest estimate
+        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+            logMissedActions(t.id, missedActionList)
+        }
 
         // For plantations
         // If harvested, don't kill the plants
