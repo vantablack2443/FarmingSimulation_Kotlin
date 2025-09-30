@@ -15,7 +15,7 @@ class IrrigationLogic : ExampleSystemTestExtension() {
     override val scenario = "example/scenario.json"
     override val map = "justAction/mapIrrigationLogic.json"
 
-    override val logLevel = "DEBUG"
+    override val logLevel = "IMPORTANT"
     override val maxTicks = 3
     override val startYearTick = 21
 

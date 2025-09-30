@@ -1,0 +1,55 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "coordinates": {"x": 0, "y": 0},
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 8000,
+      "possiblePlants": ["POTATO"],
+      "airflow": false
+    },
+    {
+      "id": 10,
+      "coordinates": { "x": 1, "y": 1 },
+      "category": "FARMSTEAD",
+      "farm": 1,
+      "shed": true,
+      "airflow": false
+    },
+    {
+      "id": 2,
+      "coordinates": {"x": 2, "y": 0},
+      "category": "FIELD",
+      "farm": 2,
+      "capacity": 8000,
+      "possiblePlants": ["POTATO"],
+      "airflow": false
+    },
+    {
+      "id": 20,
+      "coordinates": { "x": 3, "y": 1 },
+      "category": "FARMSTEAD",
+      "farm": 2,
+      "shed": true,
+      "airflow": false
+    },
+    {
+      "id": 3,
+      "coordinates": {"x": 4, "y": 0},
+      "category": "FIELD",
+      "farm": 3,
+      "capacity": 8000,
+      "possiblePlants": ["POTATO"],
+      "airflow": false
+    },
+    {
+      "id": 30,
+      "coordinates": { "x": 5, "y": 1 },
+      "category": "FARMSTEAD",
+      "farm": 3,
+      "shed": true,
+      "airflow": false
+    }
+  ]
+}

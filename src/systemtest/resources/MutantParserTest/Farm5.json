@@ -18,8 +18,8 @@
       ],
       "sowingPlans": [
         {
-          "id": 0,
-          "tick": 0,
+          "id": 1,
+          "tick": 1,
           "plant": "WHEAT",
           "location": 6,
           "radius": 1

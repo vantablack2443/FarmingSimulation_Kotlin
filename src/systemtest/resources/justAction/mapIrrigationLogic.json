@@ -14,7 +14,6 @@
       "category": "FIELD",
       "farm": 0,
       "capacity": 300,
-      "plant": "WHEAT",
       "airflow": false,
       "possiblePlants": ["WHEAT"]
     },
@@ -42,7 +41,6 @@
       "category": "FIELD",
       "farm": 0,
       "capacity": 300,
-      "plant": "WHEAT",
       "airflow": false,
       "possiblePlants": ["WHEAT"]
     }

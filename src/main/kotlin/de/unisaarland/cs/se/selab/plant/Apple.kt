@@ -98,15 +98,19 @@ class Apple : PlantationPlant() {
     /**
      * updates harvest estimate based on the late penalty ; tick is year tick
      */
-    override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick - APPLE_HARVEST_END > 1) { // more than 1 tick late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
+        var acted = false
+        if (yearTick == APPLE_HARVEST_END + 1) { // at the end of 1st late tick, apply penalty for 2nd late
             this.harvestEstimate = 0
+            acted = true
         }
-        if (yearTick - APPLE_HARVEST_END == 1) {
-            // up to 1 tick late, reduce by 50% per tick
+        if (yearTick == APPLE_HARVEST_END) {
+            // at the end of last harvest tick, apply penalty for 1st late
             val newEstimate = floor(this.harvestEstimate * APPLE_LATE_HARVEST_PENALTY)
             this.harvestEstimate = newEstimate.toInt()
+            acted = true
         }
+        return acted
     }
 
     override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
