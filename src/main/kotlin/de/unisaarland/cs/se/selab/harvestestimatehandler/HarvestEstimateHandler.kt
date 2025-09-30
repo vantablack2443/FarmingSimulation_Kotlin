@@ -8,6 +8,7 @@ import de.unisaarland.cs.se.selab.incidents.FALLOW_DURATION
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 import de.unisaarland.cs.se.selab.tile.Tile
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -206,10 +207,9 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         }
 
         // If any change occurred including drought, log and kill plant if drought
+        val crop = t.currentCrop ?: return
         if (anyActionApplied) {
-            val crop = t.currentCrop ?: return
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
-
             t.harvestedThisTick = false
 
             // With drought the plants are killed
@@ -219,6 +219,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 // IMPORTANT or else will always set estimate to 0
                 t.droughtHit = false
             }
+        } else if (yearTick == NOV_TICK) {
+            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
 
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
