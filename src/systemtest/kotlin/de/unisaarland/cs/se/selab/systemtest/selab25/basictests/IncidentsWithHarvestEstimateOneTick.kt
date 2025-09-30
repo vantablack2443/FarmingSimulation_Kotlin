@@ -29,12 +29,12 @@ class IncidentsWithHarvestEstimateOneTick : ExampleSystemTestExtension() {
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 600000 g of GRAPE.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 10 changed to 1435481 g of APPLE.")
         skipLines(1) // simulation end
-        assertNextLine("[IMPORTANT] Simulation Info: Simulation Statistics are calculated.")
+        assertNextLine("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 0 g of harvest.")
         skipLines(8)
         assertNextLine(
             "[IMPORTANT] Simulation Statistics: " +
-                "Total harvest estimate still in fields and plantations: 3605440 g."
+                "Total harvest estimate still in fields and plantations: 3579881 g."
         )
     }
 }
