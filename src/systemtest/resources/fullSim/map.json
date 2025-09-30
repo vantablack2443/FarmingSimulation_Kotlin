@@ -55,7 +55,7 @@
       "category": "PLANTATION",
       "plant": "ALMOND",
       "farm": 1,
-      "capacity": 700,
+      "capacity": 7000,
       "airflow": false
     },
     {
@@ -140,7 +140,7 @@
       "coordinates": { "x": 12, "y": 6 },
       "category": "PLANTATION",
       "farm": 2,
-      "capacity": 1000,
+      "capacity": 2000,
       "plant": "GRAPE",
       "airflow": false
     }
