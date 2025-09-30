@@ -43,6 +43,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
+
 /**
  * Used for test registration
  */
@@ -74,11 +76,12 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
+
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(MachineCantReturnDueHarvest())
         testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
-
+        testSuite.registerTest(TestSowingFollowedByDrought())
         testSuite.registerTest(MaxTickEndLogEquals())
         testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
