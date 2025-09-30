@@ -1,9 +1,6 @@
-package de.unisaarland.cs.se.selab.systemtest.selab25
+package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
-
-const val MACHINE_TWO_END = "[IMPORTANT] Farm Machine: Machine 2 is finished and returns to the shed at 1."
-const val FARM_FINISH = "[IMPORTANT] Farm: Farm 1 finished its actions."
 
 /**
  * tests default behavior of machines
