@@ -64,7 +64,7 @@ class Grape : PlantationPlant() {
         }
     }
 
-    override fun applyLateHarvestPenalty(yearTick: Int) : Boolean {
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
         var acted = false
         if (yearTick - GRAPE_HARVEST_START_END >= 3) { // more than 3 ticks late, set to 0
             this.harvestEstimate = 0
