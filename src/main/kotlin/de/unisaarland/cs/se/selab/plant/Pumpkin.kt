@@ -88,10 +88,13 @@ class Pumpkin : FieldPlant() {
      * Penalty applied per late tick. Can be called each tick by estimator.
      * Takes year tick
      */
-    override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick > PUMPKIN_HARVEST_END) {
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
+        var acted = false
+        if (yearTick == PUMPKIN_HARVEST_END) {
+            acted = true
             this.harvestEstimate = 0
         }
+        return acted
     }
 
     override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {

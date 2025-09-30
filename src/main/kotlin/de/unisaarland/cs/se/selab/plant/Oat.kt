@@ -78,14 +78,19 @@ class Oat : FieldPlant() {
      * Penalty applied per late tick. Can be called each tick by estimator.
      * Takes year tick
      */
-    override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick <= OAT_HARVEST_END) { // not late
-            return
-        } else if (yearTick - OAT_HARVEST_END > 2) { // more than 2 ticks late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int): Boolean {
+        var acted = false
+        if (yearTick <= OAT_HARVEST_END - 1) { // not late
+            return false
+        } else if (yearTick == OAT_HARVEST_END + 2) { // on the 2nd late tick, kill plants
+            acted = true
             this.harvestEstimate = 0
-        } else { // %20 reduction per tick
+        } else if (yearTick == OAT_HARVEST_END || yearTick == OAT_HARVEST_END + 1) {
+            // %20 reduction per tick on last harvest tick and 1st of late period
+            acted = true
             this.harvestEstimate = floor(OAT_LATE_HARVEST_PENALTY * this.harvestEstimate).toInt()
         }
+        return acted
     }
 
     override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
