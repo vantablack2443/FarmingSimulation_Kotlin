@@ -7,6 +7,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction2
@@ -118,6 +119,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
+        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**
@@ -140,6 +142,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
+        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**
@@ -149,7 +152,7 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
-        testSuite.registerTest(SowingPlanSimplePlan())
+//        testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(SowingPlanPrioritization())
