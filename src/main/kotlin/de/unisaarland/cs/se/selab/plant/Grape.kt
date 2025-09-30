@@ -64,17 +64,20 @@ class Grape : PlantationPlant() {
         }
     }
 
-    override fun applyLateHarvestPenalty(yearTick: Int) {
-        if (yearTick - GRAPE_HARVEST_START_END > 3) { // more than 3 ticks late, set to 0
+    override fun applyLateHarvestPenalty(yearTick: Int) : Boolean {
+        var acted = false
+        if (yearTick - GRAPE_HARVEST_START_END >= 3) { // more than 3 ticks late, set to 0
             this.harvestEstimate = 0
-            return
+            acted = true
         }
 
-        if (yearTick in GRAPE_HARVEST_START_END + 1..GRAPE_HARVEST_START_END + 3) {
+        if (yearTick in GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END + 2) {
             // up to 3 ticks late, reduce by 5% per tick
             val newEstimate = floor(this.harvestEstimate * GRAPE_LATE_HARVEST_PENALTY)
             this.harvestEstimate = newEstimate.toInt()
+            acted = true
         }
+        return acted
     }
 
     // Grape has one harvesting tick
