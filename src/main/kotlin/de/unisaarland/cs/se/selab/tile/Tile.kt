@@ -107,12 +107,8 @@ class Tile(
      * checks if there is a plant on the tile
      */
     fun hasPlantGrowing(): Boolean {
-        if (this.category == TileType.FIELD) {
+        if (this.category == TileType.FIELD || this.category == TileType.PLANTATION) {
             return plant != null
-        }
-        if (this.category == TileType.PLANTATION) {
-            // plantationDamaged can be null or false -> Plant is growing on the tile
-            return plantationDamaged != true
         }
         return false
     }
