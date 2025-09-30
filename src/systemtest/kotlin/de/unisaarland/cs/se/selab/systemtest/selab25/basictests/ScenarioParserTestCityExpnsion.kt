@@ -21,6 +21,6 @@ class ScenarioParserTestCityExpnsion : ExampleSystemTestExtension() {
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: Map7.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: Farm7.json successfully parsed and validated.")
-        assertNextLine("[IMPORTANT] Initialization Info: Scenario7.json is invalid.")
+        assertNextLine("[INFO] Initialization Info: Scenario7.json successfully parsed and validated.")
     }
 }

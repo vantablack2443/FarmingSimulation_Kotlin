@@ -126,18 +126,22 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
 
-        // Set these to zero
-        t.harvestedThisTick = false
         // IMPORTANT or else will always set estimate to 0
-        t.droughtHit = false
+        // With drought the plants are killed, could hit on plantations that started out 0 too
+        if (t.droughtHit) {
+            // IMPORTANT or else will always set estimate to 0
+            t.droughtHit = false
+            t.plant = null
+            t.currentCrop = null
+            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+        }
 
         // Drought would also set this to 0 from applyDrought(), or death by penalty
         if (plantOfTile.harvestEstimate == 0) {
             // Kill plants and set fallow
             t.plant = null
             t.currentCrop = null
-            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
-            // Set fallow
+            // Does not set fallow if harvest goes to 0 for any other reason than drought
         }
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
@@ -218,7 +222,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
 
-        t.harvestedThisTick = false
         // With drought the plants are killed, could hit on plantations that started out 0 too
         if (t.droughtHit) {
             t.plant = null

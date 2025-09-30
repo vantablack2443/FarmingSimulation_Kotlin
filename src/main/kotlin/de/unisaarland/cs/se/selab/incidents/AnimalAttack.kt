@@ -31,6 +31,6 @@ class AnimalAttack(
             tilePlant.resetMowingTime(yearTick)
             affectedIds.add(tile.id)
         }
-        Logger.logIncident(id, IncidentType.ANIMAL_ATTACK, affectedIds)
+        Logger.logIncident(id, IncidentType.ANIMAL_ATTACK, affectedIds.sortedBy { it })
     }
 }
