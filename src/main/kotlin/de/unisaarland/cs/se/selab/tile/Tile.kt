@@ -89,6 +89,10 @@ class Tile(
     /**
      * checks if the tile needs irrigation and adds action to the list if required.
      * If plantation is damaged, the plant attribute is set to null by the incident
+     *
+     * This function will be called by Farm for both fields and plantations.
+     * It will only be called for fields if the plant exists
+     * It will be called for plantations when it hasn't been hit by drought.
      */
     fun needsIrrigation() {
         val p = plant ?: return
@@ -98,7 +102,8 @@ class Tile(
             return
         }
 
-        if (cm < p.neededMoisture || p.harvestEstimate == 0) {
+        // Only required if current moisture is less than needed moisture
+        if (cm < p.neededMoisture) {
             actionsNeeded.add(ActionType.IRRIGATING)
         }
     }

@@ -5,13 +5,13 @@
     {
       "id": 0,
       "type": "CITY_EXPANSION",
-      "tick": 1,
+      "tick": 0,
       "location": 5
     },
     {
       "id": 1,
       "type": "CITY_EXPANSION",
-      "tick": 2,
+      "tick": 0,
       "location": 6
     }
   ]

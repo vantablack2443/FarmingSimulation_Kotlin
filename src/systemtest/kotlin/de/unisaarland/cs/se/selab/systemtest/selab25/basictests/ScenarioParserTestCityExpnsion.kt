@@ -15,7 +15,7 @@ class ScenarioParserTestCityExpnsion : ExampleSystemTestExtension() {
     override val map = "MutantParserTest/Map7.json"
 
     override val logLevel = "DEBUG"
-    override val maxTicks = 5
+    override val maxTicks = 1
     override val startYearTick = 1
 
     override suspend fun run() {

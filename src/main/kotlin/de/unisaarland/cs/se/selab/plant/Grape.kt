@@ -82,11 +82,8 @@ class Grape : PlantationPlant() {
 
     // Grape has one harvesting tick
     override fun filterHarvestingIfNotMissed(yearTick: Int, actionsNeeded: MutableList<ActionType>) {
-        if (actionsNeeded.contains(ActionType.HARVESTING)) {
-            if (yearTick == GRAPE_HARVEST_START_END) {
-                actionsNeeded.remove(ActionType.HARVESTING)
-            }
-        }
+        return
+        // since grape has one harvesting tick it needs to be logged as missed if missed
     }
 
     override fun resetMowingTime(startTick: Int) {
