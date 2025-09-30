@@ -1,0 +1,27 @@
+{
+  "tiles": [
+    {
+    "id": 0,
+      "coordinates": { "x": 0, "y": 0 },
+      "category": "FIELD",
+      "farm": 0,
+      "airflow": false,
+      "capacity": 500,
+      "possiblePlants": ["WHEAT", "OAT", "POTATO", "PUMPKIN"]
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 2, "y": 0 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 3, "y": 1 },
+      "category": "FARMSTEAD",
+      "airflow": false,
+      "farm": 0,
+      "shed": true
+    }
+  ]
+}

@@ -59,31 +59,31 @@ class IrrigationHandler(
 
                     // continue action
                     continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
+
+                    farm.machineHashMap.add(machine.id)
+                    machine.resetElapsedTime()
+                    Logger.logMachineFinish(machine.id, machine.homeShed.id)
                     break
                 }
             }
         }
 
         // machine cannot perform anymore
-        if (machine.currentTile != machine.homeShed) {
-            farm.machineHashMap.add(machine.id)
-        }
-
-        machine.resetElapsedTime()
-
-        val returnShed: Tile? = simulationMap.findTargetShed(
-            machine,
-            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
-            false
-        )
-
-        if (returnShed == null) {
-            machine.isStuck = true
-        } else {
-            machine.currentTile = returnShed
-            machine.homeShed = returnShed
-            Logger.logMachineFinish(machine.id, returnShed.id)
-        }
+//        if (machine.currentTile != machine.homeShed) {
+//
+//        }
+// //        val returnShed: Tile? = simulationMap.findTargetShed(
+// //            machine,
+// //            farm.getFarmstead().filter { it.shed == true }.sortedBy { it.id },
+// //            false
+// //        )
+//
+//        if (returnShed == null) {
+//            machine.isStuck = true
+//        } else {
+//            machine.currentTile = returnShed
+//            machine.homeShed = returnShed
+//        }
     }
 
     /**
