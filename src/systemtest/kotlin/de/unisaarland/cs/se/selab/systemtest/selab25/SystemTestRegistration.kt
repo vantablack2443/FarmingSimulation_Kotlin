@@ -17,6 +17,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
@@ -106,6 +107,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineBehaviorTest())
+        testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
     }
 
     /**
@@ -146,6 +148,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(IrrigationLogic())
 
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
