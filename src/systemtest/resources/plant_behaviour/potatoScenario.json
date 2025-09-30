@@ -4,8 +4,8 @@
     {
       "id": 0,
       "type": "BROKEN_MACHINE",
-      "tick": 4,
-      "duration": 5,
+      "tick": 9,
+      "duration": 2,
       "machineId": 2
     }
   ]
