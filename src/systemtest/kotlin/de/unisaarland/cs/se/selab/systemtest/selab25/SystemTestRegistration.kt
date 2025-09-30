@@ -45,6 +45,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
@@ -112,6 +113,7 @@ object SystemTestRegistration {
         testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
+        testSuite.registerTest(PotatoBehaviourTest())
     }
 
     /**
