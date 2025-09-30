@@ -25,7 +25,7 @@ class PotatoBehaviourTest : ExampleSystemTestExtension() {
     override val map = "plant_behaviour/potatoMap.json"
 
     override val logLevel = "DEBUG"
-    override val maxTicks = 12
+    override val maxTicks = 13
     override val startYearTick = 5
 
     override suspend fun run() {

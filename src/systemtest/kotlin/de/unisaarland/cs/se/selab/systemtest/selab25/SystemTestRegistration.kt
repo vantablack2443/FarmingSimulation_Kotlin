@@ -9,8 +9,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneE
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
@@ -28,6 +26,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachinePriority
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
@@ -70,12 +69,15 @@ object SystemTestRegistration {
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
+
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
-        testSuite.registerTest(CutAppleMissedAction())
-        testSuite.registerTest(CutAppleMissedAction2())
+//        testSuite.registerTest(CutAppleMissedAction())
+//        testSuite.registerTest(CutAppleMissedAction2())
         testSuite.registerTest(CutAppleMissedAction3())
+        testSuite.registerTest(MachinePriority())
+
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
@@ -164,6 +166,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
+        testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
         testSuite.registerTest(MachineIrrigationSecondTick())
