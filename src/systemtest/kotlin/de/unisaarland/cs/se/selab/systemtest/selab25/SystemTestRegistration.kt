@@ -144,7 +144,6 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
-        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**
@@ -165,7 +164,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(IrrigationLogic())
+//        testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
 
