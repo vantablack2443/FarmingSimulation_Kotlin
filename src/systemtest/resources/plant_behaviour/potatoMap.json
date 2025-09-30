@@ -11,7 +11,7 @@
     },
     {
       "id": 10,
-      "coordinates": { "x": 1, "y": 1 },
+      "coordinates": { "x": -1, "y": -1 },
       "category": "FARMSTEAD",
       "farm": 1,
       "shed": true,
@@ -28,7 +28,7 @@
     },
     {
       "id": 20,
-      "coordinates": { "x": 3, "y": 1 },
+      "coordinates": { "x": 3, "y": 3 },
       "category": "FARMSTEAD",
       "farm": 2,
       "shed": true,
@@ -49,6 +49,12 @@
       "category": "FARMSTEAD",
       "farm": 3,
       "shed": true,
+      "airflow": false
+    },
+    {
+      "id": 69,
+      "coordinates": {"x": 2, "y": 2},
+      "category": "ROAD",
       "airflow": false
     }
   ]

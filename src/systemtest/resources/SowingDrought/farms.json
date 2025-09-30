@@ -1,0 +1,29 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "Old MacDonald's Farm",
+      "farmsteads": [2],
+      "fields": [0],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 0,
+          "name": "Tractor",
+          "actions": ["SOWING"],
+          "plants": ["WHEAT", "OAT", "POTATO", "PUMPKIN"],
+          "duration": 2,
+          "location": 2
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "WHEAT",
+          "fields": [0]
+        }
+      ]
+    }
+  ]
+}

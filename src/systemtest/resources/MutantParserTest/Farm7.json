@@ -13,7 +13,7 @@
           "actions": ["SOWING"],
           "plants": ["WHEAT"],
           "duration": 4,
-          "location": 4
+          "location": 1
         }
       ],
       "sowingPlans": [
