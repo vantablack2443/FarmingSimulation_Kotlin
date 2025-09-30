@@ -32,7 +32,7 @@ class HarvestingHandler(
         for (tile in operableTiles.toList()) {
             val currentCrop = tile.currentCrop ?: continue
 
-            val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING)
+            val availableMachines = getAvailableMachines(farm, currentCrop, ActionType.HARVESTING, simTick)
             if (availableMachines.isEmpty()) {
                 continue
             }
@@ -136,20 +136,16 @@ class HarvestingHandler(
                 if (machine.currentHarvest?.plant == currentCrop) {
                     machine.currentHarvest?.harvestAmount += plant.harvestEstimate
                 } else {
-                    error("Machine is aleady carrying a different plant")
+                    error("Machine is already carrying a different plant")
                 }
             } else {
                 machine.currentHarvest = PlantAndHarvest(currentCrop, plant.harvestEstimate)
             }
+            Logger.logHarvest(machine.id, plant.harvestEstimate, currentCrop)
+
             plant.harvestEstimate = 0
             // Estimator handles killing the plants if fields and fallowing using this bool
             tile.harvestedThisTick = true
-
-            // log specific harvest logging
-            val harvestAmount = machine.currentHarvest?.harvestAmount
-            if (harvestAmount != null) {
-                Logger.logHarvest(machine.id, harvestAmount, currentCrop)
-            }
         }
         /*if (tile.category == TileType.FIELD) {
             // Handled by estimator - // Estimator handles killing the plants if fields and fallowing

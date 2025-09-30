@@ -33,7 +33,7 @@ class CutAppleMissedAction3 : ExampleSystemTestExtension() {
         )
 //        val line = skipUntilString("Farm: Farm 0 finished its actions")
         assertNextLine("[IMPORTANT] Farm: Farm 0 finished its actions.")
-        skipLines(4)
+        skipLines(2)
         assertNextLine("[INFO] Simulation Info: Tick 1 started at tick 22 within the year.")
     }
 
