@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.actionHandlers
 
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
+import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
 import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.machine.Machine
@@ -155,7 +156,13 @@ class HarvestingHandler(
 
         tile.actionsNeeded.remove(ActionType.HARVESTING)
         // Clears actionsNeedded and lateActions lists. Missed actions shouldn't be logged after harvesting
-        tile.actionsNeeded.clear()
+
+        if (tile.category == TileType.PLANTATION) {
+            tile.actionsNeeded.removeAll { it != ActionType.IRRIGATING }
+        } else if (tile.category == TileType.FIELD) {
+            tile.actionsNeeded.clear()
+        }
+
         tile.lateActions.clear()
         farm.tileHashMap.add(tile.id)
         // not a normal setter because it takes the yearTick and base off the duration on that

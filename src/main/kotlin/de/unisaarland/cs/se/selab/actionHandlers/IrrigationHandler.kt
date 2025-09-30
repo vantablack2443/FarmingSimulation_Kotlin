@@ -61,6 +61,7 @@ class IrrigationHandler(
                     continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
 
                     farm.machineHashMap.add(machine.id)
+                    machine.currentTile = machine.homeShed
                     machine.resetElapsedTime()
                     Logger.logMachineFinish(machine.id, machine.homeShed.id)
                     break

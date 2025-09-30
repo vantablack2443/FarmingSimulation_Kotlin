@@ -19,6 +19,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
@@ -120,6 +121,7 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(CityExpansionSameTick())
+        testSuite.registerTest(FullSimTest())
     }
 
     /**
@@ -142,7 +144,6 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimallAttackInvalid())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
-        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**
