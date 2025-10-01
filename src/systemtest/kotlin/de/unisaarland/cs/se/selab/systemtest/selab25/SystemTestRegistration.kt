@@ -46,6 +46,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -137,6 +138,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithoutFieldLog())
         testSuite.registerTest(FullSimAAWithFieldLog())
+        testSuite.registerTest(NoWayHome())
     }
 
     /**
