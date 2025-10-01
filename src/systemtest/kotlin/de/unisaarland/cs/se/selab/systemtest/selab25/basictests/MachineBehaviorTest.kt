@@ -40,7 +40,7 @@ class MachineBehaviorTest : ExampleSystemTestExtension() {
         [IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 3 for 2 days.
         [IMPORTANT] Farm Machine: Machine 2 is finished and returns to the shed at 16.
         [IMPORTANT] Farm: Farm 0 finished its actions.
-        [INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 453496 g of OAT.
+        [INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 453495 g of OAT.
         [INFO] Harvest Estimate: Harvest estimate on tile 6 changed to 720000 g of ALMOND.
         [INFO] Harvest Estimate: Harvest estimate on tile 12 changed to 813104 g of APPLE.
         [INFO] Simulation Info: Tick 2 started at tick 10 within the year.
