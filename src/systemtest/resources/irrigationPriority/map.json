@@ -1,0 +1,120 @@
+{
+  "tiles": [
+    {
+      "id": 0,
+      "coordinates": { "x": -1, "y": -1 },
+      "category": "FARMSTEAD",
+      "shed": true,
+      "airflow": false,
+      "farm": 0
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 0, "y": 0 },
+      "category": "FIELD",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "possiblePlants": ["POTATO"]
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 2, "y": 0 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": 4, "y": 0 },
+      "category": "FIELD",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "possiblePlants": ["POTATO"]
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": 6, "y": 0 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 5,
+      "coordinates": { "x": 0, "y": 2 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 6,
+      "coordinates": { "x": 2, "y": 2 },
+      "category": "FIELD",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "possiblePlants": ["POTATO"]
+    },
+    {
+      "id": 7,
+      "coordinates": { "x": 4, "y": 2 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 8,
+      "coordinates": { "x": 6, "y": 2 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 9,
+      "coordinates": { "x": 0, "y": 4 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 10,
+      "coordinates": { "x": 2, "y": 4 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 11,
+      "coordinates": { "x": 4, "y": 4 },
+      "category": "PLANTATION",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "plant": "ALMOND"
+    },
+    {
+      "id": 12,
+      "coordinates": { "x": 6, "y": 4 },
+      "category": "FIELD",
+      "airflow": false,
+      "farm": 0,
+      "capacity": 500,
+      "possiblePlants": ["POTATO"]
+    }
+  ]
+}
