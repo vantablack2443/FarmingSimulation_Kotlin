@@ -3,16 +3,17 @@
   ],
   "incidents": [
     {
+      "id": 0,
+      "type": "DROUGHT",
+      "tick": 0,
+      "location": 2,
+      "radius": 0
+    },
+    {
       "id": 1,
       "type": "CITY_EXPANSION",
       "tick": 0,
-      "location": 6
-    },
-    {
-      "id": 2,
-      "type": "CITY_EXPANSION",
-      "tick": 0,
-      "location": 5
+      "location": 2
     }
   ]
 }

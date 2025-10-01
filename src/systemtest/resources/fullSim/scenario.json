@@ -1,0 +1,88 @@
+{
+  "clouds": [
+    {
+      "id": 0,
+      "location": 4,
+      "duration": -1,
+      "amount": 10000
+    },
+    {
+      "id": 1,
+      "location": 5,
+      "duration": -1,
+      "amount": 10000
+    },
+    {
+      "id": 2,
+      "location": 10,
+      "duration": -1,
+      "amount": 10000
+    },
+    {
+      "id": 3,
+      "location": 20,
+      "duration": -1,
+      "amount": 10000
+    }
+  ],
+  "incidents": [
+    {
+      "id": 1,
+      "type": "BEE_HAPPY",
+      "tick": 1,
+      "effect": 30,
+      "location": 15,
+      "radius": 0
+    },
+    {
+      "id": 2,
+      "type": "ANIMAL_ATTACK",
+      "tick": 0,
+      "location": 7,
+      "radius": 1
+    },
+    {
+      "id": 3,
+      "type": "BEE_HAPPY",
+      "tick": 0,
+      "effect": 50,
+      "location": 9,
+      "radius": 3
+    },
+    {
+      "id": 4,
+      "type": "DROUGHT",
+      "tick": 0,
+      "location": 5,
+      "radius": 0
+    },
+    {
+      "id": 5,
+      "type": "ANIMAL_ATTACK",
+      "tick": 6,
+      "location": 3,
+      "radius": 1
+    },
+    {
+      "id": 7,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 3
+    },
+    {
+      "id": 8,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 5
+    },
+    {
+      "id": 9,
+      "type": "BROKEN_MACHINE",
+      "tick": 9,
+      "duration": 4,
+      "machineId": 6
+    }
+  ]
+}

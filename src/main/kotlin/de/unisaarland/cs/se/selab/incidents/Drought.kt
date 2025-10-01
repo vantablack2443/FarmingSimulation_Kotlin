@@ -40,6 +40,6 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
                 affectedIds.add(tile.id)
             }
         }
-        Logger.logIncident(id, IncidentType.DROUGHT, affectedIds.toList())
+        Logger.logIncident(id, IncidentType.DROUGHT, affectedIds.toList().sortedBy { it })
     }
 }

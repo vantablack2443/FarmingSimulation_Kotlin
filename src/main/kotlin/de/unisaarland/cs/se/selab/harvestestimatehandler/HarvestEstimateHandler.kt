@@ -8,6 +8,7 @@ import de.unisaarland.cs.se.selab.incidents.FALLOW_DURATION
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
+import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 import de.unisaarland.cs.se.selab.tile.Tile
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -54,27 +55,44 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun fieldHarvestEstimate(t: Tile, simTick: Int, yearTick: Int) {
         val plantOfTile = t.plant ?: return
+        val initialHarvestEstimate = plantOfTile.harvestEstimate
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
+        // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
+        val missedActionList = t.actionsNeeded.toList()
+
         // Log missed actions if there are any -- need to verify this
-        if (t.actionsNeeded.isNotEmpty()) {
+        /*if (t.actionsNeeded.isNotEmpty()) {
             logMissedActions(t.id, t.actionsNeeded)
+        }*/
+
+        applyLateSowing(t)
+        applySunlight(t)
+        applyMoisture(t)
+        applyMissedWeeding(t)
+        applyLateHarvest(t, yearTick)
+
+        // 2. Apply incidents then reset pollination and animal attack counters
+        // Incidents go here
+        applyAnimalAttack(t)
+        applyBeeHappy(t)
+        applyDrought(t)
+
+        val endHarvestEstimate = plantOfTile.harvestEstimate
+
+        val orderforlog = listOf(
+            ActionType.WEEDING,
+            ActionType.CUTTING,
+            ActionType.MOWING,
+            ActionType.IRRIGATING,
+            ActionType.HARVESTING
+        )
+
+        // Log missed actions only if there is a change in harvest estimate
+        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+            logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
-
-        val anyActionApplied: Boolean = listOf(
-            applyLateSowing(t),
-            applySunlight(t),
-            applyMoisture(t),
-            applyMissedWeeding(t),
-            applyLateHarvest(t, yearTick),
-
-            // 2. Apply incidents then reset pollination and animal attack counters
-            // Incidents go here
-            applyAnimalAttack(t),
-            applyBeeHappy(t),
-            applyDrought(t)
-        ).any { it }
 
         // For fields
         // If harvested, kill the plants so that the other components get what they expect
@@ -103,23 +121,27 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         // If any change happened including drought, then log harvest including 0
         // Kill plants if estimate is 0 and set fallow
-        if (anyActionApplied) {
+        if (endHarvestEstimate != initialHarvestEstimate) {
             val crop = t.currentCrop ?: return
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+        }
 
-            // Set these to zero
-            t.harvestedThisTick = false
+        // IMPORTANT or else will always set estimate to 0
+        // With drought the plants are killed, could hit on plantations that started out 0 too
+        if (t.droughtHit) {
             // IMPORTANT or else will always set estimate to 0
             t.droughtHit = false
+            t.plant = null
+            t.currentCrop = null
+            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+        }
 
-            // Drought would also set this to 0, applyDrought() and harvesting
-            if (plantOfTile.harvestEstimate == 0) {
-                // Kill plants and set fallow
-                t.plant = null
-                t.currentCrop = null
-                t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
-                // Set fallow
-            }
+        // Drought would also set this to 0 from applyDrought(), or death by penalty
+        if (plantOfTile.harvestEstimate == 0) {
+            // Kill plants and set fallow
+            t.plant = null
+            t.currentCrop = null
+            // Does not set fallow if harvest goes to 0 for any other reason than drought
         }
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
@@ -133,30 +155,48 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If there is 0 harvest on the tile, then no logging is required.
         // This check is not required for fields, since they will be set to 0 in the same tick the harvest drops to 0
         // Plantations won't
-        if (plantOfTile.harvestEstimate == 0) { return }
+        // if (plantOfTile.harvestEstimate == 0 && !t.droughtHit) { return }
+        // The needed functions need to account for the new changes -> plantations can exist with 0, page 25 line 28
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
         filterMissedCutting(t, yearTick)
 
+        val initialHarvestEstimate = plantOfTile.harvestEstimate
+        // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
+        val missedActionList = t.actionsNeeded.toList()
+
         // Log missed actions if there are any -- need to verify this
-        if (t.actionsNeeded.isNotEmpty()) {
+        /*if (t.actionsNeeded.isNotEmpty()) {
             logMissedActions(t.id, t.actionsNeeded)
+        }*/
+
+        applySunlight(t)
+        applyMoisture(t)
+        // 3. Handle missed cutting period
+        applyMissedCutting(t, yearTick)
+        applyMissedMowing(t)
+        applyLateHarvest(t, yearTick)
+
+        // 2. Apply incidents then reset pollination and animal attack counters
+        // Incidents go here
+        applyAnimalAttack(t)
+        applyBeeHappy(t)
+        applyDrought(t)
+
+        val endHarvestEstimate = plantOfTile.harvestEstimate
+
+        val orderforlog = listOf(
+            ActionType.WEEDING,
+            ActionType.CUTTING,
+            ActionType.MOWING,
+            ActionType.IRRIGATING,
+            ActionType.HARVESTING
+        )
+
+        // Log missed actions only if there is a change in harvest estimate
+        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+            logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
-
-        val anyActionApplied: Boolean = listOf(
-            applySunlight(t),
-            applyMoisture(t),
-            // 3. Handle missed cutting period
-            applyMissedCutting(t, yearTick),
-            applyMissedMowing(t),
-            applyLateHarvest(t, yearTick),
-
-            // 2. Apply incidents then reset pollination and animal attack counters
-            // Incidents go here
-            applyAnimalAttack(t),
-            applyBeeHappy(t),
-            applyDrought(t)
-        ).any { it }
 
         // For plantations
         // If harvested, don't kill the plants
@@ -175,19 +215,19 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         }
 
         // If any change occurred including drought, log and kill plant if drought
-        if (anyActionApplied) {
-            val crop = t.currentCrop ?: return
+        val crop = t.currentCrop ?: return
+        if (endHarvestEstimate != initialHarvestEstimate) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+        } else if (yearTick == NOV_TICK) {
+            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+        }
 
-            t.harvestedThisTick = false
-
-            // With drought the plants are killed
-            if (t.droughtHit) {
-                t.plant = null
-                t.currentCrop = null
-                // IMPORTANT or else will always set estimate to 0
-                t.droughtHit = false
-            }
+        // With drought the plants are killed, could hit on plantations that started out 0 too
+        if (t.droughtHit) {
+            t.plant = null
+            t.currentCrop = null
+            // IMPORTANT or else will always set estimate to 0
+            t.droughtHit = false
         }
 
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)

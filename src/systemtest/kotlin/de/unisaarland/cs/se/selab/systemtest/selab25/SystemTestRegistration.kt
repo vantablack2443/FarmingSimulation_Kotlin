@@ -7,24 +7,36 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithoutFieldLog
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineIrrigationSecondTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachinePriority
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MultipleBeeHappies
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
@@ -40,11 +52,14 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDroughtButNoActCont
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+
 /**
  * Used for test registration
  */
@@ -58,9 +73,17 @@ object SystemTestRegistration {
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
+
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
+//        testSuite.registerTest(CutAppleMissedAction())
+//        testSuite.registerTest(CutAppleMissedAction2())
+        testSuite.registerTest(CutAppleMissedAction3())
+        testSuite.registerTest(MachinePriority())
+        testSuite.registerTest(DroughtToExpansion())
+        testSuite.registerTest(DroughtToExpansionValid())
+
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
@@ -76,12 +99,11 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
-
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(MachineCantReturnDueHarvest())
         testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
-        testSuite.registerTest(TestSowingFollowedByDrought())
+
         testSuite.registerTest(MaxTickEndLogEquals())
         testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
@@ -103,7 +125,18 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineBehaviorTest())
-        testSuite.registerTest(TestSowingFollowedByDroughtButNoActCont())
+        testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
+        testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
+        testSuite.registerTest(ScenarioParserTestCityExpnsion())
+        testSuite.registerTest(PotatoBehaviourTest())
+        testSuite.registerTest(SowingAndDroughtInOneTick())
+        testSuite.registerTest(IncidentSpaceBetweenTiles())
+        testSuite.registerTest(CityExpansionSameTick())
+        testSuite.registerTest(FullSimTest())
+        testSuite.registerTest(TwentyEightDays())
+        testSuite.registerTest(MultipleBeeHappies())
+        testSuite.registerTest(FullSimAAWithoutFieldLog())
+        testSuite.registerTest(FullSimAAWithFieldLog())
     }
 
     /**
@@ -123,6 +156,10 @@ object SystemTestRegistration {
         testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
         testSuite.registerTest(MachineDefaultAction())
+        testSuite.registerTest(NoFarmAnimallAttackInvalid())
+        testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
+        testSuite.registerTest(ScenarioParserTestCityExpnsion())
+        testSuite.registerTest(CityExpansionSameTick())
     }
 
     /**
@@ -132,8 +169,23 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
-        testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
+        testSuite.registerTest(MachinePriority())
+        testSuite.registerTest(CutAppleMissedAction3())
         testSuite.registerTest(MachineDefaultAction())
+        testSuite.registerTest(SowingPlanPrioritization())
+        testSuite.registerTest(PlantationPlantsTickOneMachines())
+        testSuite.registerTest(PlantationPlantsDefault())
+        testSuite.registerTest(PotatoBehaviourTest())
+        testSuite.registerTest(DieAndComeBack())
+        testSuite.registerTest(JustMow())
+        testSuite.registerTest(MachineIrrigationSecondTick())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+        testSuite.registerTest(SowingAndDroughtInOneTick())
+        testSuite.registerTest(IncidentSpaceBetweenTiles())
+        testSuite.registerTest(TwentyEightDays())
+        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
+        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
     }
 }
