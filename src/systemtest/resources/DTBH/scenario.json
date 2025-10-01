@@ -12,7 +12,7 @@
     {
       "id": 1,
       "type": "BEE_HAPPY",
-      "tick": 1,
+      "tick": 0,
       "location": 2,
       "radius": 0,
       "effect": 2
