@@ -36,10 +36,10 @@ const val MISSING_TILE_ID = "Specified tile with ID not found"
  * parser for farm config file
  */
 class FarmParser(private val simulationData: SimulationData) {
-    private lateinit var farmIDs: List<Int>
-    private lateinit var farmNames: List<String>
-    private lateinit var machineIDs: List<Int>
-    private lateinit var machineNames: List<String>
+    private lateinit var farmIDs: MutableList<Int>
+    private lateinit var farmNames: MutableList<String>
+    private lateinit var machineIDs: MutableList<Int>
+    private lateinit var machineNames: MutableList<String>
     private val sowingPlanIDs: MutableList<Int> = mutableListOf()
     private val sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
 
@@ -167,15 +167,14 @@ class FarmParser(private val simulationData: SimulationData) {
             // gets ID and then sets one by one to mapOfFarms
             /*mapOfFarms[farm.getId()] = farm*/
             simulationData.addFarmToMapping(farm)
+            farmIDs.add(farm.getId())
+            farmNames.add(farm.getName())
         }
 
         // There has to be at least one farm in the simulation
         if (simulationData.getFarms().isEmpty()) {
             throw ValidationException("Zero farms in the simulation")
         }
-
-        farmIDs = simulationData.getFarms().map { it.getId() }
-        farmNames = simulationData.getFarms().map { it.getName() }
     }
 
     /**
@@ -345,10 +344,10 @@ class FarmParser(private val simulationData: SimulationData) {
         for (machine in machines) {
             val parsedMachine = parseMachine(machine.jsonObject, farmID)
             mapOfMachines[parsedMachine.id] = parsedMachine
+            machineIDs.add(parsedMachine.id)
+            machineNames.add(parsedMachine.name)
             simulationData.addMachineToMapping(parsedMachine)
         }
-        machineIDs = simulationData.getMachines().map { it.id }
-        machineNames = simulationData.getMachines().map { it.name }
         return mapOfMachines.values.toList().sortedBy { it.id }
     }
 
@@ -508,6 +507,7 @@ class FarmParser(private val simulationData: SimulationData) {
             val tick = sowingPlan.getTick()
             val listOfPlans = mapOfSowingPlans.getOrPut(tick) { mutableListOf() }
             listOfPlans.add(sowingPlan)
+            sowingPlanIDs.add(sowingPlan.getId())
             mapOfSowingPlans[tick] = listOfPlans
         }
 //         simulationData.setSowingPlanMapping(mapOfSowingPlans)
