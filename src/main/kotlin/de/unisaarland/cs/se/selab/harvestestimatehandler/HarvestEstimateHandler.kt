@@ -196,7 +196,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         )
 
         // Log missed actions only if there is a change in harvest estimate
-        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        // If drought hit the tile, don't log any missed actions
+        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
