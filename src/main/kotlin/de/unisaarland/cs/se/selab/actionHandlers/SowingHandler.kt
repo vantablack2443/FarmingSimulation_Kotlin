@@ -187,7 +187,7 @@ class SowingHandler(
         // Checks reachability and if the tile hashmap
         val nextTile = this.simulationMap.tileForContinueAction(
             machine,
-            tilesToSow.filter { it.currentCrop == plan.getPlant() },
+            tilesToSow.filter { it.possiblePlants?.contains(plan.getPlant()) ?: false },
             farm
         )
         if (nextTile != null) {
