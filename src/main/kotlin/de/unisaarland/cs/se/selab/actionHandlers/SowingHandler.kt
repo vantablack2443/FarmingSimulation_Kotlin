@@ -163,6 +163,7 @@ class SowingHandler(
         plant.checkLateSowing(tile.lateActions, yearTick)
         tile.plant = plant
         tile.currentCrop = plan.getPlant()
+        tile.needsIrrigation()
 
         logAction(machine, tile, plan)
     }
