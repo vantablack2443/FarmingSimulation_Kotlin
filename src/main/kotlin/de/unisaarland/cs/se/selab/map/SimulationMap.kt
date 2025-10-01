@@ -196,7 +196,8 @@ class SimulationMap(
         val allReachableInRadius = getReachableTiles(machine, 2, carryingHarvestBool)
         val possibleTiles = actionTilesFarm.intersect(allReachableInRadius.toSet()).sortedBy { it.id }
         val possibleTilesNotHashed = possibleTiles.filter { it.id !in farm.tileHashMap }
-        if (possibleTilesNotHashed.isNotEmpty()) return possibleTilesNotHashed.minByOrNull { it.id }
+        val possibleTilesForMachine = possibleTilesNotHashed.filter { machine.plants.contains(it.currentCrop) }
+        if (possibleTilesForMachine.isNotEmpty()) return possibleTilesForMachine.minByOrNull { it.id }
         return null
     }
 
