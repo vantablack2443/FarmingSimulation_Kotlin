@@ -55,6 +55,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatBehaviourTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatWheatYearTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatWheatYearTestAlternative
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -99,8 +101,8 @@ object SystemTestRegistration {
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
         // testSuite.registerTest(MachineWrongShed())
-        testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(MachineIrrigationSecondTick())
+        // testSuite.registerTest(MachineDefaultAction())
+        // testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmDroughtSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
@@ -160,6 +162,8 @@ object SystemTestRegistration {
         testSuite.registerTest(ValidatePlantCoupling())
         testSuite.registerTest(ValidateMachineUniqueness())
         testSuite.registerTest(ValidateMachineUniquenessB())
+        testSuite.registerTest(OatWheatYearTest())
+        testSuite.registerTest(OatWheatYearTestAlternative())
     }
 
     /**

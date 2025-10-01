@@ -5,8 +5,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests cloud phase for one tick with cloud creation incidents
  */
-class OatWheatYearTest : ExampleSystemTestExtension() {
-    override val name = "OatWheatYearTest"
+class OatWheatYearTestAlternative : ExampleSystemTestExtension() {
+    override val name = "OatWheatYearTestAlternative"
     override val description = "Tests simulation for a year on oat and wheat"
 
     // Paths are relative from the `src/systemtest/resources` directory.
@@ -63,12 +63,12 @@ class OatWheatYearTest : ExampleSystemTestExtension() {
         skipLines(3)
         // yeartick 23
         assertNextLine("[INFO] Simulation Info: Tick 3 started at tick 23 within the year.")
+        skipLines(3)
+        // yeartick 24
+        assertNextLine("[INFO] Simulation Info: Tick 4 started at tick 24 within the year.")
         skipLines(2)
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 4 for 3 days.")
         skipLines(2) // return and finish
-        // yeartick 24
-        assertNextLine("[INFO] Simulation Info: Tick 4 started at tick 24 within the year.")
-        skipLines(3)
         // yeartick 1
         assertNextLine("[INFO] Simulation Info: Tick 5 started at tick 1 within the year.")
         skipLines(3)
@@ -83,22 +83,22 @@ class OatWheatYearTest : ExampleSystemTestExtension() {
         skipLines(3)
         // yeartick 5, weed wheat
         assertNextLine("[INFO] Simulation Info: Tick 9 started at tick 5 within the year.")
-        skipLines(2)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 4 for 3 days.")
-        skipLines(2) // return and finish
+        skipLines(3)
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 1350000 g of WHEAT.")
         // yeartick 6
         assertNextLine("[INFO] Simulation Info: Tick 10 started at tick 6 within the year.")
         skipLines(2)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 3 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 1 has sowed OAT according to sowing plan 2.")
+        skipLines(1) // return
+        assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs WEEDING on tile 4 for 3 days.")
         skipLines(2) // return and finish
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 1080000 g of OAT.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 1215000 g of WHEAT.")
         // yeartick 7
         assertNextLine("[INFO] Simulation Info: Tick 11 started at tick 7 within the year.")
-        skipLines(2)
-        weedOat()
+        skipLines(3)
+        // weedOat()
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 3 changed to 874800 g of OAT.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 984150 g of WHEAT.")
         // yeartick 8
