@@ -25,10 +25,10 @@
     {
       "id": 3,
       "coordinates": { "x": 0, "y": 2 },
-      "category": "PLANTATION",
+      "category": "FIELD",
       "farm": 0,
       "capacity": 1000,
-      "plant": "CHERRY",
+      "possiblePlants": ["POTATO", "WHEAT"],
       "airflow": false
     }
   ]
