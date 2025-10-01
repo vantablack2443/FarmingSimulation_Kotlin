@@ -170,6 +170,8 @@ object SystemTestRegistration {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
         testSuite.registerTest(CasualCheckBehaviorTest())
+        testSuite.registerTest(MachinePriority())
+        testSuite.registerTest(CutAppleMissedAction3())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
