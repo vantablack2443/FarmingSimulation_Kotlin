@@ -2,7 +2,7 @@
   "farms": [
     {
       "id": 1,
-      "name": "Bangsat Farm",
+      "name": "Ngentot Farm",
       "farmsteads": [10],
       "fields": [],
       "plantations": [1],
@@ -26,7 +26,7 @@
       "plantations": [2],
       "machines": [
         {
-          "id": 69,
+          "id": 70,
           "name": "Mractor",
           "actions": ["SOWING", "WEEDING"],
           "plants": ["WHEAT"],

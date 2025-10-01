@@ -28,7 +28,7 @@
         {
           "id": 2,
           "name": "Mractor",
-          "actions": ["SOWING", "WEEDING"],
+          "actions": ["SOWING"],
           "plants": ["GRAPE"],
           "duration": 4,
           "location": 20

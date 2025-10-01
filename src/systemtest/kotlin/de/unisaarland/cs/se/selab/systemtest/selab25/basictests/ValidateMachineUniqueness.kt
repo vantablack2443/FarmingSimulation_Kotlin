@@ -7,7 +7,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  */
 class ValidateMachineUniqueness : ExampleSystemTestExtension() {
     override val name = "ValidateMachineUniqueID"
-    override val description = "Tests if the uniqueness of machine id is invalid"
+    override val description = "Tests if the uniqueness of farm name is invalid"
 
     // Paths are relative from the `src/systemtest/resources` directory.
     override val farms = "validating_basic/machineUniqueFarm.json"
