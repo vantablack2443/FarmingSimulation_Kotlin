@@ -26,10 +26,10 @@ class AnimalAttack(
         }
         affectedTiles.sortedBy { it.id }
         for (tile in affectedTiles) {
+            affectedIds.add(tile.id)
             val tilePlant = tile.plant ?: continue
             tilePlant.doAnimalAttack()
             tilePlant.resetMowingTime(yearTick)
-            affectedIds.add(tile.id)
         }
         Logger.logIncident(id, IncidentType.ANIMAL_ATTACK, affectedIds.sortedBy { it })
     }
