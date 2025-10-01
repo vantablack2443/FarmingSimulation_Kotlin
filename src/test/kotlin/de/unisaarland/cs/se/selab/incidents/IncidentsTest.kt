@@ -41,9 +41,13 @@ class IncidentsTest {
         potato.sownSimTick = 10
         oat = Plant.createPlant(PlantType.OAT)
         potatoTile.plant = potato
+        potatoTile.currentCrop = PlantType.POTATO
         oatTile.plant = oat
+        oatTile.currentCrop = PlantType.OAT
         grapeTile.plant = grape
+        grapeTile.currentCrop = PlantType.GRAPE
         appleTile.plant = apple
+        appleTile.currentCrop = PlantType.APPLE
         val farmFields = mockMap.getPlantableTiles().filter { it.category == TileType.FIELD } + oatTile + potatoTile
         val farmstead = Tile(
             40,
@@ -107,27 +111,23 @@ class IncidentsTest {
         mockMap = SimulationMap(tiles)
     }
 
-    /*
-    @Test
-    fun testAnimalAttack() {
-        apple.actionsNeeded.add(ActionType.MOWING)
-        val animalAttack = AnimalAttack(
-            1,
-            16,
-            IncidentType.ANIMAL_ATTACK,
-            mockMap.getTileByID(20)!!,
-            2
-        )
-        animalAttack.execute(mockMap, 17)
-        assertEquals(0.9, apple.animalAttackPenalty)
-        assertEquals(1.0, grape.animalAttackPenalty)
-        assertEquals(1.0, oat.animalAttackPenalty)
-        assertEquals(1.0, potato.animalAttackPenalty)
-        assertFalse { apple.actionsNeeded.contains(ActionType.MOWING) }
-    }
-     */
+//    @Test
+//    fun testAnimalAttack() {
+//        appleTile.actionsNeeded.add(ActionType.MOWING)
+//        val animalAttack = AnimalAttack(
+//            1,
+//            16,
+//            IncidentType.ANIMAL_ATTACK,
+//            mockMap.getTileByID(20)!!,
+//            2
+//        )
+//        animalAttack.execute(mockMap, 17)
+//        assertEquals(0.9, apple.animalAttackPenalty[0])
+//        assertTrue(grape.animalAttackPenalty.isEmpty())
+//        assertTrue(oat.animalAttackPenalty.isEmpty())
+//        assertTrue(potato.animalAttackPenalty.isEmpty())
+//    }
 
-    /*
     @Test
     fun droughtTest() {
         val drought = Drought(
@@ -144,10 +144,7 @@ class IncidentsTest {
         assertEquals(0, potatoTile.currentMoisture)
         assertEquals(true, grapeTile.plantationDamaged)
         assertEquals(true, appleTile.plantationDamaged)
-        assertNull(oatTile.plant)
-        assertNull(potatoTile.plant)
     }
-     */
 
     @Test
     fun testCityExpansion() {

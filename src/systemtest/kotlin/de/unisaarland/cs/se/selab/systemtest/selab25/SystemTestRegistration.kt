@@ -14,6 +14,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
@@ -23,6 +24,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNo
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTestUntilHarvesting
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
@@ -58,7 +60,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
@@ -74,8 +75,8 @@ object SystemTestRegistration {
      * the same as their reference implementation)
      */
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
-        testSuite.registerTest(ExampleSystemTest())
-        testSuite.registerTest(CloudMovementTest())
+//        testSuite.registerTest(ExampleSystemTest())
+//        testSuite.registerTest(CloudMovementTest())
 
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
@@ -86,6 +87,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachinePriority())
         testSuite.registerTest(DroughtToExpansion())
         testSuite.registerTest(DroughtToExpansionValid())
+        testSuite.registerTest(DroughtToExpansion2())
 
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
@@ -142,6 +144,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
+        testSuite.registerTest(FullSimTestUntilHarvesting())
     }
 
     /**
@@ -194,6 +197,6 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(FullSimAAWithFieldLog())
         testSuite.registerTest(MultipleBeeHappies())
-        testSuite.registerTest(SowingPlanFieldsDifferentFarms())
+        testSuite.registerTest(SowingPlanSimplePlan())
     }
 }

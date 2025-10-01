@@ -2,14 +2,11 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
-const val WEEDING_MESSAGE_M3 = "[IMPORTANT] Farm Action: Machine 3 performs WEEDING on tile 11 for 3 days."
-const val WEEDING_MESSAGE_M5 = "[IMPORTANT] Farm Action: Machine 5 performs WEEDING on tile 4 for 3 days."
-
 /**
  * tests cloud phase for one tick with cloud creation incidents
  */
-class FullSimTest : ExampleSystemTestExtension() {
-    override val name = "FullSimTest"
+class FullSimTestUntilHarvesting : ExampleSystemTestExtension() {
+    override val name = "FullSimTestUntilHarvesting"
     override val description = "Tests simulation until year tick 14"
 
     // Paths are relative from the `src/systemtest/resources` directory.
@@ -18,7 +15,7 @@ class FullSimTest : ExampleSystemTestExtension() {
     override val map = "fullSim/map.json"
 
     override val logLevel = "IMPORTANT"
-    override val maxTicks = 14
+    override val maxTicks = 12
     override val startYearTick = 4
 
     override suspend fun run() {
@@ -65,26 +62,6 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
-        // yeartick 16
-        skipLines(5)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 10 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 600000 g of ALMOND harvest.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 600000 g of ALMOND harvest in the shed.")
-        skipLines(3)
-        // yeartick 17
-        skipLines(5)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 18 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 193709 g of PUMPKIN harvest.")
-        skipLines(1)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 193709 g of PUMPKIN harvest in the shed.")
-        skipLines(2)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 20 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 600000 g of GRAPE harvest.")
-        skipLines(1)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 600000 g of GRAPE harvest in the shed.")
-        skipLines(1)
-        statistics()
     }
 
     private suspend fun tickUntilMay() {
@@ -135,24 +112,5 @@ class FullSimTest : ExampleSystemTestExtension() {
         skipLines(1)
         assertNextLine(WEEDING_MESSAGE_M5)
         skipLines(2)
-    }
-
-    private suspend fun statistics() {
-        assertNextLine("[IMPORTANT] Simulation Info: Simulation ended at tick 18.")
-        assertNextLine("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 866654 g of harvest.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 2 collected 1308588 g of harvest.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 0 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of WHEAT harvested: 0 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of OAT harvested: 781533 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of PUMPKIN harvested: 193709 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of APPLE harvested: 0 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 600000 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 600000 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.")
-        assertNextLine(
-            "[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations:" +
-                " 914836 g."
-        )
     }
 }
