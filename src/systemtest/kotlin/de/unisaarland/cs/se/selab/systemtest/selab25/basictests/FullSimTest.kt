@@ -44,14 +44,14 @@ class FullSimTest : ExampleSystemTestExtension() {
         // yeartick 13, harvest oats
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 11 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 100062 g of OAT harvest.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 100061 g of OAT harvest.")
         assertNextLine(RETURN_M_ONE)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 100062 g of OAT harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 100061 g of OAT harvest in the shed.")
         skipLines(2)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 5 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 787320 g of OAT harvest.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 4 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 393660 g of OAT harvest.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 4 is finished and returns to the shed at 6.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 787320 g of OAT harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 393660 g of OAT harvest in the shed.")
         skipLines(1)
         // yeartick 14, nothing
         skipLines(4)
@@ -62,21 +62,21 @@ class FullSimTest : ExampleSystemTestExtension() {
         // yeartick 16
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 10 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 600000 g of ALMOND harvest.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 780000 g of ALMOND harvest.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 600000 g of ALMOND harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 780000 g of ALMOND harvest in the shed.")
         skipLines(3)
         // yeartick 17
         skipLines(5)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 18 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 193709 g of PUMPKIN harvest.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 2 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 10812 g of APPLE harvest.")
         skipLines(1)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 193709 g of PUMPKIN harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 10812 g of APPLE harvest in the shed.")
         skipLines(2)
-        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 20 for 3 days.")
-        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 600000 g of GRAPE harvest.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 5 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 900000 g of POTATO harvest.")
         skipLines(1)
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 600000 g of GRAPE harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 900000 g of POTATO harvest in the shed.")
         skipLines(1)
         statistics()
     }
@@ -132,21 +132,21 @@ class FullSimTest : ExampleSystemTestExtension() {
     }
 
     private suspend fun statistics() {
-        assertNextLine("[IMPORTANT] Simulation Info: Simulation ended at tick 18.")
+        assertNextLine("[IMPORTANT] Simulation Info: Simulation ended at tick 14.")
         assertNextLine("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 893771 g of harvest.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 2 collected 1387320 g of harvest.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 0 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 890873 g of harvest.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Farm 2 collected 1293660 g of harvest.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 900000 g.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of WHEAT harvested: 0 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of OAT harvested: 887382 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of PUMPKIN harvested: 193709 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of APPLE harvested: 0 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 600000 g.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 600000 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of OAT harvested: 493721 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of PUMPKIN harvested: 0 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of APPLE harvested: 10821 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 0 g.")
+        assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 780000 g.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.")
         assertNextLine(
             "[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations:" +
-                " 914836 g."
+                " 763564 g."
         )
     }
     private suspend fun logFarmsNoActions() {
