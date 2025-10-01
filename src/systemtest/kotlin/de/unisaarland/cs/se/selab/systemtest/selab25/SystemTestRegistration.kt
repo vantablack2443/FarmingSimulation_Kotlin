@@ -17,6 +17,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtRainThenSow
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtSowExpand
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
@@ -187,6 +188,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
         testSuite.registerTest(CityExpansionSameTick())
+        testSuite.registerTest(DroughtSowExpand())
     }
 
     /**

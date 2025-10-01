@@ -21,7 +21,7 @@
           "id": 0,
           "tick": 1,
           "plant": "POTATO",
-          "fields": [1]
+          "fields": [1,3]
         }
       ]
     }
