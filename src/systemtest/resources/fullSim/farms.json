@@ -95,7 +95,7 @@
         },
         {
           "id": 6,
-          "tick": 3,
+          "tick": 5,
           "plant": "POTATO",
           "fields": [4, 5]
         }
