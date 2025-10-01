@@ -19,7 +19,9 @@ abstract class Plant {
     abstract var bloomingTime: Duration?
     abstract val pollination: MutableList<Double>
     abstract var animalAttack: Boolean
-    abstract val animalAttackPenalty: MutableList<Double>
+
+//    abstract val animalAttackPenalty: MutableList<Double>
+    abstract var animalAttackPenalty: Double
     abstract val cuttingTime: MutableList<CustomPair>
     abstract val mowingTime: MutableList<CustomPair>
 
