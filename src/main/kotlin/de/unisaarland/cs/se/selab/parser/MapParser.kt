@@ -129,8 +129,8 @@ class MapParser(private val simData: SimulationData) {
         if (id < 0) throw ValidationException("Tile ID negative")
 
         val type = getTileCategory(tile)
-        if (type.uppercase() !in TileType.entries.map { it.name }) throw ValidationException("invalid tile type")
-        val category = TileType.valueOf(type.uppercase())
+        if (type !in TileType.entries.map { it.name }) throw ValidationException("invalid tile type")
+        val category = TileType.valueOf(type)
 
         val coordinates = getTileCoordinates(tile)
         val x = coordinates["x"]?.jsonPrimitive?.int
@@ -221,14 +221,15 @@ class MapParser(private val simData: SimulationData) {
                 ?: throw ValidationException("Missing plant type")
             validatePlantType(TileType.PLANTATION, plantType)
             var plant: Plant? = null
-            when (plantType.uppercase()) {
-                "APPLE" -> plant = Apple()
-                "ALMOND" -> plant = Almond()
-                "CHERRY" -> plant = Cherry()
-                "GRAPE" -> plant = Grape()
+            plant = when (plantType) {
+                "APPLE" -> Apple()
+                "ALMOND" -> Almond()
+                "CHERRY" -> Cherry()
+                "GRAPE" -> Grape()
+                else -> throw ValidationException("PlantType $plantType invalid.")
             }
             tile.plant = plant
-            tile.currentCrop = PlantType.valueOf(plantType.uppercase())
+            tile.currentCrop = PlantType.valueOf(plantType)
             tile.plantationDamaged = false
             parseCapacity(jsonObject, tile)
         }
@@ -237,10 +238,12 @@ class MapParser(private val simData: SimulationData) {
             val plants = jsonObject["possiblePlants"]?.jsonArray
                 ?: throw ValidationException("Possible plants missing")
             val fieldPlants = plants.map { it.jsonPrimitive.content }
+            val validPlants = setOf("OAT", "POTATO", "WHEAT", "PUMPKIN")
             for (element in fieldPlants) {
+                if (element !in validPlants) throw ValidationException("PlantType $element invalid.")
                 validatePlantType(TileType.FIELD, element)
             }
-            tile.possiblePlants = fieldPlants.map { PlantType.valueOf(it.uppercase()) }
+            tile.possiblePlants = fieldPlants.map { PlantType.valueOf(it) }
             parseCapacity(jsonObject, tile)
         }
     }

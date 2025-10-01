@@ -434,7 +434,11 @@ class ScenarioParser(private val simData: SimulationData) {
 
         for (cloudCreation in cloudCreationIncidents) {
             // Get affected tiles by cloud creation incident
-            val tiles: List<Tile> = simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+            val tiles: List<Tile> = if (cloudCreation.radius > 0) {
+                simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius) + cloudCreation.tile
+            } else {
+                simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+            }
             // Get the list of villages that will be created up to the point of the cloud creation incident
             val villagesUpToIncident: List<Tile> = newVillagesUpToIncident(
                 cityExpansionIncidents,
@@ -482,7 +486,11 @@ class ScenarioParser(private val simData: SimulationData) {
             val tileIDSet: MutableSet<Int> = mutableSetOf()
             // Iterate through incidents in tick adding the affected tiles to the set
             for (cloudCreation in cloudCreations) {
-                val affectedTiles = simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+                val affectedTiles = if (cloudCreation.radius > 0) {
+                    simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius) + cloudCreation.tile
+                } else {
+                    simData.map.getTilesByRadius(cloudCreation.tile, cloudCreation.radius)
+                }
                 if (!checkNoOverlap(tileIDSet, affectedTiles)) {
                     return false
                 }
@@ -504,7 +512,7 @@ class ScenarioParser(private val simData: SimulationData) {
             // since clouds are not created on villages
             if (tile.id in tileIDSet && tile.category != TileType.VILLAGE) {
                 return false
-            } else {
+            } else if (tile.id !in tileIDSet && tile.category != TileType.VILLAGE) {
                 tileIDSet.add(tile.id)
             }
         }

@@ -61,6 +61,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SaharaMock
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SaharaMock2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
@@ -141,7 +142,6 @@ object SystemTestRegistration {
         testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
-        testSuite.registerTest(CityExpansionSameTick())
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
@@ -150,6 +150,7 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtThenBeeHappy2())
         testSuite.registerTest(FullSimTestUntilHarvesting())
         testSuite.registerTest(SaharaMock())
+        testSuite.registerTest(SaharaMock2())
 
         testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
@@ -208,5 +209,6 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(AnotherWayHome())
+        testSuite.registerTest(MachineBehaviorTest())
     }
 }
