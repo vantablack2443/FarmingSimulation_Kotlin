@@ -11,7 +11,7 @@ const val POTATO_SOW_START = 7
 const val POTATO_SOW_END = 10
 const val POTATO_HARVEST_START = 17
 const val POTATO_HARVEST_END = 20
-const val POTATO_BLOOM_OFFSET = 4
+const val POTATO_BLOOM_OFFSET = 3
 
 /**
  * Potato class
