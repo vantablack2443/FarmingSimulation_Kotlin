@@ -10,7 +10,7 @@ class ValidateMachineUniquenessB : ExampleSystemTestExtension() {
     override val description = "Tests if the uniqueness of machine name is invalid"
 
     // Paths are relative from the `src/systemtest/resources` directory.
-    override val farms = "validating_basic/machineUniqueFarmB.json"
+    override val farms = "validating_basic/machineUniqueBFarm.json"
     override val scenario = "validating_basic/emptyScenario.json"
     override val map = "validating_basic/plantCouplingMap.json"
 
@@ -20,7 +20,7 @@ class ValidateMachineUniquenessB : ExampleSystemTestExtension() {
 
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: plantCouplingMap.json successfully parsed and validated.")
-        assertNextLine("[INFO] Initialization Info: machineUniqueFarmB.json successfully parsed and validated.")
+        assertNextLine("[INFO] Initialization Info: machineUniqueBFarm.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: emptyScenario.json successfully parsed and validated.")
     }
 }
