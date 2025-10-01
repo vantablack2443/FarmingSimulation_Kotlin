@@ -107,8 +107,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, kill the plants .
         // If plants killed ,set fallow
 
-        plantOfTile.pollination = 1.0
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
         plantOfTile.animalAttack = false
 
         // Does not log change if harvested
@@ -220,8 +220,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, don't kill plants .
         // No fallowing for plantations
 
-        plantOfTile.pollination = 1.0
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
         plantOfTile.animalAttack = false
 
         if (t.harvestedThisTick) {
@@ -490,7 +490,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun applyBeeHappy(t: Tile): Boolean {
         var acted = false
         val plant = t.plant ?: return false
-        if (plant.pollination > 1.0) {
+        if (plant.pollination.isNotEmpty()) {
             acted = true
             plant.applyPollinationBuff()
         }

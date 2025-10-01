@@ -26,8 +26,8 @@ class Cherry : PlantationPlant() {
     override var neededMoisture = CHERRY_MOISTURE
     override var harvestEstimate = CHERRY_HARVEST
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(CHERRY_CUT_START, CHERRY_CUT_END), false),
         CustomPair(Duration(CHERRY_CUT_START_ALT, CHERRY_CUT_END_ALT), false)
@@ -39,22 +39,26 @@ class Cherry : PlantationPlant() {
     override var bloomingTime: Duration? = Duration(CHERRY_BLOOM_START, CHERRY_BLOOM_END)
 
     override fun animalAttackPenalty() {
-        val newEstimate = this.harvestEstimate * animalAttackPenalty
-        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        for (debuff in animalAttackPenalty) {
+            val newEstimate = this.harvestEstimate * debuff
+            this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        }
     }
 
     override fun applyPollinationBuff() {
-        val newEstimate = this.harvestEstimate * pollination
-        this.harvestEstimate = floor(newEstimate).toInt()
+        for (buff in pollination) {
+            val newEstimate = this.harvestEstimate * buff
+            this.harvestEstimate = floor(newEstimate).toInt()
+        }
     }
 
     override fun doAnimalAttack() {
-        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
+        this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY)
         this.animalAttack = true
     }
 
     override fun doBeeHappy(effect: Double) {
-        this.pollination *= effect
+        this.pollination.add(effect)
     }
 
     override fun isBlooming(tick: Int): Boolean {
