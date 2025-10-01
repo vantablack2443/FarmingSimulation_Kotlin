@@ -23,6 +23,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNo
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTestUntilHarvesting
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
@@ -142,6 +143,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
+        testSuite.registerTest(FullSimTestUntilHarvesting())
     }
 
     /**
