@@ -1,0 +1,37 @@
+{
+  "farms": [
+    {
+      "id": 0,
+      "name": "0",
+      "farmsteads": [0],
+      "fields": [2],
+      "plantations": [1],
+      "machines": [
+        {
+          "id": 0,
+          "name": "0",
+          "actions": ["SOWING","HARVESTING"],
+          "plants": ["ALMOND", "WHEAT"],
+          "duration": 4,
+          "location": 0
+        },
+        {
+          "id": 0,
+          "name": "0",
+          "actions": ["SOWING", "HARVESTING"],
+          "plants": ["ALMOND", "WHEAT"],
+          "duration": 4,
+          "location": 0
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "WHEAT",
+          "fields": [2]
+        }
+      ]
+    }
+  ]
+}

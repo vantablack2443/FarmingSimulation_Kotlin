@@ -1,0 +1,58 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "SaarFarn",
+      "farmsteads": [34],
+      "fields": [4,6,8,23,25,27,42,44,46],
+      "plantations": [5,7,9,24,26,28,43,45,47],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Tractor",
+          "actions": ["SOWING", "IRRIGATING", "HARVESTING"],
+          "plants": ["PUMPKIN", "WHEAT", "CHERRY", "ALMOND"],
+          "duration": 5,
+          "location": 34
+        }, {
+          "id": 2,
+          "name": "Machine",
+          "actions": ["MOWING", "SOWING", "HARVESTING"],
+          "plants": ["PUMPKIN", "WHEAT"],
+          "duration": 14,
+          "location": 34
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 1,
+          "tick": 6,
+          "plant": "OAT",
+          "fields": [4,6,8,23,25,27,42,44,46]
+        }, 
+		{
+		  "id": 2,
+		  "tick": 3 ,
+		  "plant": "POTATO",
+		  "fields": [4,6,8,23,25,27,42,44,46]
+		}, 
+		{
+		  "id": 3,
+		  "tick": 11,
+		  "plant": "PUMPKIN",
+		  "fields": [4,6,8,23,25,27,42,44,46]
+		}, {
+		  "id": 4,
+		  "tick": 13,
+		  "plant": "WHEAT",
+		  "fields": [4,6,8,23,25,27,42,44,46]
+		}, {
+		  "id": 5,
+		  "tick": 19,
+		  "plant": "WHEAT",
+		  "fields": [4,6,8,23,25,27,42,44,46]
+		}
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.parser
 
+/*
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
@@ -20,3 +21,4 @@ class MachineDefaultTest {
 //        }
     }
 }
+ */

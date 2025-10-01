@@ -196,22 +196,27 @@ class IrrigationHandler(
             return
         }
         for (tile in operableTiles) {
-            val plantType = tile.currentCrop ?: continue
+            if (tile.id in farm.tileHashMap || tile.currentCrop == null) {
+                continue // Skip if tile is already handled
+            }
+            val plantType = tile.currentCrop
             if (machine.plants.contains(plantType) && simulationMap.isReachable(machine, tile)) {
                 // perform action on target tile
                 performAction(farm, machine, tile)
 
                 // continue action
+                val irrigatableFields = getOperableTiles(farm, TileType.FIELD)
+                val irrigatablePlantations = getOperableTiles(farm, TileType.PLANTATION)
                 if (tileType == TileType.FIELD) {
                     continueOperationField(
                         machine,
-                        (operableTiles.toMutableList() - tile).toMutableList(),
+                        (irrigatableFields + irrigatablePlantations).sortedBy { it.id },
                         farm
                     )
                 } else {
                     continueOperationPlantation(
                         machine,
-                        (operableTiles.toMutableList() - tile).toMutableList(),
+                        irrigatablePlantations,
                         farm
                     )
                 }
@@ -225,41 +230,40 @@ class IrrigationHandler(
         }
     }
 
-    private fun continueOperationField(machine: Machine, operableTiles: MutableList<Tile>, farm: Farm) {
+    private fun continueOperationField(machine: Machine, operableTiles: List<Tile>, farm: Farm) {
         if (!machine.canPerform()) {
             return
         }
         val reach = this.simulationMap.getReachableTiles(machine, 2, false)
             .filter { it.id !in farm.tileHashMap }
-        val fieldTiles = operableTiles.intersect(reach.toSet()).sortedBy { it.id }.toMutableList()
-        if (fieldTiles.isNotEmpty()) {
-            performAction(farm, machine, fieldTiles.first())
-            continueOperationField(machine, (fieldTiles - fieldTiles.first()).toMutableList(), farm)
-        }
+        // This set will contain all tiles and plantation tiles ordered by id
+        val irrigatableTiles = operableTiles.intersect(reach.toSet()).sortedBy { it.id }
 
-        if (!machine.canPerform()) {
-            return
-        }
-        val newreach = this.simulationMap.getReachableTiles(machine, 2, false)
-            .filter { it.id !in farm.tileHashMap }
-        val plantationTiles = getOperableTiles(farm, TileType.PLANTATION).intersect(newreach.toSet())
-            .sortedBy { it.id }.toMutableList()
-        if (plantationTiles.isNotEmpty()) {
-            performAction(farm, machine, plantationTiles.first())
+        val nextFieldTile = irrigatableTiles.firstOrNull { it.category == TileType.FIELD }
+        if (nextFieldTile != null) {
+            performAction(farm, machine, nextFieldTile)
             continueOperationField(machine, operableTiles, farm)
+        } else {
+            val nextPlantationTile = irrigatableTiles.firstOrNull { it.category == TileType.PLANTATION }
+            if (nextPlantationTile != null) {
+                performAction(farm, machine, nextPlantationTile)
+                continueOperationField(machine, operableTiles, farm)
+            }
         }
     }
 
-    private fun continueOperationPlantation(machine: Machine, operableTiles: MutableList<Tile>, farm: Farm) {
+    private fun continueOperationPlantation(machine: Machine, operableTiles: List<Tile>, farm: Farm) {
         if (!machine.canPerform()) {
             return
         }
         val reach = this.simulationMap.getReachableTiles(machine, 2, false)
             .filter { it.id !in farm.tileHashMap }
-        val plantationTiles = operableTiles.intersect(reach.toSet()).sortedBy { it.id }.toMutableList()
-        if (plantationTiles.isNotEmpty()) {
-            performAction(farm, machine, plantationTiles.first())
-            continueOperationPlantation(machine, (plantationTiles - plantationTiles.first()).toMutableList(), farm)
+
+        val irrigatablePlantations = operableTiles.intersect(reach.toSet()).sortedBy { it.id }
+
+        if (irrigatablePlantations.isNotEmpty()) {
+            performAction(farm, machine, irrigatablePlantations.first())
+            continueOperationPlantation(machine, operableTiles, farm)
         }
     }
 
