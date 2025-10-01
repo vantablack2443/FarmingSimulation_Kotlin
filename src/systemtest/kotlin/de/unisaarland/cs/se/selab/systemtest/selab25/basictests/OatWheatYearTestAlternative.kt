@@ -43,7 +43,7 @@ class OatWheatYearTestAlternative : ExampleSystemTestExtension() {
     }
     private suspend fun statistics() {
         assertNextLine("[IMPORTANT] Simulation Info: Simulation ended at tick 24.")
-        assertNextLine("[IMPORTANT] Simulation Statistics: Simulation statistics are calculated.")
+        assertNextLine("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 623765 g of harvest.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 0 g.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Total amount of WHEAT harvested: 423642 g.")
