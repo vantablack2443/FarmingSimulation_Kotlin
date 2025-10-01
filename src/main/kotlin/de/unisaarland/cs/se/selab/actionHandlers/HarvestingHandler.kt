@@ -27,7 +27,7 @@ class HarvestingHandler(
             return
         }
         // using the operableTiles from the ActionHandler, gets plantations + fields so must be
-        val operableTiles = getOperableTiles(farm, ActionType.HARVESTING).sortedBy { it.id }
+        val operableTiles = getOperableTiles(farm, ActionType.HARVESTING)
         // get OperableTiles takes care of the prioritization of the tiles-- changed the signature in the diagram
         // val operableTiles = getOperableTiles(farm, harvestablePlantTypes)
         for (tile in operableTiles) {
