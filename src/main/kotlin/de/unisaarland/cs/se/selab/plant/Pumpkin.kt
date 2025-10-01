@@ -25,8 +25,8 @@ class Pumpkin : FieldPlant() {
     override var harvestingTime = Duration(PUMPKIN_HARVEST_START, PUMPKIN_HARVEST_END)
 
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
     override var bloomingTime: Duration? = null
 
     override val cuttingTime = mutableListOf<CustomPair>()
@@ -59,11 +59,14 @@ class Pumpkin : FieldPlant() {
     }
 
     override fun doBeeHappy(effect: Double) {
-        this.pollination *= effect
+        this.pollination.add(effect)
     }
 
     override fun applyPollinationBuff() {
-        this.harvestEstimate = floor(this.harvestEstimate * pollination).toInt()
+        for (buff in pollination) {
+            val newEstimate = this.harvestEstimate * buff
+            this.harvestEstimate = floor(newEstimate).toInt()
+        }
     }
 
     override fun checkLateSowing(lateActions: MutableList<ActionType>, yearTickSown: Int) {

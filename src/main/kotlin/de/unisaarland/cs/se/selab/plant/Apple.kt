@@ -28,8 +28,8 @@ class Apple : PlantationPlant() {
     override var neededMoisture = APPLE_MOISTURE
     override var harvestEstimate = APPLE_HARVEST
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(APPLE_CUT_START, APPLE_CUT_END), false),
         CustomPair(Duration(APPLE_CUT_START_ALT, APPLE_CUT_END_ALT), false)
@@ -45,31 +45,35 @@ class Apple : PlantationPlant() {
      * updates harvest estimate based on the animal attack
      */
     override fun animalAttackPenalty() {
-        val newEstimate = this.harvestEstimate * animalAttackPenalty
-        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        for (debuff in animalAttackPenalty) {
+            val newEstimate = this.harvestEstimate * debuff
+            this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        }
     }
 
     /**
      * updates the harvest estimate based on the bee happy effect
      */
     override fun applyPollinationBuff() {
-        val newEstimate = this.harvestEstimate * pollination
-        this.harvestEstimate = floor(newEstimate).toInt()
+        for (buff in pollination) {
+            val newEstimate = this.harvestEstimate * buff
+            this.harvestEstimate = floor(newEstimate).toInt()
+        }
     }
 
     /**
      * updates the animal attack penalty
      */
     override fun doAnimalAttack() {
+        this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY)
         this.animalAttack = true
-        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
     }
 
     /**
      * updates the pollination effect
      */
     override fun doBeeHappy(effect: Double) {
-        this.pollination *= effect
+        this.pollination.add(effect)
     }
 
     /**
