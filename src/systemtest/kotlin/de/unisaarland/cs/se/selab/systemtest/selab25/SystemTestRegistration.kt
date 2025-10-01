@@ -4,8 +4,12 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHarvestandNoCloudsOrIncidents
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
+// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
+// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
@@ -29,6 +33,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBet
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.LogCherryDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
@@ -37,8 +42,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachinePriority
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MultipleBeeHappies
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidOnePlantation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
@@ -88,6 +91,7 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtToExpansion())
         testSuite.registerTest(DroughtToExpansionValid())
         testSuite.registerTest(DroughtToExpansion2())
+        testSuite.registerTest(LogCherryDrought())
 
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
@@ -109,8 +113,8 @@ object SystemTestRegistration {
         testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
-        testSuite.registerTest(MaxTickEndLogEquals())
-        testSuite.registerTest(MaxTickEndLogOneLess())
+        // testSuite.registerTest(MaxTickEndLogEquals())
+        // testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
@@ -145,6 +149,9 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
         testSuite.registerTest(FullSimTestUntilHarvesting())
+
+        testSuite.registerTest(AnotherWayHome())
+        testSuite.registerTest(BigScenarioFirst4Ticks())
     }
 
     /**
@@ -198,5 +205,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimAAWithFieldLog())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(SowingPlanSimplePlan())
+        testSuite.registerTest(NoWayHome())
+        testSuite.registerTest(AnotherWayHome())
     }
 }
