@@ -118,8 +118,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If plants killed ,set fallow
 
         plantOfTile.pollination.clear()
-//        plantOfTile.animalAttackPenalty.clear()
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         // Does not log change if harvested
@@ -233,8 +233,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // No fallowing for plantations
 
         plantOfTile.pollination.clear()
-//        plantOfTile.animalAttackPenalty.clear()
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         if (t.harvestedThisTick) {
