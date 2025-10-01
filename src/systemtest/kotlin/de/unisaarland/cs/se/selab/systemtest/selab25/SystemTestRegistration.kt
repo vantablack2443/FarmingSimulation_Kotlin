@@ -23,6 +23,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNo
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.HarvestThenDrought
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.HarvestThenDroughtField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
@@ -136,12 +138,14 @@ object SystemTestRegistration {
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(CityExpansionSameTick())
         testSuite.registerTest(FullSimTest())
-        testSuite.registerTest(TwentyEightDays())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
+        testSuite.registerTest(HarvestThenDrought())
+        testSuite.registerTest(HarvestThenDroughtField())
+
     }
 
     /**
