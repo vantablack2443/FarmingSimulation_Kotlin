@@ -36,10 +36,10 @@ const val MISSING_TILE_ID = "Specified tile with ID not found"
  * parser for farm config file
  */
 class FarmParser(private val simulationData: SimulationData) {
-    private lateinit var farmIDs: MutableList<Int>
-    private lateinit var farmNames: MutableList<String>
-    private lateinit var machineIDs: MutableList<Int>
-    private lateinit var machineNames: MutableList<String>
+    private val farmIDs = mutableListOf<Int>()
+    private val farmNames = mutableListOf<String>()
+    private val machineIDs = mutableListOf<Int>()
+    private val machineNames = mutableListOf<String>()
     private val sowingPlanIDs: MutableList<Int> = mutableListOf()
     private val sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
 
