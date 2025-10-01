@@ -198,5 +198,6 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimAAWithFieldLog())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(SowingPlanSimplePlan())
+        testSuite.registerTest(NoWayHome())
     }
 }
