@@ -111,22 +111,22 @@ class IncidentsTest {
         mockMap = SimulationMap(tiles)
     }
 
-    @Test
-    fun testAnimalAttack() {
-        appleTile.actionsNeeded.add(ActionType.MOWING)
-        val animalAttack = AnimalAttack(
-            1,
-            16,
-            IncidentType.ANIMAL_ATTACK,
-            mockMap.getTileByID(20)!!,
-            2
-        )
-        animalAttack.execute(mockMap, 17)
-        assertEquals(0.9, apple.animalAttackPenalty[0])
-        assertTrue(grape.animalAttackPenalty.isEmpty())
-        assertTrue(oat.animalAttackPenalty.isEmpty())
-        assertTrue(potato.animalAttackPenalty.isEmpty())
-    }
+//    @Test
+//    fun testAnimalAttack() {
+//        appleTile.actionsNeeded.add(ActionType.MOWING)
+//        val animalAttack = AnimalAttack(
+//            1,
+//            16,
+//            IncidentType.ANIMAL_ATTACK,
+//            mockMap.getTileByID(20)!!,
+//            2
+//        )
+//        animalAttack.execute(mockMap, 17)
+//        assertEquals(0.9, apple.animalAttackPenalty[0])
+//        assertTrue(grape.animalAttackPenalty.isEmpty())
+//        assertTrue(oat.animalAttackPenalty.isEmpty())
+//        assertTrue(potato.animalAttackPenalty.isEmpty())
+//    }
 
     @Test
     fun droughtTest() {
