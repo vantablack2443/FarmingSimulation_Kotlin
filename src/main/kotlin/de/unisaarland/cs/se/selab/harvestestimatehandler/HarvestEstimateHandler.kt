@@ -107,7 +107,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             }
         }
         // If drought hit, don't log missed actions
-        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        if (!t.droughtHit && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
@@ -225,7 +225,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             }
         }
         // If drought hit, don't log missed actions
-        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        if (!t.droughtHit && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
