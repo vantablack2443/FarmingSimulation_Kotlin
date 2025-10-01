@@ -58,7 +58,7 @@ class IrrigationHandler(
                     operableTiles.remove(tile)
 
                     // continue action
-                    continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
+                    helperfunction(tileType, machine, operableFieldTiles, operablePlantationTiles, farm)
 
                     farm.machineHashMap.add(machine.id)
                     machine.currentTile = machine.homeShed
@@ -85,6 +85,20 @@ class IrrigationHandler(
 //            machine.currentTile = returnShed
 //            machine.homeShed = returnShed
 //        }
+    }
+
+    private fun helperfunction(
+        tileType: TileType,
+        machine: Machine,
+        operableFieldTiles: MutableList<Tile>,
+        operablePlantationTiles: MutableList<Tile>,
+        farm: Farm
+    ) {
+        if (tileType == TileType.FIELD) {
+            continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
+        } else {
+            continueAction(machine, mutableListOf(), operablePlantationTiles, farm)
+        }
     }
 
     /**
