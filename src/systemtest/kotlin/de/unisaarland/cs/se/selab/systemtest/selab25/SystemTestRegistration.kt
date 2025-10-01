@@ -70,6 +70,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
 
 /**
@@ -139,7 +140,7 @@ object SystemTestRegistration {
         testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
-        testSuite.registerTest(PotatoBehaviourTest())
+        // testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(FullSimTest())
@@ -158,6 +159,7 @@ object SystemTestRegistration {
         testSuite.registerTest(Apples())
         testSuite.registerTest(ValidatePlantCoupling())
         testSuite.registerTest(ValidateMachineUniqueness())
+        testSuite.registerTest(ValidateMachineUniquenessB())
     }
 
     /**

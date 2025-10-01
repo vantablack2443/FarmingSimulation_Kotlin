@@ -1,0 +1,40 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "Bangsat Farm",
+      "farmsteads": [10],
+      "fields": [],
+      "plantations": [1],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Tractor",
+          "actions": ["SOWING", "WEEDING"],
+          "plants": ["WHEAT"],
+          "duration": 4,
+          "location": 10
+        }
+      ],
+      "sowingPlans": []
+    },
+    {
+      "id": 2,
+      "name": "Ngentot Farm",
+      "farmsteads": [20],
+      "fields": [],
+      "plantations": [2],
+      "machines": [
+        {
+          "id": 2,
+          "name": "Tractor",
+          "actions": ["SOWING", "WEEDING"],
+          "plants": ["WHEAT"],
+          "duration": 4,
+          "location": 20
+        }
+      ],
+      "sowingPlans": []
+    }
+  ]
+}
