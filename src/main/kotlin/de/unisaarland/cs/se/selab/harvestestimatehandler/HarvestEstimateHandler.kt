@@ -99,7 +99,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 missedActionList.remove(ActionType.IRRIGATING)
             }
         }
-        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        // If drought hit, don't log missed actions
+        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
@@ -212,7 +213,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 missedActionList.remove(ActionType.IRRIGATING)
             }
         }
-        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        // If drought hit, don't log missed actions
+        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
