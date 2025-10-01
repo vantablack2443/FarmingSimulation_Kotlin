@@ -236,6 +236,7 @@ class IrrigationHandler(
         }
         val reach = this.simulationMap.getReachableTiles(machine, 2, false)
             .filter { it.id !in farm.tileHashMap }
+            .filter { it.currentCrop in machine.plants }
         // This set will contain all tiles and plantation tiles ordered by id
         val irrigatableTiles = operableTiles.intersect(reach.toSet()).sortedBy { it.id }
 
@@ -258,6 +259,7 @@ class IrrigationHandler(
         }
         val reach = this.simulationMap.getReachableTiles(machine, 2, false)
             .filter { it.id !in farm.tileHashMap }
+            .filter { it.currentCrop in machine.plants }
 
         val irrigatablePlantations = operableTiles.intersect(reach.toSet()).sortedBy { it.id }
 

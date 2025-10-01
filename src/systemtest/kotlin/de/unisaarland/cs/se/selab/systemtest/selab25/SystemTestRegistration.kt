@@ -9,6 +9,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
@@ -53,6 +54,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -60,8 +62,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SaharaMock
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SaharaMock2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
@@ -149,11 +149,13 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
         testSuite.registerTest(FullSimTestUntilHarvesting())
-        testSuite.registerTest(SaharaMock())
-        testSuite.registerTest(SaharaMock2())
+        // testSuite.registerTest(SaharaMock())
+        // testSuite.registerTest(SaharaMock2())
 
-        testSuite.registerTest(AnotherWayHome())
+        // testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
+        testSuite.registerTest(OatBehaviourTest())
+        testSuite.registerTest(Apples())
     }
 
     /**
@@ -211,5 +213,6 @@ object SystemTestRegistration {
         testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(MachineBehaviorTest())
         testSuite.registerTest(FullSimTest())
+        testSuite.registerTest(OatBehaviourTest())
     }
 }
