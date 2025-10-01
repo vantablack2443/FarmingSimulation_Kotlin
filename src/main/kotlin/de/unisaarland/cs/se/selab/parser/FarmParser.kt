@@ -507,7 +507,7 @@ class FarmParser(private val simulationData: SimulationData) {
             val tick = sowingPlan.getTick()
             val listOfPlans = mapOfSowingPlans.getOrPut(tick) { mutableListOf() }
             listOfPlans.add(sowingPlan)
-            sowingPlanIDs.add(sowingPlan.getId())
+            // sowingPlanIDs.add(sowingPlan.getId())
             mapOfSowingPlans[tick] = listOfPlans
         }
 //         simulationData.setSowingPlanMapping(mapOfSowingPlans)
