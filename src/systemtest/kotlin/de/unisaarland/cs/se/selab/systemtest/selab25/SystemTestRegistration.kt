@@ -57,6 +57,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
@@ -190,5 +191,6 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(FullSimAAWithFieldLog())
+        testSuite.registerTest(SowingPlanFieldsDifferentFarms())
     }
 }
