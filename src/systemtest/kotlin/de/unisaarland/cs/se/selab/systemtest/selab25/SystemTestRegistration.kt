@@ -12,6 +12,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
@@ -139,6 +140,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimAAWithFieldLog())
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
+        testSuite.registerTest(DroughtThenBeeHappy2())
     }
 
     /**
