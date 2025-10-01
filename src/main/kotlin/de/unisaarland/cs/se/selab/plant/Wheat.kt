@@ -31,7 +31,9 @@ class Wheat : FieldPlant() {
     override var bloomingTime: Duration? = Duration(WHEAT_BLOOM_START, WHEAT_BLOOM_END)
     override var animalAttack = false
     override val pollination = mutableListOf<Double>()
-    override val animalAttackPenalty = mutableListOf<Double>()
+
+//    override val animalAttackPenalty = mutableListOf<Double>()
+    override var animalAttackPenalty = 1.0
 
     override val cuttingTime = mutableListOf<CustomPair>()
     override val mowingTime = mutableListOf<CustomPair>()
