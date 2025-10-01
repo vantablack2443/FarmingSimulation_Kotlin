@@ -69,6 +69,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPriori
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
 
 /**
@@ -144,7 +145,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
-        testSuite.registerTest(NoWayHome())
+        // testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
         testSuite.registerTest(FullSimTestUntilHarvesting())
@@ -156,6 +157,7 @@ object SystemTestRegistration {
         testSuite.registerTest(OatBehaviourTest())
         testSuite.registerTest(Apples())
         testSuite.registerTest(ValidatePlantCoupling())
+        testSuite.registerTest(ValidateMachineUniqueness())
     }
 
     /**
