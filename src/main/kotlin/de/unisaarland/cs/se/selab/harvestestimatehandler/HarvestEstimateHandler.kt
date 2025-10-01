@@ -19,6 +19,14 @@ const val PENALTY_POINT_NINE = 0.9
 const val SIXTEEN = 16
 const val FOUR = 4
 
+val orderforlog = listOf(
+    ActionType.WEEDING,
+    ActionType.CUTTING,
+    ActionType.MOWING,
+    ActionType.IRRIGATING,
+    ActionType.HARVESTING
+)
+
 /**
  * This class is responsible for estimating the harvest of all plantable tiles on the map.
  * It applies various penalties based on the conditions of the tiles and the actions taken (or not taken)
@@ -83,13 +91,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         val endHarvestEstimate = plantOfTile.harvestEstimate
 
-        val orderforlog = listOf(
+        /* val orderforlog = listOf(
             ActionType.WEEDING,
             ActionType.CUTTING,
             ActionType.MOWING,
             ActionType.IRRIGATING,
             ActionType.HARVESTING
-        )
+        )*/
 
         // Log missed actions only if there is a change in harvest estimate
         if (missedActionList.contains(ActionType.IRRIGATING)) {
@@ -154,7 +162,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             // Kill plants and set fallow
             t.plant = null
             t.currentCrop = null
-            // Does not set fallow if harvest goes to 0 for any other reason than drought
+            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
         }
         // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
@@ -198,13 +206,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         val endHarvestEstimate = plantOfTile.harvestEstimate
 
-        val orderforlog = listOf(
+        /* val orderforlog = listOf(
             ActionType.WEEDING,
             ActionType.CUTTING,
             ActionType.MOWING,
             ActionType.IRRIGATING,
             ActionType.HARVESTING
-        )
+        ) */
 
         // Log missed actions only if there is a change in harvest estimate
         if (missedActionList.contains(ActionType.IRRIGATING)) {
