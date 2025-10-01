@@ -214,5 +214,6 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineBehaviorTest())
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(OatBehaviourTest())
+        testSuite.registerTest(BigScenarioFirst4Ticks())
     }
 }
