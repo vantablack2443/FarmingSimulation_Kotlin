@@ -375,10 +375,9 @@ class FarmParser(private val simulationData: SimulationData) {
         for (action in actions) {
             validateMachineActionPlant(action, plants)
         }
-         */
         for (plant in plants) {
             validateMachineActionPlant(plant, actions)
-        }
+        }*/
 
         // CHECK IF THIS CHECK IS EXPECTED
         /*validateActionsAndPlants(actions, plants)*/
@@ -389,6 +388,7 @@ class FarmParser(private val simulationData: SimulationData) {
     /**
      * cross validates machine and action types
      */
+    /*
     private fun validateMachineActionPlant(plant: PlantType, actions: List<ActionType>) {
         val string = "mismatch of machine action and plant type"
         when (plant) {
@@ -416,6 +416,7 @@ class FarmParser(private val simulationData: SimulationData) {
             }
         }
     }
+     */
     /*
     private fun validateMachineActionPlant(action: ActionType, plants: List<PlantType>) {
         val string = "mismatch of machine action and plant type"
