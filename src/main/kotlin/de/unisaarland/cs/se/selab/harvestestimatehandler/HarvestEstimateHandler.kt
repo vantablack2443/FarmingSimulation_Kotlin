@@ -10,6 +10,8 @@ import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 import de.unisaarland.cs.se.selab.tile.Tile
+import kotlin.math.pow
+
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
 const val FIFTY = 50
@@ -60,7 +62,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
-        val missedActionList = t.actionsNeeded.toList()
+        val missedActionList = t.actionsNeeded.toMutableList()
 
         // Log missed actions if there are any -- need to verify this
         /*if (t.actionsNeeded.isNotEmpty()) {
@@ -90,7 +92,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         )
 
         // Log missed actions only if there is a change in harvest estimate
-        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        if (missedActionList.contains(ActionType.IRRIGATING)) {
+            val plant = t.plant ?: error("error1")
+            val currentMoisture = t.currentMoisture ?: error("error1")
+            if (plant.neededMoisture - currentMoisture < HUNDRED) {
+                missedActionList.remove(ActionType.IRRIGATING)
+            }
+        }
+        // If drought hit, don't log missed actions
+        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
@@ -100,8 +110,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, kill the plants .
         // If plants killed ,set fallow
 
-        plantOfTile.pollination = 1.0
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
         plantOfTile.animalAttack = false
 
         // Does not log change if harvested
@@ -133,7 +143,9 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.droughtHit = false
             t.plant = null
             t.currentCrop = null
-            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+            if (t.fallowDuration == null) {
+                t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+            }
         }
 
         // Drought would also set this to 0 from applyDrought(), or death by penalty
@@ -163,7 +175,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         val initialHarvestEstimate = plantOfTile.harvestEstimate
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
-        val missedActionList = t.actionsNeeded.toList()
+        val missedActionList = t.actionsNeeded.toMutableList()
 
         // Log missed actions if there are any -- need to verify this
         /*if (t.actionsNeeded.isNotEmpty()) {
@@ -194,7 +206,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         )
 
         // Log missed actions only if there is a change in harvest estimate
-        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        if (missedActionList.contains(ActionType.IRRIGATING)) {
+            val plant = t.plant ?: error("error")
+            val currentMoisture = t.currentMoisture ?: error("error")
+            if (plant.neededMoisture - currentMoisture < HUNDRED) {
+                missedActionList.remove(ActionType.IRRIGATING)
+            }
+        }
+        // If drought hit, don't log missed actions
+        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
@@ -204,8 +224,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, don't kill plants .
         // No fallowing for plantations
 
-        plantOfTile.pollination = 1.0
-        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
         plantOfTile.animalAttack = false
 
         if (t.harvestedThisTick) {
@@ -272,11 +292,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             if (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
                 acted = true
             }
-            var currentSunlight = t.currentSunlight
-            while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
-                plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
-                currentSunlight -= TWENTY_FIVE
-            }
+//            var currentSunlight = t.currentSunlight
+//            while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
+//                plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
+//                currentSunlight -= TWENTY_FIVE
+//            }
+            val times = (t.currentSunlight - neededSunlight) / TWENTY_FIVE
+            plant.harvestEstimate = kotlin.math.floor(
+                plant.harvestEstimate
+                    * PENALTY_POINT_NINE.pow(times.toDouble())
+            ).toInt()
         }
 
         /*while (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
@@ -474,7 +499,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
     fun applyBeeHappy(t: Tile): Boolean {
         var acted = false
         val plant = t.plant ?: return false
-        if (plant.pollination > 1.0) {
+        if (plant.pollination.isNotEmpty()) {
             acted = true
             plant.applyPollinationBuff()
         }

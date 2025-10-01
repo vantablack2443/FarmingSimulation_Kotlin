@@ -27,8 +27,8 @@ class Oat : FieldPlant() {
 
     override var bloomingTime: Duration? = null
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
 
     override val cuttingTime = mutableListOf<CustomPair>()
     override val mowingTime = mutableListOf<CustomPair>()

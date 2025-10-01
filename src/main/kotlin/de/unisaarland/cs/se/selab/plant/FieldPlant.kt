@@ -30,8 +30,8 @@ abstract class FieldPlant : Plant() {
      * Sets the animalAttack boolean to true
      */
     override fun doAnimalAttack() {
+        this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY_FIELDS)
         this.animalAttack = true
-        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY_FIELDS
     }
 
     /**
@@ -39,8 +39,10 @@ abstract class FieldPlant : Plant() {
      * Reduces the harvest estimate by 50%
      */
     override fun animalAttackPenalty() {
-        val newEstimate = this.harvestEstimate * animalAttackPenalty
-        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        for (debuff in animalAttackPenalty) {
+            val newEstimate = this.harvestEstimate * debuff
+            this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        }
     }
 
     /**

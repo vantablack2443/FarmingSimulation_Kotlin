@@ -25,8 +25,8 @@ class Grape : PlantationPlant() {
     override var neededMoisture = GRAPE_MOISTURE
     override var harvestEstimate = GRAPE_HARVEST
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(GRAPE_CUT_START, GRAPE_CUT_END), false),
     )
@@ -38,8 +38,10 @@ class Grape : PlantationPlant() {
     override var bloomingTime: Duration? = Duration(GRAPE_BLOOM_START, GRAPE_BLOOM_END)
 
     override fun animalAttackPenalty() {
-        val newEstimate = this.harvestEstimate * animalAttackPenalty
-        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        for (debuff in animalAttackPenalty) {
+            val newEstimate = this.harvestEstimate * debuff
+            this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
+        }
     }
 
     override fun resetHarvestEstimate() {
@@ -47,7 +49,7 @@ class Grape : PlantationPlant() {
     }
 
     override fun doAnimalAttack() {
-        this.animalAttackPenalty *= GRAPE_ANIMAL_ATTACK_PENALTY
+        this.animalAttackPenalty.add(GRAPE_ANIMAL_ATTACK_PENALTY)
         this.animalAttack = true
     }
 

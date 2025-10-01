@@ -11,6 +11,7 @@ const val POTATO_SOW_START = 7
 const val POTATO_SOW_END = 10
 const val POTATO_HARVEST_START = 17
 const val POTATO_HARVEST_END = 20
+const val POTATO_BLOOM_OFFSET = 4
 
 /**
  * Potato class
@@ -24,8 +25,8 @@ class Potato : FieldPlant() {
 
     override var bloomingTime: Duration? = null
     override var animalAttack = false
-    override var pollination = 1.0
-    override var animalAttackPenalty = 1.0
+    override val pollination = mutableListOf<Double>()
+    override val animalAttackPenalty = mutableListOf<Double>()
 
     override val cuttingTime = mutableListOf<CustomPair>()
     override val mowingTime = mutableListOf<CustomPair>()
@@ -40,6 +41,13 @@ class Potato : FieldPlant() {
             actionsNeeded.add(ActionType.HARVESTING)
         }
         // Potato has no late harvesting period
+    }
+
+    // USES SIM-TICK
+    override fun isBlooming(tick: Int): Boolean {
+        // Two ticks after sowing
+        // For two ticks
+        return tick == sownSimTick + POTATO_BLOOM_OFFSET
     }
 
     // USES SIM-TICK

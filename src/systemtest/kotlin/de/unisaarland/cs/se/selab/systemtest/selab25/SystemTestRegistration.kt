@@ -11,6 +11,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSam
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
@@ -20,7 +22,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMi
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPlanTileOnNextFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithoutFieldLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
@@ -46,6 +47,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -56,10 +58,11 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanFieldsDifferentFarms
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
-
 /**
  * Used for test registration
  */
@@ -114,7 +117,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultTickOne())
         testSuite.registerTest(PlantationPlantsDefault())
-
+        testSuite.registerTest(TestSowingFollowedByDrought())
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
@@ -135,8 +138,10 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(TwentyEightDays())
         testSuite.registerTest(MultipleBeeHappies())
-        testSuite.registerTest(FullSimAAWithoutFieldLog())
         testSuite.registerTest(FullSimAAWithFieldLog())
+        testSuite.registerTest(NoWayHome())
+        testSuite.registerTest(DroughtThenBeeHappy())
+        testSuite.registerTest(DroughtThenBeeHappy2())
     }
 
     /**
@@ -187,5 +192,8 @@ object SystemTestRegistration {
         testSuite.registerTest(TwentyEightDays())
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
+        testSuite.registerTest(FullSimAAWithFieldLog())
+        testSuite.registerTest(MultipleBeeHappies())
+        testSuite.registerTest(SowingPlanFieldsDifferentFarms())
     }
 }

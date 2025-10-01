@@ -98,7 +98,7 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
-        assertNextLine("[IMPORTANT] Incident: Incident 2 of type ANIMAL_ATTACK happened and affected tiles 2.")
+        assertNextLine("[IMPORTANT] Incident: Incident 2 of type ANIMAL_ATTACK happened and affected tiles 2,4,11.")
         assertNextLine("[IMPORTANT] Incident: Incident 3 of type BEE_HAPPY happened and affected tiles 10.")
         assertNextLine("[IMPORTANT] Incident: Incident 4 of type DROUGHT happened and affected tiles 5.")
         // tick 1, yearTick 5, only clouds and incident
