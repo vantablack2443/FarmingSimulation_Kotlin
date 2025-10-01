@@ -18,6 +18,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAc
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
@@ -160,6 +161,8 @@ object SystemTestRegistration {
         testSuite.registerTest(ValidatePlantCoupling())
         testSuite.registerTest(ValidateMachineUniqueness())
         testSuite.registerTest(ValidateMachineUniquenessB())
+
+        testSuite.registerTest(DroughtThenSow())
     }
 
     /**
