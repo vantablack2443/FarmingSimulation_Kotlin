@@ -15,8 +15,8 @@ const val WHEAT_BLOOM_END = 9
 const val WHEAT_HARVEST_START = 11
 
 // const val WHEAT_HARVEST_END = 13
-const val WHEAT_WEED_START_OFFSET = 4
-const val WHEAT_WEED_END_OFFSET = 10
+const val WHEAT_WEED_START_OFFSET = 3
+const val WHEAT_WEED_END_OFFSET = 9
 const val WHEAT_LATE_HARVEST_PENALTY = 0.8
 
 /**
