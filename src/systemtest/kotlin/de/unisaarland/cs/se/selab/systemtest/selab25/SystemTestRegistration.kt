@@ -58,8 +58,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTe
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
-
 /**
  * Used for test registration
  */
@@ -114,7 +114,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultTickOne())
         testSuite.registerTest(PlantationPlantsDefault())
-
+        testSuite.registerTest(TestSowingFollowedByDrought())
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
