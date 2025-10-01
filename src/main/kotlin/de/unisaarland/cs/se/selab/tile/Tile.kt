@@ -102,6 +102,11 @@ class Tile(
             return
         }
 
+        // check if the estimate is greater than 0
+        if (plant?.harvestEstimate == 0) {
+            return
+        }
+
         // Only required if current moisture is less than needed moisture
         if (cm < p.neededMoisture) {
             actionsNeeded.add(ActionType.IRRIGATING)
