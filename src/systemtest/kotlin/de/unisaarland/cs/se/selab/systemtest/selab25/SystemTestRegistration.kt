@@ -187,5 +187,6 @@ object SystemTestRegistration {
         testSuite.registerTest(TwentyEightDays())
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
+        testSuite.registerTest(FullSimAAWithFieldLog())
     }
 }
