@@ -44,6 +44,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         for (tile in plantableTiles) {
             if (!tile.hasPlantGrowing()) {
+                tile.droughtHit = false
                 continue
             }
             when (tile.category) {
