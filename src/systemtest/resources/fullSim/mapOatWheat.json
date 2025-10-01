@@ -1,0 +1,36 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "coordinates": { "x": 5, "y": 1 },
+      "category": "FARMSTEAD",
+      "farm": 1,
+      "shed": true,
+      "airflow": false
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 6, "y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": 8, "y": 2 },
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 10000,
+      "possiblePlants": ["OAT"],
+      "airflow": false
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": 10, "y": 2 },
+      "category": "FIELD",
+      "farm": 1,
+      "capacity": 10000,
+      "possiblePlants": ["WHEAT"],
+      "airflow": false
+    }
+  ]
+}
