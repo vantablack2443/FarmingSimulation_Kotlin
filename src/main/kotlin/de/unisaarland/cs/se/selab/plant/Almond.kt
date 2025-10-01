@@ -28,7 +28,10 @@ class Almond : PlantationPlant() {
     override var harvestEstimate = ALMOND_HARVEST
     override var animalAttack = false
     override val pollination = mutableListOf<Double>()
+
     override val animalAttackPenalty = mutableListOf<Double>()
+
+//    override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(ALMOND_CUT_START, ALMOND_CUT_END), false),
         CustomPair(Duration(ALMOND_CUT_START_ALT, ALMOND_CUT_END_ALT), false)
@@ -45,6 +48,8 @@ class Almond : PlantationPlant() {
             val newEstimate = this.harvestEstimate * debuff
             this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
         }
+//        val newEstimate = this.harvestEstimate * animalAttackPenalty
+//        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     override fun applyPollinationBuff() {
@@ -56,6 +61,7 @@ class Almond : PlantationPlant() {
 
     override fun doAnimalAttack() {
         this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY)
+//        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
         this.animalAttack = true
     }
 

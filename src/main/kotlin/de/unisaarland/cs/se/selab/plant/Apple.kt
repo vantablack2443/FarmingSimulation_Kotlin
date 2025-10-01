@@ -29,7 +29,10 @@ class Apple : PlantationPlant() {
     override var harvestEstimate = APPLE_HARVEST
     override var animalAttack = false
     override val pollination = mutableListOf<Double>()
+
     override val animalAttackPenalty = mutableListOf<Double>()
+
+//    override var animalAttackPenalty = 1.0
     override val cuttingTime = mutableListOf(
         CustomPair(Duration(APPLE_CUT_START, APPLE_CUT_END), false),
         CustomPair(Duration(APPLE_CUT_START_ALT, APPLE_CUT_END_ALT), false)
@@ -49,6 +52,8 @@ class Apple : PlantationPlant() {
             val newEstimate = this.harvestEstimate * debuff
             this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
         }
+//        val newEstimate = this.harvestEstimate * animalAttackPenalty
+//        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     /**
@@ -66,6 +71,7 @@ class Apple : PlantationPlant() {
      */
     override fun doAnimalAttack() {
         this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY)
+//        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
         this.animalAttack = true
     }
 

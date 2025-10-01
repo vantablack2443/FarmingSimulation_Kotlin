@@ -26,7 +26,10 @@ class Pumpkin : FieldPlant() {
 
     override var animalAttack = false
     override val pollination = mutableListOf<Double>()
+
     override val animalAttackPenalty = mutableListOf<Double>()
+
+//    override var animalAttackPenalty = 1.0
     override var bloomingTime: Duration? = null
 
     override val cuttingTime = mutableListOf<CustomPair>()

@@ -10,7 +10,6 @@ import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 import de.unisaarland.cs.se.selab.tile.Tile
-import kotlin.math.pow
 
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -120,6 +119,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         plantOfTile.pollination.clear()
         plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         // Does not log change if harvested
@@ -234,6 +234,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         plantOfTile.pollination.clear()
         plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         if (t.harvestedThisTick) {
@@ -300,16 +301,16 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             if (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
                 acted = true
             }
-//            var currentSunlight = t.currentSunlight
-//            while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
-//                plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
-//                currentSunlight -= TWENTY_FIVE
-//            }
-            val times = (t.currentSunlight - neededSunlight) / TWENTY_FIVE
-            plant.harvestEstimate = kotlin.math.floor(
-                plant.harvestEstimate
-                    * PENALTY_POINT_NINE.pow(times.toDouble())
-            ).toInt()
+            var currentSunlight = t.currentSunlight
+            while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
+                plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
+                currentSunlight -= TWENTY_FIVE
+            }
+//            val times = (t.currentSunlight - neededSunlight) / TWENTY_FIVE
+//            plant.harvestEstimate = kotlin.math.floor(
+//                plant.harvestEstimate
+//                    * PENALTY_POINT_NINE.pow(times.toDouble())
+//            ).toInt()
         }
 
         /*while (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {

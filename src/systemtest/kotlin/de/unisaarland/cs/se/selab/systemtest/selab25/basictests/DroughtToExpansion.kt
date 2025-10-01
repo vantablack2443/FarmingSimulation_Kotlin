@@ -14,13 +14,13 @@ class DroughtToExpansion : ExampleSystemTestExtension() {
     override val scenario = "JustIncident/droughtCityScenario.json"
     override val map = "JustIncident/droughtCityMap.json"
 
-    override val logLevel = "IMPORTANT"
+    override val logLevel = "INFO"
     override val maxTicks = 1
     override val startYearTick = 1
 
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: droughtCityMap.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: droughtCityFarm.json successfully parsed and validated.")
-        assertNextLine("[IMPORTANT] Initialization Info: droughtCityScenario.json is invalid.")
+        assertNextLine("[INFO] Initialization Info: droughtCityScenario.json is invalid.")
     }
 }
