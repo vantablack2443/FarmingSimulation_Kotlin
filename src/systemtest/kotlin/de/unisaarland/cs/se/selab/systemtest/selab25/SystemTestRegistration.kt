@@ -80,7 +80,6 @@ object SystemTestRegistration {
      * the same as their reference implementation)
      */
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
-
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
