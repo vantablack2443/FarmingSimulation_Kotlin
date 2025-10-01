@@ -24,11 +24,6 @@ class NoFarmDroughtSimple : ExampleSystemTestExtension() {
 
     private fun result(): String {
         return """
-[INFO] Initialization Info: map.json successfully parsed and validated.
-[INFO] Initialization Info: farm.json successfully parsed and validated.
-[INFO] Initialization Info: scenario.json successfully parsed and validated.
-[INFO] Simulation Info: Simulation started at tick 1 within the year.
-[INFO] Simulation Info: Tick 0 started at tick 1 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 1 starts its actions.
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: .
@@ -45,7 +40,7 @@ class NoFarmDroughtSimple : ExampleSystemTestExtension() {
 [IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
-[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
+[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 3400000 g.
         """.trimIndent()
     }
 }
