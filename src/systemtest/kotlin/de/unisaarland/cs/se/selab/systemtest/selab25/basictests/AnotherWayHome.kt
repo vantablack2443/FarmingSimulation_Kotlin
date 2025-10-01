@@ -25,6 +25,8 @@ class AnotherWayHome : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 1083000 g of GRAPE harvest.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 11.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 1083000 g of GRAPE harvest in the shed.")
+        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
+        assertNextLine("[IMPORTANT] Incident: Incident 0 of type BROKEN_MACHINE happened and affected tiles 11.")
         skipUntilString("[IMPORTANT] Simulation Info: Simulation statistics are calculated.")
         assertNextLine("[IMPORTANT] Simulation Statistics: Farm 1 collected 1083000 g of harvest.")
     }
