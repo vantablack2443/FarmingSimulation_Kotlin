@@ -33,6 +33,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBet
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.JustMow
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.LogCherryDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineCantReturnDueHarvest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineDefaultAction
@@ -90,6 +91,7 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtToExpansion())
         testSuite.registerTest(DroughtToExpansionValid())
         testSuite.registerTest(DroughtToExpansion2())
+        testSuite.registerTest(LogCherryDrought())
 
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
