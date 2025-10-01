@@ -151,7 +151,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.droughtHit = false
             t.plant = null
             t.currentCrop = null
-            if (t.fallowDuration == null) {
+            val fallow = t.fallowDuration
+            if (fallow == null) {
+                t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+            } else if (!fallow.inRange(simTick)) {
                 t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
             }
         }
@@ -300,6 +303,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         t.plant?.let { plant ->
             if (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
                 acted = true
+            } else {
+                return false
             }
             var currentSunlight = t.currentSunlight
             while (currentSunlight - neededSunlight >= TWENTY_FIVE) {
@@ -325,7 +330,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * is less than the needed moisture.
      */
     fun applyMoisture(t: Tile): Boolean {
-        var acted = false
         val plant = t.plant ?: error("Need moisture needed")
         var currentMoisture = t.currentMoisture ?: error("Need moisture needed")
 
@@ -335,12 +339,14 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         }
 
         if (plant.neededMoisture - currentMoisture >= HUNDRED) {
-            acted = true
+            while (plant.neededMoisture - currentMoisture >= HUNDRED) {
+                plant.harvestEstimate = maxOf(plant.harvestEstimate - FIFTY, 0)
+                currentMoisture += HUNDRED
+            }
+        } else {
+            return false
         }
-        while (plant.neededMoisture - currentMoisture >= HUNDRED) {
-            plant.harvestEstimate = maxOf(plant.harvestEstimate - FIFTY, 0)
-            currentMoisture += HUNDRED
-        }
+        return true
         // Previous version
         /*val penaltyCounter = (plant.neededMoisture - currentMoisture) / HUNDRED
         plant.harvestEstimate -= FIFTY * penaltyCounter*/
@@ -355,7 +361,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val currentMoisture = t.currentMoisture ?: error("Need moisture needed")
         val penaltyCounter = (neededMoisture - currentMoisture) / HUNDRED
         t.plant!!.harvestEstimate -= FIFTY * penaltyCounter*/
-        return acted
     }
 
     /**
@@ -367,7 +372,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val plant = t.plant ?: return false
 
         // Checks if WEEDING is in actionsNeeded to apply penalty
-        while (ActionType.WEEDING in t.actionsNeeded) {
+        if (ActionType.WEEDING in t.actionsNeeded) {
             acted = true
             t.actionsNeeded.remove(ActionType.WEEDING)
             plant.applyMissedWeedingPenalty()
@@ -391,8 +396,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
          *  estimateHarvest() would most likely need to include the yearTick parameter as well since
          *  applyLateHarvestPenalty needs it to determine how many times the penalty needs to be applied
          */
+        val actionsNeeded = t.actionsNeeded
         val plant = t.plant ?: return false
-        return plant.applyLateHarvestPenalty(yearTick)
+
+        if (ActionType.HARVESTING in actionsNeeded) {
+            return plant.applyLateHarvestPenalty(yearTick)
+        }
+        return false
     }
 
     /**
@@ -410,8 +420,8 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val crop = t.currentCrop ?: return
         // Remove cutting only if it's not the last tick of all the cutting periods
         val shouldRemoveCutting = when (crop) {
-            PlantType.GRAPE -> yearTick != SIXTEEN // End August
-            PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> yearTick != FOUR // End February
+            PlantType.GRAPE -> yearTick != SIXTEEN // except  End August
+            PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> yearTick != FOUR // except End February
             else -> false
         }
 
@@ -481,7 +491,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         var acted = false
         val plant = t.plant ?: return false
 
-        while (ActionType.MOWING in t.actionsNeeded) {
+        if (ActionType.MOWING in t.actionsNeeded) {
             acted = true
             t.actionsNeeded.remove(ActionType.MOWING)
             plant.applyMowingPenalty()

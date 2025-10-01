@@ -37,7 +37,29 @@ class FullSimTestUntilHarvesting : ExampleSystemTestExtension() {
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs WEEDING on tile 18 for 3 days.")
         skipLines(4)
-        // yeartick 13
+        // yeartick 13, harvest oats
+        skipLines(4)
+        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 11 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 100062 g of OAT harvest.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 100062 g of OAT harvest in the shed.")
+        skipLines(2)
+        assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 5 for 3 days.")
+        assertNextLine("[IMPORTANT] Farm Harvest: Machine 4 has collected 787320 g of OAT harvest.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 is finished and returns to the shed at 6.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 4 unloads 787320 g of OAT harvest in the shed.")
+        skipLines(1)
+        // yeartick 14, nothing
+        skipLines(4)
+        assertNextLine("[IMPORTANT] Farm: Farm 1 starts its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
+        // yeartick 15
+        skipLines(8)
+        // yeartick 16
+
+        /*
         skipLines(7)
         assertNextLine("[IMPORTANT] Farm Action: Machine 5 performs WEEDING on tile 5 for 3 days.")
         skipLines(2)
@@ -62,6 +84,7 @@ class FullSimTestUntilHarvesting : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
         assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
+         */
     }
 
     private suspend fun tickUntilMay() {

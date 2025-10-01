@@ -6,6 +6,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
 
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
@@ -148,6 +149,7 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimTestUntilHarvesting())
 
         testSuite.registerTest(AnotherWayHome())
+        testSuite.registerTest(BigScenarioFirst4Ticks())
     }
 
     /**
