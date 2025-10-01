@@ -29,7 +29,7 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 1 has sowed PUMPKIN according to sowing plan 4.")
         skipLines(4)
         // resets mowing for APPLE
-        assertNextLine("[IMPORTANT] Incident: Incident 5 of type ANIMAL_ATTACK happened and affected tiles 2,11.")
+        assertNextLine("[IMPORTANT] Incident: Incident 5 of type ANIMAL_ATTACK happened and affected tiles 2,4,11.")
         // yeartick 11
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs MOWING on tile 10 for 3 days.")
