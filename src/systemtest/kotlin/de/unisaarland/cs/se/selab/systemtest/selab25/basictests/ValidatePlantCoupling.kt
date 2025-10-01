@@ -21,6 +21,6 @@ class ValidatePlantCoupling : ExampleSystemTestExtension() {
     override suspend fun run() {
         assertNextLine("[INFO] Initialization Info: plantCouplingMap.json successfully parsed and validated.")
         assertNextLine("[INFO] Initialization Info: plantCouplingFarm.json successfully parsed and validated.")
-        assertNextLine("[INFO] Initialization Info: plantCouplingScenario.json successfully parsed and validated.")
+        assertNextLine("[INFO] Initialization Info: emptyScenario.json successfully parsed and validated.")
     }
 }
