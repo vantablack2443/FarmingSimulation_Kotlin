@@ -6,15 +6,15 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
  * Test a normal cycle of planting and harvesting apple
  */
 class Apples : ExampleSystemTestExtension() {
-    override val name = "AppleNormalCycle"
+    override val name = "apples"
     override val description = "Test a normal cycle of planting and harvesting apple"
 
-    override val farms = "AppleNormalCycle/farms.json"
-    override val scenario = "AppleNormalCycle/scenario.json"
-    override val map = "AppleNormalCycle/map.json"
+    override val farms = "apples/farms.json"
+    override val scenario = "apples/scenario.json"
+    override val map = "apples/map.json"
 
     override val logLevel = "DEBUG"
-    override val maxTicks = 13
+    override val maxTicks = 15
     override val startYearTick = 4
 
     val hi = """
