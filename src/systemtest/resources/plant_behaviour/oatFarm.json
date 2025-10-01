@@ -1,0 +1,29 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "Not So Perfect Oat",
+      "farmsteads": [10],
+      "fields": [1],
+      "plantations": [],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Tractor",
+          "actions": ["SOWING", "WEEDING", "HARVESTING"],
+          "plants": ["OAT"],
+          "duration": 4,
+          "location": 10
+        }
+      ],
+      "sowingPlans": [
+        {
+          "id": 1,
+          "tick": 0,
+          "plant": "OAT",
+          "fields": [1]
+        }
+      ]
+    }
+  ]
+}

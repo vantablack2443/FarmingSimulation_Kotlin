@@ -53,6 +53,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloud
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCloudCreationSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -152,8 +153,9 @@ object SystemTestRegistration {
         testSuite.registerTest(SaharaMock())
         testSuite.registerTest(SaharaMock2())
 
-        testSuite.registerTest(AnotherWayHome())
+        // testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
+        testSuite.registerTest(OatBehaviourTest())
     }
 
     /**
@@ -211,5 +213,6 @@ object SystemTestRegistration {
         testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(MachineBehaviorTest())
         testSuite.registerTest(FullSimTest())
+        testSuite.registerTest(OatBehaviourTest())
     }
 }
