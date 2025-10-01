@@ -1,0 +1,22 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "Nyangkut Farm",
+      "farmsteads": [10],
+      "fields": [],
+      "plantations": [1],
+      "machines": [
+        {
+          "id": 1,
+          "name": "Tractor",
+          "actions": ["HARVESTING", "CUTTING"],
+          "plants": ["GRAPE"],
+          "duration": 4,
+          "location": 10
+        }
+      ],
+      "sowingPlans": []
+    }
+  ]
+}
