@@ -175,6 +175,10 @@ class IrrigationHandler(
             continueAction(machine, operableFieldTiles, operablePlantationTiles, farm)
         }
 
+        if (!machine.canPerform()) {
+            return
+        }
+
         val plantationTiles = operablePlantationTiles.intersect(reach.toSet()).sortedBy { it.id }.toMutableList()
         if (plantationTiles.isNotEmpty()) {
             performAction(farm, machine, plantationTiles.first())
