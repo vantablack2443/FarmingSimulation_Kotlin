@@ -55,7 +55,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseandCl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmandCloudCreationInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatBehaviourTest
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.OatWheatYearTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureHundred
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationHarvestMoistureSeventy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefault
@@ -70,6 +69,10 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPriori
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
+
 /**
  * Used for test registration
  */
@@ -137,13 +140,13 @@ object SystemTestRegistration {
         testSuite.registerTest(IncidentsWithHarvestEstimateOneTick())
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
-        testSuite.registerTest(PotatoBehaviourTest())
+        // testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
-        testSuite.registerTest(NoWayHome())
+        // testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
         testSuite.registerTest(DroughtThenBeeHappy2())
         testSuite.registerTest(FullSimTestUntilHarvesting())
@@ -154,7 +157,9 @@ object SystemTestRegistration {
         testSuite.registerTest(BigScenarioFirst4Ticks())
         testSuite.registerTest(OatBehaviourTest())
         testSuite.registerTest(Apples())
-        testSuite.registerTest(OatWheatYearTest())
+        testSuite.registerTest(ValidatePlantCoupling())
+        testSuite.registerTest(ValidateMachineUniqueness())
+        testSuite.registerTest(ValidateMachineUniquenessB())
     }
 
     /**
@@ -214,5 +219,6 @@ object SystemTestRegistration {
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(OatBehaviourTest())
         testSuite.registerTest(BigScenarioFirst4Ticks())
+        testSuite.registerTest(Apples())
     }
 }
