@@ -208,5 +208,6 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(AnotherWayHome())
+        testSuite.registerTest(MachineBehaviorTest())
     }
 }
