@@ -210,5 +210,6 @@ object SystemTestRegistration {
         testSuite.registerTest(NoWayHome())
         testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(MachineBehaviorTest())
+        testSuite.registerTest(FullSimTest())
     }
 }
