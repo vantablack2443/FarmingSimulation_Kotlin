@@ -90,6 +90,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed
             machine.resetElapsedTime()
+            return
         }
 //
 //        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)

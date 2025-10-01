@@ -89,6 +89,7 @@ class MowingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Action
         if (!machine.canPerform()) {
             machine.currentTile = machine.homeShed
             machine.resetElapsedTime()
+            return
         }
 
         val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
