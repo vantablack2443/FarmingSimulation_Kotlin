@@ -3,10 +3,10 @@ package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
 /**
- * Sahara mock test, first half right before sowing log estimate change to 0g.
+ * Second half of sahara mock, with sowing estimate change to 0g log
  */
-class SaharaMock : ExampleSystemTestExtension() {
-    override val name = "SaharaMock"
+class SaharaMock2 : ExampleSystemTestExtension() {
+    override val name = "SaharaMock2"
     override val description = "Mock test with desert map and no farms"
 
     // Paths are relative from the `src/systemtest/resources` directory.
@@ -37,6 +37,7 @@ class SaharaMock : ExampleSystemTestExtension() {
 [IMPORTANT] Farm Sowing: Machine 0 has sowed POTATO according to sowing plan 0.
 [IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 0.
 [IMPORTANT] Farm: Farm 0 finished its actions.
+[INFO] Harvest Estimate: Harvest estimate on tile 2 changed to 0 g of POTATO.
     """.trimIndent()
 
     override suspend fun run() {
