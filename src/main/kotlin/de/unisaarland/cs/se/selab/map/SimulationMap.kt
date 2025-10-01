@@ -202,6 +202,18 @@ class SimulationMap(
     }
 
     /**
+     * Gets next possible tile for continuing action
+     */
+    fun tileForContinueActionSowing(machine: Machine, actionTilesFarm: List<Tile>, farm: Farm): Tile? {
+        val carryingHarvestBool: Boolean = machine.currentHarvest != null
+        val allReachableInRadius = getReachableTiles(machine, 2, carryingHarvestBool)
+        val possibleTiles = actionTilesFarm.intersect(allReachableInRadius.toSet()).sortedBy { it.id }
+        val possibleTilesNotHashed = possibleTiles.filter { it.id !in farm.tileHashMap }
+        if (possibleTilesNotHashed.isNotEmpty()) return possibleTilesNotHashed.minByOrNull { it.id }
+        return null
+    }
+
+    /**
      * find the shed to which the machine returns
      * first priority: Home shed then priority by ID
      * returns null if no shed on the farm is reachable

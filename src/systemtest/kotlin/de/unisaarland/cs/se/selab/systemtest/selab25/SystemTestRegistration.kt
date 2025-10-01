@@ -80,9 +80,6 @@ object SystemTestRegistration {
      * the same as their reference implementation)
      */
     fun registerSystemTestsForReferenceImplementation(testSuite: SELab25TestSuite) {
-//        testSuite.registerTest(ExampleSystemTest())
-//        testSuite.registerTest(CloudMovementTest())
-
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
@@ -214,5 +211,6 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineBehaviorTest())
         testSuite.registerTest(FullSimTest())
         testSuite.registerTest(OatBehaviourTest())
+        testSuite.registerTest(BigScenarioFirst4Ticks())
     }
 }
