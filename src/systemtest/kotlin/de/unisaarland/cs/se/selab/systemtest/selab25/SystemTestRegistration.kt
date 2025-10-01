@@ -12,6 +12,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTes
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
@@ -57,8 +58,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTe
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingAndDroughtInOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPrioritization
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
-
 /**
  * Used for test registration
  */
@@ -81,6 +82,7 @@ object SystemTestRegistration {
         testSuite.registerTest(CutAppleMissedAction3())
         testSuite.registerTest(MachinePriority())
         testSuite.registerTest(DroughtToExpansion())
+        testSuite.registerTest(DroughtToExpansionValid())
 
         // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
         // testSuite.registerTest(FarmNoPlantableTiles())
@@ -112,7 +114,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationPlantsTickOneMachines())
         testSuite.registerTest(PlantationPlantsDefaultTickOne())
         testSuite.registerTest(PlantationPlantsDefault())
-
+        testSuite.registerTest(TestSowingFollowedByDrought())
         testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
         testSuite.registerTest(FarmParserTestMissingTilesInField())
         testSuite.registerTest(MapParserTestVillageAdjoinForest())
@@ -167,23 +169,22 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
         testSuite.registerTest(ExampleSystemTest())
         testSuite.registerTest(CloudMovementTest())
-//        testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(CasualCheckBehaviorTest())
+        testSuite.registerTest(MachinePriority())
+        testSuite.registerTest(CutAppleMissedAction3())
         testSuite.registerTest(MachineDefaultAction())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(PlantationPlantsTickOneMachines())
-        testSuite.registerTest(PlantationPlantsDefaultTickOneWithoutLog())
+        testSuite.registerTest(PlantationPlantsDefault())
         testSuite.registerTest(PotatoBehaviourTest())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-//        testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(TwentyEightDays())
-
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
     }
