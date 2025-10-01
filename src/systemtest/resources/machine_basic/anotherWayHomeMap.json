@@ -27,9 +27,8 @@
       "coordinates": { "x": 3, "y": 1 },
       "category": "FARMSTEAD",
       "farm": 1,
-      "shed": false,
+      "shed": true,
       "airflow": false
     }
   ]
 }
-
