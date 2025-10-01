@@ -14,7 +14,7 @@ class SaharaMock : ExampleSystemTestExtension() {
     override val scenario = "SaharaMock/scenario.json"
     override val map = "SaharaMock/map.json"
 
-    override val logLevel = "DEBUG"
+    override val logLevel = "INFO"
     override val maxTicks = 2
     override val startYearTick = 8
 

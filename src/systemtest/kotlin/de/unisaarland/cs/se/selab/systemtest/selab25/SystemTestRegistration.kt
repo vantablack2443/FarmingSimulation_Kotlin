@@ -20,7 +20,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHa
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EmptyTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
@@ -29,6 +28,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestPl
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimAAWithFieldLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FullSimTestUntilHarvesting
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.HarvestingLogic
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentSpaceBetweenTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IncidentsWithHarvestEstimateOneTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.IrrigationLogic
@@ -132,7 +132,7 @@ object SystemTestRegistration {
         testSuite.registerTest(ScenarioParserTestCloudOnVillage())
         testSuite.registerTest(FarmParserTestNoFieldInPlan())
 
-        testSuite.registerTest(EmptyTest())
+        testSuite.registerTest(HarvestingLogic())
         testSuite.registerTest(SowingPlanPrioritization())
         testSuite.registerTest(CasualCheckBehaviorTest())
         testSuite.registerTest(MachineBehaviorTest())
