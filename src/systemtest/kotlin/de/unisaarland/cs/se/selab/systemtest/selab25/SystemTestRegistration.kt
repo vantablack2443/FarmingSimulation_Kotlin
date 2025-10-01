@@ -69,6 +69,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPriori
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
+
 /**
  * Used for test registration
  */
@@ -153,6 +155,7 @@ object SystemTestRegistration {
         testSuite.registerTest(BigScenarioFirst4Ticks())
         testSuite.registerTest(OatBehaviourTest())
         testSuite.registerTest(Apples())
+        testSuite.registerTest(ValidatePlantCoupling())
     }
 
     /**
