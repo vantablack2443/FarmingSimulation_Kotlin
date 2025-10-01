@@ -151,7 +151,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.droughtHit = false
             t.plant = null
             t.currentCrop = null
-            if (t.fallowDuration == null) {
+            val fallow = t.fallowDuration
+            if (fallow == null) {
+                t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+            } else if (!fallow.inRange(simTick)) {
                 t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
             }
         }
