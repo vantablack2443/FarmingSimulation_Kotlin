@@ -27,7 +27,6 @@ import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST
 import de.unisaarland.cs.se.selab.plantdata.GRAPE_HARVEST_START_END
 import de.unisaarland.cs.se.selab.tile.Tile
 import kotlin.math.floor
-import kotlin.math.pow
 
 const val MOISTURE_WITH_PLANT = 100
 const val MOISTURE_WITHOUT_PLANT = 70
@@ -285,23 +284,25 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
      * helper function for grape plantations harvest
      */
     private fun grapePenalty(grapePlantations: List<Tile>) {
+        val onePenaltyHarvest = floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY).toInt()
+        val twoPenaltyHarvest = floor(onePenaltyHarvest * GRAPE_LATE_HARVEST_PENALTY).toInt()
         when (this.currentYearTick) {
             GRAPE_HARVEST_START_END + 1 -> {
                 grapePlantations.forEach {
                     it.plant?.harvestEstimate =
-                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY).toInt()
+                        onePenaltyHarvest
                 }
             }
             GRAPE_HARVEST_START_END + 2 -> {
                 grapePlantations.forEach {
                     it.plant?.harvestEstimate =
-                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY.pow(2)).toInt()
+                        twoPenaltyHarvest
                 }
             }
             GRAPE_HARVEST_START_END + 3 -> {
                 grapePlantations.forEach {
                     it.plant?.harvestEstimate =
-                        floor(GRAPE_HARVEST * GRAPE_LATE_HARVEST_PENALTY.pow(3)).toInt()
+                        floor(twoPenaltyHarvest * GRAPE_LATE_HARVEST_PENALTY).toInt()
                 }
             }
             else -> {
