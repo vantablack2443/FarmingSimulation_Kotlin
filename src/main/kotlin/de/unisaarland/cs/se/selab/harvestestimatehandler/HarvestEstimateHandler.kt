@@ -60,7 +60,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
 
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
-        val missedActionList = t.actionsNeeded.toList()
+        val missedActionList = t.actionsNeeded.toMutableList()
 
         // Log missed actions if there are any -- need to verify this
         /*if (t.actionsNeeded.isNotEmpty()) {
@@ -90,6 +90,13 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         )
 
         // Log missed actions only if there is a change in harvest estimate
+        if (missedActionList.contains(ActionType.IRRIGATING)) {
+            val plant = t.plant ?: error("error1")
+            val currentMoisture = t.currentMoisture ?: error("error1")
+            if (plant.neededMoisture - currentMoisture < HUNDRED) {
+                missedActionList.remove(ActionType.IRRIGATING)
+            }
+        }
         if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
@@ -165,7 +172,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         val initialHarvestEstimate = plantOfTile.harvestEstimate
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
-        val missedActionList = t.actionsNeeded.toList()
+        val missedActionList = t.actionsNeeded.toMutableList()
 
         // Log missed actions if there are any -- need to verify this
         /*if (t.actionsNeeded.isNotEmpty()) {
@@ -196,8 +203,14 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         )
 
         // Log missed actions only if there is a change in harvest estimate
-        // If drought hit the tile, don't log any missed actions
-        if (!t.droughtHit && endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
+        if (missedActionList.contains(ActionType.IRRIGATING)) {
+            val plant = t.plant ?: error("error")
+            val currentMoisture = t.currentMoisture ?: error("error")
+            if (plant.neededMoisture - currentMoisture < HUNDRED) {
+                missedActionList.remove(ActionType.IRRIGATING)
+            }
+        }
+        if (endHarvestEstimate != initialHarvestEstimate && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
         }
 
