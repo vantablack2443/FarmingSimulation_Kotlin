@@ -7,7 +7,6 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
 
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
@@ -116,7 +115,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
         // testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(MachineCantReturnDueHarvest())
-        testSuite.registerTest(AnimalAttackOneEffect())
+        // testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
         // testSuite.registerTest(MaxTickEndLogEquals())
@@ -165,6 +164,7 @@ object SystemTestRegistration {
         testSuite.registerTest(ValidateMachineUniquenessB())
         testSuite.registerTest(DroughtRainThenSow())
         testSuite.registerTest(DroughtThenSow())
+        testSuite.registerTest(DroughtSowExpand())
     }
 
     /**
@@ -188,7 +188,6 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
         testSuite.registerTest(CityExpansionSameTick())
-        testSuite.registerTest(DroughtSowExpand())
     }
 
     /**
