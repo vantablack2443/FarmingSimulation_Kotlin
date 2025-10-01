@@ -193,6 +193,7 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(FullSimAAWithFieldLog())
+        testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(SowingPlanFieldsDifferentFarms())
     }
 }
