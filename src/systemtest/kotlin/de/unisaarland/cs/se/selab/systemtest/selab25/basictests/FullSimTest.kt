@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 
 const val WEEDING_MESSAGE_M3 = "[IMPORTANT] Farm Action: Machine 3 performs WEEDING on tile 11 for 3 days."
 const val WEEDING_MESSAGE_M5 = "[IMPORTANT] Farm Action: Machine 5 performs WEEDING on tile 4 for 3 days."
+const val RETURN_M_ONE = "[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1."
 
 /**
  * tests cloud phase for one tick with cloud creation incidents
@@ -41,10 +42,10 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs WEEDING on tile 18 for 3 days.")
         skipLines(4)
         // yeartick 13, harvest oats
-        skipLines(4)
+        skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 11 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 100062 g of OAT harvest.")
-        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
+        assertNextLine(RETURN_M_ONE)
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 unloads 100062 g of OAT harvest in the shed.")
         skipLines(2)
         assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs HARVESTING on tile 5 for 3 days.")
@@ -54,12 +55,10 @@ class FullSimTest : ExampleSystemTestExtension() {
         skipLines(1)
         // yeartick 14, nothing
         skipLines(4)
-        assertNextLine("[IMPORTANT] Farm: Farm 1 starts its actions.")
-        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
-        assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
-        assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
+        logFarmsNoActions()
         // yeartick 15
-        skipLines(8)
+        skipLines(4)
+        logFarmsNoActions()
         // yeartick 16
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 10 for 3 days.")
@@ -90,9 +89,7 @@ class FullSimTest : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm: Farm 1 starts its actions.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 2 performs CUTTING on tile 2 for 8 days.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 2 is finished and returns to the shed at 1.")
-        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
-        assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
-        assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
+        skipLines(3)
         assertNextLine("[IMPORTANT] Incident: Incident 2 of type ANIMAL_ATTACK happened and affected tiles 2,4,11.")
         assertNextLine("[IMPORTANT] Incident: Incident 3 of type BEE_HAPPY happened and affected tiles 10.")
         assertNextLine("[IMPORTANT] Incident: Incident 4 of type DROUGHT happened and affected tiles 5.")
@@ -103,7 +100,9 @@ class FullSimTest : ExampleSystemTestExtension() {
         skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 11 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 1 has sowed OAT according to sowing plan 1.")
-        skipLines(3)
+        assertNextLine(RETURN_M_ONE)
+        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
         assertNextLine("[IMPORTANT] Farm Action: Machine 4 performs SOWING on tile 4 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Sowing: Machine 4 has sowed OAT according to sowing plan 5.")
         skipLines(2)
@@ -149,5 +148,11 @@ class FullSimTest : ExampleSystemTestExtension() {
             "[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations:" +
                 " 914836 g."
         )
+    }
+    private suspend fun logFarmsNoActions() {
+        assertNextLine("[IMPORTANT] Farm: Farm 1 starts its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 2 starts its actions.")
+        assertNextLine("[IMPORTANT] Farm: Farm 2 finished its actions.")
     }
 }

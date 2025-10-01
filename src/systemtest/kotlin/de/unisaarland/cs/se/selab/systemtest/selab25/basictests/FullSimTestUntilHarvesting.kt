@@ -38,7 +38,7 @@ class FullSimTestUntilHarvesting : ExampleSystemTestExtension() {
         assertNextLine("[IMPORTANT] Farm Action: Machine 3 performs WEEDING on tile 18 for 3 days.")
         skipLines(4)
         // yeartick 13, harvest oats
-        skipLines(4)
+        skipLines(5)
         assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 11 for 3 days.")
         assertNextLine("[IMPORTANT] Farm Harvest: Machine 1 has collected 100062 g of OAT harvest.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
