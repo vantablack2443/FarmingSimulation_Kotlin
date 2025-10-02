@@ -65,6 +65,25 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun fieldHarvestEstimate(t: Tile, simTick: Int, yearTick: Int) {
         val plantOfTile = t.plant ?: return
+
+        // Does not log change if harvested
+        if (t.harvestedThisTick) {
+            // Kill plants and set fallow
+            t.plant = null
+            t.currentCrop = null
+            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
+            // Set fallow
+
+            // Set these to zero
+            // IMPORTANT or else will always set estimate to 0
+            t.harvestedThisTick = false
+            t.droughtHit = false
+            plantOfTile.pollination.clear()
+            plantOfTile.animalAttackPenalty.clear()
+            plantOfTile.animalAttack = false
+            return
+        }
+
         val initialHarvestEstimate = plantOfTile.harvestEstimate
 
         plantOfTile.filterHarvestingIfNotMissed(yearTick, t.actionsNeeded)
@@ -118,32 +137,17 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, kill the plants .
         // If plants killed ,set fallow
 
-        plantOfTile.pollination.clear()
-        plantOfTile.animalAttackPenalty.clear()
-//        plantOfTile.animalAttackPenalty = 1.0
-        plantOfTile.animalAttack = false
-
-        // Does not log change if harvested
-        if (t.harvestedThisTick) {
-            // Kill plants and set fallow
-            t.plant = null
-            t.currentCrop = null
-            t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
-            // Set fallow
-
-            // Set these to zero
-            t.harvestedThisTick = false
-            // IMPORTANT or else will always set estimate to 0
-            t.droughtHit = false
-            return
-        }
-
         // If any change happened including drought, then log harvest including 0
         // Kill plants if estimate is 0 and set fallow
         if (endHarvestEstimate != initialHarvestEstimate) {
             val crop = t.currentCrop ?: return
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
+
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.animalAttack = false
 
         // IMPORTANT or else will always set estimate to 0
         // With drought the plants are killed, could hit on plantations that started out 0 too
@@ -175,6 +179,15 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      */
     fun plantationHarvestEstimate(t: Tile, yearTick: Int) {
         val plantOfTile = t.plant ?: return
+
+        if (t.harvestedThisTick) {
+            t.harvestedThisTick = false
+            t.droughtHit = false
+            plantOfTile.pollination.clear()
+            plantOfTile.animalAttackPenalty.clear()
+            plantOfTile.animalAttack = false
+            return
+        }
 
         // If there is 0 harvest on the tile, then no logging is required.
         // This check is not required for fields, since they will be set to 0 in the same tick the harvest drops to 0
@@ -236,17 +249,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // If estimate 0 for any other reason, don't kill plants .
         // No fallowing for plantations
 
-        plantOfTile.pollination.clear()
-        plantOfTile.animalAttackPenalty.clear()
-//        plantOfTile.animalAttackPenalty = 1.0
-        plantOfTile.animalAttack = false
-
-        if (t.harvestedThisTick) {
-            t.harvestedThisTick = false
-            t.droughtHit = false
-            return
-        }
-
         // If any change occurred including drought, log and kill plant if drought
         val crop = t.currentCrop ?: return
         if (endHarvestEstimate != initialHarvestEstimate) {
@@ -254,6 +256,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         } else if (yearTick == NOV_TICK) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
+
+        plantOfTile.pollination.clear()
+        plantOfTile.animalAttackPenalty.clear()
+//        plantOfTile.animalAttackPenalty = 1.0
+        plantOfTile.animalAttack = false
 
         // With drought the plants are killed, could hit on plantations that started out 0 too
         if (t.droughtHit) {

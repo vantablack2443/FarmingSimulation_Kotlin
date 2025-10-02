@@ -11,8 +11,8 @@ const val PUMPKIN_SOW_START = 10
 const val PUMPKIN_SOW_END = 12
 const val PUMPKIN_HARVEST_START = 17
 const val PUMPKIN_HARVEST_END = 20
-const val PUMPKIN_BLOOM_START_OFFSET = 2
-const val PUMPKIN_BLOOM_END_OFFSET = 3
+const val PUMPKIN_BLOOM_START_OFFSET = 3
+const val PUMPKIN_BLOOM_END_OFFSET = 4
 
 /**
  * Pumpkin class

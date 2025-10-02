@@ -1,0 +1,19 @@
+{
+  "clouds": [
+  ],
+  "incidents": [
+    {
+      "id": 1,
+      "type": "CITY_EXPANSION",
+      "tick": 1,
+      "location": 1
+    },
+    {
+      "id": 0,
+      "type": "DROUGHT",
+      "tick": 0,
+      "location": 1,
+      "radius": 0
+    }
+  ]
+}

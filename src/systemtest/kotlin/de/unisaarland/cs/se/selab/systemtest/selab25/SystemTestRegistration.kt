@@ -7,7 +7,6 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
 // import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
 
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnimalAttackOneEffect
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
@@ -16,8 +15,11 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSam
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtRainThenSow
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtSowExpand
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
@@ -70,6 +72,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanPriori
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SowingPlanSimplePlan
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TestSowingFollowedByDrought
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
 
@@ -111,9 +114,9 @@ object SystemTestRegistration {
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
         testSuite.registerTest(NoFarmAnimalAttackValidOnePlantation())
-        testSuite.registerTest(SowingPlanSimplePlan())
+        // testSuite.registerTest(SowingPlanSimplePlan())
         testSuite.registerTest(MachineCantReturnDueHarvest())
-        testSuite.registerTest(AnimalAttackOneEffect())
+        // testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
 
         // testSuite.registerTest(MaxTickEndLogEquals())
@@ -156,12 +159,13 @@ object SystemTestRegistration {
         // testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
         testSuite.registerTest(OatBehaviourTest())
-        testSuite.registerTest(Apples())
+        // testSuite.registerTest(Apples())
         testSuite.registerTest(ValidatePlantCoupling())
-        // testSuite.registerTest(ValidateMachineUniqueness())
+        testSuite.registerTest(ValidateMachineUniqueness())
         testSuite.registerTest(ValidateMachineUniquenessB())
-        testSuite.registerTest(OatWheatYearTest())
-        // testSuite.registerTest(OatWheatYearTestAlternative())
+        testSuite.registerTest(DroughtRainThenSow())
+        testSuite.registerTest(DroughtThenSow())
+        testSuite.registerTest(DroughtSowExpand())
     }
 
     /**

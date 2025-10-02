@@ -1,0 +1,22 @@
+{
+  "clouds": [
+  ],
+  "incidents": [
+    {
+      "id": 0,
+      "type": "DROUGHT",
+      "tick": 0,
+      "location": 1,
+      "radius": 0
+    },
+    {
+      "id": 1,
+      "type": "CLOUD_CREATION",
+      "tick": 0,
+      "location": 1,
+      "radius": 0,
+      "duration": 4,
+      "amount": 6000
+    }
+  ]
+}
