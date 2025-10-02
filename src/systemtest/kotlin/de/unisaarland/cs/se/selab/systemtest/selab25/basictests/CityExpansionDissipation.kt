@@ -38,6 +38,7 @@ class CityExpansionDissipation : ExampleSystemTestExtension() {
 [DEBUG] Farm: Farm 0 has the following active sowing plans it intends to pursue in this tick: .
 [IMPORTANT] Farm: Farm 0 finished its actions.
 [IMPORTANT] Incident: Incident 0 of type CITY_EXPANSION happened and affected tiles 1.
+[INFO] Cloud Dissipation: Cloud 0 got stuck on tile 1.
 [INFO] Simulation Info: Tick 1 started at tick 2 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 0 starts its actions.
