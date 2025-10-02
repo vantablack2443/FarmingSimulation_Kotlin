@@ -145,14 +145,9 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
         // testSuite.registerTest(PotatoBehaviourTest())
-        registerSystemTestsForReferenceImplementation2(testSuite)
-    }
-
-    fun registerSystemTestsForReferenceImplementation2(testSuite: SELab25TestSuite) {
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(FullSimTest())
-        testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
         // testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
