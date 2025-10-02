@@ -34,7 +34,8 @@ class WeedingHandlerTest {
         fieldThree.actionsNeeded.add(ActionType.WEEDING)
         fieldFour.actionsNeeded.add(ActionType.WEEDING)
 
-        machine = Machine(0, "#0", 3, farmstead, listOf(ActionType.WEEDING),
+        machine = Machine(
+            0, "#0", 3, farmstead, listOf(ActionType.WEEDING),
             listOf(PlantType.POTATO, PlantType.WHEAT, PlantType.OAT, PlantType.PUMPKIN), farmstead
         )
 
