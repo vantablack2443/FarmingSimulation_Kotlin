@@ -192,7 +192,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
 
             if (nextTile == null) {
                 c.isStuck = true
-                tryRain(c)
+//                tryRain(c)
                 break
             }
             c.maxTraversibleTiles--
@@ -291,8 +291,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
         if (currTile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
             reduceSunlight(MAX_SUNLIGHT_REDUCTION, currTile)
         }
-        tryRain(cloud)
-        cloud.duration--
+//        tryRain(cloud)
+        if (cloud.duration > 0) cloud.duration--
     }
 
     /**
