@@ -3,7 +3,6 @@
 ## Individual Contributions
 
 The following table summarizes the actual contributions of each group member, including deviations from the planned responsibilities. 
-The "implemented components" column should only include major contributions to the respective components (i.e., no bugfixes or small additions to existing components).
 
 | Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work |
 |----------|-----------------------------------------------------------------|---------------------------------------------------------------------|-----------------|
