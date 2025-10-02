@@ -30,7 +30,7 @@
     },
     {
       "id": 4,
-      "coordinates": { "x": 4, "y": 0 },
+      "coordinates": { "x": 0, "y": -2 },
       "category": "PLANTATION",
       "farm": 0,
       "capacity": 10000,
