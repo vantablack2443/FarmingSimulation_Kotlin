@@ -32,7 +32,6 @@ class TileTest {
         tiles[2].plant = Plant.createPlant(PlantType.WHEAT)
     }
 
-
     @Test
     fun testTileFunctions() {
         tiles.forEach { it.decreaseMoistureByAmount(1000) }
