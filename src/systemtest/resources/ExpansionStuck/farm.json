@@ -4,19 +4,25 @@
       "id": 0,
       "name": "Very Cool Farm",
       "farmsteads": [0],
-      "fields": [],
-      "plantations": [2,4],
+      "fields": [2,4],
+      "plantations": [],
       "machines": [
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["HARVESTING"],
-          "plants": ["APPLE"],
+          "actions": ["SOWING","HARVESTING"],
+          "plants": ["PUMPKIN"],
           "duration": 4,
           "location": 0
         }
       ],
       "sowingPlans": [
+        {
+          "id": 0,
+          "tick": 0,
+          "plant": "PUMPKIN",
+          "fields": [2,4]
+        }
       ]
     }
   ]

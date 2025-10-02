@@ -27,6 +27,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansi
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EvenBiggerScenario
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExpansionStuck
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestNoFieldInPlan
@@ -92,6 +93,7 @@ object SystemTestRegistration {
         testSuite.registerTest(IrrigationLogic())
         testSuite.registerTest(DieAndComeBack())
         testSuite.registerTest(JustMow())
+        testSuite.registerTest(ExpansionStuck())
 //        testSuite.registerTest(CutAppleMissedAction())
 //        testSuite.registerTest(CutAppleMissedAction2())
         testSuite.registerTest(CutAppleMissedAction3())

@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25.basictests
 
+import de.unisaarland.cs.se.selab.systemtest.api.SystemTestAssertionError
 import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExtension
 
 /**
@@ -14,32 +15,45 @@ class ExpansionStuck : ExampleSystemTestExtension() {
     override val scenario = "ExpansionStuck/scenario.json"
     override val map = "ExpansionStuck/map.json"
 
-    override val logLevel = "IMPORTANT"
-    override val maxTicks = 3
-    override val startYearTick = 16
-
-    val hi = """
-[IMPORTANT] Farm: Farm 0 starts its actions.
-[IMPORTANT] Farm: Farm 0 finished its actions.
-[IMPORTANT] Incident: Incident 0 of type CITY_EXPANSION happened and affected tiles 1.
-[IMPORTANT] Farm: Farm 0 starts its actions.
-[IMPORTANT] Farm Action: Machine 0 performs HARVESTING on tile 2 for 4 days.
-[IMPORTANT] Farm Harvest: Machine 0 has collected 1115370 g of APPLE harvest.
-[IMPORTANT] Farm Machine: Machine 0 is finished but failed to return.
-[IMPORTANT] Farm: Farm 0 finished its actions.
-[IMPORTANT] Incident: Incident 1 of type BROKEN_MACHINE happened and affected tiles 2.
-[IMPORTANT] Farm: Farm 0 starts its actions.
-[IMPORTANT] Farm: Farm 0 finished its actions.
-[IMPORTANT] Simulation Info: Simulation ended at tick 3.
-[IMPORTANT] Simulation Info: Simulation statistics are calculated.
-[IMPORTANT] Simulation Statistics: Farm 0 collected 1115370 g of harvest.
-    """.trimIndent()
+    override val logLevel = "DEBUG"
+    override val maxTicks = 4
+    override val startYearTick = 14
 
     override suspend fun run() {
+        skipUntilString("[IMPORTANT] Incident: Incident 0 of type CITY_EXPANSION happened and affected tiles 2.")
+
+        val hi = """
+            [IMPORTANT] Incident: Incident 2 of type BROKEN_MACHINE happened and affected tiles 2.
+            [IMPORTANT] Simulation Info: Simulation ended at tick 4.
+            [IMPORTANT] Simulation Info: Simulation statistics are calculated.
+            [IMPORTANT] Simulation Statistics: Farm 0 collected 209952 g of harvest.
+            [IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of WHEAT harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of OAT harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of PUMPKIN harvested: 209952 g.
+            [IMPORTANT] Simulation Statistics: Total amount of APPLE harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
+            [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 209952 g.
+        """.trimIndent()
+
         val lineIterator = hi.lines().iterator()
         while (lineIterator.hasNext()) {
             val currentLine = lineIterator.next()
             assertNextLine(currentLine)
+        }
+    }
+    private suspend fun skipUntilString(startString: String): String {
+        val line: String = getNextLine()
+            ?: throw SystemTestAssertionError(
+                "End of log reached when there should be more,\n" +
+                    "expected: " + startString
+            )
+        return if (line.startsWith(startString)) {
+            line
+        } else {
+            skipUntilString(startString)
         }
     }
 }
