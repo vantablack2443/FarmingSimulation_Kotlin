@@ -348,11 +348,4 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
         }
         return harvest
     }
-
-    /**
-     * helper function for scenario test
-     */
-    fun getCloudHandler(): CloudHandler {
-        return this.cloudHandler
-    }
 }
