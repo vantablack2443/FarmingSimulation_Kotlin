@@ -10,7 +10,7 @@
         {
           "id": 0,
           "name": "Tractor",
-          "actions": ["IRRIGATION"],
+          "actions": ["IRRIGATING"],
           "plants": ["CHERRY", "WHEAT"],
           "duration": 4,
           "location": 0

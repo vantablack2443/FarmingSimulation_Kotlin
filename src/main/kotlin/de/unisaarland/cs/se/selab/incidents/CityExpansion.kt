@@ -58,7 +58,7 @@ class CityExpansion(
         for (farm in farms) {
             if (farm.getId() == farmId) {
                 removeTileFromFarm(tile, farm)
-                setMachinesStuckOnTile(tile, farm)
+//                setMachinesStuckOnTile(tile, farm)
             }
         }
     }
@@ -75,12 +75,10 @@ class CityExpansion(
 //            farm.setPlantation(plantations)
 //        }
     }
-
-    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
-        for (machine in farm.getMachines()) {
-            if (machine.currentTile == tile) {
-                machine.isStuck = true
-            }
-        }
-    }
 }
+//    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
+//        for (machine in farm.getMachines()) {
+//            if (machine.currentTile == tile) {
+//                machine.isStuck = true
+//            }
+//        }
