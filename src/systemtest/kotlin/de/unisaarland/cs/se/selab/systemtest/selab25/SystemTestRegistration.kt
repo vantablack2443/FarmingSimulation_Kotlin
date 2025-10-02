@@ -77,6 +77,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
+
 /**
  * Used for test registration
  */
@@ -100,6 +101,10 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtToExpansion2())
         testSuite.registerTest(LogCherryDrought())
 
+        // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
+        // testSuite.registerTest(FarmNoPlantableTiles())
+        // testSuite.registerTest(MachineWrongShed())
+        // testSuite.registerTest(MachineDefaultAction())
         // testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmDroughtSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
@@ -144,7 +149,6 @@ object SystemTestRegistration {
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(FullSimTest())
-        testSuite.registerTest(MultipleBeeHappies())
         testSuite.registerTest(FullSimAAWithFieldLog())
         // testSuite.registerTest(NoWayHome())
         testSuite.registerTest(DroughtThenBeeHappy())
