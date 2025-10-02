@@ -15,8 +15,8 @@ class BrokenMachineThenSow : ExampleSystemTestExtension() {
     override val map = "BrokenMachineThenSow/map.json"
 
     override val logLevel = "DEBUG"
-    override val maxTicks = 10
-    override val startYearTick = 1
+    override val maxTicks = 3
+    override val startYearTick = 7
 
     val hi = """
     [INFO] Initialization Info: map.json successfully parsed and validated.
