@@ -31,21 +31,16 @@ The following table summarizes the actual contributions of each group member, in
 
 ### Thejitha
 - **Day 1:** Added skeleton files, implemented Scenario Parser
-- **Day 2:** Implementing Scenario Parser
-- **Day 3:** Functions added to Plant, Farm, actionHandler. Implemented SowingHandler
-- **Day 4:** First version of CloudHandler . Fixes to scenario parser
-- **Day 5:** Improving Field Plants, minor fixes to SowingHandler
-- **Day 6:** Adding functions to tile and harvestEstimateHandler, Fixes to Plantations and Fields
-- **Day 7:** Farm Parser edits, initial tests
-- **Day 8:** Fixes to farm Parser
-- **Day 9:** Redesign Plantation and Field Plants, changing HarvestEstimateHandler, changes to sowingHandler, farmParser, Farm
-- **Day 10:** Edits to actionPhaseHandler
-- **Day 11:** SowingHandler, ActionPhaseHandler, SimulationMap fixes
-- **Day 12:** Redesign of harvestEstimateHandler, fixes to farm and sowingHandler
-- **Day 13:** Adjusting Plants to work with harvestEstimateHandler, small fixes to farm
-- **Day 14:** HarvestEstimateHandler, fixes irrigationHandler, scenarioParser, sowingHandler
-- **Day 15:** Tests, HarvestEstimateHandler, Unit Testing Coordinate, System tests for plantation plants
-
+- **Day 2:** Implementing Scenario Parser, Functions added to Plant, Farm, actionHandler. Implemented SowingHandler
+- **Day 3:** First version of CloudHandler . Fixes to scenario parser, Improving Field Plants, minor fixes to SowingHandler
+- **Day 4:** Adding functions to tile and harvestEstimateHandler, Fixes to Plantations and Fields
+- **Day 5:** Farm Parser edits, initial tests, Fixes to farm Parser
+- **Day 6:** Redesign Plantation and Field Plants, changing HarvestEstimateHandler, changes to sowingHandler, farmParser, Farm
+- **Day 7:** Edits to actionPhaseHandler, SowingHandler, ActionPhaseHandler, SimulationMap fixes
+- **Day 8:** Redesign of harvestEstimateHandler, fixes to farm and sowingHandler
+- **Day 9:** Adjusting Plants to work with harvestEstimateHandler, small fixes to farm
+- **Day 10:** HarvestEstimateHandler, fixes irrigationHandler, scenarioParser, sowingHandler
+- **Day 11:** Tests, HarvestEstimateHandler, Unit Testing Coordinate, System tests for plantation plants
 
 ### Nehesh
 - **Day 1:** Added skeleton files, implemented parts of Map
