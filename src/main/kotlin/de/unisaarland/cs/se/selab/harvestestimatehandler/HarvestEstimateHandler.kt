@@ -91,11 +91,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
         val missedActionList = t.actionsNeeded.toMutableList()
 
-        // Log missed actions if there are any -- need to verify this
-        /*if (t.actionsNeeded.isNotEmpty()) {
-            logMissedActions(t.id, t.actionsNeeded)
-        }*/
-
         applyLateSowing(t)
         applySunlight(t)
         applyMoisture(t)
@@ -109,14 +104,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         applyDrought(t)
 
         val endHarvestEstimate = plantOfTile.harvestEstimate
-
-        /* val orderforlog = listOf(
-            ActionType.WEEDING,
-            ActionType.CUTTING,
-            ActionType.MOWING,
-            ActionType.IRRIGATING,
-            ActionType.HARVESTING
-        )*/
 
         // Log missed actions only if there is a change in harvest estimate
         if (missedActionList.contains(ActionType.IRRIGATING)) {
@@ -202,11 +189,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         // copy of missed actions because the enums in actionsNeeded gets consumed by penalty functions
         val missedActionList = t.actionsNeeded.toMutableList()
 
-        // Log missed actions if there are any -- need to verify this
-        /*if (t.actionsNeeded.isNotEmpty()) {
-            logMissedActions(t.id, t.actionsNeeded)
-        }*/
-
         applySunlight(t)
         applyMoisture(t)
         // 3. Handle missed cutting period
@@ -221,14 +203,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         applyDrought(t)
 
         val endHarvestEstimate = plantOfTile.harvestEstimate
-
-        /* val orderforlog = listOf(
-            ActionType.WEEDING,
-            ActionType.CUTTING,
-            ActionType.MOWING,
-            ActionType.IRRIGATING,
-            ActionType.HARVESTING
-        ) */
 
         // Log missed actions only if there is a change in harvest estimate
         if (missedActionList.contains(ActionType.IRRIGATING)) {
@@ -263,7 +237,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         plantOfTile.pollination.clear()
         plantOfTile.animalAttackPenalty.clear()
-//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         // With drought the plants are killed, could hit on plantations that started out 0 too
@@ -273,8 +246,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             // IMPORTANT or else will always set estimate to 0
             t.droughtHit = false
         }
-
-        // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
 
     /**
@@ -294,13 +265,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.lateActions.remove(ActionType.SOWING)
             plant.applyLateSowingPenalty()
         }
-
-        /*val lateActions = t.plant?.lateActions ?: return
-
-        if (lateActions.contains(ActionType.SOWING)) {
-            lateActions.remove(ActionType.SOWING)
-            (t.plant as FieldPlant).applyLateSowingPenalty()
-        }*/
         return acted
     }
 
@@ -323,17 +287,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
                 plant.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * plant.harvestEstimate).toInt()
                 currentSunlight -= TWENTY_FIVE
             }
-//            val times = (t.currentSunlight - neededSunlight) / TWENTY_FIVE
-//            plant.harvestEstimate = kotlin.math.floor(
-//                plant.harvestEstimate
-//                    * PENALTY_POINT_NINE.pow(times.toDouble())
-//            ).toInt()
         }
-
-        /*while (t.currentSunlight - neededSunlight >= TWENTY_FIVE) {
-            t.plant!!.harvestEstimate = kotlin.math.floor(PENALTY_POINT_NINE * t.plant!!.harvestEstimate).toInt()
-            t.currentSunlight -= TWENTY_FIVE
-        }*/
         return acted
     }
 
@@ -359,20 +313,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             return false
         }
         return true
-        // Previous version
-        /*val penaltyCounter = (plant.neededMoisture - currentMoisture) / HUNDRED
-        plant.harvestEstimate -= FIFTY * penaltyCounter*/
-
-        /*val neededMoisture = t.plant?.neededMoisture ?: error("Need moisture needed")
-
-        if (t.currentMoisture == 0) {
-            t.plant!!.harvestEstimate = 0
-            return
-        }
-
-        val currentMoisture = t.currentMoisture ?: error("Need moisture needed")
-        val penaltyCounter = (neededMoisture - currentMoisture) / HUNDRED
-        t.plant!!.harvestEstimate -= FIFTY * penaltyCounter*/
     }
 
     /**
@@ -389,14 +329,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.actionsNeeded.remove(ActionType.WEEDING)
             plant.applyMissedWeedingPenalty()
         }
-
-        // when we sow, we set the plant attribute on the tile right?
-        /*val lateActions = t.plant?.lateActions ?: return
-
-        while (lateActions.contains(ActionType.WEEDING)) {
-            lateActions.remove(ActionType.WEEDING)
-            (t.plant as FieldPlant).applyMissedWeedingPenalty()
-        }*/
         return acted
     }
 
@@ -468,32 +400,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         plant.applyCuttingPenalty()
         return true
-
-        /*var acted = false
-        val plant = t.plant ?: return false
-        val actionsNeeded = t.actionsNeeded
-
-        // Remove from list if its in there
-        if (ActionType.CUTTING in actionsNeeded) {
-            actionsNeeded.remove(ActionType.CUTTING)
-
-            // Only apply cutting penalty if yearTick is the last cutting tick
-            if (t.currentCrop == PlantType.GRAPE && yearTick != SIXTEEN) { return }
-            if (t.currentCrop == PlantType.APPLE && yearTick != FOUR) { return }
-            if (t.currentCrop == PlantType.ALMOND && yearTick != FOUR) { return }
-            if (t.currentCrop == PlantType.CHERRY && yearTick != FOUR) { return }
-
-            plant.applyCuttingPenalty()
-        }
-
-        *//*val lateActions = t.plant?.lateActions ?: return
-
-        // no while loop since cutting can be done only once per harvest cycle
-        if (lateActions.contains(ActionType.CUTTING)) {
-            lateActions.remove(ActionType.CUTTING)
-            (t.plant as PlantationPlant).applyCuttingPenalty()
-        }*//*
-        return acted*/
     }
 
     /**
@@ -555,14 +461,4 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
      * since we cannot directly get the plant from the tile in the case where it is a field.
      * WHAT IS THE POINT OF THIS FUNCTION
      */
-    /*private fun getPlantFromType(plantType: PlantType?): Plant {
-        return when (plantType) {
-            PlantType.POTATO -> Potato()
-            PlantType.WHEAT -> Wheat()
-            PlantType.OAT -> Oat()
-            PlantType.PUMPKIN -> Pumpkin()
-            null -> throw IllegalArgumentException("Plant type is null")
-            else -> throw IllegalArgumentException("Unknown plant type: $plantType")
-        }
-    }*/
 }
