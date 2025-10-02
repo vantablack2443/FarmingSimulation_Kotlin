@@ -229,6 +229,14 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             for (tile in plantations) {
                 val plant = tile.plant ?: continue
                 plant.resetHarvestEstimate()
+                plant.animalAttack = false
+                plant.animalAttackPenalty.clear()
+                for (element in plant.cuttingTime) {
+                    element.second = false
+                }
+                for (element in plant.mowingTime) {
+                    element.second = false
+                }
             }
         }
     }

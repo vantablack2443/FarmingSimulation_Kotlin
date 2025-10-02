@@ -59,8 +59,7 @@ fun main(args: Array<String>) {
         return
     } catch (exception: ValidationException) {
         Logger.logInvalidFile(exception.filePath ?: "null file")
-        Logger.printer.println()
-        Logger.printer.write(exception.message ?: "unknown error")
+        System.err.println(exception.message)
         return
     }
     Logger.printer.flush()

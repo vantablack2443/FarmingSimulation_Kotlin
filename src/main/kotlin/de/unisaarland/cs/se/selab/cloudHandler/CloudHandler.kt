@@ -60,6 +60,10 @@ class CloudHandler(val simulationMap: SimulationMap) {
         // only for plantable tiles
         val plantables = map.getPlantableTiles().sortedBy { it.id }
         for (tile in plantables) {
+            reduceSunlight(
+                MAX_SUNLIGHT_REDUCTION,
+                tile
+            )
             val cloud = this.getCloudByCoordinate(tile.location) ?: continue
             Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
         }
@@ -187,7 +191,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
                 logLocationChange(c, currTile, nextTile ?: currTile)
                 val newCloud = merge(nextCloud, c)
                 cloudsList.add(newCloud)
-                tryRain(newCloud)
                 return
             }
 
@@ -212,10 +215,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
                 return
             }
         }
-        reduceSunlight(
-            MAX_SUNLIGHT_REDUCTION,
-            simulationMap.getTileByCoordinate(c.location) ?: return
-        )
         if (c.duration > 0) c.duration--
         if (checkDurationDissipate(c)) {
             dissipate(c)
@@ -288,12 +287,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * helper function
      */
     private fun handleStuckCloud(cloud: Cloud) {
-        val currTile = simulationMap.getTileByCoordinate(cloud.location) ?: return
-        if (currTile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
-            reduceSunlight(MAX_SUNLIGHT_REDUCTION, currTile)
-        }
-//        tryRain(cloud)
         if (cloud.duration > 0) cloud.duration--
+        if (checkDurationDissipate(cloud)) dissipate(cloud)
     }
 
     /**
