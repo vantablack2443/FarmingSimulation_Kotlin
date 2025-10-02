@@ -112,4 +112,261 @@ class MapParserTests {
 
         tempFile.deleteOnExit()
     }
+
+    @Test
+    fun `tile id missing validation test`() {
+        val json = """
+        { "tiles": [ { "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `tile id not missing validation test`() {
+        val json = """
+        { "tiles": [ { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertDoesNotThrow { parser.parse(tmp.absolutePath) }
+    }
+
+    @Test
+    fun `tile category missing validation test`() {
+        val json = """
+        { "tiles": [ { "id": 5, "coordinates": { "x": 1, "y": 1 } } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `tile category not missing validation test`() {
+        val json = """
+        { "tiles": [ { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertDoesNotThrow { parser.parse(tmp.absolutePath) }
+    }
+
+    @Test
+    fun `tile coordinates missing validation test`() {
+        val json = """
+        { "tiles": [ { "id": 5, "category": "VILLAGE" } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `tile coordinates not missing validation test`() {
+        val json = """
+        { "tiles": [ { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" } ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertDoesNotThrow { parser.parse(tmp.absolutePath) }
+    }
+
+    @Test
+    fun `parseTiles valid test`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" },
+            { "id": 2, "coordinates": { "x": 2, "y": 2 }, "category": "VILLAGE" }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertDoesNotThrow { parser.parse(tmp.absolutePath) }
+    }
+
+    @Test
+    fun `parseTiles invalid test same id`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" },
+            { "id": 1, "coordinates": { "x": 2, "y": 2 }, "category": "VILLAGE" }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `parseTiles invalid test same location`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" },
+            { "id": 2, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE" }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `airflow on village`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "VILLAGE", "airflow": true }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `airflow missing`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "ROAD" }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `airflow missing direction`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 1, "y": 1 }, "category": "ROAD", "airflow": true }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
+
+    @Test
+    fun `forest neighbour test`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 0, "y": 0 }, "category": "VILLAGE" },
+            { "id": 0, "coordinates": { "x": 2, "y": 0 }, "category": "FOREST", "airflow": false }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
 }
