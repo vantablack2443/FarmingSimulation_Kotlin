@@ -26,7 +26,14 @@ The following table summarizes the actual contributions of each group member, in
 
 ### Ana
 
-- **Day 1:**
+- **Day 1 - Day 2:** Skeleton for parser and other classes, initial implementation of Parser, MapParser, CommandLineParser classes
+- **Day 3:** Implementation of Simulation, Main and CloudCreation classes.
+- **Day 4:** Parser fixes, implementation of plantation plant classes.
+- **Day 5:** Incidents unit test.
+- **Day 6:** Cloud Movement System test, fixes to the cloud handler.
+- **Day 7:** Fixes to the parser and cloud handler, validation tests.
+- **Day 8:** Harvest estimation test, bug fixes.
+- **Day 9 - Day 11:** Additional system tests, debugging and bug fixes.
 - ...
 
 ### Thejitha
