@@ -63,9 +63,6 @@ class SowingHandler(
             return sowingPlans
         }
 
-        // Log active sowing Plans - This logs all sowing Plans for the tick now
-        // Logger.logFarmSowingPlan(farm.getId(), sowingPlansAvailable.map { it.getId() })
-
         // Assumes that the farm maintains sowing plans in order of tick then id
         // Assumes that farm also maintains ordering when removing sowing plans from its list
         for (plan in sowingPlansAvailable) {
@@ -246,7 +243,6 @@ class SowingHandler(
     }
 
     override fun startPhase(farm: Farm, machine: Machine) {
-        // TODO
         return
     }
 
@@ -259,12 +255,10 @@ class SowingHandler(
     }
 
     override fun performAction(machine: Machine, tile: Tile) {
-        // TODO
         return
     }
 
     override fun getOperableTiles(farm: Farm): List<Tile> {
-        // TODO
         return emptyList()
     }
 }

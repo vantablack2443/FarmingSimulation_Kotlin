@@ -52,8 +52,6 @@ class Apple : PlantationPlant() {
             val newEstimate = this.harvestEstimate * debuff
             this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
         }
-//        val newEstimate = this.harvestEstimate * animalAttackPenalty
-//        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     /**
@@ -71,7 +69,6 @@ class Apple : PlantationPlant() {
      */
     override fun doAnimalAttack() {
         this.animalAttackPenalty.add(ANIMAL_ATTACK_PENALTY)
-//        this.animalAttackPenalty *= ANIMAL_ATTACK_PENALTY
         this.animalAttack = true
     }
 

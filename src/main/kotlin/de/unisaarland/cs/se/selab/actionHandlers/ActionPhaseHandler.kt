@@ -72,7 +72,6 @@ class ActionPhaseHandler(private val farms: List<Farm>) {
      * Starts the farm phase
      */
     fun farmPhase(yearTick: Int, simTick: Int) {
-        // TODO just for detekt check
         for (farm in farms) {
             farm.updateNeededActions(yearTick, simTick)
         }

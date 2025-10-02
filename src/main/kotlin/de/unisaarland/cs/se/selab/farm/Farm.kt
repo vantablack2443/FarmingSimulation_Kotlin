@@ -163,12 +163,4 @@ class Farm(
         this.fields.clear()
         this.fields.addAll(newFields)
     }
-
-    /**
-     * sets the plantation of the farm to the new list of plantations
-     */
-    fun setPlantation(newPlantation: MutableList<Tile>) {
-        this.plantation.clear()
-        this.plantation.addAll(newPlantation)
-    }
 }

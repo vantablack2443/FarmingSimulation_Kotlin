@@ -25,8 +25,6 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
         for (tile in incidentTiles) {
             if (tile.category == TileType.FIELD) {
                 // Fallowing and killing the plants will be handled by the estimator using the droughtHit bool
-                // tile.plant = null
-                // tile.currentCrop = null
                 tile.droughtHit = true
                 tile.currentMoisture = 0
                 affectedIds.add(tile.id)
@@ -34,8 +32,6 @@ class Drought(id: Int, tick: Int, type: IncidentType, val tile: Tile, val radius
                 tile.droughtHit = true
                 tile.currentMoisture = 0
                 tile.plantationDamaged = true
-                // tile.plant = null
-                // tile.currentCrop = null
                 affectedIds.add(tile.id)
             }
         }

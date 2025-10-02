@@ -10,22 +10,6 @@ data class Coordinate(
     var x: Int,
     var y: Int
 ) {
-
-    /**
-     * return the coordinate
-     */
-    fun getCoordinate(): Coordinate {
-        return this
-    }
-
-    /**
-     * set the coordinate
-     */
-    fun setCoordinates(x: Int, y: Int) {
-        this.x = x
-        this.y = y
-    }
-
     /**
      * helper function for get neighbor
      */

@@ -69,16 +69,5 @@ class CityExpansion(
             fields.remove(tile)
             farm.setFields(fields)
         }
-//        val plantations = farm.getPlantation().toMutableList()
-//        if (plantations.contains(tile)) {
-//            plantations.remove(tile)
-//            farm.setPlantation(plantations)
-//        }
     }
 }
-//    private fun setMachinesStuckOnTile(tile: Tile, farm: Farm) {
-//        for (machine in farm.getMachines()) {
-//            if (machine.currentTile == tile) {
-//                machine.isStuck = true
-//            }
-//        }
