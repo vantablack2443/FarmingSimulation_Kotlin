@@ -187,7 +187,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
                 logLocationChange(c, currTile, nextTile ?: currTile)
                 val newCloud = merge(nextCloud, c)
                 cloudsList.add(newCloud)
-                tryRain(newCloud)
+//                tryRain(newCloud)
                 return
             }
 
