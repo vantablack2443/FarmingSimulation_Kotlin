@@ -13,7 +13,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenMachineThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionDissipation
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionOnTilesWithClouds
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudCreationThenCityExpansions
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
@@ -170,6 +172,8 @@ object SystemTestRegistration {
             testSuite.registerTest(DroughtThenSow())
             testSuite.registerTest(DroughtSowExpand())
             testSuite.registerTest(EvenBiggerScenario())
+            testSuite.registerTest(CityExpansionOnTilesWithClouds())
+            testSuite.registerTest(CloudCreationThenCityExpansions())
         }
     }
 
