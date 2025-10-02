@@ -1,11 +1,5 @@
 package de.unisaarland.cs.se.selab.parser
 
-// import com.github.erosb.jsonsKema.IJsonObject
-// import com.github.erosb.jsonsKema.IJsonValue
-// import com.github.erosb.jsonsKema.JsonParser
-// import com.github.erosb.jsonsKema.Schema
-// import com.github.erosb.jsonsKema.SchemaLoader
-// import com.github.erosb.jsonsKema.Validator
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
@@ -30,8 +24,6 @@ const val FIELDS = "fields"
 const val LOCATION = "location"
 const val MISSING_TILE_ID = "Specified tile with ID not found"
 
-// const val DEFS = "\$defs"
-
 /**
  * parser for farm config file
  */
@@ -44,64 +36,6 @@ class FarmParser(private val simulationData: SimulationData) {
     private val sowingPlanTicks: MutableMap<Int, MutableList<SowingPlan>> = mutableMapOf()
 
     private val tilesInJsonIDs: MutableSet<Int> = mutableSetOf()
-//    private val schema: Schema by lazy { loadFarmSchema() }
-//
-//    private fun loadFarmSchema(): Schema {
-//        // Load all farm-related schemas
-//        val farmSchema = JsonParser(File("src/main/resources/schema/farm.schema").readText()).parse()
-//        val machineSchema = JsonParser(File("src/main/resources/schema/machine.schema").readText()).parse()
-//        val sowingPlanSchema = JsonParser(File("src/main/resources/schema/sowing-plan.schema").readText()).parse()
-//
-//        val farmdefsNode = farmSchema.requireObject()[DEFS]?.requireObject()
-//            ?: throw ValidationException()
-//        val machinedefsNode = machineSchema.requireObject()[DEFS]?.requireObject()
-//            ?: throw ValidationException()
-//        val sowigplandefsNode = sowingPlanSchema.requireObject()[DEFS]?.requireObject()
-//            ?: throw ValidationException()
-//
-//        val allDefs = mutableMapOf<String, IJsonValue>()
-//        fun merge(defs: IJsonObject<*, *>) {
-//            // defs.properties: Map<IJsonString,IJsonValue>
-//            defs.properties.forEach { (jsonKey, jsonVal) ->
-//                val key: String = jsonKey.toString() // extract the string
-//                allDefs[key] = jsonVal
-//            }
-//        }
-//
-//        merge(farmdefsNode)
-//        merge(machinedefsNode)
-//        merge(sowigplandefsNode)
-//
-//        // 3. Convert allDefs back into a JSON text block
-//        // You can build a new IJsonObject or simply serialize:
-//        val defsJson = allDefs.entries.joinToString(
-//            prefix = "{",
-//            postfix = "}"
-//        ) { (k, v) -> "\"$k\":$v" }
-//
-//        val farmsSchemaJson = JsonParser(
-//            """
-//            {
-//              "${'$'}schema": "https://json-schema.org/draft/2020-12/schema",
-//              "type": "object",
-//              "additionalProperties": false,
-//              "properties": {
-//                "farms": {
-//                  "type": "array",
-//                  "items": {
-//                    "${'$'}ref": "#/${'$'}defs/farm"
-//                  },
-//                  "minItems": 1
-//                }
-//              },
-//              "required": ["farms"],
-//              "${'$'}{'$'}defs":$defsJson
-//            }
-//            """
-//        ).parse()
-//
-//        return SchemaLoader(farmsSchemaJson).load()
-//    }
 
     /**
      * main parse function
@@ -111,31 +45,13 @@ class FarmParser(private val simulationData: SimulationData) {
             val file = File(json)
             val jsonString = file.readText()
 
-//            val validator = Validator.forSchema(schema)
-//            val validation = validator.validate(JsonParser(jsonString).parse())
-//            if (validation != null) {
-//                throw ValidationException()
-//            }
-
             val jsonObject = Json.parseToJsonElement(jsonString).jsonObject
 
             // Parse main components
             val farms = jsonObject["farms"]?.jsonArray ?: throw ValidationException()
 
             parseFarms(farms)
-
-            // CHECK DONE IN parseFarmstead, parseFields...
-            /*for (farm in simulationData.getFarms()) {
-                validateFarmTiles(farm)
-            }*/
-
-            // Validates uniqueness of IDs and Names
             validateUniqueAttributes()
-
-            // CHECK DONE IN validateMachineLocation
-            /*crossValidateFarmMachine()*/
-
-            // Checks if all the tiles belonging to farms on the map have been accounted for
             validateTileFarms()
 
             // Do the farmstead neighbor test
@@ -371,74 +287,12 @@ class FarmParser(private val simulationData: SimulationData) {
         val tile = parseMachineLocation(m)
         // Checks that this tile is a farmstead, contains a shed and belongs to the farm owing this machine
         validateMachineLocation(tile.id, farmID)
-        /*
-        for (action in actions) {
-            validateMachineActionPlant(action, plants)
-        }
-        for (plant in plants) {
-            validateMachineActionPlant(plant, actions)
-        }*/
 
         // CHECK IF THIS CHECK IS EXPECTED
         /*validateActionsAndPlants(actions, plants)*/
 
         return Machine(id, name, duration, tile, actions, plants, homeShed = tile)
     }
-
-    /**
-     * cross validates machine and action types
-     */
-    /*
-    private fun validateMachineActionPlant(plant: PlantType, actions: List<ActionType>) {
-        val string = "mismatch of machine action and plant type"
-        when (plant) {
-            PlantType.OAT, PlantType.WHEAT, PlantType.POTATO, PlantType.PUMPKIN -> {
-                val requiredActions = setOf(
-                    ActionType.SOWING,
-                    ActionType.WEEDING,
-                    ActionType.HARVESTING,
-                    ActionType.IRRIGATING
-                )
-                if (!actions.any { requiredActions.contains(it) }) {
-                    throw ValidationException(string)
-                }
-            }
-            PlantType.GRAPE, PlantType.APPLE, PlantType.ALMOND, PlantType.CHERRY -> {
-                val requiredActions = setOf(
-                    ActionType.CUTTING,
-                    ActionType.MOWING,
-                    ActionType.HARVESTING,
-                    ActionType.IRRIGATING
-                )
-                if (!actions.any { requiredActions.contains(it) }) {
-                    throw ValidationException(string)
-                }
-            }
-        }
-    }
-     */
-    /*
-    private fun validateMachineActionPlant(action: ActionType, plants: List<PlantType>) {
-        val string = "mismatch of machine action and plant type"
-        when (action) {
-            ActionType.MOWING, ActionType.CUTTING -> {
-                val requiredPlants = setOf(PlantType.APPLE, PlantType.CHERRY, PlantType.ALMOND, PlantType.GRAPE)
-                if (!plants.any { requiredPlants.contains(it) }) {
-                    throw ValidationException(string)
-                }
-            }
-
-            ActionType.WEEDING, ActionType.SOWING -> {
-                val requiredPlants = setOf(PlantType.OAT, PlantType.WHEAT, PlantType.POTATO, PlantType.PUMPKIN)
-                if (!plants.any { requiredPlants.contains(it) }) {
-                    throw ValidationException(string)
-                }
-            }
-            else -> { return }
-        }
-    }
-
-     */
 
     /**
      * parses machine duration
@@ -511,8 +365,6 @@ class FarmParser(private val simulationData: SimulationData) {
             // sowingPlanIDs.add(sowingPlan.getId())
             mapOfSowingPlans[tick] = listOfPlans
         }
-//         simulationData.setSowingPlanMapping(mapOfSowingPlans)
-//         sowingPlanIDs = simulationData.getSowingPlans().map { it.getId() }
         return mapOfSowingPlans
     }
 
@@ -607,20 +459,6 @@ class FarmParser(private val simulationData: SimulationData) {
      * that it can work on some PLANTATION plant
      * COMMENTED OUT -> ASK FORUM/TUTOR IF THIS CHECK IS REQUIRED
      */
-    /*private fun validateActionsAndPlants(actions: List<ActionType>, plants: List<PlantType>) {
-        if (actions.contains(ActionType.SOWING) || actions.contains(ActionType.WEEDING)) {
-            val fieldPlants = plants.filter { PlantType.isFieldPlant(it.toString()) }
-            if (fieldPlants.isNotEmpty()) {
-                throw ValidationException("Mismatch of machine action and plant type")
-            }
-        }
-        if (actions.contains(ActionType.CUTTING) || actions.contains(ActionType.MOWING)) {
-            val plantationPlants = plants.filter { PlantType.isPlantationPlant(it.toString()) }
-            if (plantationPlants.isNotEmpty()) {
-                throw ValidationException("Mismatch of machine action and plant type")
-            }
-        }
-    }*/
 
     /**
      * helper function to validate machine location
@@ -650,23 +488,6 @@ class FarmParser(private val simulationData: SimulationData) {
     }
 
     /**
-     * helper function to cross-validate machine and farm IDs
-     * CHECK HANDLED BY validateMachineLocation
-     */
-    /*private fun crossValidateFarmMachine() {
-        for (farm in simulationData.getFarms()) {
-            // Get all farmstead tiles with sheds on them
-            val shedTiles: List<Tile> = farm.getFarmstead().filter { it.shed == true }
-            for (machine in farm.getMachines()) {
-                // Check if the machine's home shed is in the farm's shed tiles
-                if (!shedTiles.contains(machine.homeShed)) {
-                    throw ValidationException("Machine shed must belong to the same farm")
-                }
-            }
-        }
-    }*/
-
-    /**
      * validateSowingPlanLocation checks if the field tiles on the list given in the parameter all belong to one farm.
      * There is also a boolean, fields, that if true, just checks if the farmIDs of the tiles are all the same (since if
      * fields == true, meaning that the list only contains field tiles), and if false, checks if there is at least one
@@ -693,28 +514,12 @@ class FarmParser(private val simulationData: SimulationData) {
                 }
             ) { throw ValidationException("Sowing Plan does not contain a tile that belongs to the farm") }
         }
-
-        // Change added -> Assume that the tiles don't have to belong to one farm
-        /*val farmIDs = tiles.filter { it.farmID != null }.map { it.farmID }
-        if (farmIDs.distinct().size != 1) {
-            throw ValidationException("All fields must belong to the same farm")
-        }*/
     }
 
     /**
      * cross validates farm and its tile IDs
      * CHECK DONE IN parseFarmstead, parseFields...
      */
-    /*private fun validateFarmTiles(f: Farm) {
-        // Get all tiles and store into one list
-        val tilesOfFarm: List<Tile> = f.getFarmstead() + f.getFields() + f.getPlantation()
-        for (tile in tilesOfFarm) {
-            val farmIDofTile: Int? = tile.farmID
-            if (farmIDofTile != f.getId()) {
-                throw ValidationException("Mismatch of the actual and tile-specified farm IDs")
-            }
-        }
-    }*/
 
     /**
      * validates that each tile has a valid farmID specified
@@ -730,17 +535,6 @@ class FarmParser(private val simulationData: SimulationData) {
                 }
             }
         }
-
-        // Doesn't check if the ids of each tile appeared in the lists of tiles in each farm
-        /*val tiles = simulationData.getTiles()
-        for (tile in tiles) {
-            val farmID = tile.farmID
-            if (farmID != null) {
-                if (!farmIDs.contains(farmID)) {
-                    throw ValidationException("Invalid Farm ID $farmID specified by tile ${tile.id}")
-                }
-            }
-        }*/
     }
 
     /**
@@ -758,16 +552,6 @@ class FarmParser(private val simulationData: SimulationData) {
         if (invalidPlants.isNotEmpty()) {
             throw ValidationException("Sowing Plan contains plant that is not sowable by farm")
         }
-
-        /*val plantTypes = farm.getSowingPlans().values.flatten().map { it.getPlant() }
-        val fields = farm.getFields()
-        for (field in fields) {
-            val possiblePlants = field.possiblePlants
-                ?: throw ValidationException("Field must have possible plants")
-            if (!possiblePlants.containsAll(plantTypes)) {
-                throw ValidationException("Sowing plans must match possible plants of the farm")
-            }
-        }*/
     }
 
     /**
