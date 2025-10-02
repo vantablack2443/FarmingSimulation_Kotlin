@@ -50,30 +50,17 @@ For each student, this section should provide a detailed day-by-day timeline of 
 - ...
 
 ### Kerem
-- **Day 1:**
-- Writing the skeletons for MapParser & FarmParser, implemented most of FarmParser.
-- - **Day 2:**
-- Finished FarmParser, added skeletons for Farm, Machine and SowingPlan, started to work on HarvestEstimateHandler.
-- **Day 3:**
-- Finished HarvestEstimateHandler, though wasn't tested, started to work on IrrigationHandler.
-- Fixed detekt errors.
-- **Day 4:**
-- Started to write tests for MapParser. Fixed some bugs both in MapParser and FarmParser.
-- **Day 5:**
-- Fixed some bugs in ActionHandler and MowingHandler. Started to write system tests.
-- **Day 6:**
-- Fixed more bugs in ScenarioParser and FarmParser. Fixed bugs all around.
-- **Day 7:**
-- Fixed some bugs in ScenarioParser, Simulation, CloudHandler. Started to write more system tests.
-- **Day 8:**
-- Fixed bugs in IrrigationHandler, HarvestingHandler. Checked if the action handlers worked.
-- **Day 9:**
-- Started to emphasize heavily on writing system tests. Wrote system tests for all action handlers.
-- Also started to write mutant tests.
-- **Day 10:**
-- Writing system tests all day. Fixing bugs accordingly.
-- **Day 11:**
-- Emphasize heavily on system and unit tests. Fixing final bugs.
+- **Day 1:** Writing the skeletons for MapParser & FarmParser, implemented most of FarmParser.
+- **Day 2:** Finished FarmParser, added skeletons for Farm, Machine and SowingPlan, started to work on HarvestEstimateHandler.
+- **Day 3:** Finished HarvestEstimateHandler, though wasn't tested, started to work on IrrigationHandler. Fixed detekt errors.
+- **Day 4:** Started to write tests for MapParser. Fixed some bugs both in MapParser and FarmParser.
+- **Day 5:** Fixed some bugs in ActionHandler and MowingHandler. Started to write system tests.
+- **Day 6:** Fixed more bugs in ScenarioParser and FarmParser. Fixed bugs all around.
+- **Day 7:** Fixed some bugs in ScenarioParser, Simulation, CloudHandler. Started to write more system tests.
+- **Day 8:** Fixed bugs in IrrigationHandler, HarvestingHandler. Checked if the action handlers worked.
+- **Day 9:** Started to emphasize heavily on writing system tests. Wrote system tests for all action handlers. Also started to write mutant tests.
+- **Day 10:** Writing system tests all day. Fixing bugs accordingly.
+- **Day 11:** Emphasize heavily on system and unit tests. Fixing final bugs.
 
 
 
