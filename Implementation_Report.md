@@ -149,7 +149,7 @@ Mahmoud used the following tools in the implementation phase:
 - Copilot for syntax and code completion
 
 **Kevin:** <br>
-Kevin used the following tools in the implementaion phase:
+Kevin used the following tools in the implementation phase:
 - NotebookLM for sourcing specific points from the specification for easier verification.
 - GPT-5 for syntax
 
