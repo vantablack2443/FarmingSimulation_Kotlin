@@ -10,7 +10,7 @@ import de.unisaarland.cs.se.selab.tile.Tile
 const val MAX_SUNLIGHT_REDUCTION = 50
 const val MIN_SUNLIGHT_REDUCTION = 3
 const val MIN_RAIN_AMOUNT = 5000
-
+const val MAX_TILES_TRAVEL = 10
 /**
  * handler class for cloud movement
  */
@@ -214,6 +214,7 @@ class CloudHandler(val simulationMap: SimulationMap) {
             simulationMap.getTileByCoordinate(c.location) ?: return
         )
         if (c.duration > 0) c.duration--
+        c.maxTraversibleTiles = MAX_TILES_TRAVEL
 
         if (checkDurationDissipate(c)) {
             dissipate(c)
