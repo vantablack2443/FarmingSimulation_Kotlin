@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.incidents
 
+import de.unisaarland.cs.se.selab.cloudHandler.CloudHandler
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
@@ -156,6 +157,7 @@ class IncidentsTest {
             affectedTile,
             listOf(mockFarm)
         )
+        cityExpansion.cloudHandler = CloudHandler(this.mockMap)
         cityExpansion.execute(mockMap, 17)
         assertEquals(TileType.VILLAGE, affectedTile.category)
         assert(!mockFarm.getFields().contains(affectedTile))

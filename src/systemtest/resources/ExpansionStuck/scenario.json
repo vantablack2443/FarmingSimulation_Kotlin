@@ -3,14 +3,20 @@
   ],
   "incidents": [
     {
-      "id": 0,
-      "tick": 0,
+      "id": 1,
+      "tick": 2,
       "type": "CITY_EXPANSION",
       "location": 1
     },
     {
-      "id": 1,
-      "tick": 1,
+      "id": 0,
+      "tick": 3,
+      "type": "CITY_EXPANSION",
+      "location": 2
+    },
+    {
+      "id": 2,
+      "tick": 3,
       "type": "BROKEN_MACHINE",
       "duration": 1,
       "machineId": 0
