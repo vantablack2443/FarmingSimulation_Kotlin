@@ -7,7 +7,7 @@ The following table summarizes the actual contributions of each group member, in
 | Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work                                                        |
 |----------|-----------------------------------------------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------|
 | Ana      | MapParser, CommandLineParser, Main, Simulation, CloudCreation   | Incidents, Cloud, Irrigation Unit test; System Tests for all phases |                                                                        |
-| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions                           |                                                                        |
+| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions, Unit Tests Coordinate    | Editing the ActionHandlers, Plant Classes, HarvestEstimationHandler    |
 | Nehesh   | Plant classes, Animal Attack, Bee Happy, Map, IrrigationHandler | System tests for parsers and simulation logic                       | Bug fixes for cloud handler, harvest estimate handler, action handlers |
 | Dipu     | WeedingHandler, CuttingHandler, CityExpansion, Logger           | System tests for validation and simulation phases                   |                                                                        |
 | Mahmoud  | HarvestingHandler, BrokenMachine                                | Unit tests for map, mowing handler; System tests for all phases     |                                                                        |
@@ -30,9 +30,22 @@ The following table summarizes the actual contributions of each group member, in
 - ...
 
 ### Thejitha
-- **Day 1:**
+- **Day 1:** Added skeleton files, implemented Scenario Parser
+- **Day 2:** Implementing Scenario Parser
+- **Day 3:** Functions added to Plant, Farm, actionHandler. Implemented SowingHandler
+- **Day 4:** First version of CloudHandler . Fixes to scenario parser
+- **Day 5:** Improving Field Plants, minor fixes to SowingHandler
+- **Day 6:** Adding functions to tile and harvestEstimateHandler, Fixes to Plantations and Fields
+- **Day 7:** Farm Parser edits, initial tests
+- **Day 8:** Fixes to farm Parser
+- **Day 9:** Redesign Plantation and Field Plants, changing HarvestEstimateHandler, changes to sowingHandler, farmParser, Farm
+- **Day 10:** Edits to actionPhaseHandler
+- **Day 11:** SowingHandler, ActionPhaseHandler, SimulationMap fixes
+- **Day 12:** Redesign of harvestEstimateHandler, fixes to farm and sowingHandler
+- **Day 13:** Adjusting Plants to work with harvestEstimateHandler, small fixes to farm
+- **Day 14:** HarvestEstimateHandler, fixes irrigationHandler, scenarioParser, sowingHandler
+- **Day 15:** Tests, HarvestEstimateHandler, Unit Testing Coordinate, System tests for plantation plants
 
-- ...
 
 ### Nehesh
 - **Day 1:** Added skeleton files, implemented parts of Map
