@@ -24,8 +24,6 @@ The following table summarizes the actual contributions of each group member, in
 
 ## Detailed Timeline 
 
-For each student, this section should provide a detailed day-by-day timeline of their activities and progress.
-
 ### Ana
 
 - **Day 1:**
