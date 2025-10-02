@@ -369,4 +369,25 @@ class MapParserTests {
             parser.parse(tmp.absolutePath)
         }
     }
+
+    @Test
+    fun `Plantation validation test missing plant`() {
+        val json = """
+        { "tiles": [ 
+            { "id": 1, "coordinates": { "x": 0, "y": 0 }, "category": "PLANTATION" }
+        ] }
+        """.trimIndent()
+
+        val tmp = File.createTempFile("testmap", ".json").apply {
+            writeText(json)
+            deleteOnExit()
+        }
+
+        val sim = SimulationData()
+        val parser = MapParser(sim)
+
+        Assertions.assertThrows(ValidationException::class.java) {
+            parser.parse(tmp.absolutePath)
+        }
+    }
 }
