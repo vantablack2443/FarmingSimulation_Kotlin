@@ -74,7 +74,6 @@ The following table summarizes the actual contributions of each group member, in
 - **Day 8:** Worked on the Action Phase Handler. Changed logic.
 - **Day 10:** Wrote more system tests for Incidents and checking out edge cases.
 - **Day 11:** Final day continuous work with group to figure out the bugs and finalize the project.
-- ...
 
 ### Mahmoud
 -**Day 1:** started directly with testing as we were told to split up and do testing and implementation in parallel
@@ -112,7 +111,8 @@ The following table summarizes the actual contributions of each group member, in
 ## Usage of Generative AI
 
 **Ana:**
-
+Ana used the following tools in the implementation phase:
+- ChatGPT for Kotlin syntax
 
 **Thejitha:**
 Theijitha used the following tools in the implementation phase:
@@ -131,7 +131,8 @@ Dipu used the following tools in the implementation phase:
 
 
 **Mahmoud:**
-
+Mahmoud used the following tools in the implementation phase:
+- Copilot for syntax and code completion
 
 **Kevin:**
 
