@@ -139,4 +139,13 @@ class CuttingHandlerTest {
         assertTrue(machine.currentTile == machine.homeShed)
         assertFalse(plantation1.actionsNeeded.contains(ActionType.CUTTING))
     }
+
+    @Test
+    fun testUnimplementedFunctions() {
+        handler.getOperableTiles(farm)
+        handler.getOperableTiles(farm, PlantType.ALMOND, 0)
+        handler.performAction(machine, plantation1)
+        handler.startPhase(farm, machine)
+        handler.startPhase(farm, machine, 0)
+    }
 }
