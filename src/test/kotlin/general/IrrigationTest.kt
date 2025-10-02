@@ -1,5 +1,5 @@
 package general
-/*
+
 import de.unisaarland.cs.se.selab.actionHandlers.IrrigationHandler
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.ActionType
@@ -36,7 +36,8 @@ class IrrigationTest {
         field.actionsNeeded.add(ActionType.IRRIGATING)
         machine = Machine(
             1, "machine", 3, farmstead,
-            listOf(ActionType.IRRIGATING), listOf(PlantType.POTATO, PlantType.GRAPE), farmstead
+            listOf(ActionType.IRRIGATING), listOf(PlantType.POTATO, PlantType.APPLE, PlantType.OAT),
+            farmstead
         )
         handler = IrrigationHandler(map, PlantData())
         farm = Farm(
@@ -111,5 +112,3 @@ class IrrigationTest {
         assertEquals(0, plantationThree.currentMoisture)
     }
 }
-
- */
