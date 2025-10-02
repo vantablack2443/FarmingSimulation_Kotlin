@@ -125,11 +125,11 @@ redistribution of the workload.
 
 ## Usage of Generative AI
 
-**Ana:**
+**Ana:** <br>
 Ana used the following tools in the implementation phase:
 - ChatGPT for Kotlin syntax
 
-**Thejitha:**
+**Thejitha:** <br>
 Theijitha used the following tools in the implementation phase:
 - Github Copilot for code completion
 - ChatGPT for Kotlin data structures and methods and writing tests
@@ -139,18 +139,18 @@ Nehesh used the following tools in the implementation phase:
 - GitHub Copilot for code completion 
 - [Perplexity](https://www.perplexity.ai/) to help with specific syntax for Kotlin and comparing logs.
 
-**Dipu:**
+**Dipu:** <br>
 Dipu used the following tools in the implementation phase:
 - GitHub Copilot for basic code completion and suggestions.
 - NotebookLM for sourcing specific points from the specification for easier verification.
 
 
-**Mahmoud:**
+**Mahmoud:** <br>
 Mahmoud used the following tools in the implementation phase:
 - Copilot for syntax and code completion
 
-**Kevin:**
-Kevin used the following tools in the implementaion phase:
+**Kevin:** <br>
+Kevin used the following tools in the implementation phase:
 - NotebookLM for sourcing specific points from the specification for easier verification.
 - GPT-5 for syntax
 
