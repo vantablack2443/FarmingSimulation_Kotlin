@@ -60,11 +60,11 @@ class CloudHandler(val simulationMap: SimulationMap) {
         // only for plantable tiles
         val plantables = map.getPlantableTiles().sortedBy { it.id }
         for (tile in plantables) {
+            val cloud = this.getCloudByCoordinate(tile.location) ?: continue
             reduceSunlight(
                 MAX_SUNLIGHT_REDUCTION,
                 tile
             )
-            val cloud = this.getCloudByCoordinate(tile.location) ?: continue
             Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
         }
     }
