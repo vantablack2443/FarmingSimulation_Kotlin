@@ -8,8 +8,9 @@ import de.unisaarland.cs.se.selab.incidents.FALLOW_DURATION
 import de.unisaarland.cs.se.selab.log.Logger.logHarvestEstimate
 import de.unisaarland.cs.se.selab.log.Logger.logMissedActions
 import de.unisaarland.cs.se.selab.map.SimulationMap
-import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 import de.unisaarland.cs.se.selab.tile.Tile
+
+// import de.unisaarland.cs.se.selab.simulation.NOV_TICK
 
 const val TWENTY_FIVE = 25
 const val HUNDRED = 100
@@ -253,9 +254,10 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val crop = t.currentCrop ?: return
         if (endHarvestEstimate != initialHarvestEstimate) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
-        } else if (yearTick == NOV_TICK) {
-            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
+//        else if (yearTick == NOV_TICK) {
+//            logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
+//        }
 
         plantOfTile.pollination.clear()
         plantOfTile.animalAttackPenalty.clear()
