@@ -10,6 +10,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenMachineThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
@@ -159,6 +160,7 @@ object SystemTestRegistration {
         // testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
         testSuite.registerTest(OatBehaviourTest())
+        testSuite.registerTest(BrokenMachineThenSow())
         // testSuite.registerTest(Apples())
         testSuite.registerTest(ValidatePlantCoupling())
         testSuite.registerTest(ValidateMachineUniqueness())
