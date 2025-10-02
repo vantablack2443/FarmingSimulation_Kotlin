@@ -17,13 +17,13 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
     override val startYearTick = 1
 
     override suspend fun run() {
-        assertLines(result1())
-
-        assertLines(result2())
-        assertLines(result3())
-
+        assertLines(result1a())
+        assertLines(result1b())
+        assertLines(result2a())
+        assertLines(result2b())
+        assertLines(result3a())
+        assertLines(result3b())
         assertLines(result4())
-
         assertLines(result5())
         assertLines(result55())
         assertLines(result6())
@@ -36,7 +36,8 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
             assertNextLine(currentLine)
         }
     }
-    private fun result1(): String = """
+
+    private fun result1a(): String = """
    [INFO] Initialization Info: map.json successfully parsed and validated.
    [INFO] Initialization Info: farm.json successfully parsed and validated.
    [INFO] Initialization Info: scenario.json successfully parsed and validated.
@@ -84,6 +85,8 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 2.
    [IMPORTANT] Farm: Farm 1 finished its actions.
    [INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 329305 g of APPLE.
+    """.trimIndent()
+    private fun result1b(): String = """
    [INFO] Simulation Info: Tick 5 started at tick 6 within the year.
    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
    [IMPORTANT] Farm: Farm 1 starts its actions.
@@ -92,23 +95,22 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
    [INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 240062 g of APPLE.
    [INFO] Simulation Info: Tick 6 started at tick 7 within the year.
    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
+   [IMPORTANT] Farm: Farm 1 starts its actions.
+   [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
+   [IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 9 for 5 days.
+   [IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 28 for 5 days.
+   [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+   [IMPORTANT] Farm: Farm 1 finished its actions.
+   [DEBUG] Harvest Estimate: Required actions on tile 26 were not performed: MOWING.
+   [INFO] Harvest Estimate: Harvest estimate on tile 26 changed to 1080000 g of GRAPE.
+   [INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 175004 g of APPLE.
+   [INFO] Simulation Info: Tick 7 started at tick 8 within the year.
+   [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 1 PLANTATION tiles.
+   [IMPORTANT] Farm: Farm 1 starts its actions.
+   [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
+   [IMPORTANT] Farm: Farm 1 finished its actions.
     """.trimIndent()
-
-    private fun result2(): String = """
-     [IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
-[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 9 for 5 days.
-[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 28 for 5 days.
-[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
-[IMPORTANT] Farm: Farm 1 finished its actions.
-[DEBUG] Harvest Estimate: Required actions on tile 26 were not performed: MOWING.
-[INFO] Harvest Estimate: Harvest estimate on tile 26 changed to 1080000 g of GRAPE.
-[INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 175004 g of APPLE.
-[INFO] Simulation Info: Tick 7 started at tick 8 within the year.
-[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 1 PLANTATION tiles.
-[IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
-[IMPORTANT] Farm: Farm 1 finished its actions.
+    private fun result2a(): String = """
 [INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 127576 g of APPLE.
 [INFO] Simulation Info: Tick 8 started at tick 9 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 3 PLANTATION tiles.
@@ -138,6 +140,8 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [INFO] Harvest Estimate: Harvest estimate on tile 45 changed to 486000 g of CHERRY.
 [DEBUG] Harvest Estimate: Required actions on tile 47 were not performed: IRRIGATING.
 [INFO] Harvest Estimate: Harvest estimate on tile 47 changed to 0 g of APPLE.
+    """.trimIndent()
+    private fun result2b(): String = """
 [INFO] Simulation Info: Tick 10 started at tick 11 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 1 starts its actions.
@@ -150,9 +154,6 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 262440 g of ALMOND.
 [DEBUG] Harvest Estimate: Required actions on tile 28 were not performed: MOWING.
 [INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 262440 g of ALMOND.
-    """.trimIndent()
-
-    private fun result3(): String = """
 [DEBUG] Harvest Estimate: Required actions on tile 45 were not performed: MOWING.
 [INFO] Harvest Estimate: Harvest estimate on tile 45 changed to 393660 g of CHERRY.
 [INFO] Simulation Info: Tick 11 started at tick 12 within the year.
@@ -167,51 +168,99 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [IMPORTANT] Farm: Farm 1 finished its actions.
 [INFO] Harvest Estimate: Harvest estimate on tile 7 changed to 354294 g of CHERRY.
 [INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 236196 g of ALMOND.
-[DEBUG] Harvest Estimate: Required actions on tile 25 were not performed: IRRIGATING.
 [INFO] Harvest Estimate: Harvest estimate on tile 25 changed to 0 g of PUMPKIN.
 [INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 236196 g of ALMOND.
 [INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 450000 g of PUMPKIN.
 [INFO] Harvest Estimate: Harvest estimate on tile 45 changed to 354294 g of CHERRY.
 [INFO] Simulation Info: Tick 12 started at tick 13 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
-[IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
-[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 7 for 5 days.
-[IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
-[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 45 for 5 days.
-[IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
-[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
-[IMPORTANT] Farm Machine: Machine 1 unloads 708588 g of CHERRY harvest in the shed.
-[IMPORTANT] Farm: Farm 1 finished its actions.
-[INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 212576 g of ALMOND.
-[INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 212576 g of ALMOND.
-[INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 405000 g of PUMPKIN.
-[INFO] Simulation Info: Tick 13 started at tick 14 within the year.
-[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.
-[IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
-[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 9 for 5 days.
-[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 28 for 5 days.
-[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
-[IMPORTANT] Farm: Farm 1 finished its actions.
-[INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 191318 g of ALMOND.
-[INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 191318 g of ALMOND.
-[DEBUG] Harvest Estimate: Required actions on tile 44 were not performed: WEEDING.
-[INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 328050 g of PUMPKIN.
-[INFO] Simulation Info: Tick 14 started at tick 15 within the year.
-[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
-[IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
-[IMPORTANT] Farm: Farm 1 finished its actions.
-[INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 295245 g of PUMPKIN.
-[INFO] Simulation Info: Tick 15 started at tick 16 within the year.
-[INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
-[IMPORTANT] Farm: Farm 1 starts its actions.
-[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
-[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 9 for 5 days.
-[IMPORTANT] Farm Harvest: Machine 1 has collected 191318 g of ALMOND harvest.
+   [IMPORTANT] Farm: Farm 1 starts its actions.
+   [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
+   [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 7 for 5 days.
+   [IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
+   [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 45 for 5 days.
+   [IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
+   [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+   [IMPORTANT] Farm Machine: Machine 1 unloads 708588 g of CHERRY harvest in the shed.
+   [IMPORTANT] Farm: Farm 1 finished its actions.
     """.trimIndent()
-
+    private fun result3a(): String = """
+    [INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 212576 g of ALMOND.
+    [INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 212576 g of ALMOND.
+    [INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 405000 g of PUMPKIN.
+    [INFO] Simulation Info: Tick 13 started at tick 14 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 9 for 5 days.
+    [IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 28 for 5 days.
+    [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    [INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 191318 g of ALMOND.
+    [INFO] Harvest Estimate: Harvest estimate on tile 28 changed to 191318 g of ALMOND.
+    [DEBUG] Harvest Estimate: Required actions on tile 44 were not performed: WEEDING.
+    [INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 328050 g of PUMPKIN.
+    [INFO] Simulation Info: Tick 14 started at tick 15 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    [INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 295245 g of PUMPKIN.
+    [INFO] Simulation Info: Tick 15 started at tick 16 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 9 for 5 days.
+    [IMPORTANT] Farm Harvest: Machine 1 has collected 191318 g of ALMOND harvest.
+    [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 28 for 5 days.
+    [IMPORTANT] Farm Harvest: Machine 1 has collected 191318 g of ALMOND harvest.
+    [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm Machine: Machine 1 unloads 382636 g of ALMOND harvest in the shed.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    [DEBUG] Harvest Estimate: Required actions on tile 44 were not performed: WEEDING.
+    [INFO] Harvest Estimate: Harvest estimate on tile 44 changed to 239148 g of PUMPKIN.
+    [INFO] Simulation Info: Tick 16 started at tick 17 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 44 for 5 days.
+    [IMPORTANT] Farm Harvest: Machine 1 has collected 239148 g of PUMPKIN harvest.
+    [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm Machine: Machine 1 unloads 239148 g of PUMPKIN harvest in the shed.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    [INFO] Simulation Info: Tick 17 started at tick 18 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    """.trimIndent()
+    private fun result3b(): String = """
+    [INFO] Simulation Info: Tick 18 started at tick 19 within the year.
+    [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 4 PLANTATION tiles.
+    [IMPORTANT] Farm: Farm 1 starts its actions.
+    [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,4.
+    [IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 4 for 4 days.
+    [IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 6 for 4 days.
+    [IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Action: Machine 0 performs SOWING on tile 8 for 4 days.
+    [IMPORTANT] Farm Sowing: Machine 0 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 23 for 5 days.
+    [IMPORTANT] Farm Sowing: Machine 1 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Action: Machine 1 performs SOWING on tile 25 for 5 days.
+    [IMPORTANT] Farm Sowing: Machine 1 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm Action: Machine 2 performs SOWING on tile 46 for 14 days.
+    [IMPORTANT] Farm Sowing: Machine 2 has sowed WHEAT according to sowing plan 4.
+    [IMPORTANT] Farm Machine: Machine 2 is finished and returns to the shed at 34.
+    [IMPORTANT] Farm: Farm 1 finished its actions.
+    [INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 0 g of WHEAT.
+    [INFO] Harvest Estimate: Harvest estimate on tile 6 changed to 0 g of WHEAT.
+    [INFO] Harvest Estimate: Harvest estimate on tile 23 changed to 0 g of WHEAT.
+    [INFO] Harvest Estimate: Harvest estimate on tile 25 changed to 0 g of WHEAT.
+    [INFO] Harvest Estimate: Harvest estimate on tile 46 changed to 0 g of WHEAT.
+    """.trimIndent()
     private fun result4(): String = """
 [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 28 for 5 days.
 [IMPORTANT] Farm Harvest: Machine 1 has collected 191318 g of ALMOND harvest.
@@ -260,8 +309,11 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [INFO] Harvest Estimate: Harvest estimate on tile 6 changed to 0 g of WHEAT.
 [DEBUG] Harvest Estimate: Required actions on tile 23 were not performed: IRRIGATING.
 [INFO] Harvest Estimate: Harvest estimate on tile 23 changed to 0 g of WHEAT.
+[DEBUG] Harvest Estimate: Required actions on tile 25 were not performed: IRRIGATING.
+[INFO] Harvest Estimate: Harvest estimate on tile 25 changed to 0 g of WHEAT.
+[DEBUG] Harvest Estimate: Required actions on tile 46 were not performed: IRRIGATING.
+[INFO] Harvest Estimate: Harvest estimate on tile 46 changed to 0 g of WHEAT.
     """.trimIndent()
-
     private fun result5(): String = """
 [DEBUG] Harvest Estimate: Required actions on tile 25 were not performed: IRRIGATING.
 [INFO] Harvest Estimate: Harvest estimate on tile 25 changed to 0 g of WHEAT.
