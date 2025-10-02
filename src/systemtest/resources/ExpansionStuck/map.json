@@ -17,10 +17,10 @@
     {
       "id": 2,
       "coordinates": { "x": 2, "y": 0 },
-      "category": "PLANTATION",
+      "category": "FIELD",
       "farm": 0,
       "capacity": 10000,
-      "plant": "APPLE",
+      "possiblePlants": ["PUMPKIN"],
       "airflow": false
     },
     {
@@ -30,11 +30,11 @@
     },
     {
       "id": 4,
-      "coordinates": { "x": 4, "y": 0 },
-      "category": "PLANTATION",
+      "coordinates": { "x": 0, "y": -2 },
+      "category": "FIELD",
       "farm": 0,
       "capacity": 10000,
-      "plant": "APPLE",
+      "possiblePlants": ["PUMPKIN"],
       "airflow": false
     }
   ]
