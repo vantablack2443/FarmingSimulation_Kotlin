@@ -3,17 +3,16 @@
 ## Individual Contributions
 
 The following table summarizes the actual contributions of each group member, including deviations from the planned responsibilities. 
-The "implemented components" column should only include major contributions to the respective components (i.e., no bugfixes or small additions to existing components).
 
-| Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work |
-|----------|-----------------------------------------------------------------|---------------------------------------------------------------------|-----------------|
-| Ana      | MapParser, CommandLineParser, Main, Simulation, CloudCreation   | Incidents, Cloud, Irrigation Unit test; System Tests for all phases |                 |
-| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions                           |                 |
-| Nehesh   | Plant classes, Animal Attack, Bee Happy, Map, IrrigationHandler | System tests for parsers and simulation logic                       |                 |
-| Dipu     | WeedingHandler, CuttingHandler, CityExpansion, Logger           | System tests for validation and simulation phases                   |                 |
-| Mahmoud  | HarvestingHandler, BrokenMachine                                | Unit tests for map, mowing handler; System tests for all phases     |                 |
-| Kevin    | MowingHandler, PlantData, Map, Drought, CloudHandler            | Unit tests for sowing, logger; System tests for farm actions        |                 |
-| Kerem    | FarmParser, HarvestEstimateHandler, IrrigationHandler           | System tests for all phases except cloud movement                   |                 |
+| Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work                                                        |
+|----------|-----------------------------------------------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------|
+| Ana      | MapParser, CommandLineParser, Main, Simulation, CloudCreation   | Incidents, Cloud, Irrigation Unit test; System Tests for all phases |                                                                        |
+| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions                           |                                                                        |
+| Nehesh   | Plant classes, Animal Attack, Bee Happy, Map, IrrigationHandler | System tests for parsers and simulation logic                       | Bug fixes for cloud handler, harvest estimate handler, action handlers |
+| Dipu     | WeedingHandler, CuttingHandler, CityExpansion, Logger           | System tests for validation and simulation phases                   |                                                                        |
+| Mahmoud  | HarvestingHandler, BrokenMachine                                | Unit tests for map, mowing handler; System tests for all phases     |                                                                        |
+| Kevin    | MowingHandler, PlantData, Map, Drought, CloudHandler            | Unit tests for sowing, logger; System tests for farm actions        |                                                                        |
+| Kerem    | FarmParser, HarvestEstimateHandler, IrrigationHandler           | System tests for all phases except cloud movement                   |                                                                        |
 
 ---
 
@@ -24,8 +23,6 @@ The "implemented components" column should only include major contributions to t
 ---
 
 ## Detailed Timeline 
-
-For each student, this section should provide a detailed day-by-day timeline of their activities and progress.
 
 ### Ana
 
@@ -38,7 +35,18 @@ For each student, this section should provide a detailed day-by-day timeline of 
 - ...
 
 ### Nehesh
-- ...
+- **Day 1:** Added skeleton files, implemented parts of Map
+- **Day 2:** Completed Map, implemented machine data class
+- **Day 3:** Implemented Animal Attack and bee happy, implemented plant data classes
+- **Day 4:** Bug fixed in Broken Machine, Farm, Implemented basis of action phase handler
+- **Day 5:** Tried schema validation approach for parsers, bugfixes in tiles and incidents
+- **Day 6:** Bug fixes in map class and other files
+- **Day 7:** started writing unit and parser tests for parsers
+- **Day 8:** Wrote system tests and bug fixes in scenario parser
+- **Day 9:** Wrote more system tests and bug fixes in action handlers and fixed incorrect tests
+- **Day 10:** Bug fixes in irrigation handler, estimate handler, animal attack and bee happy and wrote system tests
+- **Day 11:** Final bug fixes to harvest estimation handler, cloud handler, plantdata, and other files. Wrote system tests
+
 
 ### Dipu
 - ...
@@ -68,25 +76,29 @@ For each student, this section should provide a detailed day-by-day timeline of 
 
 ## Usage of Generative AI
 
-Choose the correct option that applies to each individual student (if you diverted from your initial statement in the implementation plan, make sure to explicitely state it here):
+**Ana:**
 
-**Alice:**
-*Option 1:*
-We did not use generative AI in the implementation phase (neither for code-completion, rewriting code, nor testing).
 
-*Option 2:*
-(insert tool names properly; if applicable add links or add version numbers of the used tools)
-Alice used the following tools in the implementation phase:
-Tool-1 for code completion and tool Tool-2 for ... . In addition, she used Tool-3 for ...
+**Thejitha:**
 
-**Bob:**
-...
 
-**Kerem:**
+**Nehesh:** <br>
+Nehesh used the following tools in the implementation phase:
+- GitHub Copilot for code completion 
+- [Perplexity](https://www.perplexity.ai/) to help with specific syntax for Kotlin and comparing logs.
+
+**Dipu:**
+
+
+**Mahmoud:**
+
+
+**Kevin:**
+
+**Kerem:** <br>
 Kerem used the following tools in the implementation phase:
-ChatGPT (GPT-4) for code completion and debugging assistance. He used it for system tests, in which he used it to auto-
-complete some of the test cases. In addition, he used Copilot to find edge cases while writing system tests.
+- ChatGPT (GPT-4) for code completion and debugging assistance. He used it for system tests, in which he used it to autocomplete some of the test cases. In addition
+- Used Copilot to find edge cases while writing system tests.
 
-In case of option 2, add additional sentences in which you provide more details on which tools you used for which specific tasks and to which extent.
 
 We are aware of the potential dangers of using these tools and take full responsibility for any code, documents and other content produced during the group phase.
