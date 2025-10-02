@@ -24,11 +24,18 @@ class NoFarmDroughtSimple : ExampleSystemTestExtension() {
 
     private fun result(): String {
         return """
+[INFO] Initialization Info: map.json successfully parsed and validated.
+[INFO] Initialization Info: farm.json successfully parsed and validated.
+[INFO] Initialization Info: scenario.json successfully parsed and validated.
+[INFO] Simulation Info: Simulation started at tick 1 within the year.
+[INFO] Simulation Info: Tick 0 started at tick 1 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 0 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 1 starts its actions.
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: .
 [IMPORTANT] Farm: Farm 1 finished its actions.
 [IMPORTANT] Incident: Incident 1 of type DROUGHT happened and affected tiles 5,7.
+[INFO] Harvest Estimate: Harvest estimate on tile 5 changed to 0 g of APPLE.
+[INFO] Harvest Estimate: Harvest estimate on tile 7 changed to 0 g of APPLE.
 [IMPORTANT] Simulation Info: Simulation ended at tick 1.
 [IMPORTANT] Simulation Info: Simulation statistics are calculated.
 [IMPORTANT] Simulation Statistics: Farm 1 collected 0 g of harvest.
@@ -40,7 +47,8 @@ class NoFarmDroughtSimple : ExampleSystemTestExtension() {
 [IMPORTANT] Simulation Statistics: Total amount of GRAPE harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of ALMOND harvested: 0 g.
 [IMPORTANT] Simulation Statistics: Total amount of CHERRY harvested: 0 g.
-[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 3400000 g.
+[IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 0 g.
+
         """.trimIndent()
     }
 }

@@ -103,10 +103,6 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtToExpansion2())
         testSuite.registerTest(LogCherryDrought())
 
-        // testSuite.registerTest(SowingPlanFieldsDifferentFarms())
-        // testSuite.registerTest(FarmNoPlantableTiles())
-        // testSuite.registerTest(MachineWrongShed())
-        // testSuite.registerTest(MachineDefaultAction())
         // testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmDroughtSimple())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
