@@ -257,7 +257,7 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
         val crop = t.currentCrop ?: return
         if (endHarvestEstimate != initialHarvestEstimate) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
-        } else if (yearTick == NOV_TICK && !t.droughtHit) {
+        } else if (yearTick == NOV_TICK) {
             logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, crop)
         }
 
