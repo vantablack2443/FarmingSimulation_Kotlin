@@ -63,6 +63,17 @@ The following table summarizes the actual contributions of each group member, in
 
 
 ### Dipu
+- **Day 1:** Created the skeleton files, and started implementing the Logger.
+- **Day 2:** Finished and polished logger, started with testing the map.
+- **Day 3:** Started the logic for Weeding and Cutting handlers.
+- **Day 4:** Wrote tests for the Parser and bug fixes.
+- **Day 4:** Finished weeding handler, and cutting handler. Checked bug fixes in the other Handlers and Parser.
+- **Day 5:** Finished city expansion, started with writing system tests for validation phase.
+- **Day 6:** Continued writing system tests for validation phase, started writing system tests for simulation phase.
+- **Day 7:** Continued writing system tests for simulation phase. Bug fixes in the Handlers and Parser.
+- **Day 8:** Worked on the Action Phase Handler. Changed logic.
+- **Day 10:** Wrote more system tests for Incidents and checking out edge cases.
+- **Day 11:** Final day continuous work with group to figure out the bugs and finalize the project.
 - ...
 
 ### Mahmoud
@@ -104,6 +115,9 @@ Nehesh used the following tools in the implementation phase:
 - [Perplexity](https://www.perplexity.ai/) to help with specific syntax for Kotlin and comparing logs.
 
 **Dipu:**
+Dipu used the following tools in the implementation phase:
+- GitHub Copilot for basic code completion and suggestions.
+- NotebookLM for sourcing specific points from the specification for easier verification.
 
 
 **Mahmoud:**

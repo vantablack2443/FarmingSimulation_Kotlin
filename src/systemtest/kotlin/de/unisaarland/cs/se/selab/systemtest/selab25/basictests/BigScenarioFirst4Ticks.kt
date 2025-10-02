@@ -62,6 +62,19 @@ class BigScenarioFirst4Ticks : ExampleSystemTestExtension() {
         }
     }
 
+    private suspend fun skipUntilString(startString: String): String {
+        val line: String = getNextLine()
+            ?: throw SystemTestAssertionError(
+                "End of log reached when there should be more,\n" +
+                    "expected: " + startString
+            )
+        return if (line.startsWith(startString)) {
+            line
+        } else {
+            skipUntilString(startString)
+        }
+    }
+
 //    private fun result(): String {
 //        return """
 // [INFO] Initialization Info: map.json successfully parsed and validated.
@@ -119,17 +132,4 @@ class BigScenarioFirst4Ticks : ExampleSystemTestExtension() {
 // [IMPORTANT] Simulation Statistics: Total harvest estimate still in fields and plantations: 3651724 g.
 //        """.trimIndent()
 //    }
-
-    private suspend fun skipUntilString(startString: String): String {
-        val line: String = getNextLine()
-            ?: throw SystemTestAssertionError(
-                "End of log reached when there should be more,\n" +
-                    "expected: " + startString
-            )
-        return if (line.startsWith(startString)) {
-            line
-        } else {
-            skipUntilString(startString)
-        }
-    }
 }
