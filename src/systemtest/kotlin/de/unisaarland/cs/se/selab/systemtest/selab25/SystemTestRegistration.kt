@@ -145,6 +145,10 @@ object SystemTestRegistration {
         testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
         testSuite.registerTest(ScenarioParserTestCityExpnsion())
         // testSuite.registerTest(PotatoBehaviourTest())
+        registerSystemTestsForReferenceImplementation2(testSuite)
+    }
+
+    fun registerSystemTestsForReferenceImplementation2(testSuite: SELab25TestSuite) {
         testSuite.registerTest(SowingAndDroughtInOneTick())
         testSuite.registerTest(IncidentSpaceBetweenTiles())
         testSuite.registerTest(FullSimTest())
@@ -170,65 +174,65 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtSowExpand())
         testSuite.registerTest(EvenBiggerScenario())
     }
+}
 
-    /**
-     * Register the tests you want to run against the validation mutants here!
-     * The test only check validation, so they log messages will only possibly
-     * be incorrect during the parsing/validation.
-     * Everything after 'Simulation start' works correctly
-     */
-    fun registerSystemTestsMutantValidation(testSuite: SELab25TestSuite) {
-        testSuite.registerTest(ExampleSystemTest())
-        testSuite.registerTest(FarmNoPlantableTiles())
-        testSuite.registerTest(MachineWrongShed())
+/**
+ * Register the tests you want to run against the validation mutants here!
+ * The test only check validation, so they log messages will only possibly
+ * be incorrect during the parsing/validation.
+ * Everything after 'Simulation start' works correctly
+ */
+fun registerSystemTestsMutantValidation(testSuite: SELab25TestSuite) {
+    testSuite.registerTest(ExampleSystemTest())
+    testSuite.registerTest(FarmNoPlantableTiles())
+    testSuite.registerTest(MachineWrongShed())
 
-        testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
-        testSuite.registerTest(FarmParserTestMissingTilesInField())
-        testSuite.registerTest(MapParserTestVillageAdjoinForest())
-        testSuite.registerTest(ScenarioParserTestCloudOnVillage())
-        testSuite.registerTest(FarmParserTestNoFieldInPlan())
-        testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(NoFarmAnimallAttackInvalid())
-        testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
-        testSuite.registerTest(ScenarioParserTestCityExpnsion())
-        testSuite.registerTest(CityExpansionSameTick())
-    }
+    testSuite.registerTest(MapParserTestFarmsteadAdjoinOtherFarm())
+    testSuite.registerTest(FarmParserTestMissingTilesInField())
+    testSuite.registerTest(MapParserTestVillageAdjoinForest())
+    testSuite.registerTest(ScenarioParserTestCloudOnVillage())
+    testSuite.registerTest(FarmParserTestNoFieldInPlan())
+    testSuite.registerTest(MachineDefaultAction())
+    testSuite.registerTest(NoFarmAnimallAttackInvalid())
+    testSuite.registerTest(FarmParserTestPlanTileOnNextFarm())
+    testSuite.registerTest(ScenarioParserTestCityExpnsion())
+    testSuite.registerTest(CityExpansionSameTick())
+}
 
-    /**
-     * The same as above, but the log message only (possibly) become incorrect
-     * from the 'Simulation start' log onwards
-     */
-    fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
-        testSuite.registerTest(ExampleSystemTest())
-        testSuite.registerTest(CloudMovementTest())
-        testSuite.registerTest(CasualCheckBehaviorTest())
-        testSuite.registerTest(MachinePriority())
-        testSuite.registerTest(CutAppleMissedAction3())
-        testSuite.registerTest(MachineDefaultAction())
-        testSuite.registerTest(SowingPlanPrioritization())
-        testSuite.registerTest(PlantationPlantsTickOneMachines())
-        testSuite.registerTest(PlantationPlantsDefault())
-        testSuite.registerTest(PotatoBehaviourTest())
-        testSuite.registerTest(DieAndComeBack())
-        testSuite.registerTest(JustMow())
-        testSuite.registerTest(MachineIrrigationSecondTick())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(SowingAndDroughtInOneTick())
-        testSuite.registerTest(IncidentSpaceBetweenTiles())
-        testSuite.registerTest(TwentyEightDays())
-        testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
-        testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
-        testSuite.registerTest(FullSimAAWithFieldLog())
-        testSuite.registerTest(MultipleBeeHappies())
-        testSuite.registerTest(SowingPlanSimplePlan())
-        testSuite.registerTest(NoWayHome())
-        testSuite.registerTest(AnotherWayHome())
-        testSuite.registerTest(MachineBehaviorTest())
-        testSuite.registerTest(FullSimTest())
-        testSuite.registerTest(OatBehaviourTest())
-        testSuite.registerTest(BigScenarioFirst4Ticks())
-        testSuite.registerTest(Apples())
-        testSuite.registerTest(OatWheatYearTest())
-    }
+/**
+ * The same as above, but the log message only (possibly) become incorrect
+ * from the 'Simulation start' log onwards
+ */
+fun registerSystemTestsMutantSimulation(testSuite: SELab25TestSuite) {
+    testSuite.registerTest(ExampleSystemTest())
+    testSuite.registerTest(CloudMovementTest())
+    testSuite.registerTest(CasualCheckBehaviorTest())
+    testSuite.registerTest(MachinePriority())
+    testSuite.registerTest(CutAppleMissedAction3())
+    testSuite.registerTest(MachineDefaultAction())
+    testSuite.registerTest(SowingPlanPrioritization())
+    testSuite.registerTest(PlantationPlantsTickOneMachines())
+    testSuite.registerTest(PlantationPlantsDefault())
+    testSuite.registerTest(PotatoBehaviourTest())
+    testSuite.registerTest(DieAndComeBack())
+    testSuite.registerTest(JustMow())
+    testSuite.registerTest(MachineIrrigationSecondTick())
+    testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+    testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
+    testSuite.registerTest(SowingAndDroughtInOneTick())
+    testSuite.registerTest(IncidentSpaceBetweenTiles())
+    testSuite.registerTest(TwentyEightDays())
+    testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
+    testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
+    testSuite.registerTest(FullSimAAWithFieldLog())
+    testSuite.registerTest(MultipleBeeHappies())
+    testSuite.registerTest(SowingPlanSimplePlan())
+    testSuite.registerTest(NoWayHome())
+    testSuite.registerTest(AnotherWayHome())
+    testSuite.registerTest(MachineBehaviorTest())
+    testSuite.registerTest(FullSimTest())
+    testSuite.registerTest(OatBehaviourTest())
+    testSuite.registerTest(BigScenarioFirst4Ticks())
+    testSuite.registerTest(Apples())
+    testSuite.registerTest(OatWheatYearTest())
 }
