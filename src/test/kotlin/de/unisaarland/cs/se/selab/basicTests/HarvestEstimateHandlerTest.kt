@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.basicTests
 
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
+import de.unisaarland.cs.se.selab.enumerations.ActionType
 import de.unisaarland.cs.se.selab.enumerations.TileShape
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.harvestestimatehandler.HarvestEstimateHandler
@@ -99,6 +100,36 @@ class HarvestEstimateHandlerTest {
         val simMap = SimulationMap(mutableMapOf(Pair(tile.location, tile)))
         val harvestEstHandler = HarvestEstimateHandler(simMap)
         val acted = harvestEstHandler.applyAnimalAttack(tile)
+        assertEquals(false, acted)
+    }
+
+    @Test
+    fun `apply missed mowing test`() {
+        val tile = Tile(
+            1,
+            Coordinate(0, 0),
+            TileType.FIELD,
+            TileShape.OCTAGONAL
+        )
+        tile.plant = Pumpkin()
+        tile.actionsNeeded.add(ActionType.MOWING)
+        val simMap = SimulationMap(mutableMapOf(Pair(tile.location, tile)))
+        val harvestEstHandler = HarvestEstimateHandler(simMap)
+        val acted = harvestEstHandler.applyMissedMowing(tile)
+        assertEquals(true, acted)
+    }
+
+    @Test
+    fun `apply missed mowing null plant`() {
+        val tile = Tile(
+            1,
+            Coordinate(0, 0),
+            TileType.FIELD,
+            TileShape.OCTAGONAL
+        )
+        val simMap = SimulationMap(mutableMapOf(Pair(tile.location, tile)))
+        val harvestEstHandler = HarvestEstimateHandler(simMap)
+        val acted = harvestEstHandler.applyMissedMowing(tile)
         assertEquals(false, acted)
     }
 }
