@@ -23,6 +23,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EvenBiggerScenario
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
@@ -75,7 +76,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
-
 /**
  * Used for test registration
  */
@@ -118,7 +118,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineCantReturnDueHarvest())
         // testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
-
+        testSuite.registerTest(EvenBiggerScenario())
         // testSuite.registerTest(MaxTickEndLogEquals())
         // testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
@@ -166,6 +166,7 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtRainThenSow())
         testSuite.registerTest(DroughtThenSow())
         testSuite.registerTest(DroughtSowExpand())
+        testSuite.registerTest(EvenBiggerScenario())
     }
 
     /**
