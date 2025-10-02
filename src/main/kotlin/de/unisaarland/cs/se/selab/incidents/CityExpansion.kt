@@ -1,8 +1,10 @@
 package de.unisaarland.cs.se.selab.incidents
 
+import de.unisaarland.cs.se.selab.cloudHandler.CloudHandler
 import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.farm.Farm
+import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.log.Logger.logIncident
 import de.unisaarland.cs.se.selab.map.SimulationMap
 import de.unisaarland.cs.se.selab.tile.Tile
@@ -17,6 +19,7 @@ class CityExpansion(
     val tile: Tile,
     val farms: List<Farm>
 ) : Incident(id, tick, type) {
+    lateinit var cloudHandler: CloudHandler
 
     override fun execute(simulationMap: SimulationMap, yearTick: Int) {
         this.tile.category = TileType.VILLAGE
@@ -41,7 +44,12 @@ class CityExpansion(
          */
         changeFarmAndMachine(tile)
         this.tile.farmID = null
+        val cloud = cloudHandler.getCloudByCoordinate(tile.location)
         logIncident(id, IncidentType.CITY_EXPANSION, listOf(tile.id))
+        if (cloud != null) {
+            Logger.logCloudStuck(cloud.id, tile.id)
+            cloudHandler.coordinateToCloud.remove(cloud.location)
+        }
     }
 
     private fun changeFarmAndMachine(tile: Tile) {

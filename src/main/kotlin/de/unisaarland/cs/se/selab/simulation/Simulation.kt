@@ -13,6 +13,7 @@ import de.unisaarland.cs.se.selab.enumerations.IncidentType
 import de.unisaarland.cs.se.selab.enumerations.PlantType
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.harvestestimatehandler.HarvestEstimateHandler
+import de.unisaarland.cs.se.selab.incidents.CityExpansion
 import de.unisaarland.cs.se.selab.incidents.CloudCreation
 import de.unisaarland.cs.se.selab.log.Logger
 import de.unisaarland.cs.se.selab.plant.ALMOND_LATE_HARVEST_PENALTY
@@ -54,8 +55,12 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     init {
         val incidents = data.getIncidents()
         val cloudCreations = incidents.filter { it.type == IncidentType.CLOUD_CREATION }
+        val cityExpansions = incidents.filter { it.type == IncidentType.CITY_EXPANSION }
         for (element in cloudCreations) {
             if (element is CloudCreation) element.cloudHandler = this.cloudHandler
+        }
+        for (element in cityExpansions) {
+            if (element is CityExpansion) element.cloudHandler = this.cloudHandler
         }
         incidentHandler.incidents = incidents
     }
