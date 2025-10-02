@@ -237,7 +237,11 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             if (plant.neededMoisture - currentMoisture < HUNDRED) {
                 missedActionList.remove(ActionType.IRRIGATING)
             }
+            if (initialHarvestEstimate == 0) {
+                missedActionList.remove(ActionType.IRRIGATING)
+            }
         }
+
         // If drought hit, don't log missed actions
         if (!t.droughtHit && missedActionList.isNotEmpty()) {
             logMissedActions(t.id, missedActionList.sortedBy { orderforlog.indexOf(it) })
