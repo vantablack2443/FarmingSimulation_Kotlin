@@ -17,6 +17,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionOnT
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudCreationThenCityExpansions
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudsStrange
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtRainThenSow
@@ -181,6 +182,7 @@ object SystemTestRegistration {
     private fun registerAdditionalTests(testSuite: SELab25TestSuite) {
         testSuite.run {
             testSuite.registerTest(PlantationRegeneration())
+            testSuite.registerTest(CloudsStrange())
         }
     }
 
