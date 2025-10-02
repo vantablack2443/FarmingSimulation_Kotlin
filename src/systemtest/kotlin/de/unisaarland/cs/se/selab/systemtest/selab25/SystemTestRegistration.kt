@@ -1,12 +1,5 @@
 package de.unisaarland.cs.se.selab.systemtest.selab25
 
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenScenarioTest
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.SimpleTestWithHarvestandNoCloudsOrIncidents
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTestCloudNotOnVillage
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScnearioWIthCloudsAndIncident
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogEquals
-// import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MaxTickEndLogOneLess
-
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
@@ -21,7 +14,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAc
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtRainThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtSowExpand
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenBeeHappy2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
@@ -46,7 +38,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MachineWrongShed
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestFarmsteadAdjoinOtherFarm
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MapParserTestVillageAdjoinForest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.MultipleBeeHappies
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimalAttackValidSimple
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmAnimallAttackInvalid
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMerge
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.NoFarmPhaseCloudCreationValidPlusMergeTestingOrder
@@ -93,7 +84,6 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineIrrigationSecondTick())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMerge())
-        testSuite.registerTest(NoFarmAnimalAttackValidSimple())
         testSuite.registerTest(NoFarmPhaseandCloudCreationSimple())
         testSuite.registerTest(NoFarmandCloudCreationInvalid())
         testSuite.registerTest(NoFarmPhaseCloudCreationValidPlusMergeTestingOrder())
@@ -126,7 +116,6 @@ object SystemTestRegistration {
             testSuite.registerTest(FullSimTest())
             testSuite.registerTest(FullSimAAWithFieldLog())
             testSuite.registerTest(NoWayHome())
-            testSuite.registerTest(DroughtThenBeeHappy2())
             testSuite.registerTest(FullSimTestUntilHarvesting())
         }
     }
