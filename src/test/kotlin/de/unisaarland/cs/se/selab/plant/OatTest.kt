@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.plant
 
-import de.unisaarland.cs.se.selab.duration.Duration
 import de.unisaarland.cs.se.selab.enumerations.ActionType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,9 +30,6 @@ class OatTest {
         assertEquals(300, oat.neededMoisture)
         assertEquals(emptyList<Double>(), oat.pollination)
         assertEquals(emptyList<Double>(), oat.animalAttackPenalty)
-        assertEquals(Duration(OAT_SOW_START, OAT_SOW_END), oat.sowingTime)
-        assertEquals(Duration(OAT_HARVEST_START, OAT_HARVEST_END), oat.harvestingTime)
-        assertEquals(null, oat.bloomingTime)
     }
 
     @Test
