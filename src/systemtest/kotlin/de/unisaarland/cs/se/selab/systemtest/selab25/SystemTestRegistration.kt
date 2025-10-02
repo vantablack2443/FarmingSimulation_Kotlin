@@ -69,6 +69,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOne
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationRegeneration
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationRegenerationWithoutIrrigation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
@@ -127,6 +129,7 @@ object SystemTestRegistration {
         testSuite.registerTest(PlantationHarvestMoistureSeventy())
         testSuite.registerTest(NoFarmMultipleValidAnimalAttack())
         registerMoreTests(testSuite)
+        registerAdditionalTests(testSuite)
     }
     private fun registerMoreTests(testSuite: SELab25TestSuite) {
         testSuite.run {
@@ -174,6 +177,12 @@ object SystemTestRegistration {
             testSuite.registerTest(EvenBiggerScenario())
             testSuite.registerTest(CityExpansionOnTilesWithClouds())
             testSuite.registerTest(CloudCreationThenCityExpansions())
+        }
+    }
+    private fun registerAdditionalTests(testSuite: SELab25TestSuite) {
+        testSuite.run {
+            testSuite.registerTest(PlantationRegeneration())
+            testSuite.registerTest(PlantationRegenerationWithoutIrrigation())
         }
     }
 
