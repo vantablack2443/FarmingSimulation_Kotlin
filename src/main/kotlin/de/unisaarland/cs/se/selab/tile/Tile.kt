@@ -51,13 +51,6 @@ class Tile(
     }
 
     /**
-     * checks if the plant can be harvested from the tile
-     */
-//    fun isHarvestable(plant: PlantType): Boolean {
-//        TODO()
-//    }
-
-    /**
      * increases the current moisture
      */
     fun increaseMoistureByAmount(amount: Int) {
@@ -102,18 +95,13 @@ class Tile(
             return
         }
 
-        // check if the estimate is greater than 0
-//        if (plant?.harvestEstimate == 0) {
-//            return
-//        }
-
         // Only required if current moisture is less than needed moisture
         if (cm < p.neededMoisture) {
             actionsNeeded.add(ActionType.IRRIGATING)
         }
     }
 
-/**
+    /**
      * checks if there is a plant on the tile
      */
     fun hasPlantGrowing(): Boolean {
@@ -123,7 +111,7 @@ class Tile(
         return false
     }
 
-/**
+    /**
      * setter for the current sunlight amount
      */
     fun setSunlight(sunlight: Int) {

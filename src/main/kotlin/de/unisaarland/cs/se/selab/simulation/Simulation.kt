@@ -110,16 +110,6 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
     }
 
     /**
-     * adds late harvest penalties at the beginning of each tick
-     */
-    /*private fun updateLateHarvestPenalty() {
-        val tiles = map.getPlantableTiles().filter { it.plant != null }
-        for (tile in tiles) {
-            harvestEstimator.applyLateHarvest(tile, this.currentYearTick)
-        }
-    }*/
-
-    /**
      * checks if the next tick can be continued
      */
     private fun canStartNextTick(): Boolean {
@@ -347,12 +337,5 @@ class Simulation(var data: SimulationData, var maxTicks: Int, var currentYearTic
             harvest += amount
         }
         return harvest
-    }
-
-    /**
-     * helper function for scenario test
-     */
-    fun getCloudHandler(): CloudHandler {
-        return this.cloudHandler
     }
 }

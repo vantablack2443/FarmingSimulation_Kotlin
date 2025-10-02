@@ -14,7 +14,6 @@ const val WHEAT_BLOOM_START = 9
 const val WHEAT_BLOOM_END = 9
 const val WHEAT_HARVEST_START = 11
 
-// const val WHEAT_HARVEST_END = 13
 const val WHEAT_WEED_START_OFFSET = 3
 const val WHEAT_WEED_END_OFFSET = 9
 const val WHEAT_LATE_HARVEST_PENALTY = 0.8
@@ -33,7 +32,6 @@ class Wheat : FieldPlant() {
     override val pollination = mutableListOf<Double>()
 
     override val animalAttackPenalty = mutableListOf<Double>()
-//    override var animalAttackPenalty = 1.0
 
     override val cuttingTime = mutableListOf<CustomPair>()
     override val mowingTime = mutableListOf<CustomPair>()

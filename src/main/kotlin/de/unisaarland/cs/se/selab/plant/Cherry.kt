@@ -46,8 +46,6 @@ class Cherry : PlantationPlant() {
             val newEstimate = this.harvestEstimate * debuff
             this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
         }
-//        val newEstimate = this.harvestEstimate * animalAttackPenalty
-//        this.harvestEstimate = maxOf(floor(newEstimate).toInt(), 0)
     }
 
     override fun applyPollinationBuff() {

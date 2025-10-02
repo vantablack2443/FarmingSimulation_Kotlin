@@ -1,10 +1,5 @@
 package de.unisaarland.cs.se.selab.parser
 
-// import com.github.erosb.jsonsKema.JsonParser
-// import com.github.erosb.jsonsKema.JsonValue
-// import com.github.erosb.jsonsKema.Schema
-// import com.github.erosb.jsonsKema.SchemaLoader
-// import com.github.erosb.jsonsKema.Validator
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.Direction
 import de.unisaarland.cs.se.selab.enumerations.PlantType
@@ -36,38 +31,6 @@ import kotlin.math.abs
 class MapParser(private val simData: SimulationData) {
     private val tileIDMap: MutableMap<Int, Tile> = mutableMapOf()
     private val tileCoordinates: MutableMap<Coordinate, Tile> = mutableMapOf()
-//    private val schema: Schema by lazy { loadSchema() }
-//
-//    private fun loadSchema(): Schema {
-//        val tileSchema: JsonValue = JsonParser(File("src/main/resources/schema/tile.schema").readText()).parse()
-//
-//        val defsNode = tileSchema.requireObject()["\$defs"]?.requireObject()
-//            ?: throw ValidationException()
-//
-//        val mapSchemaJson = JsonParser(
-//            """
-//            {
-//              "$schema": "https://json-schema.org/draft/2020-12/schema",
-//              "type": "object",
-//              "additionalProperties": false,
-//              "properties": {
-//                "tiles": {
-//                  "type": "array",
-//                  "items": {
-//                    "${'$'}ref": "#/${'$'}defs/tile"
-//                  },
-//                  "minItems": 1,
-//                  "uniqueItems": true
-//                }
-//              },
-//              "required": ["tiles"],
-//              "${'$'}defs": $defsNode
-//            }
-//            """
-//        ).parse()
-//
-//        return SchemaLoader(mapSchemaJson).load()
-//    }
 
     /**
      * parses the given map config file
@@ -76,13 +39,6 @@ class MapParser(private val simData: SimulationData) {
         try {
             val file = File(json)
             val jsonString = file.readText()
-
-//            val validator = Validator.forSchema(schema)
-//            val validation = validator.validate(JsonParser(jsonString).parse())
-//            if (validation != null) {
-//                throw ValidationException()
-//            }
-
             val tiles = Json.parseToJsonElement(jsonString)
                 .jsonObject["tiles"]?.jsonArray ?: throw ValidationException()
             parseCreateTiles(tiles)

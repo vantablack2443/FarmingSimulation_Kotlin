@@ -142,7 +142,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
             amount = targetCloud.amount + existingCloud.amount
         )
         newCloud.maxTraversibleTiles = maxOf(existingCloud.maxTraversibleTiles, targetCloud.maxTraversibleTiles)
-        // maxCloudID += 1
         return newCloud
     }
 
@@ -150,11 +149,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
      * handles all the merging logic (removing and adding new cloud)
      */
     fun merge(originC: Cloud, destinationC: Cloud): Cloud {
-        // val originTile = simulationMap.getTileByCoordinate(originC.location)
         val destinationTile = simulationMap.getTileByCoordinate(originC.location)
-
         val newCloud = createMergedCloud(originC, destinationC)
-        // addCloud(newCloud)
         coordinateToCloud.entries.removeIf { it.value == originC || it.value == destinationC }
         coordinateToCloud[originC.location] = newCloud
         removedClouds.add(originC)
@@ -179,7 +175,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
             villageDissipate(c)
             return
         }
-        //  var moves = 0
         while (c.maxTraversibleTiles > 0 && !c.isStuck) {
             // instead of returning throwing errors should be a good idea
             val currTile = simulationMap.getTileByCoordinate(c.location) ?: continue
@@ -196,7 +191,6 @@ class CloudHandler(val simulationMap: SimulationMap) {
 
             if (nextTile == null) {
                 c.isStuck = true
-//                tryRain(c)
                 break
             }
             c.maxTraversibleTiles--
