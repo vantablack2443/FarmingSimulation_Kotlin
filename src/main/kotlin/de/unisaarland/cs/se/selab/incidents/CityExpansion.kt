@@ -49,6 +49,7 @@ class CityExpansion(
         if (cloud != null) {
             Logger.logCloudStuck(cloud.id, tile.id)
             cloudHandler.coordinateToCloud.remove(cloud.location)
+            cloudHandler.cloudsList.removeIf { it.id == cloud.id }
         }
     }
 
