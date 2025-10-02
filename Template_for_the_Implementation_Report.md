@@ -34,7 +34,6 @@ The following table summarizes the actual contributions of each group member, in
 - **Day 7:** Fixes to the parser and cloud handler, validation tests.
 - **Day 8:** Harvest estimation test, bug fixes.
 - **Day 9 - Day 11:** Additional system tests, debugging and bug fixes.
-- ...
 
 ### Thejitha
 - **Day 1:** Added skeleton files, implemented Scenario Parser
