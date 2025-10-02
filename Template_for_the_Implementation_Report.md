@@ -26,26 +26,27 @@ The following table summarizes the actual contributions of each group member, in
 
 ### Ana
 
-- **Day 1:**
-- ...
+- **Day 1 - Day 2:** Skeleton for parser and other classes, initial implementation of Parser, MapParser, CommandLineParser classes
+- **Day 3:** Implementation of Simulation, Main and CloudCreation classes.
+- **Day 4:** Parser fixes, implementation of plantation plant classes.
+- **Day 5:** Incidents unit test.
+- **Day 6:** Cloud Movement System test, fixes to the cloud handler.
+- **Day 7:** Fixes to the parser and cloud handler, validation tests.
+- **Day 8:** Harvest estimation test, bug fixes.
+- **Day 9 - Day 11:** Additional system tests, debugging and bug fixes.
 
 ### Thejitha
 - **Day 1:** Added skeleton files, implemented Scenario Parser
-- **Day 2:** Implementing Scenario Parser
-- **Day 3:** Functions added to Plant, Farm, actionHandler. Implemented SowingHandler
-- **Day 4:** First version of CloudHandler . Fixes to scenario parser
-- **Day 5:** Improving Field Plants, minor fixes to SowingHandler
-- **Day 6:** Adding functions to tile and harvestEstimateHandler, Fixes to Plantations and Fields
-- **Day 7:** Farm Parser edits, initial tests
-- **Day 8:** Fixes to farm Parser
-- **Day 9:** Redesign Plantation and Field Plants, changing HarvestEstimateHandler, changes to sowingHandler, farmParser, Farm
-- **Day 10:** Edits to actionPhaseHandler
-- **Day 11:** SowingHandler, ActionPhaseHandler, SimulationMap fixes
-- **Day 12:** Redesign of harvestEstimateHandler, fixes to farm and sowingHandler
-- **Day 13:** Adjusting Plants to work with harvestEstimateHandler, small fixes to farm
-- **Day 14:** HarvestEstimateHandler, fixes irrigationHandler, scenarioParser, sowingHandler
-- **Day 15:** Tests, HarvestEstimateHandler, Unit Testing Coordinate, System tests for plantation plants
-
+- **Day 2:** Implementing Scenario Parser, Functions added to Plant, Farm, actionHandler. Implemented SowingHandler
+- **Day 3:** First version of CloudHandler . Fixes to scenario parser, Improving Field Plants, minor fixes to SowingHandler
+- **Day 4:** Adding functions to tile and harvestEstimateHandler, Fixes to Plantations and Fields
+- **Day 5:** Farm Parser edits, initial tests, Fixes to farm Parser
+- **Day 6:** Redesign Plantation and Field Plants, changing HarvestEstimateHandler, changes to sowingHandler, farmParser, Farm
+- **Day 7:** Edits to actionPhaseHandler, SowingHandler, ActionPhaseHandler, SimulationMap fixes
+- **Day 8:** Redesign of harvestEstimateHandler, fixes to farm and sowingHandler
+- **Day 9:** Adjusting Plants to work with harvestEstimateHandler, small fixes to farm
+- **Day 10:** HarvestEstimateHandler, fixes irrigationHandler, scenarioParser, sowingHandler
+- **Day 11:** Tests, HarvestEstimateHandler, Unit Testing Coordinate, System tests for plantation plants
 
 ### Nehesh
 - **Day 1:** Added skeleton files, implemented parts of Map
@@ -62,6 +63,17 @@ The following table summarizes the actual contributions of each group member, in
 
 
 ### Dipu
+- **Day 1:** Created the skeleton files, and started implementing the Logger.
+- **Day 2:** Finished and polished logger, started with testing the map.
+- **Day 3:** Started the logic for Weeding and Cutting handlers.
+- **Day 4:** Wrote tests for the Parser and bug fixes.
+- **Day 4:** Finished weeding handler, and cutting handler. Checked bug fixes in the other Handlers and Parser.
+- **Day 5:** Finished city expansion, started with writing system tests for validation phase.
+- **Day 6:** Continued writing system tests for validation phase, started writing system tests for simulation phase.
+- **Day 7:** Continued writing system tests for simulation phase. Bug fixes in the Handlers and Parser.
+- **Day 8:** Worked on the Action Phase Handler. Changed logic.
+- **Day 10:** Wrote more system tests for Incidents and checking out edge cases.
+- **Day 11:** Final day continuous work with group to figure out the bugs and finalize the project.
 - ...
 
 ### Mahmoud
@@ -113,6 +125,9 @@ Nehesh used the following tools in the implementation phase:
 - [Perplexity](https://www.perplexity.ai/) to help with specific syntax for Kotlin and comparing logs.
 
 **Dipu:**
+Dipu used the following tools in the implementation phase:
+- GitHub Copilot for basic code completion and suggestions.
+- NotebookLM for sourcing specific points from the specification for easier verification.
 
 
 **Mahmoud:**
