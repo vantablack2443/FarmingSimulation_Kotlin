@@ -1,0 +1,39 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "name": "farm",
+      "farmsteads": [1],
+      "fields": [],
+      "plantations": [2, 3, 4, 5],
+      "machines": [
+        {
+          "id": 1,
+          "name": "machine one",
+          "actions": ["IRRIGATING"],
+          "plants": ["CHERRY"],
+          "duration": 2,
+          "location": 1
+        },
+        {
+          "id": 2,
+          "name": "machine two",
+          "actions": ["HARVESTING"],
+          "plants": ["GRAPE"],
+          "duration": 4,
+          "location": 1
+        },
+        {
+          "id": 3,
+          "name": "machine three",
+          "actions": ["HARVESTING"],
+          "plants": ["GRAPE"],
+          "duration": 4,
+          "location": 1
+        }
+      ],
+      "sowingPlans": [
+      ]
+    }
+  ]
+}
