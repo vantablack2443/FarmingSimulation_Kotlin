@@ -174,15 +174,15 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [INFO] Harvest Estimate: Harvest estimate on tile 45 changed to 354294 g of CHERRY.
 [INFO] Simulation Info: Tick 12 started at tick 13 within the year.
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 2 PLANTATION tiles.
-   [IMPORTANT] Farm: Farm 1 starts its actions.
-   [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
-   [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 7 for 5 days.
-   [IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
-   [IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 45 for 5 days.
-   [IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
-   [IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
-   [IMPORTANT] Farm Machine: Machine 1 unloads 708588 g of CHERRY harvest in the shed.
-   [IMPORTANT] Farm: Farm 1 finished its actions.
+[IMPORTANT] Farm: Farm 1 starts its actions.
+[DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2.
+[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 7 for 5 days.
+[IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
+[IMPORTANT] Farm Action: Machine 1 performs HARVESTING on tile 45 for 5 days.
+[IMPORTANT] Farm Harvest: Machine 1 has collected 354294 g of CHERRY harvest.
+[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 34.
+[IMPORTANT] Farm Machine: Machine 1 unloads 708588 g of CHERRY harvest in the shed.
+[IMPORTANT] Farm: Farm 1 finished its actions.
     """.trimIndent()
     private fun result3a(): String = """
     [INFO] Harvest Estimate: Harvest estimate on tile 9 changed to 212576 g of ALMOND.
@@ -371,7 +371,6 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [INFO] Soil Moisture: The soil moisture is below threshold in 0 FIELD and 3 PLANTATION tiles.
 [IMPORTANT] Farm: Farm 1 starts its actions.
 [DEBUG] Farm: Farm 1 has the following active sowing plans it intends to pursue in this tick: 1,2,5.
-
     """.trimIndent()
     private fun result55(): String = """
      [IMPORTANT] Farm: Farm 1 finished its actions.
@@ -427,8 +426,6 @@ class EvenBiggerScenario : ExampleSystemTestExtension() {
 [IMPORTANT] Simulation Info: Simulation statistics are calculated.
 [IMPORTANT] Simulation Statistics: Farm 1 collected 1330372 g of harvest.
 [IMPORTANT] Simulation Statistics: Total amount of POTATO harvested: 0 g.
-
-
     """.trimIndent()
     private fun result6(): String = """
 [IMPORTANT] Simulation Statistics: Total amount of WHEAT harvested: 0 g.

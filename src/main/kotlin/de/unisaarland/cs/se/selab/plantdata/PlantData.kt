@@ -6,19 +6,15 @@ import de.unisaarland.cs.se.selab.enumerations.PlantType
  * const for sowing ticks
  */
 const val POTATO_SOWING_START = 7
-const val POTATO_SOWING_END = 10
 const val POTATO_SOWING_END_PLUS_LATE = 12
 
 const val WHEAT_SOWING_START = 19
-const val WHEAT_SOWING_END = 20
 const val WHEAT_SOWING_END_PLUS_LATE = 22
 
 const val OAT_SOWING_START = 6
-const val OAT_SOWING_END = 6
 const val OAT_SOWING_END_PLUS_LATE = 8
 
 const val PUMPKIN_SOWING_START = 10
-const val PUMPKIN_SOWING_END = 12
 const val PUMPKIN_SOWING_END_PLUS_LATE = 14
 
 /**
@@ -27,7 +23,6 @@ const val PUMPKIN_SOWING_END_PLUS_LATE = 14
 // POTATO loses all harvest after 20
 const val POTATO_HARVEST_START = 17
 const val POTATO_HARVEST_END = 20
-// const val POTATO_HARVEST_END_PLUS_LATE = 20
 // late harvest not possible for potato
 
 // WHEAT loses 20% harvest per tick in tick 14, 15
@@ -37,7 +32,6 @@ const val WHEAT_HARVEST_END_PLUS_LATE = 15
 
 // OAT loses 20% harvest per tick in tick 17, 18
 const val OAT_HARVEST_START = 13
-const val OAT_HARVEST_END = 16
 const val OAT_HARVEST_END_PLUS_LATE = 18
 
 // PUMPKIN loses all harvest after 20
@@ -48,12 +42,10 @@ const val PUMPKIN_HARVEST_END = 20
 
 // APPLE loses 50% harvest in tick 19
 const val APPLE_HARVEST_START = 17
-const val APPLE_HARVEST_END = 19
 const val APPLE_HARVEST_END_PLUS_LATE = 20
 
 // ALMOND loses 10% harvest in tick 20
 const val ALMOND_HARVEST_START = 16
-const val ALMOND_HARVEST_END = 19
 const val ALMOND_HARVEST_END_PLUS_LATE = 20
 
 // CHERRY loses 30% harvest in tick 15
@@ -91,11 +83,12 @@ class PlantData {
         PlantType.POTATO to POTATO_HARVEST,
         PlantType.WHEAT to WHEAT_HARVEST,
     )
-    val sowingTimes: Map<IntRange, PlantType> = mapOf(
-        POTATO_SOWING_START..POTATO_SOWING_END_PLUS_LATE to PlantType.POTATO,
-        WHEAT_SOWING_START..WHEAT_SOWING_END_PLUS_LATE to PlantType.WHEAT,
-        OAT_SOWING_START..OAT_SOWING_END_PLUS_LATE to PlantType.OAT,
-        PUMPKIN_SOWING_START..PUMPKIN_SOWING_END_PLUS_LATE to PlantType.PUMPKIN
+
+    val sowingTimes: Map<PlantType, IntRange> = mapOf(
+        PlantType.POTATO to POTATO_SOWING_START..POTATO_SOWING_END_PLUS_LATE,
+        PlantType.WHEAT to WHEAT_SOWING_START..WHEAT_SOWING_END_PLUS_LATE,
+        PlantType.OAT to OAT_SOWING_START..OAT_SOWING_END_PLUS_LATE,
+        PlantType.PUMPKIN to PUMPKIN_SOWING_START..PUMPKIN_SOWING_END_PLUS_LATE
     )
 
     val harvestingTimes: Map<PlantType, IntRange> = mapOf(
@@ -109,26 +102,12 @@ class PlantData {
         PlantType.GRAPE to GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END_PLUS_LATE
     )
 
-    /*
-    val harvestingTimes: Map<IntRange, PlantType> = mapOf(
-        POTATO_HARVEST_START..POTATO_HARVEST_END to PlantType.POTATO,
-        WHEAT_HARVEST_START..WHEAT_HARVEST_END_PLUS_LATE to PlantType.WHEAT,
-        OAT_HARVEST_START..OAT_HARVEST_END_PLUS_LATE to PlantType.OAT,
-        PUMPKIN_HARVEST_START..PUMPKIN_HARVEST_END to PlantType.PUMPKIN,
-        APPLE_HARVEST_START..APPLE_HARVEST_END_PLUS_LATE to PlantType.APPLE,
-        ALMOND_HARVEST_START..ALMOND_HARVEST_END_PLUS_LATE to PlantType.ALMOND,
-        CHERRY_HARVEST_START..CHERRY_HARVEST_END_PLUS_LATE to PlantType.CHERRY,
-        GRAPE_HARVEST_START_END..GRAPE_HARVEST_START_END_PLUS_LATE to PlantType.GRAPE
-    )
-
-     */
-
     /**
      * returns all sowable plant types in the given yeartick
      * @param yeartick the yeartick of the simulation
      */
     fun getSowablePlantTypes(yeartick: Int): List<PlantType> {
-        return sowingTimes.filter { (range, _) -> yeartick in range }.map { (_, value) -> value }
+        return sowingTimes.filter { (_, range) -> yeartick in range }.map { (plant, _) -> plant }
     }
 
     /**
