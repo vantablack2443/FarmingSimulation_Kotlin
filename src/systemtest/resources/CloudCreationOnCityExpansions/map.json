@@ -1,0 +1,56 @@
+{
+  "tiles": [
+    {
+      "id": 0,
+      "coordinates": { "x": 0,"y": 0 },
+      "category": "VILLAGE"
+    },
+    {
+      "id": 1,
+      "coordinates": { "x": 0,"y": -2 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 2,
+      "coordinates": { "x": 2,"y": 0 },
+      "category": "FIELD",
+      "capacity": 1000,
+      "airflow": false,
+      "farm": 0,
+      "possiblePlants": ["POTATO"]
+    },
+    {
+      "id": 3,
+      "coordinates": { "x": 0,"y": 2 },
+      "category": "ROAD",
+      "airflow": false
+    },
+    {
+      "id": 4,
+      "coordinates": { "x": -2,"y": 0 },
+      "category": "FIELD",
+      "capacity": 1000,
+      "airflow": false,
+      "farm": 0,
+      "possiblePlants": ["POTATO"]
+    },
+    {
+      "id": 5,
+      "coordinates": { "x": 3,"y": 1 },
+      "category": "FARMSTEAD",
+      "shed": true,
+      "airflow": false,
+      "farm": 0
+    },
+    {
+      "id": 6,
+      "coordinates": { "x": 4,"y": 0 },
+      "category": "PLANTATION",
+      "capacity": 1000,
+      "airflow": false,
+      "farm": 0,
+      "plant": "ALMOND"
+    }
+  ]
+}

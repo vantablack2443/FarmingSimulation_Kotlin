@@ -1,0 +1,39 @@
+{
+  "clouds": [
+  ],
+  "incidents": [
+    {
+      "id": 0,
+      "tick": 0,
+      "type": "CLOUD_CREATION",
+      "location": 0,
+      "radius": 1,
+      "duration": 5,
+      "amount": 4000
+    },
+    {
+      "id": 1,
+      "tick": 0,
+      "type": "CITY_EXPANSION",
+      "location": 1
+    },
+    {
+      "id": 2,
+      "tick": 0,
+      "type": "CITY_EXPANSION",
+      "location": 2
+    },
+    {
+      "id": 3,
+      "tick": 0,
+      "type": "CITY_EXPANSION",
+      "location": 3
+    },
+    {
+      "id": 4,
+      "tick": 0,
+      "type": "CITY_EXPANSION",
+      "location": 4
+    }
+  ]
+}

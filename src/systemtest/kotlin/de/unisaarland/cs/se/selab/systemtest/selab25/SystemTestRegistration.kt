@@ -13,7 +13,9 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenMachineThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionDissipation
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionOnTilesWithClouds
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudCreationThenCityExpansions
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CutAppleMissedAction3
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DieAndComeBack
@@ -68,7 +70,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlants
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsDefaultTickOneWithoutLog
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationPlantsTickOneMachines
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationRegeneration
-import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PlantationRegenerationWithoutIrrigation
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.PotatoBehaviourTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCityExpnsion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ScenarioParserTestCloudOnVillage
@@ -173,12 +174,13 @@ object SystemTestRegistration {
             testSuite.registerTest(DroughtThenSow())
             testSuite.registerTest(DroughtSowExpand())
             testSuite.registerTest(EvenBiggerScenario())
+            testSuite.registerTest(CityExpansionOnTilesWithClouds())
+            testSuite.registerTest(CloudCreationThenCityExpansions())
         }
     }
     private fun registerAdditionalTests(testSuite: SELab25TestSuite) {
         testSuite.run {
             testSuite.registerTest(PlantationRegeneration())
-            testSuite.registerTest(PlantationRegenerationWithoutIrrigation())
         }
     }
 
