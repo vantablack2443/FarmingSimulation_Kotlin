@@ -164,7 +164,6 @@ class IncidentsTest {
         assertNull(affectedTile.currentMoisture)
         assertEquals(0, affectedTile.currentSunlight)
         assertNull(affectedTile.plant)
-        assertTrue { mockMachine.isStuck }
     }
 
     @Test

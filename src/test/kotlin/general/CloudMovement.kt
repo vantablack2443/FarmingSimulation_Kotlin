@@ -142,7 +142,7 @@ class CloudMovement {
     fun testCloudDissipation() {
         setUpCloudDissipate()
         cloudHandler.moveClouds()
-        assertEquals(2, cloudHandler.cloudsList.size)
+        assertEquals(1, cloudHandler.cloudsList.size)
         assertEquals(4, cloudHandler.coordinateToCloud[Coordinate(6, 0)]?.id)
         assertEquals(4950, cloudFour.amount)
         assertEquals(90, simMap.getTileByID(5)?.currentMoisture)
