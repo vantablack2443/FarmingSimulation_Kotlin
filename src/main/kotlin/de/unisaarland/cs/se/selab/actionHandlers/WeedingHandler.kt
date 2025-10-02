@@ -92,15 +92,6 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             machine.resetElapsedTime()
             return
         }
-//
-//        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
-//        val neighborTiles = tilesInRadius
-//            .filter { it in operableTiles }
-//            .filter { simulationMap.isReachable(machine, it) }
-//            .filter { it.id !in farm.tileHashMap }
-//            .sortedBy { it.id } // Sort by ID
-//
-//        val nextTile = neighborTiles.firstOrNull()
 
         val nextTile = this.simulationMap.tileForContinueAction(
             machine,
@@ -124,11 +115,7 @@ class WeedingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
      * @return A mutable list of tiles that require the WEED action.
      */
     override fun getOperableTiles(farm: Farm): MutableList<Tile> {
-        val tiles = farm.getPlantation()
-            .filter { it.plant != null && it.actionsNeeded.contains(ActionType.WEEDING) }
-            .sortedBy { it.id }
-            .toMutableList()
-        return tiles
+        return mutableListOf()
     }
 
     /**

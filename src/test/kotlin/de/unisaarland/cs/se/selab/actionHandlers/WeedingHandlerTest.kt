@@ -51,6 +51,7 @@ class WeedingHandlerTest {
         fieldTwo.farmID = farm.getId()
         fieldThree.farmID = farm.getId()
         fieldFour.farmID = farm.getId()
+        farmstead.farmID = farm.getId()
     }
 
     private fun createMap() {
@@ -102,5 +103,77 @@ class WeedingHandlerTest {
         assertFalse(fieldTwo.actionsNeeded.contains(ActionType.WEEDING))
         assertFalse(fieldThree.actionsNeeded.contains(ActionType.WEEDING))
         assertFalse(fieldFour.actionsNeeded.contains(ActionType.WEEDING))
+    }
+
+    @Test
+    fun testMachineCannotWeed() {
+        val nonWeeder = Machine(
+            machine.id,
+            machine.name,
+            machine.duration,
+            machine.currentTile,
+            listOf(ActionType.CUTTING),
+            machine.plants,
+            machine.homeShed
+        )
+        handler.startPhase(farm, nonWeeder)
+        assert(fieldOne.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldTwo.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldThree.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldFour.actionsNeeded.contains(ActionType.WEEDING))
+    }
+
+    @Test
+    fun testMachineAlreadyUsed() {
+        farm.machineHashMap.add(machine.id)
+        handler.startPhase(farm, machine)
+        assert(fieldOne.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldTwo.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldThree.actionsNeeded.contains(ActionType.WEEDING))
+        assert(fieldFour.actionsNeeded.contains(ActionType.WEEDING))
+    }
+
+    @Test
+    fun testMachineCantContinue() {
+        machine.elapsedTime = machine.duration * 3
+        handler.startPhase(farm, machine)
+        assert(machine.currentTile == machine.homeShed)
+    }
+
+    @Test
+    fun testTileAlreadyHandled() {
+        farm.tileHashMap.add(fieldOne.id)
+        handler.startPhase(farm, machine)
+        assert(fieldOne.actionsNeeded.contains(ActionType.WEEDING))
+        assertFalse(fieldTwo.actionsNeeded.contains(ActionType.WEEDING))
+        assertFalse(fieldThree.actionsNeeded.contains(ActionType.WEEDING))
+        assertFalse(fieldFour.actionsNeeded.contains(ActionType.WEEDING))
+    }
+
+    @Test
+    fun testNoOperableTiles() {
+        fieldOne.actionsNeeded.clear()
+        fieldTwo.actionsNeeded.clear()
+        fieldThree.actionsNeeded.clear()
+        fieldFour.actionsNeeded.clear()
+        handler.startPhase(farm, machine)
+        assert(fieldOne.actionsNeeded.isEmpty())
+        assert(fieldTwo.actionsNeeded.isEmpty())
+        assert(fieldThree.actionsNeeded.isEmpty())
+        assert(fieldFour.actionsNeeded.isEmpty())
+    }
+
+    @Test
+    fun testUnimplementedFunctions() {
+        handler.getOperableTiles(farm, PlantType.POTATO, 0)
+        handler.startPhase(farm, 0, 0)
+        handler.performAction(machine, fieldOne, 0)
+        handler.startPhase(farm, machine, 0)
+    }
+
+    @Test
+    fun testGetOperableTilesReturnsWeedingTiles() {
+        val operableTiles = handler.getOperableTiles(farm)
+        assert(operableTiles.isEmpty())
     }
 }
