@@ -15,7 +15,7 @@ class CityExpansionDissipation : ExampleSystemTestExtension() {
     override val map = "CityExpansionDissipation/map.json"
 
     override val logLevel = "DEBUG"
-    override val maxTicks = 1
+    override val maxTicks = 2
     override val startYearTick = 1
 
     override suspend fun run() {
