@@ -111,22 +111,22 @@ class IncidentsTest {
         mockMap = SimulationMap(tiles)
     }
 
-//    @Test
-//    fun testAnimalAttack() {
-//        appleTile.actionsNeeded.add(ActionType.MOWING)
-//        val animalAttack = AnimalAttack(
-//            1,
-//            16,
-//            IncidentType.ANIMAL_ATTACK,
-//            mockMap.getTileByID(20)!!,
-//            2
-//        )
-//        animalAttack.execute(mockMap, 17)
-//        assertEquals(0.9, apple.animalAttackPenalty[0])
-//        assertTrue(grape.animalAttackPenalty.isEmpty())
-//        assertTrue(oat.animalAttackPenalty.isEmpty())
-//        assertTrue(potato.animalAttackPenalty.isEmpty())
-//    }
+    @Test
+    fun testAnimalAttack() {
+        appleTile.actionsNeeded.add(ActionType.MOWING)
+        val animalAttack = AnimalAttack(
+            1,
+            16,
+            IncidentType.ANIMAL_ATTACK,
+            mockMap.getTileByID(20)!!,
+            2
+        )
+        animalAttack.execute(mockMap, 17)
+        assertEquals(0.9, apple.animalAttackPenalty[0])
+        assertTrue(grape.animalAttackPenalty.isEmpty())
+        assertTrue(oat.animalAttackPenalty.isEmpty())
+        assertTrue(potato.animalAttackPenalty.isEmpty())
+    }
 
     @Test
     fun droughtTest() {
@@ -192,10 +192,10 @@ class IncidentsTest {
         )
 
         beeHappy.execute(mockMap, 9) // apple is blooming
-//        assertEquals(1.3, apple.pollination)
-//        assertEquals(1.0, grape.pollination)
-//        assertEquals(1.0, oat.pollination)
-//        assertEquals(1.0, potato.pollination)
+        assertEquals(1.3, apple.pollination[0])
+        assert(grape.pollination.isEmpty())
+        assert(oat.pollination.isEmpty())
+        assert(potato.pollination.isEmpty())
     }
 
     @Test
@@ -213,7 +213,7 @@ class IncidentsTest {
         val pumpkinTile = mockMap.getTileByCoordinate(Coordinate(6, 2))!!
         pumpkinTile.plant = pumpkin
         beeHappy.execute(mockMap, 14) // potato and pumpkin blooming
-//        assertEquals(1.0, potato.pollination)
-//        assertEquals(1.35, pumpkin.pollination)
+        assert(potato.pollination.isEmpty())
+        assertEquals(1.35, pumpkin.pollination[0])
     }
 }

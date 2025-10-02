@@ -10,6 +10,7 @@ package de.unisaarland.cs.se.selab.systemtest.selab25
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.AnotherWayHome
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.Apples
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BigScenarioFirst4Ticks
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.BrokenMachineThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CasualCheckBehaviorTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CityExpansionSameTick
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.CloudMovementTest
@@ -23,6 +24,7 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtThenSow
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansion2
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.DroughtToExpansionValid
+import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.EvenBiggerScenario
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ExampleSystemTest
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmNoPlantableTiles
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.FarmParserTestMissingTilesInField
@@ -75,7 +77,6 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.TwentyEightDays
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniqueness
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidateMachineUniquenessB
 import de.unisaarland.cs.se.selab.systemtest.selab25.basictests.ValidatePlantCoupling
-
 /**
  * Used for test registration
  */
@@ -118,7 +119,7 @@ object SystemTestRegistration {
         testSuite.registerTest(MachineCantReturnDueHarvest())
         // testSuite.registerTest(AnimalAttackOneEffect())
         // testSuite.registerTest(CloudMovementTestStuckCloud())
-
+        testSuite.registerTest(EvenBiggerScenario())
         // testSuite.registerTest(MaxTickEndLogEquals())
         // testSuite.registerTest(MaxTickEndLogOneLess())
         testSuite.registerTest(PlantationHarvestMoistureHundred())
@@ -159,6 +160,7 @@ object SystemTestRegistration {
         // testSuite.registerTest(AnotherWayHome())
         testSuite.registerTest(BigScenarioFirst4Ticks())
         testSuite.registerTest(OatBehaviourTest())
+        testSuite.registerTest(BrokenMachineThenSow())
         // testSuite.registerTest(Apples())
         testSuite.registerTest(ValidatePlantCoupling())
         testSuite.registerTest(ValidateMachineUniqueness())
@@ -166,6 +168,7 @@ object SystemTestRegistration {
         testSuite.registerTest(DroughtRainThenSow())
         testSuite.registerTest(DroughtThenSow())
         testSuite.registerTest(DroughtSowExpand())
+        testSuite.registerTest(EvenBiggerScenario())
     }
 
     /**

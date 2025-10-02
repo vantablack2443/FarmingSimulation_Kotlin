@@ -36,6 +36,7 @@ class DroughtThenSow : ExampleSystemTestExtension() {
 [IMPORTANT] Farm Sowing: Machine 0 has sowed POTATO according to sowing plan 0.
 [IMPORTANT] Farm Machine: Machine 0 is finished and returns to the shed at 0.
 [IMPORTANT] Farm: Farm 0 finished its actions.
+[DEBUG] Harvest Estimate: Required actions on tile 1 were not performed: IRRIGATING.
 [INFO] Harvest Estimate: Harvest estimate on tile 1 changed to 0 g of POTATO.
 [IMPORTANT] Simulation Info: Simulation ended at tick 2.
 [IMPORTANT] Simulation Info: Simulation statistics are calculated.

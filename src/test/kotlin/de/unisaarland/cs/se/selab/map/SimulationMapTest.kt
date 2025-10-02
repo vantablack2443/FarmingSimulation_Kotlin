@@ -1,5 +1,5 @@
 package de.unisaarland.cs.se.selab.map
-//
+
 // import de.unisaarland.cs.se.selab.coordinate.Coordinate
 // import de.unisaarland.cs.se.selab.enumerations.ActionType
 // import de.unisaarland.cs.se.selab.enumerations.Direction
@@ -26,12 +26,7 @@ package de.unisaarland.cs.se.selab.map
 //    fun setUp() {
 //        tiles = mutableListOf()
 //        tiles.add(
-//            Tile(
-//                12,
-//                Coordinate(-1, -1),
-//                TileType.FARMSTEAD,
-//                TileShape.SQUARE
-//            )
+//            Tile(12, Coordinate(-1, -1), TileType.FARMSTEAD, TileShape.SQUARE)
 //        )
 //        tiles[0].farmID = 1
 //        tiles.add(
@@ -75,14 +70,7 @@ package de.unisaarland.cs.se.selab.map
 //            )
 //        )
 //        tiles[7].farmID = 1
-//        tiles.add(
-//            Tile(
-//                1000,
-//                Coordinate(7, -1),
-//                TileType.MEADOW,
-//                TileShape.SQUARE
-//            )
-//        )
+//
 //        tiles.add(
 //            Tile(1001, Coordinate(8, 0), TileType.ROAD, TileShape.OCTAGONAL)
 //        )
@@ -161,9 +149,14 @@ package de.unisaarland.cs.se.selab.map
 //        assertNull(map.getNeighbor(tiles[0], Direction.NORTH_WEST))
 //    }
 //
+//    companion object {
+//        private val FIELD_TYPE = TileType.FIELD
+//        private val PLANTATION_TYPE = TileType.PLANTATION
+//    }
+//
 //    @Test
 //    fun getPlantableTiles() {
-//        val expected = tiles.filter { it.category == TileType.FIELD || it.category == TileType.PLANTATION }
+//        val expected = tiles.filter { it.category == FIELD_TYPE || it.category == PLANTATION_TYPE }
 //        assertEquals(expected.toSet(), map.getPlantableTiles().toSet())
 //    }
 // }

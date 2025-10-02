@@ -57,11 +57,10 @@ class CloudHandler(val simulationMap: SimulationMap) {
      */
     private fun logCloudPositions() {
         // only for plantable tiles
-        for (cloud in cloudsList) {
-            val tile = map.getTileByCoordinate(cloud.location) ?: return
-            if (tile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
-                Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
-            }
+        val plantables = map.getPlantableTiles().sortedBy { it.id }
+        for (tile in plantables) {
+            val cloud = this.getCloudByCoordinate(tile.location) ?: continue
+            Logger.logCloudPosition(cloud.id, tile.id, tile.currentSunlight)
         }
     }
 

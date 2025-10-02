@@ -4,9 +4,10 @@
   "incidents": [
     {
       "id": 0,
-      "type": "CITY_EXPANSION",
+      "type": "BROKEN_MACHINE",
       "tick": 0,
-      "location": 3
+      "duration": 1,
+      "machineId": 0
     }
   ]
 }
