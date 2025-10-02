@@ -14,15 +14,17 @@ import kotlin.test.assertTrue
  * tests basic functions in the tile class
  */
 class TileTest {
-    private lateinit var tiles: MutableList<Tile>
+    val tiles = mutableListOf<Tile>()
 
     @BeforeEach
     fun setUp() {
-        tiles = mutableListOf(
-            Tile(1, Coordinate(5, 1), TileType.FARMSTEAD, TileShape.SQUARE),
-            Tile(2, Coordinate(6, 2), TileType.PLANTATION, TileShape.OCTAGONAL),
-            Tile(3, Coordinate(6, 4), TileType.FIELD, TileShape.OCTAGONAL),
-            Tile(4, Coordinate(8, 2), TileType.FIELD, TileShape.OCTAGONAL)
+        tiles.addAll(
+            mutableListOf(
+                Tile(1, Coordinate(5, 1), TileType.FARMSTEAD, TileShape.SQUARE),
+                Tile(2, Coordinate(6, 2), TileType.PLANTATION, TileShape.OCTAGONAL),
+                Tile(3, Coordinate(6, 4), TileType.FIELD, TileShape.OCTAGONAL),
+                Tile(4, Coordinate(8, 2), TileType.FIELD, TileShape.OCTAGONAL)
+            )
         )
         tiles.forEach { it.currentMoisture = 100 }
         tiles.forEach { it.maxMoisture = 250 }
