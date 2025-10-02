@@ -171,17 +171,4 @@ class Farm(
         this.plantation.clear()
         this.plantation.addAll(newPlantation)
     }
-
-//    /**
-//     * returns a list of sheds on a farm
-//     */
-//    fun getShedTiles(): List<Tile> {
-//        val sheds: MutableList<Tile> = mutableListOf()
-//        for (farmstead in farmsteads) {
-//            if (farmstead.shed == true) {
-//                sheds.add(farmstead)
-//            }
-//        }
-//        return sheds
-//    }
 }
