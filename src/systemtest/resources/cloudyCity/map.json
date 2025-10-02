@@ -15,7 +15,7 @@
       "category": "FIELD",
       "farm": 0,
       "capacity": 8000,
-      "plant": "APPLE",
+      "possiblePlants": ["WHEAT"],
       "airflow": true,
       "direction" : "0"
     },
@@ -25,7 +25,7 @@
       "category": "PLANTATION",
       "farm": 0,
       "capacity": 10000,
-      "possiblePlants": ["PUMPKIN", "WHEAT"],
+      "plant": "APPLE",
       "airflow": true,
       "direction" : "225"
     },
