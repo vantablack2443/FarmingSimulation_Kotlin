@@ -18,8 +18,12 @@ The following table summarizes the actual contributions of each group member, in
 
 ## Adjustments from the Implementation Plan
 
-- [Describe adjustment here, e.g., which tasks took more time or were reassigned]  
-
+- We encountered issues with the cloud handler logic implementation and this took more time than initially accounted for.
+The task of fixing the logic was mostly reassigned to Thejitha, Kevin and Ana.
+- Another issue encountered was the plant logic and their implementation scattered across many different classes, so
+for redesigning these classes Thejitha and Nehesh took the responsibility.
+- The remaining discrepancies between the initial and the final implementation plans stem from the time-management realted 
+redistribution of the workload.
 ---
 
 ## Detailed Timeline 
