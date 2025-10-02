@@ -107,16 +107,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             return
         }
 
-        // Get neighboring tiles within radius 2 that are also in operableTiles and reachable
-//        val tilesInRadius = this.simulationMap.getTilesByRadius(tile, 2)
-//        val neighborTiles = tilesInRadius
-//            .filter { it in operableTiles }
-//            .filter { simulationMap.isReachable(machine, it) }
-//            .filter { it.id !in farm.tileHashMap }
-//            .sortedBy { it.id } // Sort by ID
-//
-//        val nextTile = neighborTiles.firstOrNull()
-
         val nextTile = this.simulationMap.tileForContinueAction(machine, operableTiles, farm)
 
         if (nextTile != null) {
@@ -129,54 +119,6 @@ class CuttingHandler(simulationMap: SimulationMap, plantdata: PlantData) : Actio
             logMachineFinish(machine.id, machine.homeShed.id)
         }
     }
-
-//    /**
-//     * Retrieves all plantation tiles that have a plant requiring the CUT action.
-//     * The tiles are sorted by their ID.
-//     *
-//     * @param farm The farm containing the plantation tiles.
-//     * @return A mutable list of tiles that require the CUT action.
-//     */
-//    override fun getOperableTiles(farm: Farm, actionType: ActionType): MutableList<Tile> {
-//        val tiles = farm.getPlantation()
-//            .filter { it.plant != null && it.plant?.actionsNeeded?.contains(ActionType.CUTTING) ?: false }
-//            .sortedBy { it.id }
-//            .toMutableList()
-//        return tiles
-//    }
-
-//    /**
-//     * Retrieves a list of available machines that can perform the CUT action
-//     * on the given plant type. The machines are sorted by duration and ID.
-//     *
-//     * @param farm The farm containing the machines.
-//     * @param plantType The type of plant to be cut.
-//     * @return A list of machines that can perform the CUT action.
-//     */
-//    private fun getAvailableMachines(farm: Farm, plantType: PlantType): List<Machine> {
-//        return farm.getMachines().filter {
-//            !it.isStuck && it.plants.contains(plantType) && it.actions.contains(ActionType.CUTTING)
-//        }.sortedWith(compareBy({ it.duration }, { it.id }))
-//    }
-//
-//    /**
-//     * Retrieves the next available machine that can reach the destination tile.
-//     * The machine is marked as in use by adding its ID to the farm's machineHashMap.
-//     *
-//     * @param machines The list of machines to choose from.
-//     * @param farm The farm containing the machineHashMap.
-//     * @param destination The tile the machine needs to reach.
-//     * @return The next available machine, or null if none are available.
-//     */
-//    private fun getNextMachine(machines: List<Machine>, farm: Farm, destination: Tile): Machine? {
-//        for (machine in machines) {
-//            if (!farm.machineHashMap.contains(machine.id) && this.simulationMap.isReachable(machine, destination)) {
-//                farm.machineHashMap.add(machine.id)
-//                return machine
-//            }
-//        }
-//        return null
-//    }
 
     /**
      *THINGS BELOW SO THAT THIS BUILDS

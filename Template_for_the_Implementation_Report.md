@@ -74,10 +74,19 @@ The following table summarizes the actual contributions of each group member, in
 - **Day 8:** Worked on the Action Phase Handler. Changed logic.
 - **Day 10:** Wrote more system tests for Incidents and checking out edge cases.
 - **Day 11:** Final day continuous work with group to figure out the bugs and finalize the project.
-- ...
 
 ### Mahmoud
-- ...
+-**Day 1:** started directly with testing as we were told to split up and do testing and implementation in parallel
+-**Day 2:** continued with testing, worked a bit on simulation map tests
+-**Day 3:** started working on harvesting handler and broken machine
+-**Day 4:** continue working on harvesting handler and broken machine and fixed errors with the unit tests I wrote earlier
+-**Day 5:** continued working on harvesting handler and broken machine but also spent some time off because I had an exam the day after that
+-**Day 6:** it was our day off and I had an exam in the morning and had to continue looking for apartments as my rent contract was about to end
+-**Day 7:** finished harvesting handler and broken machine and started writing system tests
+-**Day 8:** continued writing system tests and fixing bugs that were found during testing but also had to stop a bit because I was moving out between apartments
+-**Day 9:** code reviewed some classes while working on some big scenarios for system testing to catch more bugs in our implementation  
+-**Day 10:** wrote tests specifically for incidents and clouds because we weren't passing all their tests
+-**Day 11:** general code reviewing and debugging
 
 ### Kevin
 - **Day 1:** Added skeleton classes for plants, logger and implemented half of simulationMap
@@ -112,7 +121,8 @@ The following table summarizes the actual contributions of each group member, in
 ## Usage of Generative AI
 
 **Ana:**
-
+Ana used the following tools in the implementation phase:
+- ChatGPT for Kotlin syntax
 
 **Thejitha:**
 Theijitha used the following tools in the implementation phase:
@@ -131,7 +141,8 @@ Dipu used the following tools in the implementation phase:
 
 
 **Mahmoud:**
-
+Mahmoud used the following tools in the implementation phase:
+- Copilot for syntax and code completion
 
 **Kevin:**
 
