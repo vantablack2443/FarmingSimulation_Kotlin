@@ -1,0 +1,13 @@
+{
+  "clouds": [
+    {
+      "id": 2,
+      "location": 1,
+      "duration": -1,
+      "amount": 400
+    }
+  ],
+  "incidents": [
+
+  ]
+}

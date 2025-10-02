@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.cloudHandler
 
 import de.unisaarland.cs.se.selab.cloud.Cloud
+import de.unisaarland.cs.se.selab.cloud.TEN
 import de.unisaarland.cs.se.selab.coordinate.Coordinate
 import de.unisaarland.cs.se.selab.enumerations.TileType
 import de.unisaarland.cs.se.selab.log.Logger
@@ -10,7 +11,6 @@ import de.unisaarland.cs.se.selab.tile.Tile
 const val MAX_SUNLIGHT_REDUCTION = 50
 const val MIN_SUNLIGHT_REDUCTION = 3
 const val MIN_RAIN_AMOUNT = 5000
-const val MAX_TILES_TRAVEL = 10
 
 /**
  * handler class for cloud movement
@@ -175,25 +175,28 @@ class CloudHandler(val simulationMap: SimulationMap) {
             villageDissipate(c)
             return
         }
-        var moves = 0
-        while (moves < c.maxTraversibleTiles && !c.isStuck) {
+        //  var moves = 0
+        while (c.maxTraversibleTiles > 0 && !c.isStuck) {
             // instead of returning throwing errors should be a good idea
             val currTile = simulationMap.getTileByCoordinate(c.location) ?: continue
             val nextTile = simulationMap.getNeighbor(currTile, currTile.direction)
             val nextCloud = coordinateToCloud[nextTile?.location]
             // check for merges
             if (nextCloud != null) {
+                c.maxTraversibleTiles--
                 logLocationChange(c, currTile, nextTile ?: currTile)
                 val newCloud = merge(nextCloud, c)
                 cloudsList.add(newCloud)
+//                tryRain(newCloud)
                 return
             }
 
             if (nextTile == null) {
                 c.isStuck = true
-                tryRain(c)
+//                tryRain(c)
                 break
             }
+            c.maxTraversibleTiles--
             logLocationChange(c, currTile, nextTile)
             coordinateToCloud.remove(c.location)
             c.location = nextTile.location
@@ -208,15 +211,12 @@ class CloudHandler(val simulationMap: SimulationMap) {
             if (tryRain(c)) {
                 return
             }
-            moves++
         }
         reduceSunlight(
             MAX_SUNLIGHT_REDUCTION,
             simulationMap.getTileByCoordinate(c.location) ?: return
         )
         if (c.duration > 0) c.duration--
-        c.maxTraversibleTiles = MAX_TILES_TRAVEL
-
         if (checkDurationDissipate(c)) {
             dissipate(c)
         }
@@ -272,6 +272,16 @@ class CloudHandler(val simulationMap: SimulationMap) {
         // empty removed clouds list
         removedClouds.clear()
         logCloudPositions()
+        resetTraversibleTiles()
+    }
+
+    /**
+     * helper function to reset the traversible tiles each tick
+     */
+    private fun resetTraversibleTiles() {
+        for (cloud in cloudsList) {
+            cloud.maxTraversibleTiles = TEN
+        }
     }
 
     /**
@@ -282,8 +292,8 @@ class CloudHandler(val simulationMap: SimulationMap) {
         if (currTile.category in setOf(TileType.FIELD, TileType.PLANTATION)) {
             reduceSunlight(MAX_SUNLIGHT_REDUCTION, currTile)
         }
-        tryRain(cloud)
-        cloud.duration--
+//        tryRain(cloud)
+        if (cloud.duration > 0) cloud.duration--
     }
 
     /**
