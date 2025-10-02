@@ -12,7 +12,6 @@ const val MAX_SUNLIGHT_REDUCTION = 50
 const val MIN_SUNLIGHT_REDUCTION = 3
 const val MIN_RAIN_AMOUNT = 5000
 
-
 /**
  * handler class for cloud movement
  */
