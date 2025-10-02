@@ -80,7 +80,17 @@ The following table summarizes the actual contributions of each group member, in
 - ...
 
 ### Kevin
-- ...
+- **Day 1:** Added skeleton classes for plants, logger and implemented half of simulationMap
+- **Day 2:** Added unit tests for logger, implemented PlantData
+- **Day 3:** Added the implementation of Mowing Handler, Drought incident and half of Tile
+- **Day 4:** Added missing logging on sowing handler, fixed the behaviour of machine in sowing handler
+- **Day 5:** Started revising old cloud handler
+- **Day 6:** Finished cloud handler revision, note : the revised handler is added on a different file "cloudHandlerAlt" commit : 4095ad90
+- **Day 7:** Focused on fixing small bugs mainly on weeding, irrigating and mowing, fixed big bugs on harvesting handler
+- **Day 8:** Added system test "sowingPlanSimplePlan", "sowingPrioritizationTest"
+- **Day 9:** Added system test "potatoBehaviourTest"
+- **Day 10:** Added system tests "noWayHome, AnotherWayHome, oatBehaviourTest", a few validation system tests
+- **Day 11:** Added more validation system tests, Unit tests for SowingHandler, mapParser, farmParser, harvestEstimateHandler
 
 ### Kerem
 - **Day 1:** Writing the skeletons for MapParser & FarmParser, implemented most of FarmParser.
