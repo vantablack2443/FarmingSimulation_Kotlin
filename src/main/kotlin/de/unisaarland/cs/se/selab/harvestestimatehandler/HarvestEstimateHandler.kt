@@ -133,7 +133,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
 
         plantOfTile.pollination.clear()
         plantOfTile.animalAttackPenalty.clear()
-//        plantOfTile.animalAttackPenalty = 1.0
         plantOfTile.animalAttack = false
 
         // IMPORTANT or else will always set estimate to 0

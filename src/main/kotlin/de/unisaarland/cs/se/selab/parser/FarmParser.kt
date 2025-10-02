@@ -81,7 +81,6 @@ class FarmParser(private val simulationData: SimulationData) {
             val farmObject = farmJson.jsonObject
             val farm = parseFarm(farmObject)
             // gets ID and then sets one by one to mapOfFarms
-            /*mapOfFarms[farm.getId()] = farm*/
             simulationData.addFarmToMapping(farm)
             farmIDs.add(farm.getId())
             farmNames.add(farm.getName())
@@ -102,8 +101,6 @@ class FarmParser(private val simulationData: SimulationData) {
         if (id < 0) throw ValidationException("ID should be non-negative")
 
         val name = farm["name"]?.jsonPrimitive?.content ?: throw ValidationException("Farm name not specified")
-        // Name can be empty string
-        // if (name.isEmpty()) throw ValidationException("Empty farm name")
 
         // Each function must check whether the tiles specified in the json are actually what they are supposed to be
         // A tile with id n in the fields list has to be a field
@@ -277,7 +274,6 @@ class FarmParser(private val simulationData: SimulationData) {
 
         val name = m["name"]?.jsonPrimitive?.content ?: throw ValidationException("Machine name missing")
         // Name can be empty string - Assumption like for farms
-        // if (name.isEmpty()) throw ValidationException("Empty machine name")
 
         // These functions check that a machine has at least one action, one plant and that the duration is 1..14
         val actions = parseMachineActions(m)
@@ -287,10 +283,6 @@ class FarmParser(private val simulationData: SimulationData) {
         val tile = parseMachineLocation(m)
         // Checks that this tile is a farmstead, contains a shed and belongs to the farm owing this machine
         validateMachineLocation(tile.id, farmID)
-
-        // CHECK IF THIS CHECK IS EXPECTED
-        /*validateActionsAndPlants(actions, plants)*/
-
         return Machine(id, name, duration, tile, actions, plants, homeShed = tile)
     }
 

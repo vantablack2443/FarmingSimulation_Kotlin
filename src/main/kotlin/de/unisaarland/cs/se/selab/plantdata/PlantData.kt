@@ -71,19 +71,6 @@ const val WHEAT_HARVEST = 1500000
  * class to find available actions for given tick
  */
 class PlantData {
-    val plantationHarvestEstimates: Map<PlantType, Int> = mapOf(
-        PlantType.ALMOND to ALMOND_HARVEST,
-        PlantType.APPLE to APPLE_HARVEST,
-        PlantType.GRAPE to GRAPE_HARVEST,
-        PlantType.CHERRY to CHERRY_HARVEST
-    )
-    val fieldHarvestingEstimates: Map<PlantType, Int> = mapOf(
-        PlantType.OAT to OAT_HARVEST,
-        PlantType.PUMPKIN to PUMPKIN_HARVEST,
-        PlantType.POTATO to POTATO_HARVEST,
-        PlantType.WHEAT to WHEAT_HARVEST,
-    )
-
     val sowingTimes: Map<PlantType, IntRange> = mapOf(
         PlantType.POTATO to POTATO_SOWING_START..POTATO_SOWING_END_PLUS_LATE,
         PlantType.WHEAT to WHEAT_SOWING_START..WHEAT_SOWING_END_PLUS_LATE,
@@ -117,10 +104,4 @@ class PlantData {
     fun getHarvestablePlantTypes(yearTick: Int): List<PlantType> {
         return harvestingTimes.filter { (_, range) -> yearTick in range }.map { (plant, _) -> plant }
     }
-    /*
-    fun getHarvestablePlantTypes(yeartick: Int): List<PlantType> {
-        return harvestingTimes.filter { (range, _) -> yeartick in range }.map { (_, value) -> value }
-    }
-
-     */
 }

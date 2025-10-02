@@ -41,21 +41,6 @@ class SimulationMap(
             return listOf(tile)
         }
         val cord = tile.location
-
-//        val tiles: MutableList<Tile> = mutableListOf()
-//        for (i in (cord.x - (radius * 2))..(cord.x + (radius * 2))) {
-//            for (j in (cord.y - (radius * 2))..(cord.y + (radius * 2))) {
-//                if (abs(i - cord.x) + abs(j - cord.y) > radius * 2 || (i == cord.x && j == cord.y)) {
-//                    continue
-//                }
-//                val newTile = getTileByCoordinate(Coordinate(i, j))
-//                // Here it will also try to get invalid tiles such as (9,4) but getTileByCoordinate will return null
-//                if (newTile != null) {
-//                    tiles.add(newTile)
-//                }
-//            }
-//        }
-//
         val neighbors = cord.getNeighborsInRadius(radius)
         val tiles = mutableListOf<Tile>()
         for (n in neighbors) {
@@ -75,33 +60,6 @@ class SimulationMap(
         val neighbor = tile.location.getNeighbor(direction)
         if (neighbor != null) { return tiles[neighbor] }
         return null
-        /*
-        var neighbour: Tile? = null
-        if (direction == null) return null
-        if (tile.shape == TileShape.SQUARE) {
-            neighbour = when (direction) {
-                Direction.NORTH -> null
-                Direction.NORTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y - 1)]
-                Direction.EAST -> null
-                Direction.SOUTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y + 1)]
-                Direction.SOUTH -> null
-                Direction.SOUTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y + 1)]
-                Direction.WEST -> null
-                Direction.NORTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y - 1)]
-            }
-        } else if (tile.shape == TileShape.OCTAGONAL) {
-            neighbour = when (direction) {
-                Direction.NORTH -> tiles[Coordinate(tile.location.x, tile.location.y - 2)]
-                Direction.NORTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y - 1)]
-                Direction.EAST -> tiles[Coordinate(tile.location.x + 2, tile.location.y)]
-                Direction.SOUTH_EAST -> tiles[Coordinate(tile.location.x + 1, tile.location.y + 1)]
-                Direction.SOUTH -> tiles[Coordinate(tile.location.x, tile.location.y + 2)]
-                Direction.SOUTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y + 1)]
-                Direction.WEST -> tiles[Coordinate(tile.location.x - 2, tile.location.y)]
-                Direction.NORTH_WEST -> tiles[Coordinate(tile.location.x - 1, tile.location.y - 1)]
-            }
-        }
-        return neighbour*/
     }
 
     /**
@@ -250,12 +208,4 @@ class SimulationMap(
     fun filterByType(type: TileType, tiles: List<Tile>): List<Tile> {
         return tiles.filter { it.category == type }.sortedBy { it.id }
     }
-
-//    /**
-//     * For move cloud optimization
-//     */
-//    fun nextTileNullButAirflow(tile: Tile): Boolean {
-//        val nextTile = getNeighbor(tile, tile.direction)
-//        return nextTile == null
-//    }
 }

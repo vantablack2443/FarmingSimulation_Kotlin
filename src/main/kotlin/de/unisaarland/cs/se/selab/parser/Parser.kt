@@ -11,7 +11,6 @@ class ValidationException : Exception {
         this.filePath = filePath
     }
 
-    // constructor(cause: Throwable) : super(cause)
     constructor(message: String) : super(message)
     constructor() : super()
 }
@@ -20,7 +19,6 @@ class ValidationException : Exception {
  * custom parsing exception for when CLI commands are invalid
  */
 class ParsingException : Exception {
-    // constructor(cause: Throwable) : super(cause)
     constructor(message: String) : super(message)
     constructor() : super()
 }
