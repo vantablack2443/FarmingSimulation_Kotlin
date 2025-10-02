@@ -4,15 +4,15 @@
 
 The following table summarizes the actual contributions of each group member, including deviations from the planned responsibilities. 
 
-| Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work |
-|----------|-----------------------------------------------------------------|---------------------------------------------------------------------|-----------------|
-| Ana      | MapParser, CommandLineParser, Main, Simulation, CloudCreation   | Incidents, Cloud, Irrigation Unit test; System Tests for all phases |                 |
-| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions                           |                 |
-| Nehesh   | Plant classes, Animal Attack, Bee Happy, Map, IrrigationHandler | System tests for parsers and simulation logic                       |                 |
-| Dipu     | WeedingHandler, CuttingHandler, CityExpansion, Logger           | System tests for validation and simulation phases                   |                 |
-| Mahmoud  | HarvestingHandler, BrokenMachine                                | Unit tests for map, mowing handler; System tests for all phases     |                 |
-| Kevin    | MowingHandler, PlantData, Map, Drought, CloudHandler            | Unit tests for sowing, logger; System tests for farm actions        |                 |
-| Kerem    | FarmParser, HarvestEstimateHandler, IrrigationHandler           | System tests for all phases except cloud movement                   |                 |
+| Member   | Implemented Components                                          | Testing Contributions                                               | Additional Work                                                        |
+|----------|-----------------------------------------------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------|
+| Ana      | MapParser, CommandLineParser, Main, Simulation, CloudCreation   | Incidents, Cloud, Irrigation Unit test; System Tests for all phases |                                                                        |
+| Thejitha | ScenarioParser, SowingHandler, CloudHandler                     | System tests for plantation plant actions                           |                                                                        |
+| Nehesh   | Plant classes, Animal Attack, Bee Happy, Map, IrrigationHandler | System tests for parsers and simulation logic                       | Bug fixes for cloud handler, harvest estimate handler, action handlers |
+| Dipu     | WeedingHandler, CuttingHandler, CityExpansion, Logger           | System tests for validation and simulation phases                   |                                                                        |
+| Mahmoud  | HarvestingHandler, BrokenMachine                                | Unit tests for map, mowing handler; System tests for all phases     |                                                                        |
+| Kevin    | MowingHandler, PlantData, Map, Drought, CloudHandler            | Unit tests for sowing, logger; System tests for farm actions        |                                                                        |
+| Kerem    | FarmParser, HarvestEstimateHandler, IrrigationHandler           | System tests for all phases except cloud movement                   |                                                                        |
 
 ---
 
