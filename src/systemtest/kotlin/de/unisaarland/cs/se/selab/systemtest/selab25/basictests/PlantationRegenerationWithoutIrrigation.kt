@@ -5,8 +5,8 @@ import de.unisaarland.cs.se.selab.systemtest.selab25.utils.ExampleSystemTestExte
 /**
  * tests default behavior of machines
  */
-class PlantationRegeneration : ExampleSystemTestExtension() {
-    override val name = "Plantation Regeneration"
+class PlantationRegenerationWithoutIrrigation : ExampleSystemTestExtension() {
+    override val name = "Plantation Regeneration Without Regeneration"
     override val description = "Tests plantation HE reset in late october"
 
     // Paths are relative from the `src/systemtest/resources` directory.
@@ -36,8 +36,8 @@ class PlantationRegeneration : ExampleSystemTestExtension() {
         )
         assertNextLine("[IMPORTANT] Farm Machine: Machine 3 is finished and returns to the shed at 1.")
         assertNextLine("[IMPORTANT] Farm Machine: Machine 3 unloads 850000 g of APPLE harvest in the shed.")
-        // assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 2 for 2 days.")
-        // assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
+        assertNextLine("[IMPORTANT] Farm Action: Machine 1 performs IRRIGATING on tile 2 for 2 days.")
+        assertNextLine("[IMPORTANT] Farm Machine: Machine 1 is finished and returns to the shed at 1.")
         assertNextLine("[IMPORTANT] Farm: Farm 1 finished its actions.")
         assertNextLine("[INFO] Harvest Estimate: Harvest estimate on tile 4 changed to 0 g of ALMOND.")
         // yeartick 21, reset HE

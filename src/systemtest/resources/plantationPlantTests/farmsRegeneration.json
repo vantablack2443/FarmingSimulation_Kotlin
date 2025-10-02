@@ -27,7 +27,7 @@
           "id": 3,
           "name": "machine three",
           "actions": ["HARVESTING"],
-          "plants": ["GRAPE"],
+          "plants": ["APPLE"],
           "duration": 4,
           "location": 1
         }
