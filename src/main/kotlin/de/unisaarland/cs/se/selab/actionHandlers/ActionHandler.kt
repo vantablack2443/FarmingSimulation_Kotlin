@@ -58,38 +58,6 @@ abstract class ActionHandler(
     abstract fun getOperableTiles(farm: Farm, plant: PlantType, tick: Int): List<Tile>
 
     /**
-     * Updates the tile hash map of the farm with the given tile
-     */
-    fun updateTileMap(farm: Farm, tile: Tile) {
-        // TODO implementation just to build
-        farm.tileHashMap.contains(tile.id)
-    }
-
-    /**
-     * Updates the machine hash map of the farm with the given machine
-     */
-    fun updateMachineMap(farm: Farm, machine: Machine) {
-        // TODO
-        farm.machineHashMap.contains(machine.id)
-    }
-
-    /**
-     * Returns the machine to the shed after completing its action
-     */
-    fun returnToShed(machine: Machine) {
-        // TODO
-        machine.currentHarvest ?: return
-    }
-
-    /**
-     * Clears the tile hash maps
-     */
-    fun clearSets(farm: Farm) {
-        farm.machineHashMap.clear()
-        farm.tileHashMap.clear()
-    }
-
-    /**
      * Retrieves a list of available machines that can perform the CUT action
      * on the given plant type. The machines are sorted by duration and ID.
      *
@@ -136,33 +104,4 @@ abstract class ActionHandler(
             .sortedBy { it.id }
         return (plantationTiles + fieldTiles).toMutableList()
     }
-
-//    /**
-//     * Performs the CUT action on a tile using the given machine.
-//     * Updates the machine's state and removes the CUT action from the plant's required actions.
-//     *
-//     * @param machine The machine performing the action.
-//     * @param tile The tile on which the action is performed.
-//     */
-//    fun performAction(
-//        machine: Machine,
-//        tile: Tile,
-//        yearTick: Int
-//    ) {
-//        machine.currentTile = tile
-//        machine.updateElapsedTime()
-//
-//        val plant = tile.plant
-//        plant?.actionsNeeded?.remove(ActionType.CUTTING)
-//        if (plant != null) {
-//            for (element in plant.cuttingTime) {
-//                if (element.first.inRange(yearTick)) {
-//                    element.second = true
-//                }
-//            }
-//        }
-//
-//        // Log the action
-//        logFarmAction(machine.farmID, ActionType.CUTTING, tile.id, machine.duration)
-//    }
 }

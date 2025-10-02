@@ -158,7 +158,6 @@ class HarvestEstimateHandler(val simulationMap: SimulationMap) {
             t.currentCrop = null
             t.fallowDuration = Duration(simTick + 1, simTick + FALLOW_DURATION)
         }
-        // logHarvestEstimate(t.id, t.plant?.harvestEstimate ?: 0, t.currentCrop!!)
     }
 
     /**
