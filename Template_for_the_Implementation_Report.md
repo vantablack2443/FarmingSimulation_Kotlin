@@ -22,7 +22,8 @@ The following table summarizes the actual contributions of each group member, in
 The task of fixing the logic was mostly reassigned to Thejitha, Kevin and Ana.
 - Another issue encountered was the plant logic and their implementation scattered across many different classes, so
 for redesigning these classes Thejitha and Nehesh took the responsibility.
-- The remaining discrepancies between the initial and the final implementation plans stem from the time-management realted 
+- Certain attributes had to be adjusted to work with the harvest Estimating Handler.
+- The remaining discrepancies between the initial and the final implementation plans stem from the time-management related 
 redistribution of the workload.
 ---
 
