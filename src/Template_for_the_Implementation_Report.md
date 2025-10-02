@@ -93,7 +93,9 @@ The following table summarizes the actual contributions of each group member, in
 
 
 **Thejitha:**
-
+Theijitha used the following tools in the implementation phase:
+- Github Copilot for code completion
+- ChatGPT for Kotlin data structures and methods and writing tests
 
 **Nehesh:** <br>
 Nehesh used the following tools in the implementation phase:
